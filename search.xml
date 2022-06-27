@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>多线程学习01：进程与线程</title>
+      <link href="/2022/06/26/multithread01/"/>
+      <url>/2022/06/26/multithread01/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言：程序是如何跑起来的"><a href="#前言：程序是如何跑起来的" class="headerlink" title="前言：程序是如何跑起来的"></a>前言：程序是如何跑起来的</h1><p>通常来说，像我们苦逼码农写的软件都是文本格式的代码，这些代码不能直接被计算机识别执行，需要使用编译器<font color:red="">编译</font>成操作系统或者虚拟机可以运行的代码（可执行代码），它们都被存储在文件系统中。</p><p>要想让程序处理数据，完成计算任务，必须把程序从外部设备加载到内存中，并在操作系统的管理调度下交给 CPU 去执行，去运行起来，才能真正发挥软件的作用，程序运行起来以后，被称作<strong>进程</strong>。</p><p>进程除了包含可执行的程序代码，还包括进程在运行期使用的内存堆空间、栈空间、供操作系统管理用的数据结构。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>javaSE 面试题01</title>
       <link href="/2022/06/25/javasems01/"/>
       <url>/2022/06/25/javasems01/</url>
@@ -20,9 +47,9 @@
       
         <tags>
             
-            <tag> 面试题 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 面试题 </tag>
             
         </tags>
       
@@ -52,19 +79,6 @@
             <tag> hexo </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2022/06/20/hello-world/"/>
-      <url>/2022/06/20/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
       
     </entry>
     
