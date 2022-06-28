@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="多线程学习日记01：进程、线程, 银色回廊">
-    <meta name="description" content="进程、线程前言：程序是如何跑起来的​	通常来说，像我们苦逼码农写的软件都是文本格式的代码，这些代码不能直接被计算机识别执行，需要使用编译器编译成操作系统或者虚拟机可以运行的代码（可执行代码），它们都被存储在文件系统中。
-​	要想让程序处理数">
+    <meta name="keywords" content="Gecco学习日记02, 银色回廊">
+    <meta name="description" content="Gecco学习日记02：梳理 与 分析Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用管道过滤器模式，提供灵活的内容清洗和持久化处理模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。
+Gecco引擎初">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +20,7 @@
 
     
 
-    <title>多线程学习日记01：进程、线程 | 银色回廊</title>
+    <title>Gecco学习日记02 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -312,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">多线程学习日记01：进程、线程</h1>
+                    <h1 class="description center-align post-title">Gecco学习日记02</h1>
                 </div>
             </div>
         </div>
@@ -433,12 +433,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-                                <span class="chip bg-color">多线程</span>
+                            <a href="/tags/Gecco/">
+                                <span class="chip bg-color">Gecco</span>
                             </a>
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/">
+                                <span class="chip bg-color">网络爬虫</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
+                                <span class="chip bg-color">开源项目</span>
                             </a>
                         
                     </div>
@@ -449,8 +453,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-category">
-                                java多线程
+                            <a href="/categories/Gecco/" class="post-category">
+                                Gecco
                             </a>
                         
                     </div>
@@ -462,7 +466,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-26
+                    2022-06-28
                 </div>
                 
 
@@ -483,117 +487,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="进程、线程"><a href="#进程、线程" class="headerlink" title="进程、线程"></a>进程、线程</h1><h2 id="前言：程序是如何跑起来的"><a href="#前言：程序是如何跑起来的" class="headerlink" title="前言：程序是如何跑起来的"></a>前言：程序是如何跑起来的</h2><p>​	通常来说，像我们苦逼码农写的软件都是文本格式的代码，这些代码不能直接被计算机识别执行，需要使用编译器<font color:red="">编译</font>成操作系统或者虚拟机可以运行的代码（可执行代码），它们都被存储在文件系统中。</p>
-<p>​	要想让程序处理数据，完成计算任务，必须把程序从外部设备加载到内存中，并在操作系统的管理调度下交给 CPU 去执行，去运行起来，才能真正发挥软件的作用，程序运行起来以后，被称作<strong>进程</strong>。</p>
-<p>​	进程除了包含可执行的程序代码，还包括进程在运行期使用的内存<strong>堆空间、栈空间</strong>、供操作系统管理用的数据结构。</p>
-<h2 id="进程（process）"><a href="#进程（process）" class="headerlink" title="进程（process）"></a>进程（process）</h2><ul>
-<li><p>程序在系统上的一次执行过程</p>
-</li>
-<li><p>每个进程有独立的<strong>地址空间</strong>，进程切换时需要切换进程页表，以及切换运行环境（寄存器等）</p>
-</li>
-</ul>
-<h4 id="早期内存分配机制"><a href="#早期内存分配机制" class="headerlink" title="早期内存分配机制"></a>早期内存分配机制</h4><p>  ​	在早期的计算机中，要运行一个程序，会把这些程序全都装入内存，程序都是直接运行在内存上的，也就是说<strong>程序中访问的内存地址都是实际的物理内存地址</strong>。当计算机同时运行多个程序时，必须保证这些程序用到的内存总量要小于计算机实际物理内存的大小。</p>
-<p>  ​	那当程序同时运行多个程序时，操作系统是如何为这些程序分配内存的呢？</p>
+                <h1 id="Gecco学习日记02：梳理-与-分析"><a href="#Gecco学习日记02：梳理-与-分析" class="headerlink" title="Gecco学习日记02：梳理 与 分析"></a>Gecco学习日记02：梳理 与 分析</h1><p>Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用<strong>管道过滤器</strong>模式，提供灵活的<strong>内容清洗</strong>和<strong>持久化处理</strong>模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。</p>
+<h2 id="Gecco引擎初始化梳理"><a href="#Gecco引擎初始化梳理" class="headerlink" title="Gecco引擎初始化梳理"></a>Gecco引擎初始化梳理</h2><p>GeccoEngine是一个线程类，其中包含一些关键类有：</p>
+<p>状态性的——</p>
 <blockquote>
-<p>举个栗子，某台计算机总的内存大小是 128M ，现在同时运行两个程序 A 和 B ， A 需占用内存 10M ， B 需占用内存 110M 。计算机在给程序分配内存时会采取这样的方法：先将内存中的前 10M 分配给程序 A ，接着再从内存中剩余的 118M 中划分出 110M 分配给程序 B 。</p>
+<p>请求队列：Scheduler，装着请求对象的队列<br>请求类：Request，代表一个应该进行的请求，存放在请求队列中，多个爬虫对象并发地从队列中取得请求对象，根据之发起HTTP请求<br>响应类：Response，将爬虫对象发起HTTP请求后获得的结果，封装成响应对象，由Render转换成实体对象</p>
 </blockquote>
-<p><img src="/2022/06/26/multithread01/215125w5kywrxk0yhzw1mj.png" alt="image.png"></p>
-<p>这种分配方法可以保证程序 A 和程序 B 都能运行，但是<strong>这种简单的内存分配策略问题很多</strong>。</p>
-<p><strong>安全的问题</strong> ：进程地址空间不隔离。由于程序都是直接访问物理内存，所以恶意程序可以随意修改别的进程的内存数据，以达到破坏的目的。有些非恶意的，但是有 bug 的程序也可能不小心修改了其它程序的内存数据，就会导致其它程序的运行出现异常。</p>
-<p><strong>效率的问题 <strong>：内存使用效率低。在 A 和 B 都运行的情况下，如果用户又运行了程序 C，而程序 C 需要 20M 大小的内存才能运行，而此时系统只剩下 8M 的空间可供使用，所以此时系统必须在已运行的程序中选择一个将该程序的数据暂时拷贝到硬盘上</strong>（知识点：外存硬盘属于I/O设备）</strong>，释放出部分空间来供程序 C 使用，然后再将程序 C 的数据全部装入内存中运行。可以想象得到，在这个过程中，有大量的数据在装入装出，导致效率十分低下。</p>
-<p><strong>地址随机性的问题</strong>：程序运行的地址不确定。当内存中的剩余空间可以满足程序 C 的要求后，操作系统会在剩余空间中随机分配一段连续的 20M 大小的空间给程序 C 使用，因为是随机分配的，所以程序运行的地址是不确定的。</p>
-<h4 id="内存分段机制"><a href="#内存分段机制" class="headerlink" title="内存分段机制"></a>内存分段机制</h4><p><strong>虚内存</strong>：内存地址不是真正的物理地址，而是一个<strong>虚拟地址</strong>（通过映射计算）。<strong>按照这种方法，程序中访问的内存地址不再是实际的物理内存地址，而是一个虚拟地址，然后由操作系统将这个虚拟地址映射到适当的物理内存地址上</strong>。只要操作系统处理好虚拟地址到物理内存地址的<strong>映射</strong>，就可以保证不同的程序最终访问的内存地址位于不同的区域，彼此没有重叠，就可以达到内存地址空间隔离的效果。</p>
-<p>当创建一个进程时，操作系统会为该进程分配一个 4GB 大小的虚拟进程地址空间。之所以是 4GB ，是因为在 32 位的操作系统中，一个指针长度是 4 字节，而 4 字节指针的寻址能力是从<code> 0x00000000</code>~`0xFFFFFFFF<code>，最大值 </code>0xFFFFFFFF` 表示的即为 4GB 大小的容量。</p>
-<p>当进程创建时，每个进程都会有一个自己的 4GB 虚拟地址空间。要注意的是这个 4GB 的地址空间是“虚拟”的，并不是真实存在的，而且每个进程只能访问自己虚拟地址空间中的数据，无法访问别的进程中的数据，通过这种方法实现了进程间的<strong>地址隔离</strong>。</p>
-<p>再举个例子。</p>
+<p>行为性的——</p>
 <blockquote>
-<p>假设有两个进程 A 和 B ，进程 A 所需内存大小为 10M ，其虚拟地址空间分布在 0x00000000 到 0x00A00000 ，进程 B 所需内存为 100M ，其虚拟地址空间分布为 0x00000000 到 0x06400000 。那么按照分段的映射方法，进程 A 在物理内存上映射区域为 0x00100000 到 0x00B00000 ，进程 B 在物理内存上映射区域为0x00C00000 到 0x07000000 。于是进程 A 和进程 B 分别被映射到了不同的内存区间，彼此互不重叠，实现了地址隔离。从应用程序的角度看来，进程 A 的地址空间就是分布在 0x00000000 到 0x00A00000 </p>
+<p>引擎类：Engine，总的配置和入口<br>爬虫类：Spider，一个引擎可以有多个爬虫对象并发工作，每个爬虫对象有一个单独的线程，爬虫的线程主循环中，从请求队列中获得请求对象，交给下载器<br>下载器：Downloader，用于根据一个请求对象，发起一次HTTP请求，将HTTP响应封装成响应对象<br>转换器：Render，用于将响应对象转换成用户定义的实体类的对象，实现方式是通过反射读取实体类的字段上的注解并处理</p>
 </blockquote>
-<p>在 Windows 系统下，这个虚拟地址空间被分成了 4 部分： <strong>NULL 指针区、用户区、 64KB 禁入区、内核区</strong>。<strong>应用程序能使用的只是用户区而已</strong>，大约 2GB 左右 ( 最大可以调整到 3GB) 。内核区为 2GB ，内核区保存的是系统线程调度、内存管理、设备驱动等数据，这部分数据供所有的进程共享，但应用程序是不能直接访问的。</p>
-<p>这种分段的映射方法虽然解决了上述中的安全问题和地址随机性的问题，但并没能解决内存的使用效率问题。在分段的映射方法中，每次换入换出内存的都是整个程序， 这样会造成大量的磁盘访问操作，导致效率低下。所以这种映射方法还是稍显粗糙，粒度比较大。基于此情况，人们想到了粒度更小的内存分割和映射方法，这种方法就是分页 (Paging) 。 </p>
-<h4 id="内存分页机制"><a href="#内存分页机制" class="headerlink" title="内存分页机制"></a>内存分页机制</h4><p>分页的基本方法是，将地址空间分成许多的页。每页的大小由 CPU 决定，然后由操作系统选择页的大小。目前 Inter 系列的 CPU 支持 4KB 或 4MB 的页大小，而 PC上目前都选择使用 4KB 。按这种选择， 4GB 虚拟地址空间共可以分成 1048576（1024*1024） 页， 512M 的物理内存可以分为 131072 个页。显然<strong>虚拟空间的页数要比物理空间的页数多得多</strong>。</p>
-<blockquote>
-<p>例如：银行存钱，张三：存1号箱，李四：存1号箱，但是两个1号箱并不是同一个，有一个特殊的对应表来查询实际的物理位置</p>
-</blockquote>
-<p>在分段的方法中，每次程序运行时总是把程序全部装入内存，而分页的方法则有所不同。分页的思想是程序运行时用到哪页就为哪页分配内存，没用到的页暂时保留在硬盘上。当用到这些页时再在物理地址空间中为这些页分配内存，然后建立虚拟地址空间中的页和刚分配的物理内存页间的映射。</p>
-<h2 id="线程（Thread）"><a href="#线程（Thread）" class="headerlink" title="线程（Thread）"></a>线程（Thread）</h2><ul>
-<li><p>定义：<strong>进程真正的执行过程是线程</strong>，每个进程在创立时会缺省的创立一个主线程，当然，进程还可以创建更多的线程，所有的线程属于这个进程，进程销毁时，进程下所有线程也销毁，<strong>同一个进程</strong>里面 <strong>切换线程</strong>时 **<font color="red">不需要切换页表</font>**（节约时间），需要切换运行时环境（寄存器等）</p>
-</li>
-<li><p>线程一定属于进程</p>
-</li>
-<li><p>每个线程都有独立的运行时空间</p>
-</li>
-<li><p>同一个进程里面 切换线程时 不需要切换页表（节约时间），需要切换运行时环境（寄存器等）</p>
-</li>
-<li><p>一个进程多个线程并发</p>
-</li>
+<p>对其运行过程进行流程梳理。</p>
+<ol>
+<li>首先GeccoEngine进行一系列初始化（scheduler、spiderBeanFactory、startRequests、spiders）。</li>
+<li>scheduler将需要下载的请求都放在这里管理，可以认为这里是一个队列，保存了所有待抓取的请求。</li>
+<li>每个爬虫(Spider)可以认为是一个单独线程，在每个爬虫对象线程的主循环中，爬虫会从Scheduler中获取需要待抓取的请求对象，由下载器进行下载。爬虫的任务就是下载网页并渲染相应的JavaBean。</li>
+<li>下载器(Downloader)，使用请求对象(startRequests)，发起HTTP请求，把HTTP响应封装成响应对象</li>
+<li>转换器，使用响应对象，及实体类上的注解信息，将响应对象渲染成有业务意义的实体对象</li>
+<li>在爬取信息过程中，GeccoEngine会监控爬虫的基本信息，并导出jmx信息</li>
+</ol>
+<h2 id="GeccoEngine基本配置项"><a href="#GeccoEngine基本配置项" class="headerlink" title="GeccoEngine基本配置项"></a>GeccoEngine基本配置项</h2><ul>
+<li>loop(true)：表示是否循环抓取，默认为false</li>
+<li>thread(2)：表示开启的爬虫线程数量，默认是1，需要注意的是线程数量要小于或者等于start请求的数量</li>
+<li>interval(2000)：表示某个线程在抓取完成一个请求后的间隔时间，单位是毫秒，系统会在左右1秒时间内随机。如果为2000，系统会在1000～3000之间随机选取。</li>
+<li>mobile(false)：表示使用移动端还是pc端的UserAgent。默认为false使用pc端的UserAgent。</li>
+<li>debug(true)：是否开启debug模式，如果开启debug模式，会在控制台输出jsoup元素抽取的日志。</li>
+<li>pipelineFactory(PipelineFactory)：自定义Pipeline工厂类</li>
+<li>scheduler(Scheduler)：自定义请求队列管理器</li>
 </ul>
-<h3 id="Java中的线程生命周期"><a href="#Java中的线程生命周期" class="headerlink" title="Java中的线程生命周期"></a>Java中的线程生命周期</h3><p>线程是一个动态执行的过程，它也有一个从产生到死亡的过程。Java中的线程生命周期大体可以分为五种状态：</p>
-<h4 id="1、初始化状态（NEW）"><a href="#1、初始化状态（NEW）" class="headerlink" title="1、初始化状态（NEW）"></a>1、<strong>初始化状态（NEW）</strong></h4><ul>
-<li>此时JVM为其分配内存，并初始化其成员变量的值；</li>
-<li><strong>此时线程对象没有表现出任何线程的动态特征</strong>，程序也不会执行线程的线程执行体；</li>
+<h2 id="非阻塞启动和阻塞启动"><a href="#非阻塞启动和阻塞启动" class="headerlink" title="非阻塞启动和阻塞启动"></a>非阻塞启动和阻塞启动</h2><ul>
+<li>start()：非阻塞启动，GeccoEngine会单独启动线程运行，推荐以该方式运行。线程模型如下：</li>
 </ul>
-<h4 id="2、可运行-x2F-运行状态（RUNNABLE）"><a href="#2、可运行-x2F-运行状态（RUNNABLE）" class="headerlink" title="2、可运行/运行状态（RUNNABLE）"></a>2、<strong>可运行/运行状态（RUNNABLE）</strong></h4><p>线程对象调用了start()方法之后，该线程处于 <strong>就绪状态</strong>，此时JVM会为其<strong>创建方法调用栈和程序计数器</strong></p>
-<p>该状态的线程一直处于 <strong>线程就绪队列</strong>（尽管是采用队列形式，事实上，<strong>把它称为可运行池而不是可运行队列</strong>。因为CPU的调度不一定是按照先进先出的顺序来调度的），线程并没有开始运行；</p>
+<p>Main Thread–&gt;GeccoEngine Thread–&gt;Spider Thread</p>
 <ul>
-<li>此时线程 <strong>等待系统为其分配CPU时间片</strong>，并不是说执行了start()方法就立即执行；</li>
-<li><strong>调用start()方法来启动线程，系统会把该run()方法当成线程执行体来处理</strong>。但如果直接调用线程对象的run()方法，则run()方法立即就会被执行，而且在run()方法返回之前其他线程无法并发执行。也就是说，<strong>系统把线程对象当成一个普通对象，而run()方法也是一个普通方法，而不是线程执行体</strong>；</li>
-<li>需要指出的是，调用了线程的run()方法之后，<strong>该线程已经不再处于新建状态</strong>，不要再次调用线程对象的start()方法。<strong>只能对处于新建状态的线程调用start()方法，否则将引发IllegaIThreadStateExccption异常</strong>；</li>
+<li>run()：阻塞启动，GeccoEngine在主线程中启动运行，非循环模式GeccoEngine需要等待其他爬虫线程运行完毕后才会退出。线程模型r如下：</li>
 </ul>
-<h4 id="3、运行状态（RUNNING）"><a href="#3、运行状态（RUNNING）" class="headerlink" title="3、运行状态（RUNNING）"></a><font color="red"><strong>3、运行状态（RUNNING）</strong></font></h4><p>当CPU开始调度处于 <strong>就绪状态</strong> 的线程时，此时线程获得了CPU时间片才得以真正开始执行run()方法的线程执行体，则该线程处于 <strong>运行状态</strong>。</p>
-<ol>
-<li>如果计算机只有一个CPU，那么在任何时刻只有一个线程处于运行状态；</li>
-<li>如果在一个多处理器的机器上，将会有多个线程并行执行，处于运行状态；</li>
-<li>当线程数大于处理器数时，依然会存在多个线程在同一个CPU上轮换的现象；</li>
-</ol>
-<p>线程<strong>不可能一直处于运行状态</strong>，其在运行过程中需要被中断，<strong>目的是使其他线程获得执行的机会，线程调度的细节取决于底层平台所采用的策略</strong>(抢占式or协作式)。</p>
-<h4 id="4、阻塞状态（BLOCKED）"><a href="#4、阻塞状态（BLOCKED）" class="headerlink" title="4、阻塞状态（BLOCKED）"></a><font color="red"><strong>4、阻塞状态（BLOCKED）</strong></font></h4><p>处于运行状态的线程在某些情况下，让出CPU并暂时停止自己的运行，进入 <strong>阻塞状态</strong>。</p>
-<p><strong>当发生如下情况时，线程将会进入阻塞状态：</strong></p>
-<blockquote>
-<ol>
-<li><strong>线程调用sleep()方法</strong>，主动放弃所占用的处理器资源，暂时进入中断状态（<strong>不会释放持有的对象锁</strong>），时间到后等待系统分配CPU继续执行；</li>
-<li><strong>线程调用一个阻塞式IO方法</strong>，在该方法返回之前，该线程被阻塞；</li>
-<li><strong>线程试图获得一个同步监视器</strong>，但该同步监视器正被其他线程所持有;</li>
-<li><strong>程序调用了线程的suspend方法将线程挂起</strong>；</li>
-<li><strong>线程调用wait</strong>，等待notify/notifyAll唤醒时(会释放持有的对象锁)；</li>
-</ol>
-</blockquote>
-<p><strong>阻塞状态分类：</strong></p>
-<blockquote>
-<ol>
-<li><strong>等待阻塞</strong>：运行状态中的 <strong>线程执行wait()方法</strong>，使本线程进入到等待阻塞状态；</li>
-<li><strong>同步阻塞</strong>：线程在 <strong>获取synchronized同步锁失败</strong>（因为锁被其它线程占用），它会进入到同步阻塞状态；</li>
-<li><strong>其他阻塞</strong>：通过调用线程的 <strong>sleep()或join()或发出I/O请求</strong> 时，线程会进入到阻塞状态。当 <strong>sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕</strong> 时，线程重新转入就绪状态；</li>
-</ol>
-</blockquote>
-<p><strong>在阻塞状态的线程只能进入就绪状态，无法直接进入运行状态</strong>。而就绪和运行状态之间的转换通常不受程序控制，<strong>而是由系统线程调度所决定</strong>。当处于就绪状态的线程获得处理器资源时，该线程进入运行状态；<strong>当处于运行状态的线程失去处理器资源时，该线程进入就绪状态</strong>。</p>
-<blockquote>
-<p>但有一个方法例外，<strong>调用yield()方法可以让运行状态的线程转入就绪状态</strong>。</p>
-</blockquote>
-<h5 id="等待状态分类：无限制等待状态（WAITING）、时限等待状态（TIMED-WAITING）"><a href="#等待状态分类：无限制等待状态（WAITING）、时限等待状态（TIMED-WAITING）" class="headerlink" title="等待状态分类：无限制等待状态（WAITING）、时限等待状态（TIMED_WAITING）"></a>等待状态分类：无限制等待状态（WAITING）、时限等待状态（TIMED_WAITING）</h5><p>当线程进入了一个 <strong>时限等待状态</strong>，如：</p>
-<blockquote>
-<p>**sleep(3000)**，等待3秒后线程重新进行 <strong>就绪（RUNNABLE）状态</strong> 继续运行。</p>
-</blockquote>
-<h4 id="5、终止状态（TERMINATED）"><a href="#5、终止状态（TERMINATED）" class="headerlink" title="5、终止状态（TERMINATED）"></a><strong>5、终止状态（TERMINATED）</strong></h4><p>线程会以如下3种方式结束，结束后就处于 <strong>死亡状态</strong>：</p>
-<blockquote>
-<ol>
-<li><strong>run()或call()方法执行完成</strong>，线程正常结束；</li>
-<li><strong>线程抛出一个未捕获的Exception或Error</strong>；</li>
-<li><strong>直接调用该线程stop()方法来结束该线程</strong>—该方法容易导致死锁，通常不推荐使用；</li>
-</ol>
-</blockquote>
-<p><strong>处于死亡状态的线程对象也许是活的，但是，它已经不是一个单独执行的线程</strong>。线程一旦死亡，就不能复生。 <strong>如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</strong>。</p>
-<p><strong>所以，需要注意的是：</strong></p>
-<blockquote>
-<p>一旦线程通过start()方法启动后就再也不能回到新建（NEW）状态，线程终止后也不能再回到就绪（RUNNABLE）状态。</p>
-</blockquote>
-<p><strong>需要重点理解的是：虽然Java语言中线程的状态比较多，但是，其实<font color="red">在操作系统层面，Java线程中的阻塞状态（BLOCKED）、无时限等待状态（WAITING）、有时限等待状态（TIMED_WAITING）都是一种状态，即通用线程生命周期中的休眠状态。</font>也就是说，只要Java中的线程处于这三种状态时，那么，这个线程就没有CPU的使用权。</strong></p>
-<p>下面的图表示Java中线程的生命周期。</p>
-<p><img src="/2022/06/26/multithread01/ThreadLife.png" alt="image.png"></p>
-<h2 id="参考博文"><a href="#参考博文" class="headerlink" title="参考博文"></a>参考博文</h2><p><strong><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903558433734669">https://juejin.cn/post/6844903558433734669</a></strong></p>
-<p><strong><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/forum/topic/0202779877806640557?fid=0101592429757310384">https://developer.huawei.com/consumer/cn/forum/topic/0202779877806640557?fid=0101592429757310384</a></strong></p>
-<end>
-</end>
+<p>Main Thread–&gt;Spider Thread</p>
+<h2 id="Gecco如何匹配URL"><a href="#Gecco如何匹配URL" class="headerlink" title="Gecco如何匹配URL"></a>Gecco如何匹配URL</h2><ul>
+<li><h4 id="匹配URL的作用"><a href="#匹配URL的作用" class="headerlink" title="匹配URL的作用"></a>匹配URL的作用</h4></li>
+</ul>
+<p>​		匹配URL是告知Gecco，这种格式的url对应的网页会被渲染成当前的SpiderBean。</p>
+<ul>
+<li><h4 id="matchUrl如何写"><a href="#matchUrl如何写" class="headerlink" title="matchUrl如何写"></a>matchUrl如何写</h4></li>
+</ul>
+<p>​	完全匹配：@Gecco(matchUrl=”<a target="_blank" rel="noopener" href="https://github.com/&quot;">https://github.com/"</a>)</p>
+<p>​	模糊匹配：@Gecco(matchUrl=”<a target="_blank" rel="noopener" href="https://github.com/%7Buser%7D/%7Bproject%7D&quot;)%EF%BC%8C%E4%BC%9A%E5%8C%B9%E9%85%8D%E6%89%80%E6%9C%89%E7%B1%BB%E4%BC%BC%E6%A0%BC%E5%BC%8F%E7%9A%84url%EF%BC%8C%E4%BE%8B%E5%A6%82[https://github.com/xtuhcy/gecco](https://github.com/xtuhcy/gecco)">https://github.com/{user}/{project}")，会匹配所有类似格式的url，例如[https://github.com/xtuhcy/gecco](https://github.com/xtuhcy/gecco)</a></p>
+<p>​	任意匹配：@Gecco，如果你不写matchUrl，任何格式的url都会被匹配，这种方式一般用作通用爬虫，例如：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Gecco</span><span class="token punctuation">(</span>pipelines<span class="token operator">=</span><span class="token string">"consolePipeline"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CommonCrawler</span> <span class="token keyword">implements</span> <span class="token class-name">HtmlBean</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>8870768223740844229L<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Request</span>
+    <span class="token keyword">private</span> HttpRequest request<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@HtmlField</span><span class="token punctuation">(</span>cssPath<span class="token operator">=</span><span class="token string">"body"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String body<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> HttpRequest <span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> request<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setRequest</span><span class="token punctuation">(</span>HttpRequest request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>request <span class="token operator">=</span> request<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> String <span class="token function">getBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> body<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setBody</span><span class="token punctuation">(</span>String body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>body <span class="token operator">=</span> body<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        GeccoEngine<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">classpath</span><span class="token punctuation">(</span><span class="token string">"com.geccocrawler.gecco.demo"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com/"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
                 
             </div>
             <hr/>
@@ -619,7 +595,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/06/26/multithread01/">https://silvercorridors.cf/2022/06/26/multithread01/</a>
+                    <a href="https://silvercorridors.cf/2022/06/28/gecco02/">https://silvercorridors.cf/2022/06/28/gecco02/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -657,12 +633,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-                                    <span class="chip bg-color">多线程</span>
+                                <a href="/tags/Gecco/">
+                                    <span class="chip bg-color">Gecco</span>
                                 </a>
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/">
+                                    <span class="chip bg-color">网络爬虫</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
+                                    <span class="chip bg-color">开源项目</span>
                                 </a>
                             
                         </div>
@@ -981,6 +961,59 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2022/06/28/multithread02/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="多线程学习日记02：线程池">
+                        
+                        <span class="card-title">多线程学习日记02：线程池</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-category">
+                                    java多线程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
+                    </a>
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2022/06/27/gecco01/">
                     <div class="card-image">
                         
@@ -997,9 +1030,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1025,59 +1058,6 @@
                     
                     <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
                         <span class="chip bg-color">开源项目</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/06/25/javasems01/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="javaSE 面试题01">
-                        
-                        <span class="card-title">javaSE 面试题01</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-25
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
-                                    java面试题
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>

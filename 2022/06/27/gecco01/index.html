@@ -126,7 +126,7 @@
       
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
       
-      <span>友情链接</span>
+      <span>大佬博客</span>
     </a>
     
   </li>
@@ -227,7 +227,7 @@
 			
 			    <i class="fa-fw fas fa-address-book"></i>
 			
-			友情链接
+			大佬博客
 		</a>
           
         </li>
@@ -440,6 +440,10 @@
                                 <span class="chip bg-color">网络爬虫</span>
                             </a>
                         
+                            <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
+                                <span class="chip bg-color">开源项目</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -523,32 +527,22 @@
 <li>支持下载代理服务器随机选取</li>
 </ol>
 <h2 id="框架概述"><a href="#框架概述" class="headerlink" title="框架概述"></a>框架概述</h2><p><img src="/2022/06/27/gecco01/jiagou.jpg" alt="img"></p>
-<h3 id="GeccoEngine"><a href="#GeccoEngine" class="headerlink" title="GeccoEngine"></a>GeccoEngine</h3><blockquote>
-<p>GeccoEngine 是爬虫引擎，每个爬虫引擎最好是一个独立进程，在分布式爬虫场景下，建议每台爬虫服务器（物理机或者虚机）运行一个 GeccoEngine。爬虫引擎包括 Scheduler、Downloader、Spider、SpiderBeanFactory、PipelineFactory5 个主要模块。</p>
-</blockquote>
-<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><blockquote>
-<p>通常爬虫需要一个有效管理下载地址的角色，Scheduler 负责下载地址的管理。gecco 对初始地址的管理使用 StartScheduler，StartScheduler 内部采用一个阻塞的 FIFO 的队列。初始地址通常会派生出很多其他待抓取的地址，派生出来的其他地址采用 SpiderScheduler 进行管理，SpiderScheduler 内部采用线程安全的非阻塞 FIFO 队列。这种设计使的 gecco 对初始地址采用了深度遍历的策略，即一个线程抓取完一个初始地址后才会去抓取另外一个初始地址；对初始地址派生出来的地址，采用广度优先策略。</p>
-</blockquote>
-<h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><blockquote>
-<p>Downloader 负责从 Scheduler 中获取需要下载的请求，gecco 默认采用 httpclient4.x 作为下载引擎。通过实现 Downloader 接口可以自定义自己的下载引擎。你也可以对每个请求定义 BeforeDownload 和 AfterDownload，实现不同的请求下载的个性需求。</p>
-</blockquote>
-<h3 id="SpiderBeanFactory"><a href="#SpiderBeanFactory" class="headerlink" title="SpiderBeanFactory"></a>SpiderBeanFactory</h3><blockquote>
-<p>Gecco 将下载下来的内容渲染为 SpiderBean，所有爬虫渲染的 JavaBean 都统一继承 SpiderBean，SpiderBean 又分为 HtmlBean 和 JsonBean 分别对应 html 页面的渲染和 json 数据的渲染。SpiderBeanFactroy 会根据请求的 url 地址，匹配相应的 SpiderBean，同时生成该 SpiderBean 的上下文 SpiderBeanContext。上下文 SpiderBeanContext 会告知这个 SpiderBean 采用什么渲染器，采用那个下载器，渲染完成后采用哪些 pipeline 处理等相关上下文信息。</p>
-</blockquote>
-<h3 id="PipelineFactory"><a href="#PipelineFactory" class="headerlink" title="PipelineFactory"></a>PipelineFactory</h3><blockquote>
-<p>pipeline 是 SpiderBean 渲染完成的后续业务处理单元，PipelineFactory 是 pipeline 的工厂类，负责 pipeline 实例化。通过扩展 PipelineFactory 就可以实现和 Spring 等业务处理框架的整合。</p>
-</blockquote>
-<h3 id="Spider"><a href="#Spider" class="headerlink" title="Spider"></a>Spider</h3><blockquote>
-<p>Gecco 框架最核心的类应该是 <strong>Spider 线程</strong>，一个爬虫引擎可以同时运行多个 Spider 线程。Spider 描绘了这个框架运行的基本骨架，先从 Scheduler 获取请求，再通过 SpiderBeanFactory 匹配 SpiderBeanClass，再通过 SpiderBeanClass 找到 SpiderBean 的上下文，下载网页并对 SpiderBean 做渲染，将渲染后的 SpiderBean 交个 pipeline 处理。</p>
-</blockquote>
-<h2 id="Maven依赖配置"><a href="#Maven依赖配置" class="headerlink" title="Maven依赖配置"></a>Maven依赖配置</h2><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+<h3 id="GeccoEngine"><a href="#GeccoEngine" class="headerlink" title="GeccoEngine"></a>GeccoEngine</h3><p>GeccoEngine 是爬虫引擎，每个爬虫引擎最好是一个独立进程，在分布式爬虫场景下，建议每台爬虫服务器（物理机或者虚机）运行一个 GeccoEngine。爬虫引擎包括 Scheduler、Downloader、Spider、SpiderBeanFactory、PipelineFactory 5 个主要模块。</p>
+<h3 id="Scheduler（下载地址管理）"><a href="#Scheduler（下载地址管理）" class="headerlink" title="Scheduler（下载地址管理）"></a>Scheduler（下载地址管理）</h3><p>通常爬虫需要一个有效管理下载地址的角色，Scheduler 负责下载地址的管理。gecco 对初始地址的管理使用 StartScheduler，StartScheduler 内部采用一个<strong>阻塞的 FIFO 的队列</strong>。初始地址通常会派生出很多其他待抓取的地址，派生出来的其他地址采用 SpiderScheduler 进行管理，SpiderScheduler 内部采用<strong>线程安全的非阻塞 FIFO 队列</strong>。这种设计使的 gecco 对初始地址采用了深度遍历的策略，即一个线程抓取完一个初始地址后才会去抓取另外一个初始地址；对初始地址派生出来的地址，采用广度优先策略。</p>
+<h3 id="Downloader（下载器）"><a href="#Downloader（下载器）" class="headerlink" title="Downloader（下载器）"></a>Downloader（下载器）</h3><p>Downloader 负责从 Scheduler 中获取需要下载的请求，gecco 默认采用 httpclient4.x 作为下载引擎。通过实现 Downloader 接口可以自定义自己的下载引擎。你也可以对每个请求定义 BeforeDownload 和 AfterDownload，实现不同的请求下载的个性需求。</p>
+<h3 id="SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）"><a href="#SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）" class="headerlink" title="SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）"></a>SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）</h3><p>Gecco 将下载下来的内容渲染为 SpiderBean，所有爬虫渲染的 JavaBean 都统一继承 SpiderBean，SpiderBean 又分为 HtmlBean 和 JsonBean 分别对应 html 页面的渲染和 json 数据的渲染。<strong>SpiderBeanFactroy 会根据请求的 url 地址，匹配相应的 SpiderBean，同时生成该 SpiderBean 的上下文 SpiderBeanContext</strong>。上下文 SpiderBeanContext 会告知这个 SpiderBean 采用什么渲染器，采用那个下载器，渲染完成后采用哪些 pipeline 处理等相关上下文信息。</p>
+<h3 id="PipelineFactory（管道工厂类）"><a href="#PipelineFactory（管道工厂类）" class="headerlink" title="PipelineFactory（管道工厂类）"></a>PipelineFactory（管道工厂类）</h3><p>pipeline 是 SpiderBean 渲染完成的后续业务处理单元，PipelineFactory 是 pipeline 的工厂类，负责 pipeline 实例化。通过扩展 PipelineFactory 就可以实现和 Spring 等业务处理框架的整合。</p>
+<h3 id="Spider"><a href="#Spider" class="headerlink" title="Spider"></a>Spider</h3><p>Gecco 框架最核心的类应该是 <strong>Spider 线程</strong>，一个爬虫引擎可以同时运行多个 Spider 线程。Spider 描绘了这个框架运行的基本骨架，<font color="red">先从 Scheduler 获取请求，再通过 <strong>SpiderBeanFactory</strong> 匹配 SpiderBeanClass，再通过 SpiderBeanClass 找到 SpiderBean 的上下文，下载网页并对 SpiderBean 做渲染，将渲染后的 SpiderBean 交给 pipeline 处理。</font></p>
+<h2 id="Maven导入jar包"><a href="#Maven导入jar包" class="headerlink" title="Maven导入jar包"></a>Maven导入jar包</h2><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.geccocrawler<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>gecco<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>x.x.x<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 </code></pre>
-<h2 id="项目quick-start源码"><a href="#项目quick-start源码" class="headerlink" title="项目quick-start源码"></a>项目quick-start源码</h2><p>@Gecco(matchUrl=”<a target="_blank" rel="noopener" href="https://github.com/%7Buser%7D/%7Bproject%7D&quot;">https://github.com/{user}/{project}"</a>, pipelines=”consolePipeline”)<br>public class MyGithub implements HtmlBean {</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>7127412585200687225L<span class="token punctuation">;</span>
+<h2 id="项目quick-start"><a href="#项目quick-start" class="headerlink" title="项目quick-start"></a>项目quick-start</h2><p>快速入门源码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Gecco</span><span class="token punctuation">(</span>matchUrl<span class="token operator">=</span><span class="token string">"https://github.com/{user}/{project}"</span><span class="token punctuation">,</span>pipelines<span class="token operator">=</span><span class="token string">"consolePipeline"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyGithub</span> <span class="token keyword">implements</span> <span class="token class-name">HtmlBean</span> <span class="token punctuation">{</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>7127412585200687225L<span class="token punctuation">;</span>
 
 <span class="token annotation punctuation">@RequestParameter</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span>
 <span class="token keyword">private</span> String user<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//url中的{user}值</span>
@@ -624,10 +618,61 @@
     <span class="token punctuation">.</span><span class="token function">mobile</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
     <span class="token comment" spellcheck="true">//非阻塞方式运行</span>
     <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>}</p>
+<h3 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h3><ul>
+<li>接口HtmlBean说明该爬虫是一个解析html页面的爬虫（gecco还支持json格式的解析）</li>
+<li>注解@Gecco告知该爬虫匹配的url格式(matchUrl)和内容抽取后的bean处理类（pipelines处理类采用管道过滤器模式，可以定义多个处理类）。</li>
+<li>注解@RequestParameter可以注入url中的请求参数，如@RequestParameter(“user”)表示匹配url中的{user}</li>
+<li>注解@HtmlField表示抽取html中的元素，cssPath采用类似jquery的css selector选取元素</li>
+<li>注解@Text表示获取@HtmlField抽取出来的元素的text内容</li>
+<li>注解@Html表示获取@HtmlField抽取出来的元素的html内容（如果不指定默认为@Html）</li>
+<li>GeccoEngine表示爬虫引擎，通过create()初始化，通过start()/run()运行。可以配置一些启动参数如：扫描**@Gecco注解**的包名classpath；开始抓取的url地址star；抓取线程数thread；抓取完一个页面后的间隔时间interval(ms)等</li>
+</ul>
+<p><code>@Gecco</code>自定义注解</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Inherited</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">Gecco</span> <span class="token punctuation">{</span>
 
+   <span class="token comment" spellcheck="true">/**
+    * 摒弃正则表达式的匹配方式，采用更容易理解的{value}方式
+    * 如：https://github.com/{user}/{project}
+    * 
+    * @return url匹配规则
+    */</span>
+   String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">matchUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">"*"</span><span class="token punctuation">;</span>
+   
+   <span class="token comment" spellcheck="true">/**
+    * url下载器，默认为httpClientDownloader
+    * 
+    * @return 下载器
+    */</span>
+   String <span class="token function">downloader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+   
+   <span class="token comment" spellcheck="true">/**
+    * 下载超时时间
+    * 
+    * @return 下载超时时间
+    */</span>
+   <span class="token keyword">int</span> <span class="token function">timeout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token number">3000</span><span class="token punctuation">;</span>
+   
+   <span class="token comment" spellcheck="true">/**
+    * bean渲染完成后，后续的管道过滤器
+    * 
+    * @return 管道过滤器
+    */</span>
+   String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">pipelines</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>伏笔</strong>：在启动quickstart之后，打印出了以下错误信息：</p>
+<p><img src="/2022/06/27/gecco01/image-20220628175501708.png" alt="image-20220628175501708"></p>
+<p>具体问题解决看下篇~</p>
+<p>本篇结束</p>
+<end>
+
+</end>
                 
             </div>
             <hr/>
@@ -697,6 +742,10 @@
                             
                                 <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/">
                                     <span class="chip bg-color">网络爬虫</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
+                                    <span class="chip bg-color">开源项目</span>
                                 </a>
                             
                         </div>
@@ -1011,18 +1060,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/06/27/gecco01/">
+                <a href="/2022/06/28/gecco02/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Gecco学习日记01">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Gecco学习日记02">
                         
-                        <span class="card-title">Gecco学习日记01</span>
+                        <span class="card-title">Gecco学习日记02</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1032,9 +1080,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1047,7 +1095,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1057,6 +1104,10 @@
                     
                     <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/">
                         <span class="chip bg-color">网络爬虫</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
+                        <span class="chip bg-color">开源项目</span>
                     </a>
                     
                 </div>
@@ -1074,9 +1125,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="多线程学习日记01：进程与线程">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="多线程学习日记01：进程、线程">
                         
-                        <span class="card-title">多线程学习日记01：进程与线程</span>
+                        <span class="card-title">多线程学习日记01：进程、线程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1093,8 +1144,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category">
-                                    java
+                            <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-category">
+                                    java多线程
                                 </a>
                             
                             
