@@ -635,7 +635,7 @@
 <p>ExecutorService接口增加了一些能力：（1）扩充执行任务的能力，补充可以为一个或一批异步任务生成Future的方法；（2）提供了管控线程池的方法，比如停止线程池的运行。</p>
 <p>AbstractExecutorService则是上层的抽象类，将执行任务的流程串联了起来，保证下层的实现只需关注一个执行任务的方法即可。</p>
 <p>最下层的实现类ThreadPoolExecutor实现最复杂的运行部分，ThreadPoolExecutor将会一方面维护自身的生命周期，另一方面同时管理线程和任务，使两者良好的结合从而执行并行任务。</p>
-<h4 id="ThreadPoolExecutor运行机制"><a href="#ThreadPoolExecutor运行机制" class="headerlink" title="ThreadPoolExecutor运行机制"></a>ThreadPoolExecutor运行机制</h4><p><img src="/77441586f6b312a54264e3fcf5eebe2663494.png" alt="图2 ThreadPoolExecutor运行流程"></p>
+<h4 id="ThreadPoolExecutor运行机制"><a href="#ThreadPoolExecutor运行机制" class="headerlink" title="ThreadPoolExecutor运行机制"></a>ThreadPoolExecutor运行机制</h4><p><img src="/2022/06/28/multithread02/77441586f6b312a54264e3fcf5eebe2663494.png" alt="图2 ThreadPoolExecutor运行流程"></p>
 <p>线程池在内部实际上构建了一个生产者消费者模型，<font color="red">将线程和任务两者解耦，并不直接关联，</font>从而良好的缓冲任务，复用线程。线程池的运行主要分成两部分：<strong>任务管理、线程管理</strong>。任务管理部分充当生产者的角色，当任务提交后，线程池会判断该任务后续的流转：</p>
 <p>（1）直接申请线程执行该任务；</p>
 <p>（2）缓冲到队列中等待线程执行；</p>
@@ -670,7 +670,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">silverCorriods</a>
+                    <a href="/about" rel="external nofollow noreferrer">银色回廊</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -693,7 +693,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">silverCorriods</a>
+                    <a href="/about" target="_blank">银色回廊</a>
                     !
                 </span>
             </div>
@@ -1076,12 +1076,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
                     <a href="/tags/MySQL/">
                         <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>

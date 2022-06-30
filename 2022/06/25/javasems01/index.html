@@ -5,14 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="javaSE 面试题01, 银色回廊">
-    <meta name="description" content="Java SE 面试题 01
-    练习面试题需要将题目独立提取出来，以自问自答的形式反复练习。
-    没有人能随随便便成功，加油吧，骚年！
-
-
-
-1. 面向对象和面向过程的区别面向过程： 
-优点：性能高，类的实例化是有较大开销的，且占">
+    <meta name="description" content="Java SE 面试题 011. 面向对象和面向过程的区别面向过程： 
+优点：性能高，类的实例化是有较大开销的，且占用更多的内存，在注重性能的开发场合，例如单片机、嵌入式开发、Linux/Unix内核等场景中一般采用面向过程开发。
+缺点：代">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -489,17 +484,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Java-SE-面试题-01"><a href="#Java-SE-面试题-01" class="headerlink" title="Java SE 面试题 01"></a>Java SE 面试题 01</h1><p style="color:red;">
-    练习面试题需要将题目独立提取出来，以自问自答的形式反复练习。<br>
-    没有人能随随便便成功，加油吧，骚年！
-</p>
-
-
-<h2 id="1-面向对象和面向过程的区别"><a href="#1-面向对象和面向过程的区别" class="headerlink" title="1. 面向对象和面向过程的区别"></a>1. 面向对象和面向过程的区别</h2><p><strong>面向过程：</strong> </p>
+                <h1 id="Java-SE-面试题-01"><a href="#Java-SE-面试题-01" class="headerlink" title="Java SE 面试题 01"></a>Java SE 面试题 01</h1><h2 id="1-面向对象和面向过程的区别"><a href="#1-面向对象和面向过程的区别" class="headerlink" title="1. 面向对象和面向过程的区别"></a>1. 面向对象和面向过程的区别</h2><p><strong>面向过程：</strong> </p>
 <p>优点：性能高，类的实例化是有较大开销的，且占用更多的内存，在注重性能的开发场合，例如单片机、嵌入式开发、Linux/Unix内核等场景中一般采用面向过程开发。</p>
 <p>缺点：代码逻辑贴近机器逻辑，不易维护；不易复用；不易扩展。</p>
 <p><strong>面向对象：</strong> </p>
-<p>优点：易维护；易复用；易扩展；面向对象有封装、继承、多态性的特性，可以设计出低耦合的系统。</p>
+<p>优点：易维护；易复用；易扩展；面向对象有<strong>封装、继承、多态</strong>的特性，可以设计出低耦合的系统。</p>
 <p>缺点：性能比面向过程低，一般用于业务层、比如业务中间件。</p>
 <h2 id="2-Java语言有哪些特点？"><a href="#2-Java语言有哪些特点？" class="headerlink" title="2. Java语言有哪些特点？"></a>2. Java语言有哪些特点？</h2><p>面向对象（封装，继承，多态）；</p>
 <p>平台无关性（Java虚拟机实现平台无关性），编译与解释并存；</p>
@@ -542,7 +531,7 @@
 <p><strong>override和overload的区别：</strong></p>
 <p>override：发生在父子类中，方法名、参数列表必须相同，返回值小于等于父类，抛出的异常小于等于父类，访问修饰符大于等于父类；如果父类方法访问修饰符为private则子类中就不是重写。</p>
 <p>overload：发生在同一个类中，方法名必须相同，参数类型不同、个数不同、顺序不同，方法返回值和访问修饰符可以不同，发生在编译时。</p>
-<h2 id="9-java-面向对象编程三大特性"><a href="#9-java-面向对象编程三大特性" class="headerlink" title="9. java 面向对象编程三大特性"></a>9. java 面向对象编程三大特性</h2><p>封装：对象的属性或者方法，可以隐藏起来，禁止被外部访问</p>
+<h2 id="9-java-面向对象编程三大特性"><a href="#9-java-面向对象编程三大特性" class="headerlink" title="9. java 面向对象编程三大特性"></a>9. java 面向对象编程三大特性</h2><p><strong>封装</strong>：对象的属性或者方法，可以隐藏起来，禁止被外部访问</p>
 <pre class=" language-markdown"><code class="language-markdown"><span class="token code keyword">    9. 封装：访问权限 protected friendly(什么都不写，default)</span>
 <span class="token code keyword">                 当前类   派生类   同一个package里的类    不同package里的类</span>
 <span class="token code keyword">        public    Yes     Yes            Yes              Yes</span>
@@ -550,8 +539,8 @@
 <span class="token code keyword">        (default) Yes  看是否同一个package Yes               No</span>
 <span class="token code keyword">        private   Yes     No             No                No</span>
 </code></pre>
-<p>继承：派生类可以使用基类的属性和方法（一般方法，构造方法），也可以定义自己的属性和方法</p>
-<p>多态：动态绑定，决定调用基类的方法还是派生类的方法，由实例事实上是哪个类的实例来决定，而不是由引用的类型决定。</p>
+<p><strong>继承</strong>：派生类可以使用基类的属性和方法（一般方法，构造方法），也可以定义自己的属性和方法</p>
+<p><strong>多态</strong>：动态绑定，决定调用基类的方法还是派生类的方法，由实例事实上是哪个类的实例来决定，而不是由引用的类型决定。</p>
 <h2 id="10-java中equals方法的用法以及-x3D-x3D-的用法"><a href="#10-java中equals方法的用法以及-x3D-x3D-的用法" class="headerlink" title="10. java中equals方法的用法以及==的用法"></a>10. java中equals方法的用法以及==的用法</h2><p>“==”比较两个变量本身的值，即两个对象在内存中的首地址。</p>
 <p>“equals()”比较字符串中所包含的内容是否相同。</p>
 <p>主要适用于String，原始类型的包装类</p>
@@ -590,7 +579,7 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 <p>s5 == s6: false</p>
 <p>s5.equals(s6): false</p>
 <h2 id="11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"><a href="#11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？" class="headerlink" title="11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"></a>11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？</h2><p><strong>可变性</strong> </p>
-<p>String类中使用字符数组保存字符串，private final char value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[]value，这两种对象都是可变的。  </p>
+<p>String类中使用<strong>字符数组保存字符串</strong>，private <strong>final</strong> char value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[]value，这两种对象都是可变的。  </p>
 <p><strong>线程安全性</strong></p>
 <p>String中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。StringBuilder并没有对方法进行加同步锁，所以是非线程安全的。  </p>
 <p><strong>性能</strong></p>
@@ -619,11 +608,11 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 <h2 id="14-在一个静态方法内调用一个非静态成员为什么是非法的？"><a href="#14-在一个静态方法内调用一个非静态成员为什么是非法的？" class="headerlink" title="14. 在一个静态方法内调用一个非静态成员为什么是非法的？"></a>14. 在一个静态方法内调用一个非静态成员为什么是非法的？</h2><p>  由于静态方法可以不通过对象进行调用，因此在静态方法里，不能调用其他非静态变量，也不可以访问非静态变量成员。</p>
 <h2 id="15-在Java中定义一个不做事且没有参数的构造方法的作用"><a href="#15-在Java中定义一个不做事且没有参数的构造方法的作用" class="headerlink" title="15. 在Java中定义一个不做事且没有参数的构造方法的作用"></a>15. 在Java中定义一个不做事且没有参数的构造方法的作用</h2><p>  Java程序在执行子类的构造方法之前，如果没有用super()来调用父类特定的构造方法，则会调用父类中“没有参数的构造方法”。因此，如果父类中只定义了有参数的构造方法，而在子类的构造方法中又没有用super()来调用父类中特定的构造方法，则编译时将发生错误，因为Java程序在父类中找不到没有参数的构造方法可供执行。解决办法是在父类里加上一个不做事且没有参数的构造方法。</p>
 <h2 id="16-接口和抽象类的区别是什么？"><a href="#16-接口和抽象类的区别是什么？" class="headerlink" title="16. 接口和抽象类的区别是什么？"></a>16. 接口和抽象类的区别是什么？</h2><ol>
-<li><p>接口的方法默认是public，在JDK 7及以前，所有方法在接口中不能有实现，JDK 8 及以后接口中可以用default关键字实现方法，抽象类可以有非抽象的方法</p>
+<li><p><strong>接口的方法默认是public</strong>，在JDK 7及以前，所有方法在接口中不能有实现，JDK 8 及以后接口中可以用default关键字实现方法，<strong>抽象类可以有非抽象的方法</strong></p>
 </li>
-<li><p>接口中不能有变量，构造函数和static静态代码块，只能有常量 public static final，而抽象类没有限制</p>
+<li><p><strong>接口中不能有变量，构造函数和static静态代码块</strong>，只能有常量 public static final，而抽象类没有限制</p>
 </li>
-<li><p>一个类可以实现多个接口，但最多只能实现一个抽象类</p>
+<li><p><strong>一个类可以实现多个接口，但最多只能实现一个抽象类</strong></p>
 </li>
 <li><p>一个类实现接口的话要实现接口的所有方法，而抽象类不一定</p>
 </li>
@@ -631,9 +620,9 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 </li>
 </ol>
 <h2 id="17-成员变量与局部变量的区别有那些？"><a href="#17-成员变量与局部变量的区别有那些？" class="headerlink" title="17. 成员变量与局部变量的区别有那些？"></a>17. 成员变量与局部变量的区别有那些？</h2><ol>
-<li><p>从语法形式上，看成员变量是属于类的，而局部变量是在方法中定义的变量或是方法的参数；成员变量可以被public,private,static等修饰符所修饰，而局部变量不能被访问控制修饰符及static所修饰；成员变量和局部变量都能被final所修饰；</p>
+<li><p>从语法形式上，看成员变量是属于类的，而局部变量是在方法中定义的变量或是方法的参数；成员变量可以被public,private,static等修饰符所修饰，而<strong>局部变量不能被访问控制修饰符及static所修饰</strong>；<strong>成员变量和局部变量都能被final所修饰</strong>；</p>
 </li>
-<li><p>从变量在内存中的存储方式来看，成员变量是对象的一部分，而对象存在于堆内存，局部变量存在于栈内存</p>
+<li><p>从变量在内存中的存储方式来看，成员变量是对象的一部分，而<strong>对象存在于堆内存，局部变量存在于栈内存</strong></p>
 </li>
 <li><p>从变量在内存中的生存时间上看，成员变量是对象的一部分，它随着对象的创建而存在，而局部变量随着方法的调用而自动消失。</p>
 </li>
@@ -657,7 +646,7 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">silverCorriods</a>
+                    <a href="/about" rel="external nofollow noreferrer">银色回廊</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -680,7 +669,7 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">silverCorriods</a>
+                    <a href="/about" target="_blank">银色回廊</a>
                     !
                 </span>
             </div>
