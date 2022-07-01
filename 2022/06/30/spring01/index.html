@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring学习日记01, 银色回廊">
-    <meta name="description" content="Spring 学习日记01：相关概念与IoCSpring是什么？历史背景：简单的说就是以前Java用的EJB框架存在许多问题，不好用，一个大佬就写了本书叫&amp;lt;不用EJB进行JAVA开发&amp;gt;，后面blblbl产生了Spring。
+    <meta name="keywords" content="Spring学习日记01：基础概念与IoC, 银色回廊">
+    <meta name="description" content="Spring 学习日记01：基础概念与IoCSpring是什么？历史背景：简单的说就是以前Java用的EJB框架存在许多问题，不好用，一个大佬就写了本书叫&amp;lt;不用EJB进行JAVA开发&amp;gt;，后面blblbl产生了Spring。
 Sp">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -20,7 +20,7 @@ Sp">
 
     
 
-    <title>Spring学习日记01 | 银色回廊</title>
+    <title>Spring学习日记01：基础概念与IoC | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -312,12 +312,12 @@ Sp">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Spring学习日记01</h1>
+                    <h1 class="description center-align post-title">Spring学习日记01：基础概念与IoC</h1>
                 </div>
             </div>
         </div>
@@ -479,7 +479,7 @@ Sp">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Spring-学习日记01：相关概念与IoC"><a href="#Spring-学习日记01：相关概念与IoC" class="headerlink" title="Spring 学习日记01：相关概念与IoC"></a>Spring 学习日记01：相关概念与IoC</h1><h2 id="Spring是什么？"><a href="#Spring是什么？" class="headerlink" title="Spring是什么？"></a>Spring是什么？</h2><p><strong>历史背景：</strong>简单的说就是以前Java用的EJB框架存在许多问题，不好用，一个大佬就写了本书叫&lt;不用EJB进行JAVA开发&gt;，后面blblbl产生了Spring。</p>
+                <h1 id="Spring-学习日记01：基础概念与IoC"><a href="#Spring-学习日记01：基础概念与IoC" class="headerlink" title="Spring 学习日记01：基础概念与IoC"></a>Spring 学习日记01：基础概念与IoC</h1><h2 id="Spring是什么？"><a href="#Spring是什么？" class="headerlink" title="Spring是什么？"></a>Spring是什么？</h2><p><strong>历史背景：</strong>简单的说就是以前Java用的EJB框架存在许多问题，不好用，一个大佬就写了本书叫&lt;不用EJB进行JAVA开发&gt;，后面blblbl产生了Spring。</p>
 <p>SpringFramework是一个轻量级J2EE开发解决方案（框架）–Spring。目前最新版本为5.X。</p>
 <p>Spring框架包含几个模块，例如 IOC，AOP，DAO，Context，ORM，WEB MVC 等。</p>
 <h2 id="Spring全家桶有哪些？"><a href="#Spring全家桶有哪些？" class="headerlink" title="Spring全家桶有哪些？"></a>Spring全家桶有哪些？</h2><p>SpringFramework（依赖注入、事务处理、webapps、数据访问）</p>
@@ -605,7 +605,7 @@ Sp">
 </code></pre>
 <p>所以我们要利用反射的技术了</p>
 <h3 id="工厂模式-（配置-反射）-》DI-Dependecy-Injection"><a href="#工厂模式-（配置-反射）-》DI-Dependecy-Injection" class="headerlink" title="工厂模式+（配置+反射）-》DI (Dependecy Injection)"></a>工厂模式+（配置+反射）-》DI (Dependecy Injection)</h3><p>首先创建一个配置文件bean.properties(其实还可以使用xml形式配置)</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">airPod</span><span class="token punctuation">=</span><span class="token attr-value">cn.qyx.AirPod</span>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">airPod</span><span class="token punctuation">=</span><span class="token attr-value">cn.silverCorridors.AirPod</span>
 </code></pre>
 <p>然后在工厂类中</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanFactory</span> <span class="token punctuation">{</span>
@@ -671,7 +671,7 @@ Sp">
 <h4 id="第一种方法：直接创造Bean"><a href="#第一种方法：直接创造Bean" class="headerlink" title="第一种方法：直接创造Bean"></a>第一种方法：直接创造Bean</h4><p>直接创造一个Bean，通过工厂类创造，通过静态工厂方法创造。</p>
 <p>要求XML配置中只有 id 和 class， 要求Bean的类必须有默认构造函数(不带参数的)</p>
 <p>XML中Bean的写法：</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.qyx.AirPod<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.AirPod<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 </code></pre>
 <p>主程序中调用：</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> args <span class="token punctuation">)</span>
@@ -691,11 +691,11 @@ Sp">
 </code></pre>
 <p>XML中Bean的写法：</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 2.第二种方法，使用工厂方法,首先需要实例化工厂实例，然后调用工厂实例方法返回类实例 --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>beanFactory2<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.qyx.BeanFactory2<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>beanFactory2<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.BeanFactory2<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">factory-bean</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>beanFactory2<span class="token punctuation">"</span></span> <span class="token attr-name">factory-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getAirPod<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 </code></pre>
 <h4 id="第三种方法：使用静态工厂的静态方法"><a href="#第三种方法：使用静态工厂的静态方法" class="headerlink" title="第三种方法：使用静态工厂的静态方法"></a>第三种方法：使用静态工厂的静态方法</h4><pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 3.第三种方法，使用静态工厂方法，需要知道静态工厂类和静态方法 --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.qyx.BeanFactory<span class="token punctuation">"</span></span> <span class="token attr-name">factory-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.BeanFactory<span class="token punctuation">"</span></span> <span class="token attr-name">factory-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </code></pre>
@@ -743,7 +743,7 @@ Sp">
 <span class="token punctuation">}</span>
 </code></pre>
 <p>然后在xml文件中对AirPod的bean添加两个属性：</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.qyx.AirPod<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>prototype<span class="token punctuation">"</span></span> <span class="token attr-name">init-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>init<span class="token punctuation">"</span></span> <span class="token attr-name">destroy-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>destroy<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>airPod<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.AirPod<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>prototype<span class="token punctuation">"</span></span> <span class="token attr-name">init-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>init<span class="token punctuation">"</span></span> <span class="token attr-name">destroy-method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>destroy<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 </code></pre>
 <p>运行类中：</p>
 <pre class=" language-java"><code class="language-java">ApplicationContext ac <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"bean.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -788,7 +788,7 @@ destroy
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">silverCorriods</a>
+                    <a href="/about" rel="external nofollow noreferrer">银色回廊</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -811,7 +811,7 @@ destroy
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">silverCorriods</a>
+                    <a href="/about" target="_blank">银色回廊</a>
                     !
                 </span>
             </div>
@@ -1161,9 +1161,9 @@ destroy
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Spring学习日记01">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Spring学习日记01：基础概念与IoC">
                         
-                        <span class="card-title">Spring学习日记01</span>
+                        <span class="card-title">Spring学习日记01：基础概念与IoC</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
