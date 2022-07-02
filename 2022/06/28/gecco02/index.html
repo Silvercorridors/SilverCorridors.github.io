@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Gecco学习日记02, 银色回廊">
-    <meta name="description" content="Gecco学习日记02：梳理 与 分析Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用管道过滤器模式，提供灵活的内容清洗和持久化处理模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。
-Gecco引擎初">
+    <meta name="description" content="Gecco学习日记02：Debug分析Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用管道过滤器模式，提供灵活的内容清洗和持久化处理模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。
+Debug分析由">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -31,8 +31,8 @@ Gecco引擎初">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
-
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script> 
+    <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto&min_length=64&max_length=255" defer></script>
 <meta name="generator" content="Hexo 6.2.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
@@ -475,7 +475,7 @@ Gecco引擎初">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    997
                 </div>
                 
 
@@ -492,89 +492,48 @@ Gecco引擎初">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Gecco学习日记02：梳理-与-分析"><a href="#Gecco学习日记02：梳理-与-分析" class="headerlink" title="Gecco学习日记02：梳理 与 分析"></a>Gecco学习日记02：梳理 与 分析</h1><p>Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用<strong>管道过滤器</strong>模式，提供灵活的<strong>内容清洗</strong>和<strong>持久化处理</strong>模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。</p>
-<h2 id="Gecco引擎初始化梳理"><a href="#Gecco引擎初始化梳理" class="headerlink" title="Gecco引擎初始化梳理"></a>Gecco引擎初始化梳理</h2><p>GeccoEngine是一个线程类，其中包含一些关键类有：</p>
+                <h1 id="Gecco学习日记02：Debug分析"><a href="#Gecco学习日记02：Debug分析" class="headerlink" title="Gecco学习日记02：Debug分析"></a>Gecco学习日记02：Debug分析</h1><p>Gecco的目标是提供一个完善的主题爬虫框架，简化下载和内容抽取的开发，利用<strong>管道过滤器</strong>模式，提供灵活的<strong>内容清洗</strong>和<strong>持久化处理</strong>模式，让开发人员把更多的精力投入到与业务主题相关的内容处理上。</p>
+<h2 id="Debug分析"><a href="#Debug分析" class="headerlink" title="Debug分析"></a>Debug分析</h2><p>由于上节我们在启动quickstart之后，打印出了错误信息mismatch。通过log4j打印的错误，我们发现问题出现在Spider这个类中。</p>
+<p><img src="/2022/06/28/gecco02/image-20220628175501708.png" alt="image-20220628175501708.png"></p>
+<p>但是为了更好的明白Gecco的运作方式和Debug错误，我们先对GeccoEngine这个类进行了分析。</p>
+<h3 id="Gecco引擎初始化梳理"><a href="#Gecco引擎初始化梳理" class="headerlink" title="Gecco引擎初始化梳理"></a>Gecco引擎初始化梳理</h3><p>GeccoEngine是一个线程类，其中包含一些关键类有：</p>
 <p>状态性的——</p>
 <blockquote>
 <p>请求队列：Scheduler，装着请求对象的队列<br>请求类：Request，代表一个应该进行的请求，存放在请求队列中，多个爬虫对象并发地从队列中取得请求对象，根据之发起HTTP请求<br>响应类：Response，将爬虫对象发起HTTP请求后获得的结果，封装成响应对象，由Render转换成实体对象</p>
 </blockquote>
 <p>行为性的——</p>
 <blockquote>
-<p>引擎类：Engine，总的配置和入口<br>爬虫类：Spider，一个引擎可以有多个爬虫对象并发工作，每个爬虫对象有一个单独的线程，爬虫的线程主循环中，从请求队列中获得请求对象，交给下载器<br>下载器：Downloader，用于根据一个请求对象，发起一次HTTP请求，将HTTP响应封装成响应对象<br>转换器：Render，用于将响应对象转换成用户定义的实体类的对象，实现方式是通过反射读取实体类的字段上的注解并处理</p>
+<p>引擎类：Engine，总的配置和入口<br>爬虫类：Spider，一个引擎可以有多个爬虫对象并发工作，每个爬虫对象有一个单独的线程，爬虫的线程主循环中，从请求队列中获得请求对象，交给下载器<br>下载器：Downloader，用于根据一个请求对象，发起一次HTTP请求，将HTTP响应封装成响应对象<br>转换器：Render，用于将响应对象转换成用户定义的实体类的对象，实现方式是通过<strong>反射</strong>读取实体类的字段上的注解并处理</p>
 </blockquote>
-<p>对其运行过程进行流程梳理。</p>
+<p>在run()中我们熟悉了，GeccoEngine的具体流程：</p>
 <ol>
-<li>首先GeccoEngine进行一系列初始化（scheduler、spiderBeanFactory、startRequests、spiders）。</li>
+<li>首先GeccoEngine进行一系列初始化（scheduler、spiderBeanFactory、startRequests、spiders）</li>
 <li>scheduler将需要下载的请求都放在这里管理，可以认为这里是一个队列，保存了所有待抓取的请求。</li>
 <li>每个爬虫(Spider)可以认为是一个单独线程，在每个爬虫对象线程的主循环中，爬虫会从Scheduler中获取需要待抓取的请求对象，由下载器进行下载。爬虫的任务就是下载网页并渲染相应的JavaBean。</li>
 <li>下载器(Downloader)，使用请求对象(startRequests)，发起HTTP请求，把HTTP响应封装成响应对象</li>
 <li>转换器，使用响应对象，及实体类上的注解信息，将响应对象渲染成有业务意义的实体对象</li>
 <li>在爬取信息过程中，GeccoEngine会监控爬虫的基本信息，并导出jmx信息</li>
 </ol>
-<h2 id="GeccoEngine基本配置项"><a href="#GeccoEngine基本配置项" class="headerlink" title="GeccoEngine基本配置项"></a>GeccoEngine基本配置项</h2><ul>
-<li>loop(true)：表示是否循环抓取，默认为false</li>
-<li>thread(2)：表示开启的爬虫线程数量，默认是1，需要注意的是线程数量要小于或者等于start请求的数量</li>
-<li>interval(2000)：表示某个线程在抓取完成一个请求后的间隔时间，单位是毫秒，系统会在左右1秒时间内随机。如果为2000，系统会在1000～3000之间随机选取。</li>
-<li>mobile(false)：表示使用移动端还是pc端的UserAgent。默认为false使用pc端的UserAgent。</li>
-<li>debug(true)：是否开启debug模式，如果开启debug模式，会在控制台输出jsoup元素抽取的日志。</li>
-<li>pipelineFactory(PipelineFactory)：自定义Pipeline工厂类</li>
-<li>scheduler(Scheduler)：自定义请求队列管理器</li>
-</ul>
-<h2 id="非阻塞启动和阻塞启动"><a href="#非阻塞启动和阻塞启动" class="headerlink" title="非阻塞启动和阻塞启动"></a>非阻塞启动和阻塞启动</h2><ul>
-<li>start()：非阻塞启动，GeccoEngine会单独启动线程运行，推荐以该方式运行。线程模型如下：</li>
-</ul>
-<p>Main Thread–&gt;GeccoEngine Thread–&gt;Spider Thread</p>
+<h3 id="Spider类"><a href="#Spider类" class="headerlink" title="Spider类"></a>Spider类</h3><p>通过查看Spider的源码我们发现，原来问题在这:</p>
+<p><img src="/image-20220702004522420.png" alt="image-20220702004522420"></p>
+<p>在这里我们发现，之所以出现错误信息，只有一种可能： </p>
 <ul>
-<li>run()：阻塞启动，GeccoEngine在主线程中启动运行，非循环模式GeccoEngine需要等待其他爬虫线程运行完毕后才会退出。线程模型r如下：</li>
+<li>currSpiderBeanClass为空，且response.getStatus（）不为302 或 301。</li>
 </ul>
-<p>Main Thread–&gt;Spider Thread</p>
-<h2 id="Gecco如何匹配URL"><a href="#Gecco如何匹配URL" class="headerlink" title="Gecco如何匹配URL"></a>Gecco如何匹配URL</h2><ul>
-<li><h4 id="匹配URL的作用"><a href="#匹配URL的作用" class="headerlink" title="匹配URL的作用"></a>匹配URL的作用</h4></li>
-</ul>
-<p>​		匹配URL是告知Gecco，这种格式的url对应的网页会被渲染成当前的SpiderBean。</p>
-<ul>
-<li><h4 id="matchUrl如何写"><a href="#matchUrl如何写" class="headerlink" title="matchUrl如何写"></a>matchUrl如何写</h4></li>
-</ul>
-<p>​	完全匹配：@Gecco(matchUrl=”<a target="_blank" rel="noopener" href="https://github.com/&quot;">https://github.com/"</a>)</p>
-<p>​	模糊匹配：@Gecco(matchUrl=”<a target="_blank" rel="noopener" href="https://github.com/%7Buser%7D/%7Bproject%7D&quot;">https://github.com/{user}/{project}"</a>)</p>
-<p>​						这样会匹配所有类似格式的url，例如<a target="_blank" rel="noopener" href="https://github.com/xtuhcy/gecco">https://github.com/xtuhcy/gecco</a></p>
-<p>​	任意匹配：@Gecco，如果你不写matchUrl，任何格式的url都会被匹配，这种方式一般用作通用爬虫，例如：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Gecco</span><span class="token punctuation">(</span>pipelines<span class="token operator">=</span><span class="token string">"consolePipeline"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CommonCrawler</span> <span class="token keyword">implements</span> <span class="token class-name">HtmlBean</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>8870768223740844229L<span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@Request</span>
-    <span class="token keyword">private</span> HttpRequest request<span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@HtmlField</span><span class="token punctuation">(</span>cssPath<span class="token operator">=</span><span class="token string">"body"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String body<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> HttpRequest <span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> request<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setRequest</span><span class="token punctuation">(</span>HttpRequest request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>request <span class="token operator">=</span> request<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> String <span class="token function">getBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> body<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setBody</span><span class="token punctuation">(</span>String body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>body <span class="token operator">=</span> body<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        GeccoEngine<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">classpath</span><span class="token punctuation">(</span><span class="token string">"com.geccocrawler.gecco.demo"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token string">"https://www.baidu.com/"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<p>所以，为什么currSpiderBeanClass会为空呢？我们继续找，发现其实是因为</p>
+<p>engine.getSpiderBeanFactory().matchSpider(request) 为null</p>
+<p>这是什么意思呢？猜测因该是engine的SpiderBeanFactory这个工厂类中创建Spider出现了问题</p>
+<p>刨根问底，继续往SpiderBeanFactory找。查看matchSpider方法，发现了问题所在。</p>
+<p><img src="/2022/06/28/gecco02/image-20220702005158773.png" alt="image-20220702005158773"></p>
+<p>SpiderBeans这个concurrentHashMap是空的。。。那么是谁应该创造SpiderBeans呢？</p>
+<p>我们找到了addSpiderBean（）这个方法</p>
+<p><img src="/2022/06/28/gecco02/image-20220702005541631.png" alt="image-20220702005541631"></p>
+<p>按道理，这里SpiderBeans应该要存放一些东西，虽然现在不太清楚放些什么。。。</p>
+<p>但是既然如此，我们就利用log4j以及获得调用栈来看看是哪个调用addSpiderBean(好像在挖祖坟的感觉。。。)</p>
+<p><img src="/2022/06/28/gecco02/image-20220702005744180.png" alt="image-20220702005744180"></p>
+<p>通过打印的log，我们可以看到SpiderBeanFactory先进行初始化，然后loadSpiderBean，那么问题就肯定在这两者中。</p>
+<p><img src="/2022/06/28/gecco02/image-20220702005940787.png" alt="image-20220702005940787"></p>
+<p>最终，我们分析这段SpiderBeanFactory的构造函数，发现这个工厂类原来在利用<strong>反射</strong>来进行一系列初始化，同时也知道了spiderBean的本质是一个ConcurrentHashMap，而反射读取的路径是com.geccocrawler.gecco包下的。</p>
 
                 
             </div>

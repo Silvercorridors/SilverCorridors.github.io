@@ -30,8 +30,8 @@
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
-
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script> 
+    <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto&min_length=64&max_length=255" defer></script>
 <meta name="generator" content="Hexo 6.2.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
@@ -474,7 +474,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    2.5k
                 </div>
                 
 
@@ -538,6 +538,23 @@
 <h3 id="SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）"><a href="#SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）" class="headerlink" title="SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）"></a>SpiderBeanFactory（爬虫工厂类：生成爬虫SpiderBean）</h3><p>Gecco 将下载下来的内容渲染为 SpiderBean，所有爬虫渲染的 JavaBean 都统一继承 SpiderBean，SpiderBean 又分为 HtmlBean 和 JsonBean 分别对应 html 页面的渲染和 json 数据的渲染。<strong>SpiderBeanFactroy 会根据请求的 url 地址，匹配相应的 SpiderBean，同时生成该 SpiderBean 的上下文 SpiderBeanContext</strong>。上下文 SpiderBeanContext 会告知这个 SpiderBean 采用什么渲染器，采用那个下载器，渲染完成后采用哪些 pipeline 处理等相关上下文信息。</p>
 <h3 id="PipelineFactory（管道工厂类）"><a href="#PipelineFactory（管道工厂类）" class="headerlink" title="PipelineFactory（管道工厂类）"></a>PipelineFactory（管道工厂类）</h3><p>pipeline 是 SpiderBean 渲染完成的后续业务处理单元，PipelineFactory 是 pipeline 的工厂类，负责 pipeline 实例化。通过扩展 PipelineFactory 就可以实现和 Spring 等业务处理框架的整合。</p>
 <h3 id="Spider"><a href="#Spider" class="headerlink" title="Spider"></a>Spider</h3><p>Gecco 框架最核心的类应该是 <strong>Spider 线程</strong>，一个爬虫引擎可以同时运行多个 Spider 线程。Spider 描绘了这个框架运行的基本骨架，<font color="red">先从 Scheduler 获取请求，再通过 <strong>SpiderBeanFactory</strong> 匹配 SpiderBeanClass，再通过 SpiderBeanClass 找到 SpiderBean 的上下文，下载网页并对 SpiderBean 做渲染，将渲染后的 SpiderBean 交给 pipeline 处理。</font></p>
+<h2 id="GeccoEngine基本配置项"><a href="#GeccoEngine基本配置项" class="headerlink" title="GeccoEngine基本配置项"></a>GeccoEngine基本配置项</h2><ul>
+<li>loop(true)：表示是否循环抓取，默认为false</li>
+<li>thread(2)：表示开启的爬虫线程数量，默认是1，需要注意的是线程数量要小于或者等于start请求的数量</li>
+<li>interval(2000)：表示某个线程在抓取完成一个请求后的间隔时间，单位是毫秒，系统会在左右1秒时间内随机。如果为2000，系统会在1000～3000之间随机选取。</li>
+<li>mobile(false)：表示使用移动端还是pc端的UserAgent。默认为false使用pc端的UserAgent。</li>
+<li>debug(true)：是否开启debug模式，如果开启debug模式，会在控制台输出jsoup元素抽取的日志。</li>
+<li>pipelineFactory(PipelineFactory)：自定义Pipeline工厂类</li>
+<li>scheduler(Scheduler)：自定义请求队列管理器</li>
+</ul>
+<h2 id="非阻塞启动和阻塞启动"><a href="#非阻塞启动和阻塞启动" class="headerlink" title="非阻塞启动和阻塞启动"></a>非阻塞启动和阻塞启动</h2><ul>
+<li>start()：非阻塞启动，GeccoEngine会单独启动线程运行，推荐以该方式运行。线程模型如下：</li>
+</ul>
+<p>Main Thread–&gt;GeccoEngine Thread–&gt;Spider Thread</p>
+<ul>
+<li>run()：阻塞启动，GeccoEngine在主线程中启动运行，非循环模式GeccoEngine需要等待其他爬虫线程运行完毕后才会退出。线程模型r如下：</li>
+</ul>
+<p>Main Thread–&gt;Spider Thread</p>
 <h2 id="Maven导入jar包"><a href="#Maven导入jar包" class="headerlink" title="Maven导入jar包"></a>Maven导入jar包</h2><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.geccocrawler<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>gecco<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
