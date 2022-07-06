@@ -454,8 +454,8 @@ Debug分析由">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Gecco/" class="post-category">
-                                Gecco
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" class="post-category">
+                                项目实战
                             </a>
                         
                     </div>
@@ -534,7 +534,9 @@ Debug分析由">
 <p><img src="/2022/06/28/gecco02/image-20220702005744180.png" alt="image-20220702005744180"></p>
 <p>通过打印的log，我们可以看到SpiderBeanFactory先进行初始化，然后loadSpiderBean，那么问题就肯定在这两者中。</p>
 <p><img src="/2022/06/28/gecco02/image-20220702005940787.png" alt="image-20220702005940787"></p>
-<p>最终，我们分析这段SpiderBeanFactory的构造函数，发现这个工厂类原来在利用<strong>反射</strong>来进行一系列初始化，同时也知道了spiderBean的本质是一个ConcurrentHashMap，而反射读取的路径是com.geccocrawler.gecco包下的，接下来对该包下的test包进行分析。</p>
+<p>最终，我们分析这段SpiderBeanFactory的构造函数，发现这个工厂类原来在利用<strong>反射</strong>来进行一系列初始化，同时也知道了spiderBean的本质是一个ConcurrentHashMap，而反射读取的路径是com.geccocrawler.gecco包下的。</p>
+<p>这里，我们明白了SpiderBeans是在SpiderBeanFactory初始化的时候就被new出来的，而至于为什么</p>
+<p>本篇作为过渡，接下几篇对该包下所有包逐一分析。(🕊🕊🕊🕊🕊)</p>
 
                 
             </div>
@@ -1003,8 +1005,8 @@ Debug分析由">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Gecco/" class="post-category">
-                                    Gecco
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" class="post-category">
+                                    项目实战
                                 </a>
                             
                             
