@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题02, 银色回廊">
+    <meta name="keywords" content="javaSE 面试题02（重要）, 银色回廊">
     <meta name="description" content="1. 一个类的构造方法的作用是什么？构造方法有哪些特性？构造函数用于完成对象的初始化工作。
 如果一个类没有声明构造函数，编译器会 为类生成默认的、不带参数的构造方法。
 构造函数的特性：
@@ -23,7 +23,7 @@
 
     
 
-    <title>javaSE 面试题02 | 银色回廊</title>
+    <title>javaSE 面试题02（重要） | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -316,12 +316,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题02</h1>
+                    <h1 class="description center-align post-title">javaSE 面试题02（重要）</h1>
                 </div>
             </div>
         </div>
@@ -437,12 +437,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
-                            </a>
-                        
-                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                <span class="chip bg-color">面试题</span>
+                            <a href="/tags/javaSE/">
+                                <span class="chip bg-color">javaSE</span>
                             </a>
                         
                     </div>
@@ -475,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9.9k
+                    10k
                 </div>
                 
 
@@ -507,7 +503,7 @@
 <li>String不可变，是说实例对象中的数组不可变。</li>
 <li>但是，事实上是可以通过反射技术改变数组的</li>
 </ol>
-<h2 id="4-什么是反射？"><a href="#4-什么是反射？" class="headerlink" title="4. 什么是反射？"></a>4. 什么是反射？</h2><p><strong>什么是反射？</strong></p>
+<h2 id="4-什么是反射？"><a href="#4-什么是反射？" class="headerlink" title="4. 什么是反射？"></a><font color="red">4. 什么是反射？</font></h2><p><strong>什么是反射？</strong></p>
 <p>在运行状态中，对于任意一个类，能够获取这个类的所有属性和方法，并且可以实例化。</p>
 <p>在运行状态中，对于任意一个对象，能够获取这个实例的类的所有属性和方法，能够调用对象的任意一个方法和属性；</p>
 <p>这种动态获取信息、以及动态调用对象方法的功能，称为java语言的反射机制。</p>
@@ -520,10 +516,15 @@
 <h2 id="5-List，Set，Map三者的区别："><a href="#5-List，Set，Map三者的区别：" class="headerlink" title="5. List，Set，Map三者的区别："></a>5. List，Set，Map三者的区别：</h2><p>​	<strong>List：</strong> 有序，可重复</p>
 <p>​	<strong>Set：</strong> 不可重复，无序</p>
 <p>​	<strong>Map：</strong> Key-Value，不可重复</p>
-<h2 id="6-ArrayList、LinkedList、Vector三者的区别："><a href="#6-ArrayList、LinkedList、Vector三者的区别：" class="headerlink" title="6. ArrayList、LinkedList、Vector三者的区别："></a>6. ArrayList、LinkedList、Vector三者的区别：</h2><p>​	<strong>ArrayList：</strong> 底层使用数组，随机读取速度快（O(1)），但是插入删除需要移动数据（O(N)）</p>
-<p>​	<strong>LinkedList：</strong> 底层使用双向链表，随机读取速度慢（O(N)），但是插入删除不需要移动数据</p>
-<p>​	<strong>Vector：</strong> Vector是线程安全的，内部用的同步；ArrayList和LinkedList都不是线程安全的</p>
-<h2 id="7-HashMap、HashSet、HashTable三者的区别："><a href="#7-HashMap、HashSet、HashTable三者的区别：" class="headerlink" title="7. HashMap、HashSet、HashTable三者的区别："></a>7. HashMap、HashSet、HashTable三者的区别：</h2><p>  <strong>HashMap：</strong> Key-Value方式，底层是哈希表，Key的判等是根据HashCode()和equals的返回决定，相同的Key，后面的写操作会覆盖以前的数据。</p>
+<h2 id="6-ArrayList、LinkedList、Vector三者的区别："><a href="#6-ArrayList、LinkedList、Vector三者的区别：" class="headerlink" title="6. ArrayList、LinkedList、Vector三者的区别："></a>6. ArrayList、LinkedList、Vector三者的区别：</h2><p>​	继承关系：</p>
+<p><img src="/2022/06/30/javasems02/20480692-eee8-480e-86e8-74ef79d4f75a-2346068.jpg" alt="img"></p>
+<p>​	<strong>ArrayList：</strong> 底层使用数组，随机读取速度快（O(1)），但是插入删除需要移动数据（O(N)）</p>
+<p>​	<strong>LinkedList：</strong> 底层使用<strong>双向链表</strong>，随机读取速度慢（O(N)），但是插入删除不需要移动数据</p>
+<p>​	<strong>Vector：</strong> Vector是线程安全的，但是性能比ArrayList要低。</p>
+<p>，内部用的同步；ArrayList和LinkedList都不是线程安全的。</p>
+<h2 id="7-HashMap、HashSet、HashTable三者的区别："><a href="#7-HashMap、HashSet、HashTable三者的区别：" class="headerlink" title="7. HashMap、HashSet、HashTable三者的区别："></a>7. HashMap、HashSet、HashTable三者的区别：</h2><p>继承关系：</p>
+<p><img src="/2022/06/30/javasems02/603b32e9-3238-41ec-b101-732080467f29-2346068.jpg" alt="img"> </p>
+<p>​	<strong>HashMap：</strong> Key-Value方式，底层是哈希表，Key的判等是根据HashCode()和equals()的返回决定，相同的Key，后面的写操作会覆盖以前的数据。</p>
 <p>  <strong>HashSet：</strong>  使用实例本身计算HashCode当做key，本质也是HashMap，JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数大于8个）+红黑树（个数小于8个）</p>
 <p>  <strong>HashTable：</strong> HashTable和HashMap很接近，区别仅在于HashTable是线程安全的，而前两者不是；另外，HashTable不允许Key是null，但是HashMap允许。</p>
 <h2 id="8-HashMap、ConcurrentHashMap的区别"><a href="#8-HashMap、ConcurrentHashMap的区别" class="headerlink" title="8. HashMap、ConcurrentHashMap的区别"></a>8. HashMap、ConcurrentHashMap的区别</h2><p>​	<strong>HashMap：</strong> HashMap不是线程安全的；允许Key是null</p>
@@ -532,7 +533,7 @@
 <p>​	<strong>comparator：</strong> 接口，实现该接口的比较类是独立于被比较的类的，比较类需要Override compare方法，一个类可以有多个不同的比较类</p>
 <h2 id="10-如何对Object的list排序？"><a href="#10-如何对Object的list排序？" class="headerlink" title="10. 如何对Object的list排序？"></a>10. 如何对Object的list排序？</h2><p>​	对objects数组进行排序，我们可以用Arrays.sort()方法。</p>
 <p>​	对objects的集合进行排序，需要使用Collections.sort()方法。</p>
-<h2 id="11-简述HashMap的工作原理以及分析源码"><a href="#11-简述HashMap的工作原理以及分析源码" class="headerlink" title="11. 简述HashMap的工作原理以及分析源码"></a>11. 简述HashMap的工作原理以及分析源码</h2><p>&lt;参考知识讲述中的HashMap，JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数大于8个）+红黑树（个数小于8个）&gt;</p>
+<h2 id="11-简述HashMap的工作原理以及分析源码"><a href="#11-简述HashMap的工作原理以及分析源码" class="headerlink" title="11. 简述HashMap的工作原理以及分析源码"></a><font color="red">11. 简述HashMap的工作原理以及分析源码</font></h2><p><strong><font color="blue">关键思路：1.简单说一下， JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数大于8个）+红黑树（个数小于8个）&nbsp; 2.介绍哈希表存储位置的计算（哈希函数）3. Hash冲突&nbsp; 4.哈希表数据结构以及相关操作时间复杂度 5.影响因子&nbsp;&nbsp;</font></strong></p>
 <p><strong>简介</strong></p>
 <p>HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。与HashTable主要区别为不支持同步和允许null作为key和value，所以如果你想要保证线程安全，可以使用ConcurrentHashMap代替而不是线程安全的HashTable，因为HashTable基本已经被淘汰。</p>
 <p><strong>内部结构分析</strong></p>
@@ -594,21 +595,20 @@
 <span class="token keyword">transient</span> Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> table <span class="token operator">=</span> <span class="token punctuation">(</span>Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> EMPTY_TABLE<span class="token punctuation">;</span>
 </code></pre>
 <p> Entry是HashMap中的一个静态内部类。代码如下</p>
-<pre class=" language-java"><code class="language-java">    <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Entry</span><span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">Map<span class="token punctuation">.</span>Entry</span><span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> K key<span class="token punctuation">;</span>
-        V value<span class="token punctuation">;</span>
-        Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> next<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存储指向下一个Entry的引用，单链表结构</span>
-        <span class="token keyword">int</span> hash<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//对key的hashcode值进行hash运算后得到的值，存储在Entry，避免重复计算</span>
-
-        <span class="token comment" spellcheck="true">/**
+<pre class=" language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Entry</span><span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">Map<span class="token punctuation">.</span>Entry</span><span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">final</span> K key<span class="token punctuation">;</span>
+    V value<span class="token punctuation">;</span>
+    Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> next<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存储指向下一个Entry的引用，单链表结构</span>
+    <span class="token keyword">int</span> hash<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//对key的hashcode值进行hash运算后得到的值，存储在Entry，避免重复计算</span>
+    <span class="token comment" spellcheck="true">/**
          * Creates new entry.
          */</span>
-        <span class="token function">Entry</span><span class="token punctuation">(</span><span class="token keyword">int</span> h<span class="token punctuation">,</span> K k<span class="token punctuation">,</span> V v<span class="token punctuation">,</span> Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            value <span class="token operator">=</span> v<span class="token punctuation">;</span>
-            next <span class="token operator">=</span> n<span class="token punctuation">;</span>
-            key <span class="token operator">=</span> k<span class="token punctuation">;</span>
-            hash <span class="token operator">=</span> h<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> 
+    <span class="token function">Entry</span><span class="token punctuation">(</span><span class="token keyword">int</span> h<span class="token punctuation">,</span> K k<span class="token punctuation">,</span> V v<span class="token punctuation">,</span> Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        value <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        next <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        key <span class="token operator">=</span> k<span class="token punctuation">;</span>
+        hash <span class="token operator">=</span> h<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> 
 </code></pre>
 <p> 所以，HashMap的整体结构如下</p>
 <p><img src="/2022/06/30/javasems02/6.png" alt="img">　　</p>
@@ -751,20 +751,22 @@
 </code></pre>
 <p>如果数组进行扩容，数组长度发生变化，而存储位置 index = h&amp;(length-1),index也可能会发生变化，需要重新计算index，我们先来看看transfer这个方法</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">transfer</span><span class="token punctuation">(</span>Entry<span class="token punctuation">[</span><span class="token punctuation">]</span> newTable<span class="token punctuation">,</span> <span class="token keyword">boolean</span> rehash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">int</span> newCapacity <span class="token operator">=</span> newTable<span class="token punctuation">.</span>length<span class="token punctuation">;</span>　　　　　<span class="token comment" spellcheck="true">//for循环中的代码，逐个遍历链表，重新计算索引位置，将老数组数据复制到新数组中去（数组不存储实际数据，所以仅仅是拷贝引用而已）</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> e <span class="token operator">:</span> table<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">while</span><span class="token punctuation">(</span>null <span class="token operator">!=</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> next <span class="token operator">=</span> e<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>rehash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    e<span class="token punctuation">.</span>hash <span class="token operator">=</span> null <span class="token operator">==</span> e<span class="token punctuation">.</span>key <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token function">hash</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-                <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token function">indexFor</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>hash<span class="token punctuation">,</span> newCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>　　　　　　　　　 <span class="token comment" spellcheck="true">//将当前entry的next链指向新的索引位置,newTable[i]有可能为空，有可能也是个entry链，如果是entry链，直接在链表头部插入。</span>
-                e<span class="token punctuation">.</span>next <span class="token operator">=</span> newTable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-                newTable<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
-                e <span class="token operator">=</span> next<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> newCapacity <span class="token operator">=</span> newTable<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//for循环中的代码，逐个遍历链表，重新计算索引位置，将老数组数据复制到新数组中去（数组不存储实际数据，所以仅仅是拷贝引用而已）</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> e <span class="token operator">:</span> table<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>null <span class="token operator">!=</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Entry<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> next <span class="token operator">=</span> e<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>rehash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span>hash <span class="token operator">=</span> null <span class="token operator">==</span> e<span class="token punctuation">.</span>key <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> <span class="token function">hash</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
+            <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token function">indexFor</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>hash<span class="token punctuation">,</span> newCapacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//将当前entry的next链指向新的索引位置,newTable[i]有可能为空，有可能也是个entry链，如果是entry链，直接在链表头部插入。</span>
+            e<span class="token punctuation">.</span>next <span class="token operator">=</span> newTable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            newTable<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
+            e <span class="token operator">=</span> next<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>　　这个方法将老数组中的数据逐个链表地遍历，扔到新的扩容后的数组中，我们的数组索引位置的计算是通过 对key值的hashcode进行hash扰乱运算后，再通过和 length-1进行位运算得到最终数组索引位置。</p>
 <p>　　hashMap的数组长度一定保持2的次幂，比如16的二进制表示为 10000，那么length-1就是15，二进制为01111，同理扩容后的数组长度为32，二进制表示为100000，length-1为31，二进制表示为011111。从下图可以我们也能看到这样会保证低位全为1，而扩容后只有一位差异，也就是多出了最左位的1，这样在通过 h&amp;(length-1)的时候，只要h对应的最左边的那一个差异位为0，就能保证得到的新的数组索引和老数组索引一致(大大减少了之前已经散列良好的老数组的数据位置重新调换)，个人理解。</p>
@@ -1179,9 +1181,10 @@
 
 <span class="token punctuation">}</span>
 </code></pre>
-<h2 id="12-简述ConcurrentHashMap-的工作原理及分析源码"><a href="#12-简述ConcurrentHashMap-的工作原理及分析源码" class="headerlink" title="12. 简述ConcurrentHashMap 的工作原理及分析源码"></a>12. 简述ConcurrentHashMap 的工作原理及分析源码</h2><p>ConcurrentHashMap是Java并发包中提供的一个线程安全且高效的HashMap实现，ConcurrentHashMap在并发编程的场景中使用频率非常之高，本文就来分析下ConcurrentHashMap的实现原理，并对其实现原理进行分析（JDK1.7).</p>
+<h2 id="12-简述ConcurrentHashMap-的工作原理及分析源码"><a href="#12-简述ConcurrentHashMap-的工作原理及分析源码" class="headerlink" title="12. 简述ConcurrentHashMap 的工作原理及分析源码"></a><font color="red">12. 简述ConcurrentHashMap 的工作原理及分析源码</font></h2><p><strong><font color="blue">思路：先介绍HashMap和HashTable在线程安全方面的问题，再介绍ConcurrentHashMap在线程安全方面的优势,采用了什么技术。</font></strong></p>
+<p>ConcurrentHashMap是Java并发包中提供的一个线程安全且高效的HashMap实现，ConcurrentHashMap在并发编程的场景中使用频率非常之高，本文就来分析下ConcurrentHashMap的实现原理，并对其实现原理进行分析（JDK1.7).</p>
 <p><strong>ConcurrentHashMap实现原理</strong></p>
-<p>　　众所周知，哈希表是中非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。</p>
+<p>　　众所周知，哈希表是种非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。</p>
 <p>　　<strong>HashMap</strong> ：先说HashMap，HashMap是<strong>线程不安全</strong>的，在并发环境下，可能会形成<strong>环状链表</strong>（扩容时可能造成，具体原因自行百度google或查看源码分析），导致get操作时，cpu空转，所以，在并发环境中使用HashMap是非常危险的。</p>
 <p>　　<strong>HashTable</strong> ： HashTable和HashMap的实现原理几乎一样，差别无非是<strong>1.HashTable不允许key和value为null；2.HashTable是线程安全的。</strong>但是HashTable线程安全的策略实现代价却太大了，简单粗暴，get/put所有相关操作都是synchronized的，这相当于给整个哈希表加了一把<strong>大锁</strong>，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作<strong>串行化</strong>，在竞争激烈的并发场景中性能就会非常差。</p>
 <p><img src="/2022/06/30/javasems02/3.png" alt="img"></p>
@@ -1213,8 +1216,7 @@
         <span class="token punctuation">}</span>
 </code></pre>
 <p>我们来看下ConcurrentHashMap的构造方法</p>
-<pre class=" language-java"><code class="language-java"> <span class="token number">1</span>  <span class="token keyword">public</span> <span class="token function">ConcurrentHashMap</span><span class="token punctuation">(</span><span class="token keyword">int</span> initialCapacity<span class="token punctuation">,</span>
- <span class="token number">2</span>                                <span class="token keyword">float</span> loadFactor<span class="token punctuation">,</span> <span class="token keyword">int</span> concurrencyLevel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class=" language-java"><code class="language-java"> <span class="token number">1</span>  <span class="token keyword">public</span> <span class="token function">ConcurrentHashMap</span><span class="token punctuation">(</span><span class="token keyword">int</span> initialCapacity<span class="token punctuation">,</span><span class="token keyword">float</span> loadFactor<span class="token punctuation">,</span> <span class="token keyword">int</span> concurrencyLevel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
  <span class="token number">3</span>           <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>loadFactor <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">||</span> initialCapacity <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> concurrencyLevel <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
  <span class="token number">4</span>               <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
  <span class="token number">5</span>           <span class="token comment" spellcheck="true">//MAX_SEGMENTS 为1&lt;&lt;16=65536，也就是最大并发数为65536</span>
@@ -1404,12 +1406,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
-                                </a>
-                            
-                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                                    <span class="chip bg-color">面试题</span>
+                                <a href="/tags/javaSE/">
+                                    <span class="chip bg-color">javaSE</span>
                                 </a>
                             
                         </div>
@@ -1810,10 +1808,6 @@
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
-                    </a>
                     
                     <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
                         <span class="chip bg-color">数据库</span>
