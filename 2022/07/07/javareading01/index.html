@@ -4,9 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题04, 银色回廊">
-    <meta name="description" content="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？​	改变了，因为传递是对象的引用，操作的是引用所指向的对象
-2. 实例化数组后，能不能改变数组长度呢？​	不能，数组一旦实例化，">
+    <meta name="keywords" content="读书笔记：Java编程思想, 银色回廊">
+    <meta name="description" content="读书笔记：Java编程思想为记录在读Java编程思想这本神书的领悟与感受，此篇博客会一直更新，同时记笔记也是为了不放弃阅读纸质书的一个习惯。对于这本书的阅读方式，博主选择挑选性的观看，因为只有这样，这更能有效率的学习与探索Java的美（主要">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +19,7 @@
 
     
 
-    <title>javaSE 面试题04 | 银色回廊</title>
+    <title>读书笔记：Java编程思想 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -313,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题04</h1>
+                    <h1 class="description center-align post-title">读书笔记：Java编程思想</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +433,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/javaSE/">
-                                <span class="chip bg-color">javaSE</span>
+                            <a href="/tags/%E5%86%99%E4%BD%9C/">
+                                <span class="chip bg-color">写作</span>
                             </a>
                         
                     </div>
@@ -446,8 +445,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
-                                面试题
+                            <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-category">
+                                读书笔记
                             </a>
                         
                     </div>
@@ -468,7 +467,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    993
                 </div>
                 
 
@@ -485,60 +484,25 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"><a href="#1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？" class="headerlink" title="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"></a>1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？</h2><p>​	改变了，因为传递是对象的引用，操作的是引用所指向的对象</p>
-<h2 id="2-实例化数组后，能不能改变数组长度呢？"><a href="#2-实例化数组后，能不能改变数组长度呢？" class="headerlink" title="2. 实例化数组后，能不能改变数组长度呢？"></a>2. 实例化数组后，能不能改变数组长度呢？</h2><p>​	不能，数组一旦实例化，它的长度就是固定的</p>
-<h2 id="3-形参与实参？"><a href="#3-形参与实参？" class="headerlink" title="3. 形参与实参？"></a>3. 形参与实参？</h2><p>​	形参：全称为“形式参数”，是在定义方法名和方法体的时候使用的参数，用于接收调用该方法时传入的实际值；	实参：全称为“实际参数”，是在调用方法时传递给该方法的实际值。</p>
-<h2 id="4-内部类与静态内部类的区别？"><a href="#4-内部类与静态内部类的区别？" class="headerlink" title="4. 内部类与静态内部类的区别？"></a>4. 内部类与静态内部类的区别？</h2><p>  静态内部类相对与外部类是独立存在的，在静态内部类中无法直接访问外部类中变量、方法。但是可以直接访问静态的变量、调用静态的方法；</p>
-<p>​	普通内部类作为外部类一个成员而存在，在普通内部类中可以直接访问外部类属性，调用外部类的方法。</p>
-<p>​	如果外部类要访问内部类的属性或者调用内部类的方法，必须要创建一个内部类的对象，使用该对象访问属性或者调用方法。</p>
-<p>​	如果其他的类要访问普通内部类的属性或者调用普通内部类的方法，必须要在外部类中创建一个普通内部类的对象作为一个属性，外同类可以通过该属性调用普通内部类的方法或者访问普通内部类的属性</p>
-<p>​	如果其他的类要访问静态内部类的属性或者调用静态内部类的方法，直接创建一个静态内部类对象即可。</p>
-<h2 id="5-Static关键字有什么作用？"><a href="#5-Static关键字有什么作用？" class="headerlink" title="5. Static关键字有什么作用？"></a>5. Static关键字有什么作用？</h2><p>​	Static可以修饰内部类、方法、变量、代码块</p>
-<p>​		Static修饰的类是静态内部类</p>
-<p>​		Static修饰的方法是静态方法，表示该方法属于当前类的，而不属于某个对象的，静态方法也不能被重写，可以直接使用类名来调用。在static方法中不能使用this或者super关键字。</p>
-<p>​		Static修饰变量是静态变量或者叫类变量，静态变量被所有实例所共享，不会依赖于对象。静态变量在内存中只有一份拷贝，在JVM加载类的时候，只为静态分配一次内存。</p>
-<p>​		Static修饰的代码块叫静态代码块，通常用来做程序优化的。静态代码块中的代码在整个类加载的时候只会执行一次。静态代码块可以有多个，如果有多个，按照先后顺序依次执行。</p>
-<h2 id="6-Final在java中的作用？"><a href="#6-Final在java中的作用？" class="headerlink" title="6. Final在java中的作用？"></a>6. Final在java中的作用？</h2><p>​	Final可以修饰类，修饰方法，修饰变量。</p>
-<p>​		修饰的类叫最终类。该类不能被继承。 </p>
-<p>​		修饰的方法不能被重写。 </p>
-<p>​		修饰的变量叫常量，常量必须初始化，一旦初始化后，常量的值不能发生改变。</p>
-<h2 id="7-String-str-x3D-”aaa”-与String-str-x3D-new-String-“aaa”-一样吗？"><a href="#7-String-str-x3D-”aaa”-与String-str-x3D-new-String-“aaa”-一样吗？" class="headerlink" title="7. String str=”aaa”,与String str=new String(“aaa”)一样吗？"></a>7. String str=”aaa”,与String str=new String(“aaa”)一样吗？</h2><p>  不一样的。因为内存分配的方式不一样。</p>
-<p>​		第一种，创建的”aaa”是常量，jvm都将其分配在常量池中。 </p>
-<p>​		第二种，创建的是一个对象，jvm将其值分配在堆内存中。</p>
-<h2 id="8-String-str-x3D-”aa”-String-s-x3D-”bb”-str-x3D-str-s-一种创建了几个对象？"><a href="#8-String-str-x3D-”aa”-String-s-x3D-”bb”-str-x3D-str-s-一种创建了几个对象？" class="headerlink" title="8. String str=”aa”,String s=”bb”; str=str+s;一种创建了几个对象？"></a>8. String str=”aa”,String s=”bb”; str=str+s;一种创建了几个对象？</h2><p>  一共有两个引用，三个对象。因为”aa”与”bb”都是常量，常量的值不能改变，当执行字符串拼接时候，会创建一个新的常量是” aabb”,有将其存到常量池中。</p>
-<h2 id="9-String类的常用方法有那些？"><a href="#9-String类的常用方法有那些？" class="headerlink" title="9. String类的常用方法有那些？"></a>9. String类的常用方法有那些？</h2><p>​	charAt：返回指定索引处的字符</p>
-<p>​	indexOf()：返回指定字符的索引</p>
-<p>​	replace()：字符串替换</p>
-<p>​	trim()：去除字符串两端空白</p>
-<p>​	split()：分割字符串，返回一个分割后的字符串数组</p>
-<p>​	getBytes()：返回字符串的byte类型数组</p>
-<p>​	length()：返回字符串长度</p>
-<p>​	toLowerCase()：将字符串转成小写字母</p>
-<p>​	toUpperCase()：将字符串转成大写字符</p>
-<p>​	substring()：截取字符串</p>
-<p>​	format()：格式化字符串</p>
-<p>​	equals()：字符串比较</p>
-<h2 id="10-Java中的继承是单继承还是多继承"><a href="#10-Java中的继承是单继承还是多继承" class="headerlink" title="10. Java中的继承是单继承还是多继承"></a>10. Java中的继承是单继承还是多继承</h2><p>​	类的继承，是单继承。</p>
-<p>​	接口的实现，是可以实现多个接口。</p>
-<h2 id="11-抽象类必须要有抽象方法吗？"><a href="#11-抽象类必须要有抽象方法吗？" class="headerlink" title="11. 抽象类必须要有抽象方法吗？"></a>11. 抽象类必须要有抽象方法吗？</h2><p>​	当然不是，但是即使这样也不能实例化。（有点不讲道理是吧，谁让你声明的？）</p>
-<h2 id="12-如果一个类中有抽象方法，那么这个一定是抽象类？"><a href="#12-如果一个类中有抽象方法，那么这个一定是抽象类？" class="headerlink" title="12. 如果一个类中有抽象方法，那么这个一定是抽象类？"></a>12. 如果一个类中有抽象方法，那么这个一定是抽象类？</h2><p>​	是的，java的编译器硬性要求一个包含抽象方法的类必须声明为抽象类，否则编译报错。不信你可以试试。</p>
-<h2 id="13-抽象类可以使用final修饰吗？"><a href="#13-抽象类可以使用final修饰吗？" class="headerlink" title="13. 抽象类可以使用final修饰吗？"></a>13. 抽象类可以使用final修饰吗？</h2><p>​	不行，抽象类就是要被继承的，但是final使得类无法被继承。这么写编译过不了的。</p>
-<h2 id="14-普通类与抽象类有什么区别？"><a href="#14-普通类与抽象类有什么区别？" class="headerlink" title="14. 普通类与抽象类有什么区别？"></a>14. 普通类与抽象类有什么区别？</h2><p> 普通类不能包含抽象方法，抽象类可以包含抽象方法。</p>
-<p>​	抽象类不能直接实例化，普通类可以直接实例化。</p>
-<h2 id="15-什么是接口？JAVA为什么需要接口？"><a href="#15-什么是接口？JAVA为什么需要接口？" class="headerlink" title="15. 什么是接口？JAVA为什么需要接口？"></a>15. 什么是接口？JAVA为什么需要接口？</h2><p> 接口内定义了若干抽象方法但是没有成员变量（但是可以由public static final的常量），可以视为一组功能的声明。实现某个接口的类就必须将这些方法全部Override。</p>
-<p>​	应该是因为Java的类继承只有单继承，所以需要接口，并且一个类可以实现多个接口。如果你了解C++的多继承以及虚继承，你就会知道多继承所带来的复杂，C++中没有接口。</p>
-<p>​	</p>
-<h2 id="16-接口有什么特点？"><a href="#16-接口有什么特点？" class="headerlink" title="16. 接口有什么特点？"></a>16. 接口有什么特点？</h2><p>​	接口中声明全是public <strong>static</strong> final修饰的常量，</p>
-<p>​	接口中不能有：成员变量，构造函数，static静态代码块，</p>
-<p>​	接口中的方法一般都是抽象方法，但是也可以有默认方法，有实现。</p>
-<p>​	接口也不能直接实例化，</p>
-<p>​	接口可以多继承，</p>
-<h2 id="17-简述你了解的异常？"><a href="#17-简述你了解的异常？" class="headerlink" title="17. 简述你了解的异常？"></a>17. 简述你了解的异常？</h2><p>​	异常捕捉：try-catch-finally</p>
-<p>​	异常抛出：throw</p>
-<p>​	可以使用系统已经定义的异常，也可以以已有的类为基类派生自己异常类</p>
-<p>​	try必须存在，catch和finally都可以不存在，但不能同时不存在。</p>
-<h2 id="18-throw与throws区别？"><a href="#18-throw与throws区别？" class="headerlink" title="18. throw与throws区别？"></a>18. throw与throws区别？</h2><p> throw写在代码块内，<strong>throw</strong>后面跟的是一个具体的异常实例</p>
-<p>​	throws写在方法前面后面，throws后面跟的是异常类，异常类可以出现多个</p>
+                <h1 id="读书笔记：Java编程思想"><a href="#读书笔记：Java编程思想" class="headerlink" title="读书笔记：Java编程思想"></a>读书笔记：Java编程思想</h1><p>为记录在读Java编程思想这本神书的领悟与感受，此篇博客会一直更新，同时记笔记也是为了不放弃阅读纸质书的一个习惯。对于这本书的阅读方式，博主选择挑选性的观看，因为只有这样，这更能有效率的学习与探索Java的美（主要因为太厚了看不完啊…..）。先上图以明志。</p>
+<p><img src="/2022/07/07/javareading01/111126082092481.jpg" alt="Java编程思想(第4版)中文完整版"></p>
+<p>对封面都这么用心设计，可见这本神书，与其说是一部工具书，更像是一本Java的艺术思想，难怪被封为圣经。</p>
+<h2 id="01-概念：容器"><a href="#01-概念：容器" class="headerlink" title="01-概念：容器"></a>01-概念：容器</h2><p>在学习Java的时候，听到容器这个词的时候就一直有点不理解（还有context应用上下文什么的），为什么要把一个类叫做容器呢？接下来看看书上的概念：</p>
+<blockquote>
+<p>通常来说，如果不知道在解决某个特定问题时需要多少个对象，或者它们将存活多久，那么就不可能知道如何存储这些对象。如何才能知道需要多少空间来创建这些对象呢？答案是你不可能知道，因为这类信息只有在运行时才能获得。</p>
+<p>对于面向对象设计的大多数问题而言，这个问题的解决方案似乎过于轻率：创建另一种对象类型。这种新的对象类型持有对其他对象的引用。当然，你可以用在大多数语言中都有的数组类型来实现相同的功能。但是<strong>这个通常被称为容器（也称为集合）的新对象，在任何时候都可以扩容自己以容纳你置于其中的所有东西</strong>。因此<strong>你不需要知道将来会把多少个对象置于容器中</strong>，然后让它处理所有细节。</p>
+</blockquote>
+<p>换个更直白点的说明方式：容器是一个Java 所编写的程序，原先必须自行编写程序并且事先要明确管理对象的细节，而有了容器以后，容器都会自动帮您作好。</p>
+<blockquote>
+<p>从设计的观点来看，真正需要的只是一个可以被操作，从而解决问题的序列。</p>
+</blockquote>
+<h2 id="02-goto语句"><a href="#02-goto语句" class="headerlink" title="02-goto语句"></a>02-goto语句</h2><p>goto起源于汇编语言的程序控制：“A成立，则跳到这里，否则跳到那里”。如果阅读由编译器最终生成的汇编代码，就会发现控制里包含了许多跳转。（Java编译器生成他自己的”汇编代码”，但是这个代码是运行在Java虚拟机上的，而不是直接运行在CPU硬件上）。</p>
+<p>因为goto语句是在源码级上的跳转，这使得它臭名昭著。对于这个问题，java采用的策略是中庸之道：goto是Java中的一个关键字，但是在语言中并没有使用它，也就是说Java中没有goto。</p>
+<p>然而，Java中也能完成一些类似跳转的操作，这与break和continue有关。他们其实不是跳转，而是中断迭代语句的一种方法。之后以把他们和goto相提并论，是因为他们都使用了<strong>标签</strong>机制。Java里使用标签的唯一理由就是因为有循环嵌套存在。</p>
+<p>标签就是后面跟有冒号的标识，就像这样：</p>
+<pre class=" language-markdown"><code class="language-markdown">label1：
+</code></pre>
+<p>然而在Dijkstra（发明最短路径算法的那位）的《Goto有害》论文中，它最反对的就是标签，而非goto。因为一个程序里面，标签越多，错误也就会越多，并且还会让程序难以分析。但是，Java里面的标签不会造成这种问题，因为他们的应用场合已经受到了限制。这也引出了一个现象：通过限制语句的能力，反而能使一项语言特性更加有用。（有点哲学的味道）</p>
 
                 
             </div>
@@ -565,7 +529,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/07/07/javasems04/">https://silvercorridors.cf/2022/07/07/javasems04/</a>
+                    <a href="https://silvercorridors.cf/2022/07/07/javareading01/">https://silvercorridors.cf/2022/07/07/javareading01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -603,8 +567,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/javaSE/">
-                                    <span class="chip bg-color">javaSE</span>
+                                <a href="/tags/%E5%86%99%E4%BD%9C/">
+                                    <span class="chip bg-color">写作</span>
                                 </a>
                             
                         </div>
@@ -919,9 +883,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/07/07/javareading01/">
                     <div class="card-image">
@@ -939,9 +904,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -954,6 +919,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -972,13 +938,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/07/07/javasems03/">
+                <a href="/2022/07/07/javasems04/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="javaSE 面试题03">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="javaSE 面试题04">
                         
-                        <span class="card-title">javaSE 面试题03</span>
+                        <span class="card-title">javaSE 面试题04</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
