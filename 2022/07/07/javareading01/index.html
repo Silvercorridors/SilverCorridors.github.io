@@ -433,6 +433,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
                             <a href="/tags/%E5%86%99%E4%BD%9C/">
                                 <span class="chip bg-color">写作</span>
                             </a>
@@ -467,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    993
+                    1.2k
                 </div>
                 
 
@@ -503,6 +507,9 @@
 <pre class=" language-markdown"><code class="language-markdown">label1：
 </code></pre>
 <p>然而在Dijkstra（发明最短路径算法的那位）的《Goto有害》论文中，它最反对的就是标签，而非goto。因为一个程序里面，标签越多，错误也就会越多，并且还会让程序难以分析。但是，Java里面的标签不会造成这种问题，因为他们的应用场合已经受到了限制。这也引出了一个现象：通过限制语句的能力，反而能使一项语言特性更加有用。（有点哲学的味道）</p>
+<h2 id="03-this、static"><a href="#03-this、static" class="headerlink" title="03 - this、static"></a>03 - this、static</h2><p>假设你希望在方法的内部获得当前对象的引用。由于这个引用是由编译器“偷偷”传入的，所以没有标识符可用。但是， 有个专门的关键字：<strong>this</strong>，this关键字只能在方法内部使用，表示“调用方法的那个对象”。</p>
+<p>有了this出现后解决了一个重要的问题：代码复用，以至于this后面一节专门讲了<strong>在构造器中调用（另一个）构造器</strong>这一知识点，但是有一点需要注意，就是在<strong>一个构造方法里面只能用this调用一个构造器，不能调用两个，并却必须将这个构造器置于最起始的位置</strong>，否则编译器会报错。</p>
+<p>了解了this以后就能更全面的了解static方法的含义。s<strong>tatic方法就是没有this的方法。在static的内部不能调用非静态方法，反过来是可以的。</strong></p>
 
                 
             </div>
@@ -566,6 +573,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
                             
                                 <a href="/tags/%E5%86%99%E4%BD%9C/">
                                     <span class="chip bg-color">写作</span>
@@ -883,18 +894,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/07/javareading01/">
+                <a href="/2022/07/10/databasems01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="读书笔记：Java编程思想">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="数据库面试题01：基础知识">
                         
-                        <span class="card-title">读书笔记：Java编程思想</span>
+                        <span class="card-title">数据库面试题01：基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -904,27 +914,26 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    读书笔记
+                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
+                                    面试题
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%86%99%E4%BD%9C/">
-                        <span class="chip bg-color">写作</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>

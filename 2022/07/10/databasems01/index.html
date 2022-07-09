@@ -4,9 +4,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题04, 银色回廊">
-    <meta name="description" content="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？​	改变了，因为传递是对象的引用，操作的是引用所指向的对象
-2. 实例化数组后，能不能改变数组长度呢？​	不能，数组一旦实例化，">
+    <meta name="keywords" content="数据库面试题01：基础知识, 银色回廊">
+    <meta name="description" content="1. 事务四大特性？原子性（Atomicity）
+
+事务包含的所有操作要么全部成功，要么全部失败回滚。
+
+一致性（Consistency）
+
+事务开始前和结束后，数据库的完整性约束没有被破坏。包括一致读和一致写
+假定有一个事务序列，T1，T">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +26,7 @@
 
     
 
-    <title>javaSE 面试题04 | 银色回廊</title>
+    <title>数据库面试题01：基础知识 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -313,12 +319,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题04</h1>
+                    <h1 class="description center-align post-title">数据库面试题01：基础知识</h1>
                 </div>
             </div>
         </div>
@@ -434,8 +440,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/javaSE/">
-                                <span class="chip bg-color">javaSE</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
                     </div>
@@ -459,7 +465,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-07-07
+                    2022-07-10
                 </div>
                 
 
@@ -468,7 +474,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    2.7k
                 </div>
                 
 
@@ -485,60 +491,134 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"><a href="#1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？" class="headerlink" title="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"></a>1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？</h2><p>​	改变了，因为传递是对象的引用，操作的是引用所指向的对象</p>
-<h2 id="2-实例化数组后，能不能改变数组长度呢？"><a href="#2-实例化数组后，能不能改变数组长度呢？" class="headerlink" title="2. 实例化数组后，能不能改变数组长度呢？"></a>2. 实例化数组后，能不能改变数组长度呢？</h2><p>​	不能，数组一旦实例化，它的长度就是固定的</p>
-<h2 id="3-形参与实参？"><a href="#3-形参与实参？" class="headerlink" title="3. 形参与实参？"></a>3. 形参与实参？</h2><p>​	形参：全称为“形式参数”，是在定义方法名和方法体的时候使用的参数，用于接收调用该方法时传入的实际值；	实参：全称为“实际参数”，是在调用方法时传递给该方法的实际值。</p>
-<h2 id="4-内部类与静态内部类的区别？"><a href="#4-内部类与静态内部类的区别？" class="headerlink" title="4. 内部类与静态内部类的区别？"></a>4. 内部类与静态内部类的区别？</h2><p>  静态内部类相对与外部类是独立存在的，在静态内部类中无法直接访问外部类中变量、方法。但是可以直接访问静态的变量、调用静态的方法；</p>
-<p>​	普通内部类作为外部类一个成员而存在，在普通内部类中可以直接访问外部类属性，调用外部类的方法。</p>
-<p>​	如果外部类要访问内部类的属性或者调用内部类的方法，必须要创建一个内部类的对象，使用该对象访问属性或者调用方法。</p>
-<p>​	如果其他的类要访问普通内部类的属性或者调用普通内部类的方法，必须要在外部类中创建一个普通内部类的对象作为一个属性，外同类可以通过该属性调用普通内部类的方法或者访问普通内部类的属性</p>
-<p>​	如果其他的类要访问静态内部类的属性或者调用静态内部类的方法，直接创建一个静态内部类对象即可。</p>
-<h2 id="5-Static关键字有什么作用？"><a href="#5-Static关键字有什么作用？" class="headerlink" title="5. Static关键字有什么作用？"></a>5. Static关键字有什么作用？</h2><p>​	Static可以修饰内部类、方法、变量、代码块</p>
-<p>​		Static修饰的类是静态内部类</p>
-<p>​		Static修饰的方法是静态方法，表示该方法属于当前类的，而不属于某个对象的，静态方法也不能被重写，可以直接使用类名来调用。在static方法中不能使用this或者super关键字。</p>
-<p>​		Static修饰变量是静态变量或者叫类变量，静态变量被所有实例所共享，不会依赖于对象。静态变量在内存中只有一份拷贝，在JVM加载类的时候，只为静态分配一次内存。</p>
-<p>​		Static修饰的代码块叫静态代码块，通常用来做程序优化的。静态代码块中的代码在整个类加载的时候只会执行一次。静态代码块可以有多个，如果有多个，按照先后顺序依次执行。</p>
-<h2 id="6-Final在java中的作用？"><a href="#6-Final在java中的作用？" class="headerlink" title="6. Final在java中的作用？"></a>6. Final在java中的作用？</h2><p>​	Final可以修饰类，修饰方法，修饰变量。</p>
-<p>​		修饰的类叫最终类。该类不能被继承。 </p>
-<p>​		修饰的方法不能被重写。 </p>
-<p>​		修饰的变量叫常量，常量必须初始化，一旦初始化后，常量的值不能发生改变。</p>
-<h2 id="7-String-str-x3D-”aaa”-与String-str-x3D-new-String-“aaa”-一样吗？"><a href="#7-String-str-x3D-”aaa”-与String-str-x3D-new-String-“aaa”-一样吗？" class="headerlink" title="7. String str=”aaa”,与String str=new String(“aaa”)一样吗？"></a>7. String str=”aaa”,与String str=new String(“aaa”)一样吗？</h2><p>  不一样的。因为内存分配的方式不一样。</p>
-<p>​		第一种，创建的”aaa”是常量，jvm都将其分配在常量池中。 </p>
-<p>​		第二种，创建的是一个对象，jvm将其值分配在堆内存中。</p>
-<h2 id="8-String-str-x3D-”aa”-String-s-x3D-”bb”-str-x3D-str-s-一种创建了几个对象？"><a href="#8-String-str-x3D-”aa”-String-s-x3D-”bb”-str-x3D-str-s-一种创建了几个对象？" class="headerlink" title="8. String str=”aa”,String s=”bb”; str=str+s;一种创建了几个对象？"></a>8. String str=”aa”,String s=”bb”; str=str+s;一种创建了几个对象？</h2><p>  一共有两个引用，三个对象。因为”aa”与”bb”都是常量，常量的值不能改变，当执行字符串拼接时候，会创建一个新的常量是” aabb”,有将其存到常量池中。</p>
-<h2 id="9-String类的常用方法有那些？"><a href="#9-String类的常用方法有那些？" class="headerlink" title="9. String类的常用方法有那些？"></a>9. String类的常用方法有那些？</h2><p>​	charAt：返回指定索引处的字符</p>
-<p>​	indexOf()：返回指定字符的索引</p>
-<p>​	replace()：字符串替换</p>
-<p>​	trim()：去除字符串两端空白</p>
-<p>​	split()：分割字符串，返回一个分割后的字符串数组</p>
-<p>​	getBytes()：返回字符串的byte类型数组</p>
-<p>​	length()：返回字符串长度</p>
-<p>​	toLowerCase()：将字符串转成小写字母</p>
-<p>​	toUpperCase()：将字符串转成大写字符</p>
-<p>​	substring()：截取字符串</p>
-<p>​	format()：格式化字符串</p>
-<p>​	equals()：字符串比较</p>
-<h2 id="10-Java中的继承是单继承还是多继承"><a href="#10-Java中的继承是单继承还是多继承" class="headerlink" title="10. Java中的继承是单继承还是多继承"></a>10. Java中的继承是单继承还是多继承</h2><p>​	类的继承，是单继承。</p>
-<p>​	接口的实现，是可以实现多个接口。</p>
-<h2 id="11-抽象类必须要有抽象方法吗？"><a href="#11-抽象类必须要有抽象方法吗？" class="headerlink" title="11. 抽象类必须要有抽象方法吗？"></a>11. 抽象类必须要有抽象方法吗？</h2><p>​	当然不是，但是即使这样也不能实例化。（有点不讲道理是吧，谁让你声明的？）</p>
-<h2 id="12-如果一个类中有抽象方法，那么这个一定是抽象类？"><a href="#12-如果一个类中有抽象方法，那么这个一定是抽象类？" class="headerlink" title="12. 如果一个类中有抽象方法，那么这个一定是抽象类？"></a>12. 如果一个类中有抽象方法，那么这个一定是抽象类？</h2><p>​	是的，java的编译器硬性要求一个包含抽象方法的类必须声明为抽象类，否则编译报错。不信你可以试试。</p>
-<h2 id="13-抽象类可以使用final修饰吗？"><a href="#13-抽象类可以使用final修饰吗？" class="headerlink" title="13. 抽象类可以使用final修饰吗？"></a>13. 抽象类可以使用final修饰吗？</h2><p>​	不行，抽象类就是要被继承的，但是final使得类无法被继承。这么写编译过不了的。</p>
-<h2 id="14-普通类与抽象类有什么区别？"><a href="#14-普通类与抽象类有什么区别？" class="headerlink" title="14. 普通类与抽象类有什么区别？"></a>14. 普通类与抽象类有什么区别？</h2><p> 普通类不能包含抽象方法，抽象类可以包含抽象方法。</p>
-<p>​	抽象类不能直接实例化，普通类可以直接实例化。</p>
-<h2 id="15-什么是接口？JAVA为什么需要接口？"><a href="#15-什么是接口？JAVA为什么需要接口？" class="headerlink" title="15. 什么是接口？JAVA为什么需要接口？"></a>15. 什么是接口？JAVA为什么需要接口？</h2><p> 接口内定义了若干抽象方法但是没有成员变量（但是可以由public static final的常量），可以视为一组功能的声明。实现某个接口的类就必须将这些方法全部Override。</p>
-<p>​	应该是因为Java的类继承只有单继承，所以需要接口，并且一个类可以实现多个接口。如果你了解C++的多继承以及虚继承，你就会知道多继承所带来的复杂，C++中没有接口。</p>
-<p>​	</p>
-<h2 id="16-接口有什么特点？"><a href="#16-接口有什么特点？" class="headerlink" title="16. 接口有什么特点？"></a>16. 接口有什么特点？</h2><p>​	接口中声明全是public <strong>static</strong> final修饰的常量，</p>
-<p>​	接口中不能有：成员变量，构造函数，static静态代码块，</p>
-<p>​	接口中的方法一般都是抽象方法，但是也可以有默认方法，有实现。</p>
-<p>​	接口也不能直接实例化，</p>
-<p>​	接口可以多继承，</p>
-<h2 id="17-简述你了解的异常？"><a href="#17-简述你了解的异常？" class="headerlink" title="17. 简述你了解的异常？"></a>17. 简述你了解的异常？</h2><p>​	异常捕捉：try-catch-finally</p>
-<p>​	异常抛出：throw</p>
-<p>​	可以使用系统已经定义的异常，也可以以已有的类为基类派生自己异常类</p>
-<p>​	try必须存在，catch和finally都可以不存在，但不能同时不存在。</p>
-<h2 id="18-throw与throws区别？"><a href="#18-throw与throws区别？" class="headerlink" title="18. throw与throws区别？"></a>18. throw与throws区别？</h2><p> throw写在代码块内，<strong>throw</strong>后面跟的是一个具体的异常实例</p>
-<p>​	throws写在方法前面后面，throws后面跟的是异常类，异常类可以出现多个</p>
+                <h2 id="1-事务四大特性？"><a href="#1-事务四大特性？" class="headerlink" title="1. 事务四大特性？"></a>1. 事务四大特性？</h2><p><strong>原子性（Atomicity）</strong></p>
+<ul>
+<li>事务包含的所有操作要么全部成功，要么全部失败回滚。</li>
+</ul>
+<p><strong>一致性（Consistency）</strong></p>
+<ul>
+<li>事务开始前和结束后，数据库的完整性约束没有被破坏。包括一致读和一致写</li>
+<li>假定有一个事务序列，T1，T2… Tn，数据库的状态是执行T1前为C0，执行后为C1，执行T1后是C1，依次类推，执行Tn后是Cn。<ul>
+<li>一致读：任何事务都只能读取到Ti运行后的完整状态Ci，而不可能读取到一部分Ci一部分Ci-1的状态。</li>
+<li>一致写：一个状态只能由一个事务导致，不能由两个事务同时导致。</li>
+</ul>
+</li>
+</ul>
+<p><strong>隔离性（Isolation）</strong></p>
+<ul>
+<li>多个用户并发访问数据库时，数据库为每一个用户开启的事务，且不被其他事务的操作所干扰。同一时间，只允许一个事务请求同一数据。</li>
+</ul>
+<p><strong>持久性（Durability）</strong></p>
+<ul>
+<li>事务一旦被提交，数据的改变就是永久性的。</li>
+</ul>
+<h2 id="2-事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？"><a href="#2-事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？" class="headerlink" title="2. 事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？"></a>2. 事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？</h2><p><strong>2.1 事务的并发</strong></p>
+<p>（1）<strong>脏读</strong>：T1没有COMMIT以前，就让T2读到了T1尚未COMMIT的数据。</p>
+<p>（2）<strong>不可重复读</strong>：T1已经COMMIT了一个数据记录的修改，T2在T1 COMMIT同一条数据以前访问过这个数据，在T1 COMMIT后发现数据被修改了。</p>
+<p>（3）<strong>幻读</strong>：T1添加了一条数据并且COMMIT，T2在开始时没有发现这条数据，但是后来发现了。</p>
+<p><strong>2.2 事务的隔离级别</strong></p>
+<p>（1）READ UNCOMMITTED: 读未提交 =》 可能的问题：脏读，不可重复读，幻读</p>
+<p>（2）READ COMMITTED：读已提交    =》 可能的问题：不可重复读，幻读</p>
+<p>（3）REPEATABLE READ：可重复读   =》 可能的问题：幻读</p>
+<p>（4）SERIALIZABLE：串行化            =》  没有问题</p>
+<p><strong>2.3 事务的隔离级别要得到底层数据库引擎的支持, 而不是应用程序或者框架的支持。</strong></p>
+<p>​    MySQL默认的事务隔离级别为REPEATABLE READ，MySQL支持 4 中事务隔离级别。</p>
+<p>​    Oracle默认的事务隔离级别为READ COMMITTED，Oracle 支持的 2 种事务隔离级别 READ-COMMITED , SERIALIZABLE</p>
+<p><strong>2.4 补充</strong></p>
+<ol>
+<li>MySQL中默认事务隔离级别是“可重复读”时并不会锁住读取到的行</li>
+</ol>
+<ul>
+<li><strong>事务隔离级别</strong>：<strong>未提交读时</strong>，写数据只会锁住相应的行。</li>
+<li><strong>事务隔离级别为</strong>：<strong>可重复读时</strong>，写数据会锁住整张表。</li>
+<li><strong>事务隔离级别为</strong>：<strong>串行化时</strong>，读写数据都会锁住整张表。</li>
+</ul>
+<h2 id="3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？"><a href="#3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？" class="headerlink" title="3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？"></a>3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？</h2><pre class=" language-SQL"><code class="language-SQL">SELECT DISTINCT
+    列名
+FROM
+    表名1
+    JOIN 表名2 ON 条件J
+    ...
+WHERE
+    条件1
+GROUP BY
+    列名
+HAVING
+    条件2
+ORDER BY
+    列名
+LIMIT 分页限定
+</code></pre>
+<p>第1步，得到所有表的记录<br>第2步，根据WHERE中的条件1中的单表条件来过滤记录<br>第3步，对多表的记录进行笛卡尔积，获得笛卡尔积记录，同时使用条件J和条件1中的跨表条件来过滤笛卡尔积记录<br>第4步，补齐外连接<br>      4.1，左外连接，把左表没有参与过笛卡尔积运算的记录全部补全，右表补NULL<br>      4.2，右外链接，把右表没有参与过笛卡尔积运算的记录全部补全，左表补NULL<br>第5步，根据BU分组<br>第6步，在分组内部，利用聚合函数对非分组列进行计算<br>第7步，把需要新加的列加上<br>第8步，把不需要的列去掉<br>第9步，根据HAVING中的条件对结果进行过滤<br>第10步，去重<br>第11步，排序<br>第12步，分页</p>
+<p><strong>顺序</strong>：WHERE中的单表条件 =&gt; JOIN和WHERE中的跨表条件 =&gt; GROUP BY =&gt; HAVING的条件 =&gt; limit</p>
+<h2 id="4-什么是临时表，临时表什么时候删除？"><a href="#4-什么是临时表，临时表什么时候删除？" class="headerlink" title="4. 什么是临时表，临时表什么时候删除？"></a>4. <strong>什么是临时表，临时表什么时候删除？</strong></h2><p>MySQL 临时表在我们需要保存一些临时数据时是非常有用的。</p>
+<p>临时表只在当前连接可见，当关闭连接时，Mysql会自动删除表并释放所有空间；当然，也可以手动删除临时表。</p>
+<p>例如：</p>
+<p>CREATE TEMPORARY TABLE tmp_table (</p>
+<p>​        NAME VARCHAR (10) NOT NULL,</p>
+<p>​        time date NOT NULL</p>
+<p>);</p>
+<p>select * from tmp_table;</p>
+<p>需要手动删除时：</p>
+<p>DROP TEMPORARY TABLE IF EXISTS temp_tb;</p>
+<h2 id="5-关系型数据库的-B-Tree索引和Hash索引的区别？"><a href="#5-关系型数据库的-B-Tree索引和Hash索引的区别？" class="headerlink" title="5. 关系型数据库的 B+Tree索引和Hash索引的区别？"></a>5. <strong>关系型数据库的 B+Tree索引和Hash索引的区别？</strong></h2><ul>
+<li><p>Hash索引结构：是通过Key和哈希函数，计算哈希值并把哈希值最为存储的数组下标。</p>
+</li>
+<li><p>B+树索引结构：是M叉平衡查找树，以及串起所有叶子节点的链表</p>
+<p><strong>Hash索引相比于B+Tree索引的缺点：</strong></p>
+</li>
+</ul>
+<p>（1）Hash索引仅仅能满足”=”,”IN”和”&lt;=&gt;”查询，不能使用范围查询，因为经过相应的Hash算法处理之后的Hash值的大小关系，并不能保证和Hash运算前完全一样；</p>
+<p>（2）Hash索引无法被用来避免数据的排序操作，因为Hash值的大小关系并不一定和Hash运算前的键值完全一样；</p>
+<p>（3）Hash索引不能利用部分索引键查询，对于组合索引，Hash索引在计算Hash值的时候是组合索引键合并后再一起计算Hash值，而不是单独计算Hash值，所以通过组合索引的前面一个或几个索引键进行查询的时候，Hash索引也无法被利用；</p>
+<p>（4）Hash索引在任何时候都不能避免表扫描，由于不同索引键存在相同Hash值，所以即使取满足某个Hash键值的数据的记录条数，也无法从Hash索引中直接完成查询，还是要回表查询数据；</p>
+<p>（5）Hash索引遇到大量Hash值相等的情况后性能并不一定就会比B+树索引高。</p>
+<p><strong>某些关系型数据库是可以使用Hash索引的</strong></p>
+<p>MySQL中，HEAP/MEMORY引擎可以显示支持Hash索引，而常用的InnoDB引擎中默认使用的是B+树索引。</p>
+<p>只有在查询是Key-Value这种情况，没有范围查询，没有模糊查询，没有排序，且键值重复性小时，才推荐Hash索引。</p>
+<h2 id="6-简述索引如何加速查询"><a href="#6-简述索引如何加速查询" class="headerlink" title="6. 简述索引如何加速查询?"></a>6. 简述索引如何加速查询?</h2><ol>
+<li><p>索引是指定新的列，为该列建立B+Tree结构</p>
+</li>
+<li><p>有索引时，操作&lt;,&lt;=,=,&gt;,&gt;=,between,in，以及不适用通配符开头的like，会被加速。</p>
+</li>
+<li><p>添加索引后，对应列的查找时间从O(N)下降到O(LogN)</p>
+</li>
+</ol>
+<h2 id="7-聚集索引和非聚集索引区别？"><a href="#7-聚集索引和非聚集索引区别？" class="headerlink" title="7. 聚集索引和非聚集索引区别？"></a>7. <strong>聚集索引和非聚集索引区别？</strong></h2><p>聚集索引 clustered Index  -  非聚集索引 unclustered Index</p>
+<ol>
+<li>每张表有且只有一个聚集索引，如果在建表的时候定义了主键，主键就是聚集索引，如果没定义有一个缺省的。（有一种说法是聚集索引的索引排列顺序和表记录的排列顺序一致，是的，所谓表记录的排列顺序就是B+Tree结构中链表的顺序）</li>
+<li>非聚集索引可以有多个。（非聚集索引是另外增加的B+Tree结构，最后通过指针指向单条数据记录）</li>
+<li>增加索引可以提高SELECT速度。</li>
+<li>增加索引会减慢INSERT，DELETE的速度。</li>
+</ol>
+<h2 id="8-关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）"><a href="#8-关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）" class="headerlink" title="8. 关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）?"></a>8. 关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）?</h2><p>非关系型数据库的优点：</p>
+<ol>
+<li>性能：比如Redis，使用跳表，在并发方面表现更加优异</li>
+<li>可扩展：无论是跳表还是Hash表，耦合性都很低，分布式存储不像B+Tree那样复杂。</li>
+</ol>
+<p>关系型数据库的优点：</p>
+<ol>
+<li>支持复杂的SQL查询</li>
+<li>支持事务</li>
+</ol>
+<h2 id="9-简述什么是数据库的三范式"><a href="#9-简述什么是数据库的三范式" class="headerlink" title="9. 简述什么是数据库的三范式?"></a>9. 简述什么是数据库的三范式?</h2><p>第一范式：每一个列都是不可分割的原始数据项。第一范式解决的是如何把数据放到一张二维表里。</p>
+<p>第二范式：在第一范式的基础上，不存在部分函数依赖，即所有的非主属性都完全的依赖主属性。第二范式解决的问题：部分的，数据冗余，删除错误，插入困难</p>
+<p>​	函数依赖：A -&gt; B，对两列中的任意记录，通过属性A的值可以确定属性B的值，我们说B依赖于A；A也可以是一组属性，同理</p>
+<p>​	完全函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且B不依赖于任何A的子集，我们说B完全依赖于A。</p>
+<p>​	部分函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且存在B依赖于A的某个子集，我们说B部分依赖于A。</p>
+<p>第三范式：在第二范式的基础上，非主属性不存在传递依赖。第三范式解决的问题：数据冗余，删除错误，插入困难</p>
+<p>​	传递函数依赖，A -&gt; B， B -&gt; C，即C完全依赖于B，B完全依赖于A，我们说C传递依赖于A。</p>
+<p>BC范式：在第二范式的基础上，所有的属性都不存在传递依赖</p>
+<h2 id="10-什么是-内连接、外连接、交叉连接、笛卡尔积等？"><a href="#10-什么是-内连接、外连接、交叉连接、笛卡尔积等？" class="headerlink" title="10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？"></a>10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？</h2><p>SQL中两张表，左表和右表</p>
+<p>内连接，只有同时满足连接条件的左表记录和右表记录才能连接成为新的记录。</p>
+<p>外链接，分为左外链接和右外连接</p>
+<p>​	左连接，左表中的全部记录和右表中满足连接条件的记录能够根据条件连接成为新的记录，如果某些左表中记录找不到符合条件的右表记录，则对应列写NULL。</p>
+<p>​	右连接，左表中满足连接条件的记录和右表中的全部记录能够根据条件连接成为新的记录，如果某些右表中记录找不到符合条件的左表记录，则对应列写NULL。</p>
+<p>交叉连接：没有连接条件，左表和右表中的记录排列组合连接成为新的记录，这种连接的结果也成为笛卡尔积。</p>
+<h2 id="11-varchar和char的区别？"><a href="#11-varchar和char的区别？" class="headerlink" title="11. varchar和char的区别？"></a>11. varchar和char的区别？</h2><p>char：</p>
+<p>​	char类型是固定长度类型，例如char(20)是一个长度为20字节的空间。如果放入的字符串长度不足20字节，尾部会用空格填满，然后在查询时会自动删除后边结尾的空格。所以char类型是不能存储结尾有空格的字符串的。</p>
+<p>varchar：</p>
+<p>​	varchar类型是可变长度类型，例如varchar(20)是指最长可以放20个字符的空间，而不考虑字符的字符集，以及具体字符占用的字节数。事实上，varchar类型在最后还保存了一个字符串字符长度的值。</p>
 
                 
             </div>
@@ -565,7 +645,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/07/07/javasems04/">https://silvercorridors.cf/2022/07/07/javasems04/</a>
+                    <a href="https://silvercorridors.cf/2022/07/10/databasems01/">https://silvercorridors.cf/2022/07/10/databasems01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -603,8 +683,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/javaSE/">
-                                    <span class="chip bg-color">javaSE</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
                                 </a>
                             
                         </div>
@@ -919,9 +999,60 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/07/10/databasems01/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="数据库面试题01：基础知识">
+                        
+                        <span class="card-title">数据库面试题01：基础知识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
+                                    面试题
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2022/07/07/javareading01/">
                     <div class="card-image">
@@ -939,9 +1070,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -963,55 +1094,6 @@
                     
                     <a href="/tags/%E5%86%99%E4%BD%9C/">
                         <span class="chip bg-color">写作</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/07/07/javasems03/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="javaSE 面试题03">
-                        
-                        <span class="card-title">javaSE 面试题03</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
-                                    面试题
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/javaSE/">
-                        <span class="chip bg-color">javaSE</span>
                     </a>
                     
                 </div>
