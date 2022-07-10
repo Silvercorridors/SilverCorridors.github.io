@@ -474,7 +474,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3k
                 </div>
                 
 
@@ -511,6 +511,7 @@
 <p><strong>持久性（Durability）</strong></p>
 <ul>
 <li>事务一旦被提交，数据的改变就是永久性的。</li>
+<li>服务器硬盘发生故障时怎么办？根据RAID Level 进行对应的校验恢复。</li>
 </ul>
 <h2 id="2-事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？"><a href="#2-事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？" class="headerlink" title="2. 事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？"></a>2. 事务的并发？事务隔离级别？每个级别会引发什么问题？MySQL、Oracle默认是哪个级别？</h2><p><strong>2.1 事务的并发</strong></p>
 <p>（1）<strong>脏读</strong>：T1没有COMMIT以前，就让T2读到了T1尚未COMMIT的数据。</p>
@@ -549,18 +550,20 @@ ORDER BY
     列名
 LIMIT 分页限定
 </code></pre>
-<p>第1步，得到所有表的记录<br>第2步，根据WHERE中的条件1中的单表条件来过滤记录<br>第3步，对多表的记录进行笛卡尔积，获得笛卡尔积记录，同时使用条件J和条件1中的跨表条件来过滤笛卡尔积记录<br>第4步，补齐外连接<br>      4.1，左外连接，把左表没有参与过笛卡尔积运算的记录全部补全，右表补NULL<br>      4.2，右外链接，把右表没有参与过笛卡尔积运算的记录全部补全，左表补NULL<br>第5步，根据BU分组<br>第6步，在分组内部，利用聚合函数对非分组列进行计算<br>第7步，把需要新加的列加上<br>第8步，把不需要的列去掉<br>第9步，根据HAVING中的条件对结果进行过滤<br>第10步，去重<br>第11步，排序<br>第12步，分页</p>
+<p>第1步，得到所有表的记录<br>第2步，根据WHERE中的条件1中的单表条件来过滤记录<br>第3步，对多表的记录进行笛卡尔积，获得笛卡尔积记录，同时使用条件J和条件1中的跨表条件来过滤笛卡尔积记录<br>第4步，补齐外连接<br>      4.1，左外连接，把左表没有参与过笛卡尔积运算的记录全部补全，右表补NULL<br>      4.2，右外链接，把右表没有参与过笛卡尔积运算的记录全部补全，左表补NULL<br>第5步，根据列名分组<br>第6步，在分组内部，利用聚合函数对非分组列进行计算<br>第7步，把需要新加的列加上<br>第8步，把不需要的列去掉<br>第9步，根据HAVING中的条件对结果进行过滤<br>第10步，去重<br>第11步，排序<br>第12步，分页</p>
 <p><strong>顺序</strong>：WHERE中的单表条件 =&gt; JOIN和WHERE中的跨表条件 =&gt; GROUP BY =&gt; HAVING的条件 =&gt; limit</p>
 <h2 id="4-什么是临时表，临时表什么时候删除？"><a href="#4-什么是临时表，临时表什么时候删除？" class="headerlink" title="4. 什么是临时表，临时表什么时候删除？"></a>4. <strong>什么是临时表，临时表什么时候删除？</strong></h2><p>MySQL 临时表在我们需要保存一些临时数据时是非常有用的。</p>
 <p>临时表只在当前连接可见，当关闭连接时，Mysql会自动删除表并释放所有空间；当然，也可以手动删除临时表。</p>
 <p>例如：</p>
-<p>CREATE TEMPORARY TABLE tmp_table (</p>
-<p>​        NAME VARCHAR (10) NOT NULL,</p>
-<p>​        time date NOT NULL</p>
-<p>);</p>
-<p>select * from tmp_table;</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TEMPORARY</span> <span class="token keyword">TABLE</span> tmp_table <span class="token punctuation">(</span>
+       NAME <span class="token keyword">VARCHAR</span> <span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+       time <span class="token keyword">date</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tmp_table<span class="token punctuation">;</span>
+</code></pre>
 <p>需要手动删除时：</p>
-<p>DROP TEMPORARY TABLE IF EXISTS temp_tb;</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TEMPORARY</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> temp_tb<span class="token punctuation">;</span>
+</code></pre>
 <h2 id="5-关系型数据库的-B-Tree索引和Hash索引的区别？"><a href="#5-关系型数据库的-B-Tree索引和Hash索引的区别？" class="headerlink" title="5. 关系型数据库的 B+Tree索引和Hash索引的区别？"></a>5. <strong>关系型数据库的 B+Tree索引和Hash索引的区别？</strong></h2><ul>
 <li><p>Hash索引结构：是通过Key和哈希函数，计算哈希值并把哈希值最为存储的数组下标。</p>
 </li>
@@ -568,32 +571,38 @@ LIMIT 分页限定
 <p><strong>Hash索引相比于B+Tree索引的缺点：</strong></p>
 </li>
 </ul>
-<p>（1）Hash索引仅仅能满足”=”,”IN”和”&lt;=&gt;”查询，不能使用范围查询，因为经过相应的Hash算法处理之后的Hash值的大小关系，并不能保证和Hash运算前完全一样；</p>
-<p>（2）Hash索引无法被用来避免数据的排序操作，因为Hash值的大小关系并不一定和Hash运算前的键值完全一样；</p>
-<p>（3）Hash索引不能利用部分索引键查询，对于组合索引，Hash索引在计算Hash值的时候是组合索引键合并后再一起计算Hash值，而不是单独计算Hash值，所以通过组合索引的前面一个或几个索引键进行查询的时候，Hash索引也无法被利用；</p>
-<p>（4）Hash索引在任何时候都不能避免表扫描，由于不同索引键存在相同Hash值，所以即使取满足某个Hash键值的数据的记录条数，也无法从Hash索引中直接完成查询，还是要回表查询数据；</p>
-<p>（5）Hash索引遇到大量Hash值相等的情况后性能并不一定就会比B+树索引高。</p>
+<p>（1）<strong>查询方面：</strong>Hash索引仅仅能满足”=”,”IN”和”&lt;=&gt;”查询，不能使用范围查询，因为经过相应的Hash算法处理之后的Hash值的大小关系，并不能保证和Hash运算前完全一样；</p>
+<p>（2）<strong>排序方面：</strong>Hash索引无法被用来避免数据的排序操作，因为Hash值的大小关系并不一定和Hash运算前的键值完全一样；</p>
+<p>（3）<strong>索引方面：</strong>Hash索引不能利用部分索引键查询，对于组合索引，Hash索引在计算Hash值的时候是组合索引键合并后再一起计算Hash值，而不是单独计算Hash值，所以通过组合索引的前面一个或几个索引键进行查询的时候，Hash索引也无法被利用；</p>
+<p>（4）<strong>Hash自身方面：</strong>Hash索引在任何时候都不能避免表扫描，由于不同索引键存在相同Hash值，所以即使取满足某个Hash键值的数据的记录条数，也无法从Hash索引中直接完成查询，还是要回表查询数据；</p>
+<p>（5）<strong>性能方面：</strong>Hash索引遇到大量Hash值相等的情况后性能并不一定就会比B+树索引高。</p>
 <p><strong>某些关系型数据库是可以使用Hash索引的</strong></p>
-<p>MySQL中，HEAP/MEMORY引擎可以显示支持Hash索引，而常用的InnoDB引擎中默认使用的是B+树索引。</p>
+<p>MySQL中，<strong>HEAP/MEMORY引擎可以显示支持Hash索引</strong>，而常用的<strong>InnoDB引擎中默认使用的是B+树索引</strong>。</p>
 <p>只有在查询是Key-Value这种情况，没有范围查询，没有模糊查询，没有排序，且键值重复性小时，才推荐Hash索引。</p>
 <h2 id="6-简述索引如何加速查询"><a href="#6-简述索引如何加速查询" class="headerlink" title="6. 简述索引如何加速查询?"></a>6. 简述索引如何加速查询?</h2><ol>
 <li><p>索引是指定新的列，为该列建立B+Tree结构</p>
 </li>
-<li><p>有索引时，操作&lt;,&lt;=,=,&gt;,&gt;=,between,in，以及不适用通配符开头的like，会被加速。</p>
+<li><p>有索引时，操作&lt;,&lt;=,=,&gt;,&gt;=,between,in，以及不使用通配符开头的like，会被加速。</p>
 </li>
-<li><p>添加索引后，对应列的查找时间从O(N)下降到O(LogN)</p>
+<li><p>添加索引后，对应列的查找时间从<strong>O(N)下降到O(LogN)</strong></p>
 </li>
 </ol>
-<h2 id="7-聚集索引和非聚集索引区别？"><a href="#7-聚集索引和非聚集索引区别？" class="headerlink" title="7. 聚集索引和非聚集索引区别？"></a>7. <strong>聚集索引和非聚集索引区别？</strong></h2><p>聚集索引 clustered Index  -  非聚集索引 unclustered Index</p>
+<h2 id="7-聚集索引和非聚集索引区别？"><a href="#7-聚集索引和非聚集索引区别？" class="headerlink" title="7. 聚集索引和非聚集索引区别？"></a>7. <strong>聚集索引和非聚集索引区别？</strong></h2><p>索引（在MySQL中也叫做“键（key）”） 是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。</p>
+<p><strong>聚集索引</strong> clustered Index</p>
+<p><img src="/2022/07/10/databasems01/image-20220710164838698.png" alt="聚集索引"></p>
+<p><strong>非聚集索引</strong> unclustered Index</p>
+<p><img src="/2022/07/10/databasems01/image-20220710165659145.png" alt="image-20220710165659145"></p>
+<p><strong>不同点：</strong> 聚集索引的叶子节点存放是一整行的信息。 聚集索引一个表只能有一个，而非聚集索引一个表可以存在多个。 <strong>聚集索引存储记录是物理上连续存在，而非聚集索引是逻辑上的连续（通过指针调用来实现连续）</strong>，物理存储并不连续。 聚集索引查询数据速度快，插入数据速度慢;非聚集索引反之。 聚集索引范围查询快。</p>
 <ol>
-<li>每张表有且只有一个聚集索引，如果在建表的时候定义了主键，主键就是聚集索引，如果没定义有一个缺省的。（有一种说法是聚集索引的索引排列顺序和表记录的排列顺序一致，是的，所谓表记录的排列顺序就是B+Tree结构中链表的顺序）</li>
+<li>每张表有且只有一个聚集索引，如果在建表的时候定义了主键，主键就是聚集索引，如果没定义有一个缺省的。（有一种说法是<strong>聚集索引的索引排列顺序和表记录的排列顺序一致</strong>，是的，所谓表记录的排列顺序就是B+Tree结构中链表的顺序）</li>
 <li>非聚集索引可以有多个。（非聚集索引是另外增加的B+Tree结构，最后通过指针指向单条数据记录）</li>
 <li>增加索引可以提高SELECT速度。</li>
 <li>增加索引会减慢INSERT，DELETE的速度。</li>
 </ol>
+<p>具体的引擎，实现聚簇索引的区别也有所不同，详情可看这个大佬的一篇博客：<a target="_blank" rel="noopener" href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html">MySQL索引背后的数据结构及算法原理</a></p>
 <h2 id="8-关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）"><a href="#8-关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）" class="headerlink" title="8. 关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）?"></a>8. 关系型数据库和非关系型数据库的区别（SQL与NoSQL的区别）?</h2><p>非关系型数据库的优点：</p>
 <ol>
-<li>性能：比如Redis，使用跳表，在并发方面表现更加优异</li>
+<li>性能：比如Redis，底层使用跳表，在并发方面表现更加优异</li>
 <li>可扩展：无论是跳表还是Hash表，耦合性都很低，分布式存储不像B+Tree那样复杂。</li>
 </ol>
 <p>关系型数据库的优点：</p>
