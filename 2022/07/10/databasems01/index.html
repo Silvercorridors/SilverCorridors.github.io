@@ -587,7 +587,7 @@ LIMIT 分页限定
 <li><p>添加索引后，对应列的查找时间从<strong>O(N)下降到O(LogN)</strong></p>
 </li>
 </ol>
-<h2 id="7-聚集索引和非聚集索引区别？"><a href="#7-聚集索引和非聚集索引区别？" class="headerlink" title="7. 聚集索引和非聚集索引区别？"></a>7. <strong>聚集索引和非聚集索引区别？</strong></h2><p>索引（在MySQL中也叫做“键（key）”） 是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。</p>
+<h2 id="7-聚集索引和非聚集索引区别？"><a href="#7-聚集索引和非聚集索引区别？" class="headerlink" title="7. 聚集索引和非聚集索引区别？"></a><font color="red">7. <strong>聚集索引和非聚集索引区别？</strong></font></h2><p>索引（在MySQL中也叫做“键（key）”） 是存储引擎用于快速找到记录的一种数据结构。这是索引的基本功能。</p>
 <p><strong>聚集索引</strong> clustered Index</p>
 <p><img src="/2022/07/10/databasems01/image-20220710164838698.png" alt="聚集索引"></p>
 <p><strong>非聚集索引</strong> unclustered Index</p>
@@ -610,24 +610,24 @@ LIMIT 分页限定
 <li>支持复杂的SQL查询</li>
 <li>支持事务</li>
 </ol>
-<h2 id="9-简述什么是数据库的三范式"><a href="#9-简述什么是数据库的三范式" class="headerlink" title="9. 简述什么是数据库的三范式?"></a>9. 简述什么是数据库的三范式?</h2><p>第一范式：每一个列都是不可分割的原始数据项。第一范式解决的是如何把数据放到一张二维表里。</p>
-<p>第二范式：在第一范式的基础上，不存在部分函数依赖，即所有的非主属性都完全的依赖主属性。第二范式解决的问题：部分的，数据冗余，删除错误，插入困难</p>
+<h2 id="9-简述什么是数据库的三范式"><a href="#9-简述什么是数据库的三范式" class="headerlink" title="9. 简述什么是数据库的三范式?"></a>9. 简述什么是数据库的三范式?</h2><p>第一范式：每一个列都是不可分割的原始数据项。第一范式解决的是如何把数据放到一张二维表里。（<strong>最基本要求</strong>）</p>
+<p>第二范式：在第一范式的基础上，<strong>不存在部分函数依赖</strong>，即所有的非主属性都完全的依赖主属性。第二范式解决的问题：部分的，数据冗余，删除错误，插入困难</p>
 <p>​	函数依赖：A -&gt; B，对两列中的任意记录，通过属性A的值可以确定属性B的值，我们说B依赖于A；A也可以是一组属性，同理</p>
 <p>​	完全函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且B不依赖于任何A的子集，我们说B完全依赖于A。</p>
 <p>​	部分函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且存在B依赖于A的某个子集，我们说B部分依赖于A。</p>
-<p>第三范式：在第二范式的基础上，非主属性不存在传递依赖。第三范式解决的问题：数据冗余，删除错误，插入困难</p>
+<p>第三范式：在第二范式的基础上，<font color="skyblue"><strong>非主属性</strong></font><strong>不存在传递依赖</strong>。第三范式解决的问题：数据冗余，删除错误，插入困难</p>
 <p>​	传递函数依赖，A -&gt; B， B -&gt; C，即C完全依赖于B，B完全依赖于A，我们说C传递依赖于A。</p>
-<p>BC范式：在第二范式的基础上，所有的属性都不存在传递依赖</p>
+<p>BC范式：在第二范式的基础上，<strong>所有的属性都不存在传递依赖</strong></p>
 <h2 id="10-什么是-内连接、外连接、交叉连接、笛卡尔积等？"><a href="#10-什么是-内连接、外连接、交叉连接、笛卡尔积等？" class="headerlink" title="10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？"></a>10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？</h2><p>SQL中两张表，左表和右表</p>
 <p>内连接，只有同时满足连接条件的左表记录和右表记录才能连接成为新的记录。</p>
 <p>外链接，分为左外链接和右外连接</p>
 <p>​	左连接，左表中的全部记录和右表中满足连接条件的记录能够根据条件连接成为新的记录，如果某些左表中记录找不到符合条件的右表记录，则对应列写NULL。</p>
 <p>​	右连接，左表中满足连接条件的记录和右表中的全部记录能够根据条件连接成为新的记录，如果某些右表中记录找不到符合条件的左表记录，则对应列写NULL。</p>
-<p>交叉连接：没有连接条件，左表和右表中的记录排列组合连接成为新的记录，这种连接的结果也成为笛卡尔积。</p>
+<p>交叉连接：没有连接条件，左表和右表中的记录排列组合连接成为新的记录，这种连接的结果也成为笛卡尔积。也就是说内连接是在交叉连接的基础上根据连接条件对笛卡尔积的结果进行了过滤。</p>
 <h2 id="11-varchar和char的区别？"><a href="#11-varchar和char的区别？" class="headerlink" title="11. varchar和char的区别？"></a>11. varchar和char的区别？</h2><p>char：</p>
-<p>​	char类型是固定长度类型，例如char(20)是一个长度为20字节的空间。如果放入的字符串长度不足20字节，尾部会用空格填满，然后在查询时会自动删除后边结尾的空格。所以char类型是不能存储结尾有空格的字符串的。</p>
+<p>​	char类型是固定长度类型，例如char(20)是一个长度为20<strong>字节</strong>的空间。如果放入的字符串长度不足20字节，尾部会用空格填满，然后在查询时会自动删除后边结尾的空格。所以<strong>char类型是不能存储结尾有空格的字符串的</strong>。</p>
 <p>varchar：</p>
-<p>​	varchar类型是可变长度类型，例如varchar(20)是指最长可以放20个字符的空间，而不考虑字符的字符集，以及具体字符占用的字节数。事实上，varchar类型在最后还保存了一个字符串字符长度的值。</p>
+<p>​	varchar类型是可变长度类型，例如varchar(20)是指最长可以放20个**<font color="gold">字符</font>**的空间，而不考虑字符的字符集，以及具体字符占用的字节数。事实上，varchar类型在最后还保存了一个字符串字符长度的值。</p>
 
                 
             </div>
@@ -1008,18 +1008,17 @@ LIMIT 分页限定
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/10/databasems01/">
+                <a href="/2022/07/10/springmvc01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="数据库面试题01：基础知识">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Spring MVC 学习笔记 01：MVC模式">
                         
-                        <span class="card-title">数据库面试题01：基础知识</span>
+                        <span class="card-title">Spring MVC 学习笔记 01：MVC模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1029,27 +1028,26 @@ LIMIT 分页限定
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
-                                    面试题
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category">
+                                    学习笔记
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/Spring-MVC/">
+                        <span class="chip bg-color">Spring MVC</span>
                     </a>
                     
                 </div>
@@ -1465,17 +1463,16 @@ $(function () {
     
 
     
-        
+
+    <!-- 雪花特效 -->
+     
         <script type="text/javascript">
             // 只在桌面版网页启用特效
             var windowWidth = $(window).width();
             if (windowWidth > 768) {
-                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
             }
         </script>
-    
-
-    <!-- 雪花特效 -->
     
 
     <!-- 鼠标星星特效 -->
