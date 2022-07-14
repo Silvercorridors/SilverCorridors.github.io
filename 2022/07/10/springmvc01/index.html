@@ -495,7 +495,7 @@
 <li>代码难以复用</li>
 </ul>
 <h3 id="JAVA-Web-MVC模式"><a href="#JAVA-Web-MVC模式" class="headerlink" title="JAVA Web MVC模式"></a>JAVA Web MVC模式</h3><p>正因为上面的种种弊端，所以很快这种方式就被 <strong>Servlet + JSP + Java Bean</strong> 所替代了，早期的 MVC 模型<strong>（Model2）</strong>就像下图这样：</p>
-<p><img src="/2022/07/10/springmvc01/MVC01.webp" alt="MVC01"></p>
+<p><img src="/2022/07/10/springmvc01/MVC01.webp" alt="Model2"></p>
 <p>首先用户的请求会到达 Servlet，然后根据请求调用相应的 Java Bean，并把所有的显示结果交给 JSP 去完成，这样的模式我们就称为 <strong>MVC</strong> 模式。</p>
 <ul>
 <li><strong>M 代表 模型（Model）</strong><br>模型是什么呢？ 模型就是 dao,bean等。用于获取数据</li>
@@ -503,8 +503,8 @@
 <li><strong>C 代表 控制器（controller)</strong><br>控制器是什么？控制器的作用就是把不同的数据(Model)，显示在不同的视图(View)上，Servlet 扮演的就是这样的角色。</li>
 </ul>
 <h3 id="Spring-MVC-的架构"><a href="#Spring-MVC-的架构" class="headerlink" title="Spring MVC 的架构"></a>Spring MVC 的架构</h3><p>为解决持久层中一直未处理好的数据库事务的编程，又为了迎合 NoSQL 的强势崛起，Spring MVC 给出了方案：</p>
-<p><img src="/2022/07/10/springmvc01/1561976813@307187d9ecbe83a4d41400a94b59b715.png" alt="img"></p>
-<p><img src="/2022/07/10/springmvc01/SpringMVC%E6%9E%B6%E6%9E%84.webp" alt="SpringMVC架构"></p>
+<p><img src="/2022/07/10/springmvc01/1561976813@307187d9ecbe83a4d41400a94b59b715.png" alt="Spring MVC架构1"></p>
+<p><img src="/2022/07/10/springmvc01/SpringMVC%E6%9E%B6%E6%9E%84.webp" alt="SpringMVC架构2"></p>
 <p><strong>传统的模型层被拆分为了业务层(Service)和数据访问层（DAO,Data Access Object）。</strong> 在 Service 下可以通过 Spring 的声明式事务操作数据访问层，而在业务层上还允许我们访问 NoSQL ，这样就能够满足异军突起的 NoSQL 的使用了，它可以大大提高互联网系统的性能。</p>
 <ul>
 <li><strong>特点：</strong><br>结构松散，几乎可以在 Spring MVC 中使用各类视图<br>松耦合，各个模块分离<br>与 Spring 无缝集成</li>
@@ -523,7 +523,7 @@
 <li>（10）DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）</li>
 <li>（11）DispatcherServlet响应用户。</li>
 </ul>
-<p><img src="/2022/07/10/springmvc01/70.png" alt="img"></p>
+<p><img src="/2022/07/10/springmvc01/70.png" alt="SpringMVC流程"></p>
 <blockquote>
 <ul>
 <li>前端控制器 DispatcherServlet：接收请求、响应结果，相当于转发器，有了DispatcherServlet 就减少了其它组件之间的耦合度。</li>

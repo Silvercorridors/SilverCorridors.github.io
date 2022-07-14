@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringMVC04, 银色回廊">
+    <meta name="keywords" content="Spring MVC 学习笔记 04：数据的发送, 银色回廊">
     <meta name="description" content="Spring MVC 学习笔记 04：数据的发送显示图片在进行Spring MVC的配置时，通常我们会配置一个dispatcher servlet用于处理对应的URL。配置如下：
 &amp;lt;servlet&gt;
     &amp;lt;servlet-n">
@@ -21,7 +21,7 @@
 
     
 
-    <title>SpringMVC04 | 银色回廊</title>
+    <title>Spring MVC 学习笔记 04：数据的发送 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -314,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringMVC04</h1>
+                    <h1 class="description center-align post-title">Spring MVC 学习笔记 04：数据的发送</h1>
                 </div>
             </div>
         </div>
@@ -508,7 +508,7 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span> 
 </code></pre>
 <p>当你在一个jsp写好<code>&lt;img&gt;</code>后，是无法直接显示的，因为MVC会默认劫持。</p>
-<p><img src="/2022/07/12/springmvc04/image-20220712214638856.png" alt="image-20220712214638856"></p>
+<p><img src="/2022/07/12/springmvc04/image-20220712214638856.png" alt="MVC默认劫持未配置的资源"></p>
 <p>index.jsp</p>
 <pre class=" language-jsp"><code class="language-jsp"><html>
 <body>
@@ -664,10 +664,10 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <p>运行结果：</p>
-<p><img src="/2022/07/12/springmvc04/image-20220713162556331.png" alt="image-20220713162556331"></p>
-<p><img src="/2022/07/12/springmvc04/image-20220713162611197.png" alt="image-20220713162611197"></p>
+<p><img src="/2022/07/12/springmvc04/image-20220713162556331.png" alt="运行结果"></p>
+<p><img src="/2022/07/12/springmvc04/image-20220713162611197.png" alt="运行结果"></p>
 <p>或者用Postman上传一个文件夹</p>
-<p><img src="/2022/07/12/springmvc04/image-20220713163119647.png" alt="image-20220713163119647"></p>
+<p><img src="/2022/07/12/springmvc04/image-20220713163119647.png" alt="用Postman上传一个文件夹"></p>
 <h3 id="使用UUID来产生不会重名的文件"><a href="#使用UUID来产生不会重名的文件" class="headerlink" title="使用UUID来产生不会重名的文件"></a>使用UUID来产生不会重名的文件</h3><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test1"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> String <span class="token function">test1</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
     System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test1()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1224,18 +1224,17 @@ Web Resource webResource <span class="token operator">=</span> c<span class="tok
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/12/springmvc04/">
+                <a href="/2022/07/13/springmvc05/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="SpringMVC04">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Spring MVC 学习笔记 05：异常处理">
                         
-                        <span class="card-title">SpringMVC04</span>
+                        <span class="card-title">Spring MVC 学习笔记 05：异常处理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1245,9 +1244,9 @@ Web Resource webResource <span class="token operator">=</span> c<span class="tok
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1260,7 +1259,6 @@ Web Resource webResource <span class="token operator">=</span> c<span class="tok
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1283,9 +1281,9 @@ Web Resource webResource <span class="token operator">=</span> c<span class="tok
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringMVC03">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="SpringMVC03：RESTful与常用注解">
                         
-                        <span class="card-title">SpringMVC03</span>
+                        <span class="card-title">SpringMVC03：RESTful与常用注解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
