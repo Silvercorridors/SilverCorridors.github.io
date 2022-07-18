@@ -472,7 +472,7 @@ Spring的jar包
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.8k
                 </div>
                 
 
@@ -507,6 +507,7 @@ Spring的jar包
 2.配置文件的命名：没有硬性要求，一般用applicationContext.xml
 思考：日后应用Spring框架时，需要进行配置文件路径的设置
 </code></pre>
+<h2 id="IOC（Inversion-of-Control）"><a href="#IOC（Inversion-of-Control）" class="headerlink" title="IOC（Inversion of Control）"></a>IOC（Inversion of Control）</h2><p>使用对象时，由主动new产生对象转换为由<strong>外部</strong>提供对象，在此过程中对象创建控制权由程序转移到外部，此思想称为<strong>控制反转</strong>。</p>
 <h2 id="Spring的核心API"><a href="#Spring的核心API" class="headerlink" title="Spring的核心API"></a>Spring的核心API</h2><p>每个框架都有自己的核心API。</p>
 <p>例如 </p>
 <ul>
@@ -656,7 +657,7 @@ destroy
 </ul>
 <p>与Singleton模式中不同，当运行上面代码时，我们不会看到destroy，因为Spring在Prototype模式下根本看不到这个生成的实例了。</p>
 <p>所以这个被销毁时，Spring也是无法知道的。</p>
-<p>依赖注入：Spring在解耦合以后通过设置完成复杂类的实例化。</p>
+<h2 id="依赖注入（DI）"><a href="#依赖注入（DI）" class="headerlink" title="依赖注入（DI）"></a>依赖注入（DI）</h2><p>依赖注入：Spring在解耦合以后通过设置完成复杂类的实例化。在容器中建立bean与bean之间的依赖关系的整个过程，称为依赖注入。</p>
 <h2 id="XML方式配置依赖注入（DI）"><a href="#XML方式配置依赖注入（DI）" class="headerlink" title="XML方式配置依赖注入（DI）"></a>XML方式配置依赖注入（DI）</h2><h3 id="构造函数注入：基础类型-Bean"><a href="#构造函数注入：基础类型-Bean" class="headerlink" title="构造函数注入：基础类型 + Bean"></a>构造函数注入：基础类型 + Bean</h3><ul>
 <li><strong>name</strong>/<strong>index</strong>(序号，构造函数参数的顺序，从0开始)/<strong>type</strong>(给出类型，按顺序) + value/ref，例如</li>
 </ul>
@@ -666,7 +667,7 @@ destroy
 </code></pre>
 <p>也可以不用ref，嵌入Bean标签，可以不用value，嵌入value标签</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>b<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span>  <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.sivlerCorridors.B<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.sivlerCorridors.B<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>constructor-arg</span><span class="token punctuation">></span></span>
 </code></pre>
 <h3 id="set函数注入：基础类型-Bean-集合类型"><a href="#set函数注入：基础类型-Bean-集合类型" class="headerlink" title="set函数注入：基础类型 + Bean + 集合类型"></a>set函数注入：基础类型 + Bean + 集合类型</h3><p>新建一个空参构造，再调用set方法</p>
@@ -730,7 +731,7 @@ destroy
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </code></pre>
-<p> <strong>构造函数注入与set函数注入区别：</strong></p>
+<p> 构造函数注入与set函数注入区别：</p>
 <ul>
 <li><p>构造函数的必须和构造函数的参数一致，set可以不一致</p>
 </li>
@@ -1219,9 +1220,9 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Spring学习日记01：基础概念与IoC">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Spring学习日记01：基础概念">
                         
-                        <span class="card-title">Spring学习日记01：基础概念与IoC</span>
+                        <span class="card-title">Spring学习日记01：基础概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
