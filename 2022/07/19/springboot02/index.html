@@ -468,7 +468,7 @@ SpringBootApplication注解分析例如，如果类路径中存在H2数据库Jar
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.1k
+                    3.2k
                 </div>
                 
 
@@ -818,6 +818,9 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
 <p><code>AutoConfigurationImportSelector</code>类是<code>ImportSelector</code>的实现类，实现了<code>selectImports()</code>方法。<code>selectImports()</code>方法又调用<code>getAutoConfigurationEntry()</code>方法从spring.factories文件中读取配置类的全限定名列表，并进行过滤，最终得到需要自动配置的类全限定名列表。</p>
 <br>
 
+<h2 id="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"><a href="#问题：为什么有了ComponentScan，还需要AutoConfigurationPackage" class="headerlink" title="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"></a>问题：为什么有了ComponentScan，还需要AutoConfigurationPackage</h2><p>AutoConfigurationPackage处理的是主程序所在包平级的所有类，ComponentScan（缺省写法，不写value或者basePackages，就是当前主程序所在包）处理的是主程序所在包的平级和子包的所有类。</p>
+<p>AutoConfigurationPackage运行在先，ComponentScan运行在后</p>
+<p>AutoConfigurationPackage不运行的话，ComponentScan无法运行（AutoConfigurationPackage为ComponentScan做了一系列初始化工作）</p>
 <br>
 
 <br>
@@ -828,6 +831,7 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
 
 <br>
 
+<p><br><br><br><br><br></p>
 <p>体会：初看源码的感觉就像掉进了秦始皇的陵墓一样，令人惊叹的同时又令人充满着困惑，真的是佩服能够书写这种史诗级代码的程序员，这头发掉的值！~</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7035528380753641508">SpringBoot自动配置之AutoConfigurationImportSelector - SpringBoot自动配置(二)</a></p>
 
