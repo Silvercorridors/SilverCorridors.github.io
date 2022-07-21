@@ -481,7 +481,7 @@ Spring与Spring Boot对比Spring: Spring框架是">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.1k
+                    4.4k
                 </div>
                 
 
@@ -923,14 +923,15 @@ Spring与Spring Boot对比Spring: Spring框架是">
 <p>当要临时改端口时</p>
 <pre><code>java –jar springboot.jar –-server.port=88 –-spring.profiles.active=test
 </code></pre>
-<p><strong>参数加载优先顺序</strong></p>
-<p>参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html">https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config</a></p>
+<h4 id="参数加载优先顺序"><a href="#参数加载优先顺序" class="headerlink" title="参数加载优先顺序"></a><strong>参数加载优先顺序</strong></h4><p>参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html">https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config</a></p>
 <p><img src="/2022/07/18/springboot01/image-20220719114744197.png" alt="参数加载优先顺序"></p>
+<h4 id="Application-Properties"><a href="#Application-Properties" class="headerlink" title="Application Properties"></a>Application Properties</h4><p>16类配置参数项文档（Application Properties）：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties">Spring properties</a></p>
+<p>作用：自动配置(见Springboot02：@EnableAutoConfiguration)</p>
 <h3 id="配置文件分类"><a href="#配置文件分类" class="headerlink" title="配置文件分类"></a><strong>配置文件分类</strong></h3><p>SpringBoot中4级配置文件</p>
-<p>1级： file ：(target)/config/application.yml <strong>【最高】</strong> </p>
-<p>2级： file ：(target)/application.yml</p>
-<p>3级：classpath：config/application.yml</p>
-<p>4级：classpath：application.yml  <strong>【最低】</strong></p>
+<p>1级： <code>(target的上一层：&lt;current_dir&gt;)/config/（xx/）application.yml</code> <strong>【最高】</strong> </p>
+<p>2级： <code>(target的上一层：&lt;current_dir&gt;)/application.yml</code></p>
+<p>3级：<code>&lt;classpath&gt;/config/application.yml</code></p>
+<p>4级：<code>&lt;classpath&gt;/application.yml</code>  <strong>【最低】</strong></p>
 <p>作用：</p>
 <ul>
 <li>1级与2级留做系统打包后设置通用属性</li>
@@ -1047,6 +1048,47 @@ quiet-period: 1000
 <p><img src="/2022/07/18/springboot01/image-20220719155209262.png" alt="测试"></p>
 <p>热部署成功实现</p>
 <p><img src="/2022/07/18/springboot01/image-20220719155501559.png" alt="Postman再次发送请求"></p>
+<h2 id="知识点：SpringBoot常见项目结构"><a href="#知识点：SpringBoot常见项目结构" class="headerlink" title="知识点：SpringBoot常见项目结构"></a>知识点：SpringBoot常见项目结构</h2><p><img src="/image-20220720110255610.png" alt="通常的项目结构"></p>
+<ul>
+<li><code>项目根目录/src/main/java</code>：放置项目Java源代码</li>
+<li><code>项目根目录/src/main/resources</code>：放置项目静态资源和配置文件</li>
+<li><code>项目根目录/src/test/java</code>：放置项目测试用例代码</li>
+</ul>
+<h3 id="代码层结构"><a href="#代码层结构" class="headerlink" title="代码层结构"></a>代码层结构</h3><pre class=" language-text"><code class="language-text">|_annotation：放置项目自定义注解
+|_aspect：放置切面代码
+|_config：放置配置类
+|_constant：放置常量、枚举等定义
+   |__consist：存放常量定义
+   |__enums：存放枚举定义
+|_controller：放置控制器代码
+|_filter：放置一些过滤、拦截相关的代码
+|_mapper：放置数据访问层代码接口
+|_model：放置数据模型代码
+   |__entity：放置数据库实体对象定义
+   |__dto：存放数据传输对象定义
+   |__vo：存放显示层对象定义
+|_service：放置具体的业务逻辑代码（接口和实现分离）
+   |__intf：存放业务逻辑接口定义
+   |__impl：存放业务逻辑实际实现
+|_utils：放置工具类和辅助代码
+</code></pre>
+<h3 id="资源文件结构"><a href="#资源文件结构" class="headerlink" title="资源文件结构"></a>资源文件结构</h3><pre class=" language-text"><code class="language-text">|_mapper：存放mybatis的XML映射文件（如果是mybatis项目）
+|_static：存放网页静态资源，比如下面的js/css/img
+   |__js：
+   |__css：
+   |__img：
+   |__font：
+   |__等等
+|_template：存放网页模板，比如thymeleaf/freemarker模板等
+   |__header
+   |__sidebar
+   |__bottom
+   |__XXX.html等等
+|_application.yml       基本配置文件
+|_application-dev.yml   开发环境配置文件
+|_application-test.yml  测试环境配置文件
+|_application-prod.yml  生产环境配置文件
+</code></pre>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://javamana.com/2022/194/202207120611097279.html">Spring Boot 2.7版本 实现热部署</a></p>
 
                 

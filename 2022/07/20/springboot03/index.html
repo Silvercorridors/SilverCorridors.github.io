@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="读书笔记：Java编程思想, 银色回廊">
-    <meta name="description" content="读书笔记：Java编程思想为记录在读Java编程思想这本神书的领悟与感受，此篇博客会一直更新，同时记笔记也是为了不放弃阅读纸质书的一个习惯。对于这本书的阅读方式，博主选择挑选性的观看，因为只有这样，这更能有效率的学习与探索Java的美（主要">
+    <meta name="keywords" content="springboot03, 银色回廊">
+    <meta name="description" content="springboot03：自定义AutoConfiguration在看完自动装配的原理后，今天来div一个AutoConfiguration的过程，巩固一下学到的知识。
+步骤1.建立自定义starter的package
+2.通过maven把">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@
 
     
 
-    <title>读书笔记：Java编程思想 | 银色回廊</title>
+    <title>springboot03 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -325,12 +327,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">读书笔记：Java编程思想</h1>
+                    <h1 class="description center-align post-title">springboot03</h1>
                 </div>
             </div>
         </div>
@@ -444,17 +446,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E5%86%99%E4%BD%9C/">
-                                <span class="chip bg-color">写作</span>
-                            </a>
-                        
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -462,8 +456,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-category">
-                                读书笔记
+                            <a href="/categories/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-category">
+                                Spring全家桶
                             </a>
                         
                     </div>
@@ -475,7 +469,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-07-07
+                    2022-07-20
                 </div>
                 
 
@@ -484,7 +478,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    778
                 </div>
                 
 
@@ -506,28 +500,153 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="读书笔记：Java编程思想"><a href="#读书笔记：Java编程思想" class="headerlink" title="读书笔记：Java编程思想"></a>读书笔记：Java编程思想</h1><p>为记录在读Java编程思想这本神书的领悟与感受，此篇博客会一直更新，同时记笔记也是为了不放弃阅读纸质书的一个习惯。对于这本书的阅读方式，博主选择挑选性的观看，因为只有这样，这更能有效率的学习与探索Java的美（主要因为太厚了看不完啊…..）。先上图以明志。</p>
-<p><img src="/2022/07/07/javareading01/111126082092481.jpg" alt="Java编程思想(第4版)中文完整版"></p>
-<p>对封面都这么用心设计，可见这本神书，与其说是一部工具书，更像是一本Java的艺术思想，难怪被封为圣经。</p>
-<h2 id="01-概念：容器"><a href="#01-概念：容器" class="headerlink" title="01-概念：容器"></a>01-概念：容器</h2><p>在学习Java的时候，听到容器这个词的时候就一直有点不理解（还有context应用上下文什么的），为什么要把一个类叫做容器呢？接下来看看书上的概念：</p>
-<blockquote>
-<p>通常来说，如果不知道在解决某个特定问题时需要多少个对象，或者它们将存活多久，那么就不可能知道如何存储这些对象。如何才能知道需要多少空间来创建这些对象呢？答案是你不可能知道，因为这类信息只有在运行时才能获得。</p>
-<p>对于面向对象设计的大多数问题而言，这个问题的解决方案似乎过于轻率：创建另一种对象类型。这种新的对象类型持有对其他对象的引用。当然，你可以用在大多数语言中都有的数组类型来实现相同的功能。但是<strong>这个通常被称为容器（也称为集合）的新对象，在任何时候都可以扩容自己以容纳你置于其中的所有东西</strong>。因此<strong>你不需要知道将来会把多少个对象置于容器中</strong>，然后让它处理所有细节。</p>
-</blockquote>
-<p>换个更直白点的说明方式：容器是一个Java 所编写的程序，原先必须自行编写程序并且事先要明确管理对象的细节，而有了容器以后，容器都会自动帮您作好。</p>
-<blockquote>
-<p>从设计的观点来看，真正需要的只是一个可以被操作，从而解决问题的序列。</p>
-</blockquote>
-<h2 id="02-goto语句"><a href="#02-goto语句" class="headerlink" title="02-goto语句"></a>02-goto语句</h2><p>goto起源于汇编语言的程序控制：“A成立，则跳到这里，否则跳到那里”。如果阅读由编译器最终生成的汇编代码，就会发现控制里包含了许多跳转。（Java编译器生成他自己的”汇编代码”，但是这个代码是运行在Java虚拟机上的，而不是直接运行在CPU硬件上）。</p>
-<p>因为goto语句是在源码级上的跳转，这使得它臭名昭著。对于这个问题，java采用的策略是中庸之道：goto是Java中的一个关键字，但是在语言中并没有使用它，也就是说Java中没有goto。</p>
-<p>然而，Java中也能完成一些类似跳转的操作，这与break和continue有关。他们其实不是跳转，而是中断迭代语句的一种方法。之后以把他们和goto相提并论，是因为他们都使用了<strong>标签</strong>机制。Java里使用标签的唯一理由就是因为有循环嵌套存在。</p>
-<p>标签就是后面跟有冒号的标识，就像这样：</p>
-<pre class=" language-markdown"><code class="language-markdown">label1：
+                <h1 id="springboot03：自定义AutoConfiguration"><a href="#springboot03：自定义AutoConfiguration" class="headerlink" title="springboot03：自定义AutoConfiguration"></a>springboot03：自定义AutoConfiguration</h1><p>在看完自动装配的原理后，今天来div一个AutoConfiguration的过程，巩固一下学到的知识。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>1.建立自定义starter的package</p>
+<p>2.通过maven把自定义starter引入</p>
+<p>3.通过ApplicationContext容器使用</p>
+<h2 id="建立自定义starter的package"><a href="#建立自定义starter的package" class="headerlink" title="建立自定义starter的package"></a>建立自定义starter的package</h2><p>通过空maven新建一个starter模块，编写pom.xml文件</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 产出是jar包  --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>packaging</span><span class="token punctuation">></span></span>jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>packaging</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!-- name;description --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>MySpringBootStarter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>description</span><span class="token punctuation">></span></span>Starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>description</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project.build.sourceEncoding</span><span class="token punctuation">></span></span>UTF-8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>project.build.sourceEncoding</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project.reporting.outputEncoding</span><span class="token punctuation">></span></span>UTF-8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>project.reporting.outputEncoding</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>java.version</span><span class="token punctuation">></span></span>11<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>java.version</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--target 和 source是必须要设定的，并且需要和java.version一致,否则会有编译错误--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>maven.compiler.source</span><span class="token punctuation">></span></span>${java.version}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>maven.compiler.source</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>maven.compiler.target</span><span class="token punctuation">></span></span>${java.version}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>maven.compiler.target</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--如果需要一个有starter的项目，有三个jar包是必须要引入的--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-autoconfigure<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-autoconfigure-processor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
 </code></pre>
-<p>然而在Dijkstra（发明最短路径算法的那位）的《Goto有害》论文中，它最反对的就是标签，而非goto。因为一个程序里面，标签越多，错误也就会越多，并且还会让程序难以分析。但是，Java里面的标签不会造成这种问题，因为他们的应用场合已经受到了限制。这也引出了一个现象：通过限制语句的能力，反而能使一项语言特性更加有用。（有点哲学的味道）</p>
-<h2 id="03-this、static"><a href="#03-this、static" class="headerlink" title="03 - this、static"></a>03 - this、static</h2><p>假设你希望在方法的内部获得当前对象的引用。由于这个引用是由编译器“偷偷”传入的，所以没有标识符可用。但是， 有个专门的关键字：<strong>this</strong>，this关键字只能在方法内部使用，表示“调用方法的那个对象”。</p>
-<p>有了this出现后解决了一个重要的问题：代码复用，以至于this后面一节专门讲了<strong>在构造器中调用（另一个）构造器</strong>这一知识点，但是有一点需要注意，就是在<strong>一个构造方法里面只能用this调用一个构造器，不能调用两个，并却必须将这个构造器置于最起始的位置</strong>，否则编译器会报错。</p>
-<p>了解了this以后就能更全面的了解static方法的含义。s<strong>tatic方法就是没有this的方法。在static的内部不能调用非静态方法，反过来是可以的。</strong></p>
+<p>建立三个类</p>
+<p>xxxProperties 配置类</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"myservice"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyServiceProperties</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 如果application.yaml中没有配置，需要自动配置缺省值</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MSG<span class="token operator">=</span><span class="token string">"aaaa"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String msg <span class="token operator">=</span> MSG<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> String <span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMsg</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>msg <span class="token operator">=</span> msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>xxxAutoConfiguration <strong>自动装配类</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token punctuation">{</span>MyServiceProperties<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span><span class="token punctuation">{</span>MyService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"myservice"</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">"msg"</span><span class="token punctuation">,</span> matchIfMissing <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyServiceAutoConfiguration</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 自动注入MyServiceProperties</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> MyServiceProperties myServiceProperties<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 初始化MyService，并且放入容器</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span>MyService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> MyService <span class="token function">myService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        MyService myService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 从Properties文件中注入msg</span>
+        myService<span class="token punctuation">.</span><span class="token function">setMsg</span><span class="token punctuation">(</span>myServiceProperties<span class="token punctuation">.</span><span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> myService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>xxx     service类</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyService</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> String msg<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> String <span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMsg</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>msg <span class="token operator">=</span> msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> String <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"Hello! "</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>msg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在resources文件夹下新建一个META-INF文件夹，新建spring.factories</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><span class="token punctuation">=</span><span class="token attr-value">\
+cn.silvercorridors.MyServiceAutoConfiguration</span>
+</code></pre>
+<p>打包(package)</p>
+<p>安装到本地仓库(install)</p>
+<p>到这里，一个自动装配的架子就初步搭好了</p>
+<h2 id="在springboot中实现自动装配"><a href="#在springboot中实现自动装配" class="headerlink" title="在springboot中实现自动装配"></a>在springboot中实现自动装配</h2><p>在springboot项目中pom.xml引入刚才创建的自定义starter</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>cn.silvercorridors<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>MySpringBootStarter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0-SNAPSHOT<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>yaml配置文件添加配置信息（不设定则为默认值：aaaa）</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">Myservice</span><span class="token punctuation">:</span>
+  <span class="token key atrule">msg</span><span class="token punctuation">:</span> abcd
+</code></pre>
+<p>在Controller中调用</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyController</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> MyService myService<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/r1"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ResponseBody</span>
+    <span class="token keyword">public</span> String <span class="token function">r1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> myService<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>运行结果：实现自动配置</p>
+<p><img src="/2022/07/20/springboot03/image-20220722010237653.png" alt="自定义AutoConfiguration运行结果"></p>
+<h2 id="查询自动装配初始化信息"><a href="#查询自动装配初始化信息" class="headerlink" title="查询自动装配初始化信息"></a>查询自动装配初始化信息</h2><p>如果我们想要知道，AutoConfiguration在初始化时自动装配了哪些属性，可以通过如下操作来查看。</p>
+<p>配置文件中</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">debugger</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+</code></pre>
+<p>此时，再一次运行springboot启动类，会多出如下debug信息：</p>
+<p><img src="/2022/07/20/springboot03/image-20220722011257470.png" alt="Positive matches"></p>
+<p>告诉了哪些AutoConfiguration被match了，告诉了被match的原因并且进行相应的操作</p>
+<p>还有一些AutoConfiguration没有被match，告诉了没有被match的原因</p>
+<p><img src="/2022/07/20/springboot03/image-20220722011522424.png" alt="Negative matches"></p>
+<p>这里我们可以看到MyServiceAutoConfiguration与其中的myService成员在启动时被匹配到了，因为满足了存在MyService.class的条件</p>
+<p><img src="/2022/07/20/springboot03/image-20220722011659753.png" alt="MyService的match信息"></p>
+<p>这里的条件对应的就是MyServiceAutoConfiguration中的 @ConditionalOnClass(MyService.class)。</p>
 
                 
             </div>
@@ -554,7 +673,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/07/07/javareading01/">https://silvercorridors.cf/2022/07/07/javareading01/</a>
+                    <a href="https://silvercorridors.cf/2022/07/20/springboot03/">https://silvercorridors.cf/2022/07/20/springboot03/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -591,15 +710,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E5%86%99%E4%BD%9C/">
-                                    <span class="chip bg-color">写作</span>
-                                </a>
-                            
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -912,66 +1023,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/07/10/databasems01/">
+                <a href="/2022/07/20/springboot03/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="数据库面试题01：基础知识">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="springboot03">
                         
-                        <span class="card-title">数据库面试题01：基础知识</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-10
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/07/07/javasems04/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="javaSE 面试题04">
-                        
-                        <span class="card-title">javaSE 面试题04</span>
+                        <span class="card-title">springboot03</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -982,14 +1045,56 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/JavaSE/" class="post-category">
-                                    JavaSE
+                            <a href="/categories/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-category">
+                                    Spring全家桶
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/19/springboot02/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringBoot 02：源码分析——自动装配">
+                        
+                        <span class="card-title">SpringBoot 02：源码分析——自动装配</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-category">
+                                    Spring全家桶
                                 </a>
                             
                             
@@ -999,12 +1104,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
                     </a>
                     
                 </div>

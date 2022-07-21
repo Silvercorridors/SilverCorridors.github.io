@@ -481,7 +481,7 @@ SpringBootApplication注解分析例如，如果类路径中存在H2数据库Jar
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    3.3k
                 </div>
                 
 
@@ -632,7 +632,7 @@ SpringBootApplication注解分析例如，如果类路径中存在H2数据库Jar
 <p>SpringBoot自动配置的核心就在<code>@EnableAutoConfiguration</code>注解上，这个注解通过<code>@Import(AutoConfigurationImportSelector)</code>来完成自动配置。</p>
 <p>所以说，SpringBoot自动配置的奥秘就隐藏在<code>AutoConfigurationImportSelector</code>类中。</p>
 <p>首先有以下问题：</p>
-<h4 id="1-Import注解是什么？有什么用？"><a href="#1-Import注解是什么？有什么用？" class="headerlink" title="1.@Import注解是什么？有什么用？"></a>1.<code>@Import</code>注解是什么？有什么用？</h4><p>​		@Import注解是用来导入配置类或者一些需要前置加载的类。以下是@Imort注解类的源码</p>
+<h4 id="1-Import注解是什么？有什么用？"><a href="#1-Import注解是什么？有什么用？" class="headerlink" title="1.@Import注解是什么？有什么用？"></a>1.<code>@Import</code>注解是什么？有什么用？</h4><p>​		@Import注解是用来导入配置类或者一些需要前置加载的类并放入容器，以下是@Imort注解类的源码</p>
 <pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Documented</span>
@@ -762,7 +762,7 @@ TestC testC<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p><code>getCandidateConfigurations()</code>方法通过<code>SpringFactoriesLoader</code>的<code>loadFactoryNames()</code>方法从所有的<strong>spring.factories</strong>文件中获取<strong>需要配置的bean全限定名列表</strong>。</p>
-<h4 id="getSpringFactoriesLoaderFactoryClass"><a href="#getSpringFactoriesLoaderFactoryClass" class="headerlink" title="getSpringFactoriesLoaderFactoryClass"></a>getSpringFactoriesLoaderFactoryClass</h4><p>这里我们看到，AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
+<h4 id="getSpringFactoriesLoaderFactoryClass"><a href="#getSpringFactoriesLoaderFactoryClass" class="headerlink" title="getSpringFactoriesLoaderFactoryClass"></a>getSpringFactoriesLoaderFactoryClass</h4><p>这里我们看到，AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass 被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getSpringFactoriesLoaderFactoryClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> EnableAutoConfiguration<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -832,13 +832,18 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p><code>getConfigurationClassFilter()</code>方法通过<code>getAutoConfigurationImportFilters()</code>方法获取到spring.factories文件中<code>AutoConfigurationImportFilter</code>接口的配置，然后将其封装到<code>ConfigurationClassFilter</code>对象中。</p>
-<h3 id="AutoConfigurationImportSelector总结"><a href="#AutoConfigurationImportSelector总结" class="headerlink" title="AutoConfigurationImportSelector总结"></a>AutoConfigurationImportSelector总结</h3><p>AutoConfigurationImportSelector类是通过@EnableAutoConfiguration注解引入的，主要作用就是<strong>将所有SpringBoot要引入的自动配置类加载并放入容器之中，这些类的名称都是xxxAutoConfiguration，并且他们的全名都是配置在META-INF/spring-autoconfigure-metadata配置文件中（2.71版本是这样，以前的版本好像有的会放在spring.factories）</strong>，除了这些还有一个强大的功能就是过滤掉不符合条件注解配置类。</p>
+<h3 id="AutoConfigurationImportSelector总结"><a href="#AutoConfigurationImportSelector总结" class="headerlink" title="AutoConfigurationImportSelector总结"></a>AutoConfigurationImportSelector总结</h3><p>AutoConfigurationImportSelector类是通过@EnableAutoConfiguration注解引入的，主要作用就是<strong>将所有SpringBoot要引入的自动配置类加载并放入容器之中，这些类的名称都是xxxAutoConfiguration，并且他们的全名都是配置在META-INF/spring.factories配置文件中的EnableAutoConfiguration（<font color="red">新版本有所不同</font>）</strong>，除了这些还有一个强大的功能就是过滤掉不符合条件注解配置类。</p>
+<p>AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass 被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
+<p>当调用SpringFactoriesLoader.loadFactoryNames()时，内部调用loadSpringFactories，访问本包(org.springframework.boot.autoconfigure)下的META-INF文件夹中的spring.factories，变量都是所有要加载的xxxAutoConfiguration类。</p>
+<p>每一个xxxAutoConfiguration类都有@Configuration 注解，表明这个类是参与Spring配置的。</p>
+<p>每一个xxxAutoConfiguration类都有@EnableConfigurationProperties((xxxProperties.class)) annotation，xxxProperties类就是用于存储自动配置信息的类</p>
 <p><code>AutoConfigurationImportSelector</code>类是<code>ImportSelector</code>的实现类，实现了<code>selectImports()</code>方法。<code>selectImports()</code>方法又调用<code>getAutoConfigurationEntry()</code>方法从spring.factories文件中读取配置类的全限定名列表，并进行过滤，最终得到需要自动配置的类全限定名列表。</p>
 <br>
 
 <h2 id="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"><a href="#问题：为什么有了ComponentScan，还需要AutoConfigurationPackage" class="headerlink" title="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"></a>问题：为什么有了ComponentScan，还需要AutoConfigurationPackage</h2><p>AutoConfigurationPackage处理的是主程序所在包平级的所有类，ComponentScan（缺省写法，不写value或者basePackages，就是当前主程序所在包）处理的是主程序所在包的平级和子包的所有类。</p>
 <p>AutoConfigurationPackage运行在先，ComponentScan运行在后</p>
 <p>AutoConfigurationPackage不运行的话，ComponentScan无法运行（AutoConfigurationPackage为ComponentScan做了一系列初始化工作）</p>
+<h2 id="SpringBoot自动配置原理总结"><a href="#SpringBoot自动配置原理总结" class="headerlink" title="SpringBoot自动配置原理总结"></a>SpringBoot自动配置原理总结</h2><p>这里我们看到，AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass 被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
 <br>
 
 <br>
@@ -1232,18 +1237,17 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/19/springboot02/">
+                <a href="/2022/07/20/springboot03/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringBoot 02：源码分析——自动装配">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="springboot03">
                         
-                        <span class="card-title">SpringBoot 02：源码分析——自动装配</span>
+                        <span class="card-title">springboot03</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1253,9 +1257,9 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-20
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1267,15 +1271,6 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/springboot/">
-                        <span class="chip bg-color">springboot</span>
-                    </a>
-                    
                 </div>
                 
             </div>
