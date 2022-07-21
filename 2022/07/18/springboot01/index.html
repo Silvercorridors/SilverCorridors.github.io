@@ -310,6 +310,19 @@ Spring与Spring Boot对比Spring: Spring框架是">
 
     
     
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
 
 
 
@@ -468,13 +481,18 @@ Spring与Spring Boot对比Spring: Spring框架是">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    4.1k
                 </div>
                 
 
                 
 
                 
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
             </div>
         </div>
         <hr class="clearfix">
@@ -644,11 +662,11 @@ Spring与Spring Boot对比Spring: Spring框架是">
 <p>以后再开发中，我们主要写yml这种配置文件格式。</p>
 <h3 id="如果三种配置文件都存在，谁生效？"><a href="#如果三种配置文件都存在，谁生效？" class="headerlink" title="如果三种配置文件都存在，谁生效？"></a><strong>如果三种配置文件都存在，谁生效？</strong></h3><p><strong>答：properties优先级最高，其次yml，最后yaml。</strong></p>
 <p>注意事项：SpringBoot内置属性过多，且所有属性集中在一起修改，在使用时，通过提示键+关键字修改属性。</p>
-<h3 id="yaml格式"><a href="#yaml格式" class="headerlink" title="yaml格式"></a>yaml格式</h3><p>YAML（YAML Ain’t Markup Language），一种数据序列化格式</p>
+<h3 id="yaml格式"><a href="#yaml格式" class="headerlink" title="yaml格式"></a>yaml格式</h3><p>YAML是”YAML Ain’t Markup Language”(YAML不是一种标记语言)的递归缩写，然而开发这种语言时，YAML的意思其实是”Yet Another Markup Language”(仍是一种标记语言)，本质其实是一种数据序列化格式</p>
 <h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ul>
 <li>容易阅读</li>
 <li>容易与脚本语言交互</li>
-<li>以数据为核心，重数据轻格式</li>
+<li>以数据为核心，重数据 轻格式</li>
 </ul>
 <h4 id="YAML文件扩展名"><a href="#YAML文件扩展名" class="headerlink" title="YAML文件扩展名"></a>YAML文件扩展名</h4><ul>
 <li><strong>yml（主流）</strong></li>
@@ -665,6 +683,13 @@ Spring与Spring Boot对比Spring: Spring框架是">
 </li>
 <li><p><code>#</code> 表示注释</p>
 </li>
+<li><p>普通的值，包括数字，字符串，布尔值</p>
+<ul>
+<li>字符串，字符串默认不加引号。如果需要的字符串本身就是一个数字，或者布尔值，需要使用引号(单引号or双引号)。双引号引起的内容，支持特殊字符转义，例如”aaa \n bbb”。单引号引起的内容，不支持特殊字符转义。如果字符串中包含[ ] -&gt; 用于表示结构的字符，需要使用引号、单引号。</li>
+</ul>
+</li>
+<li><p>对象,有key-value写法，行内写法</p>
+</li>
 <li><p>核心规则：<strong>数据前面要加空格与冒号隔开</strong></p>
 </li>
 </ul>
@@ -673,7 +698,7 @@ Spring与Spring Boot对比Spring: Spring框架是">
     <span class="token key atrule">auto</span><span class="token punctuation">:</span> on
   <span class="token key atrule">info</span><span class="token punctuation">:</span>
     <span class="token key atrule">build</span><span class="token punctuation">:</span>
-      <span class="token key atrule">encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8</span>
+      <span class="token key atrule">encoding</span><span class="token punctuation">:</span> utf<span class="token punctuation">-</span><span class="token number">8 </span>
   <span class="token key atrule">dao</span><span class="token punctuation">:</span>
     <span class="token key atrule">exceptiontranslation</span><span class="token punctuation">:</span>
       <span class="token key atrule">enabled</span><span class="token punctuation">:</span> on
@@ -724,7 +749,7 @@ Spring与Spring Boot对比Spring: Spring框架是">
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<h4 id="自定义对象封装指定数据"><a href="#自定义对象封装指定数据" class="headerlink" title="自定义对象封装指定数据"></a>自定义对象封装指定数据</h4><p>新建一个domain包，创建student类，读取配置文件中指定名称的数据，进行匹配</p>
+<h4 id="自定义对象封装注入数据"><a href="#自定义对象封装注入数据" class="headerlink" title="自定义对象封装注入数据"></a>自定义对象封装注入数据</h4><p>新建一个domain包，创建student类，读取配置文件中指定名称的数据，进行匹配</p>
 <pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
 <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"student"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Student</span> <span class="token punctuation">{</span>
@@ -796,6 +821,47 @@ Spring与Spring Boot对比Spring: Spring框架是">
    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>optional</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>optional</span><span class="token punctuation">></span></span>
  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 </code></pre>
+<h4 id="对注入的数据进行JSR303数据校验"><a href="#对注入的数据进行JSR303数据校验" class="headerlink" title="对注入的数据进行JSR303数据校验"></a>对注入的数据进行JSR303数据校验</h4><p>首先引入一个依赖</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.hibernate.validator<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>hibernate-validator<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>在@ConfigurationProperties数据注入模式下，对对应的属性进行校验</p>
+<h4 id="注意事项：-Value-与-ConfigurationProperties的区别"><a href="#注意事项：-Value-与-ConfigurationProperties的区别" class="headerlink" title="注意事项：@Value 与 @ConfigurationProperties的区别"></a>注意事项：@Value 与 @ConfigurationProperties的区别</h4><table>
+<thead>
+<tr>
+<th align="center">项目</th>
+<th align="center">@ConfigurationProperties</th>
+<th align="center">@Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">作用</td>
+<td align="center">用于整个对象的注入，要求变量名与key值对应</td>
+<td align="center">单个值的注入，不要求变量名与key值对应</td>
+</tr>
+<tr>
+<td align="center">松散结构映射</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">SPEL</td>
+<td align="center">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">JSR303数据校验</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">符合数据类型</td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+</tbody></table>
 <h3 id="多环境开发配置"><a href="#多环境开发配置" class="headerlink" title="多环境开发配置"></a>多环境开发配置</h3><h4 id="yaml文件格式"><a href="#yaml文件格式" class="headerlink" title="yaml文件格式"></a>yaml文件格式</h4><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 设置启动环境</span>
 <span class="token key atrule">spring</span><span class="token punctuation">:</span>
   <span class="token key atrule">profiles</span><span class="token punctuation">:</span>
@@ -842,6 +908,13 @@ Spring与Spring Boot对比Spring: Spring框架是">
 <p>环境分类配置文件application-test.properties</p>
 <pre class=" language-properties"><code class="language-properties"><span class="token attr-name">server.port</span><span class="token punctuation">=</span><span class="token attr-value">82</span>
 </code></pre>
+<h4 id="在application-properties-x2F-application-yaml-x2F-application-yml-以外建立配置文件"><a href="#在application-properties-x2F-application-yaml-x2F-application-yml-以外建立配置文件" class="headerlink" title="在application.properties / application.yaml / application.yml 以外建立配置文件"></a>在application.properties / application.yaml / application.yml 以外建立配置文件</h4><p>需要在<strong>要注入数据的类</strong>上添加以下注解</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@PropertySource</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"classpath:&lt;其他配置文件路径和名字>"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>另外，Spring Boot能够像Spring一样应用XML格式的配置文件和类，需要在<strong>启动类</strong>添加注解</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@ImportResource</span><span class="token punctuation">(</span>locations <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"classpath:&lt;其他配置文件路径和名字>"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>当然，纯注解的配置类加上@Configuration,@Bean也是支持的。</p>
 <h3 id="多环境启动"><a href="#多环境启动" class="headerlink" title="多环境启动"></a>多环境启动</h3><p>当开发的环境转移到测试的环境时需要进行对应的修改，对已经打包的文件，我们可以使用多环境启动格式来进行配置。</p>
 <p>启动格式：</p>
 <p>带参数启动SpringBoot</p>
@@ -863,6 +936,24 @@ Spring与Spring Boot对比Spring: Spring框架是">
 <li>1级与2级留做系统打包后设置通用属性</li>
 <li>3级与4级用于系统开发阶段设置通用属性</li>
 </ul>
+<h3 id="配置文件中的占位符和随机符"><a href="#配置文件中的占位符和随机符" class="headerlink" title="配置文件中的占位符和随机符"></a>配置文件中的占位符和随机符</h3><h4 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h4><p>让配置文件中，当前属性能够访问其他属性，这个时候需要用到占位符。</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">a</span><span class="token punctuation">=</span><span class="token attr-value">silvercorridors.cf</span>
+<span class="token attr-name">b</span><span class="token punctuation">=</span><span class="token attr-value">blog.${a} </span>
+</code></pre>
+<p>此时a就被当作了占位符，b的值就为blog.silvercorridors.cf</p>
+<p>如果事先没有a这个属性的值，可以在占位符中添加默认的缺省值(default_value)</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">b</span><span class="token punctuation">=</span><span class="token attr-value">blog.${a:silvercorridors.cf} </span>
+</code></pre>
+<p>这样写，b的值也为blog.silvercorridors.cf</p>
+<h4 id="随机符"><a href="#随机符" class="headerlink" title="随机符"></a>随机符</h4><p>当配置文件中需要让一个key产生随机的value，需要用到随机符${radom.xxx}</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">r1</span><span class="token punctuation">=</span><span class="token attr-value">${random.int} # 产生一个int型随机数 32位</span>
+<span class="token attr-name">r2</span><span class="token punctuation">=</span><span class="token attr-value">${random.long} # 产生一个long型随机数 64位</span>
+<span class="token attr-name">r3</span><span class="token punctuation">=</span><span class="token attr-value">${random.long(100)}  # 产生一个100以内的long型随机数 0-99</span>
+<span class="token attr-name">r4</span><span class="token punctuation">=</span><span class="token attr-value">${random.long[101,200]}  # 产生一个101~200范围内的long型随机数 101~200</span>
+<span class="token attr-name">r5</span><span class="token punctuation">=</span><span class="token attr-value">${random.value} # 随机产生一个md5值</span>
+<span class="token attr-name">r6</span><span class="token punctuation">=</span><span class="token attr-value">${random.uuid} # 随机产生一个uuid值</span>
+<span class="token attr-name">r7</span><span class="token punctuation">=</span><span class="token attr-value">id${random.int[101,999]} # 支持字符串拼接</span>
+</code></pre>
 <h2 id="SpringBoot-整合MyBatis"><a href="#SpringBoot-整合MyBatis" class="headerlink" title="SpringBoot 整合MyBatis"></a>SpringBoot 整合MyBatis</h2><p>①：创建新模块，选择Spring初始化，并配置模块相关基础信息</p>
 <p>②：选择当前模块需要使用的技术集（MyBatis、MySQL）</p>
 <p>③：设置数据源参数</p>
@@ -1312,7 +1403,7 @@ quiet-period: 1000
         notify: 'true' === 'true',
         verify: 'true' === 'true',
         visitor: 'true' === 'true',
-        avatar: 'mm',
+        avatar: 'retro',
         pageSize: '10',
         lang: 'zh-cn',
         placeholder: '想说点啥？ just go go~'
@@ -1811,10 +1902,6 @@ $(function () {
         </script>
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
