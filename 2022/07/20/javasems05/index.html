@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Java SE 面试题 (伍) - 并发专题, 银色回廊">
-    <meta name="description" content="Java SE 面试题 (伍) - 并发专题1. 对于 synchronized 关键字的了解？synchronized关键字解决的是多个线程之间访问资源的同步性，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能">
+    <meta name="description" content="1. 对于 synchronized 关键字的了解？synchronized关键字解决的是多个线程之间访问资源的同步性，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。
+另外，在 Java 早期版">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -444,12 +445,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                <span class="chip bg-color">面试题</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/" class="post-category">
+                                面试题库
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -489,7 +507,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Java-SE-面试题-伍-并发专题"><a href="#Java-SE-面试题-伍-并发专题" class="headerlink" title="Java SE 面试题 (伍) - 并发专题"></a>Java SE 面试题 (伍) - 并发专题</h1><h2 id="1-对于-synchronized-关键字的了解？"><a href="#1-对于-synchronized-关键字的了解？" class="headerlink" title="1. 对于 synchronized 关键字的了解？"></a>1. 对于 synchronized 关键字的了解？</h2><p>synchronized关键字解决的是<strong>多个线程之间访问资源的同步性</strong>，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</p>
+                <h2 id="1-对于-synchronized-关键字的了解？"><a href="#1-对于-synchronized-关键字的了解？" class="headerlink" title="1. 对于 synchronized 关键字的了解？"></a>1. 对于 synchronized 关键字的了解？</h2><p>synchronized关键字解决的是<strong>多个线程之间访问资源的同步性</strong>，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</p>
 <p>另外，在 Java 早期版本中，<strong>synchronized属于重量级锁(悲观锁)<strong>，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 <strong>互斥锁(Mutex Lock)</strong> 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而<font color="blue">操作系统实现线程之间的切换时需要</font></strong>从用户态转换到内核态</strong>，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如<strong>自旋锁、适应性自旋锁、锁消除、锁粗化</strong>等技术来减少锁操作的开销。</p>
 <p><strong>自旋锁：</strong>某些情况下线程的运行时间很短，但是如果申请锁失败就讲线程阻塞并且切线程，会严重拉长运行时间，此时自旋锁在获得锁失败后并不进行线程切换，而是<strong>以循环的方式</strong>不断地尝试获得锁，这样行为的锁称为自旋锁。(有点像开车挂挡挂不上，在那空转的感觉)</p>
 <p><strong>适应性自旋锁：</strong>自旋锁的缺点就是会消耗CPU资源，所以适应性自旋锁会自旋一定的次数，如果还拿不到锁就阻塞切换线程，而且自选次数不是固定的，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。</p>
@@ -767,7 +785,15 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                                    <span class="chip bg-color">面试题</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -1080,18 +1106,17 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/20/javasems05/">
+                <a href="/2022/07/22/springboot04/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java SE 面试题 (伍) - 并发专题">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="springboot04">
                         
-                        <span class="card-title">Java SE 面试题 (伍) - 并发专题</span>
+                        <span class="card-title">springboot04</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1101,18 +1126,29 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-22
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            银色回廊
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1146,13 +1182,21 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Spring%E5%85%A8%E5%AE%B6%E6%A1%B6/" class="post-category">
-                                    Spring全家桶
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
                                 </a>
                             
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
                 </div>
                 
             </div>
