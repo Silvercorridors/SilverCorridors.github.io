@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>springboot04</title>
+      <title>springboot04：条件注入与装配</title>
       <link href="/2022/07/22/springboot04/"/>
       <url>/2022/07/22/springboot04/</url>
       
@@ -56,7 +56,7 @@
     
     
     <entry>
-      <title>springboot03</title>
+      <title>springboot03：自定义AutoConfiguration</title>
       <link href="/2022/07/20/springboot03/"/>
       <url>/2022/07/20/springboot03/</url>
       
@@ -690,9 +690,9 @@
       
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> MySQL </tag>
             
         </tags>
       
