@@ -508,7 +508,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="1-对于-synchronized-关键字的了解？"><a href="#1-对于-synchronized-关键字的了解？" class="headerlink" title="1. 对于 synchronized 关键字的了解？"></a>1. 对于 synchronized 关键字的了解？</h2><p>synchronized关键字解决的是<strong>多个线程之间访问资源的同步性</strong>，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</p>
-<p>另外，在 Java 早期版本中，<strong>synchronized属于重量级锁(悲观锁)<strong>，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 <strong>互斥锁(Mutex Lock)</strong> 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而<font color="blue">操作系统实现线程之间的切换时需要</font></strong>从用户态转换到内核态</strong>，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如<strong>自旋锁、适应性自旋锁、锁消除、锁粗化</strong>等技术来减少锁操作的开销。</p>
+<p>另外，在 Java 早期版本中，<strong>synchronized属于重量级锁(悲观锁)<strong>，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 <strong>互斥锁(Mutex Lock)</strong> 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而<font color="blue">操作系统实现线程之间的切换时需要</font></strong><font color="blue">从用户态转换到内核态</font></strong>，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如<strong>自旋锁、适应性自旋锁、锁消除、锁粗化</strong>等技术来减少锁操作的开销。</p>
 <p><strong>自旋锁：</strong>某些情况下线程的运行时间很短，但是如果申请锁失败就讲线程阻塞并且切线程，会严重拉长运行时间，此时自旋锁在获得锁失败后并不进行线程切换，而是<strong>以循环的方式</strong>不断地尝试获得锁，这样行为的锁称为自旋锁。(有点像开车挂挡挂不上，在那空转的感觉)</p>
 <p><strong>适应性自旋锁：</strong>自旋锁的缺点就是会消耗CPU资源，所以适应性自旋锁会自旋一定的次数，如果还拿不到锁就阻塞切换线程，而且自选次数不是固定的，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。</p>
 <p><strong>锁粗化：</strong> 频繁的申请和放弃锁会带来很多额外的开销，有些情况下（如下代码）<font color="red">JVM会将多个锁合并为一个锁而减少开销，称为锁粗化</font>。</p>
@@ -1092,33 +1092,6 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
 
 
     
-
-    
-        <style>
-    .mvaline-card {
-        margin: 1.5rem auto;
-    }
-
-    .mvaline-card .card-content {
-        padding: 20px 20px 5px 20px;
-    }
-</style>
-
-<div class="card mvaline-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="mvcomments" class="card-content" style="display: grid">
-    </div>
-</div>
-
-<script src="/libs/minivaline/MiniValine.js"></script>
-<script>
-    new MiniValine(Object.assign({"enable":true,"serverURL":"https://minivaline.your-domain.top"}, {
-	  el: '#mvcomments',
-    }));
-</script>
 
     
 

@@ -507,7 +507,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="进程、线程"><a href="#进程、线程" class="headerlink" title="进程、线程"></a>进程、线程</h1><h2 id="前言：程序是如何跑起来的"><a href="#前言：程序是如何跑起来的" class="headerlink" title="前言：程序是如何跑起来的"></a>前言：程序是如何跑起来的</h2><p>​	通常来说，像我们苦逼码农写的软件都是文本格式的代码，这些代码不能直接被计算机识别执行，需要使用编译器<font color:red="">编译</font>成操作系统或者虚拟机可以运行的代码（可执行代码），它们都被存储在文件系统中。</p>
+                <h1 id="进程、线程"><a href="#进程、线程" class="headerlink" title="进程、线程"></a>进程、线程</h1><h2 id="前言：程序是如何跑起来的"><a href="#前言：程序是如何跑起来的" class="headerlink" title="前言：程序是如何跑起来的"></a>前言：程序是如何跑起来的</h2><p>​	通常来说，像我们苦逼码农写的软件都是文本格式的代码，这些代码不能直接被计算机识别执行，需要使用编译器<font color:red>编译</font>成操作系统或者虚拟机可以运行的代码（可执行代码），它们都被存储在文件系统中。</p>
 <p>​	要想让程序处理数据，完成计算任务，必须把程序从外部设备加载到内存中，并在操作系统的管理调度下交给 CPU 去执行，去运行起来，才能真正发挥软件的作用，程序运行起来以后，被称作<strong>进程</strong>。</p>
 <p>​	进程除了包含可执行的程序代码，还包括进程在运行期使用的内存<strong>堆空间、栈空间</strong>、供操作系统管理用的数据结构。</p>
 <h2 id="进程（process）"><a href="#进程（process）" class="headerlink" title="进程（process）"></a>进程（process）</h2><ul>
@@ -987,33 +987,6 @@
 
 
     
-
-    
-        <style>
-    .mvaline-card {
-        margin: 1.5rem auto;
-    }
-
-    .mvaline-card .card-content {
-        padding: 20px 20px 5px 20px;
-    }
-</style>
-
-<div class="card mvaline-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="mvcomments" class="card-content" style="display: grid">
-    </div>
-</div>
-
-<script src="/libs/minivaline/MiniValine.js"></script>
-<script>
-    new MiniValine(Object.assign({"enable":true,"serverURL":"https://minivaline.your-domain.top"}, {
-	  el: '#mvcomments',
-    }));
-</script>
 
     
 
