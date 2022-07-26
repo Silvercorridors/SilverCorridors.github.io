@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Java SE 面试题 (伍) - 并发专题, 银色回廊">
-    <meta name="description" content="1. 对于 synchronized 关键字的了解？synchronized关键字解决的是多个线程之间访问资源的同步性，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。
-另外，在 Java 早期版">
+    <meta name="keywords" content="Java SE 面试题05-并发专题（1）, 银色回廊">
+    <meta name="description" content="*1. 对于 synchronized 关键字的了解？synchronized关键字解决的是多个线程之间访问资源的同步性，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。
+另外，在 Java 早期">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +20,7 @@
 
     
 
-    <title>Java SE 面试题 (伍) - 并发专题 | 银色回廊</title>
+    <title>Java SE 面试题05-并发专题（1） | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -326,12 +326,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Java SE 面试题 (伍) - 并发专题</h1>
+                    <h1 class="description center-align post-title">Java SE 面试题05-并发专题（1）</h1>
                 </div>
             </div>
         </div>
@@ -507,8 +507,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-对于-synchronized-关键字的了解？"><a href="#1-对于-synchronized-关键字的了解？" class="headerlink" title="1. 对于 synchronized 关键字的了解？"></a>1. 对于 synchronized 关键字的了解？</h2><p>synchronized关键字解决的是<strong>多个线程之间访问资源的同步性</strong>，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</p>
-<p>另外，在 Java 早期版本中，<strong>synchronized属于重量级锁(悲观锁)<strong>，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 <strong>互斥锁(Mutex Lock)</strong> 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而<font color="blue">操作系统实现线程之间的切换时需要</font></strong><font color="blue">从用户态转换到内核态</font></strong>，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如<strong>自旋锁、适应性自旋锁、锁消除、锁粗化</strong>等技术来减少锁操作的开销。</p>
+                <h2 id="1-对于-synchronized-关键字的了解？"><a href="#1-对于-synchronized-关键字的了解？" class="headerlink" title="*1. 对于 synchronized 关键字的了解？"></a>*1. 对于 synchronized 关键字的了解？</h2><p>synchronized关键字解决的是<strong>多个线程之间访问资源的同步性</strong>，synchronized关键字可以保证被它修饰的方法或者代码块在任意时刻只能有一个线程执行。</p>
+<p>另外，在 Java 早期版本中，<strong>synchronized属于重量级锁(悲观锁)<strong>，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 <strong>互斥锁(Mutex Lock)</strong> 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而<font color="blue">操作系统实现线程之间的切换时需要</font></strong>从用户态转换到内核态</strong>，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，所以现在的 synchronized 锁效率也优化得很不错了。JDK1.6对锁的实现引入了大量的优化，如<strong>自旋锁、适应性自旋锁、锁消除、锁粗化</strong>等技术来减少锁操作的开销。</p>
 <p><strong>自旋锁：</strong>某些情况下线程的运行时间很短，但是如果申请锁失败就讲线程阻塞并且切线程，会严重拉长运行时间，此时自旋锁在获得锁失败后并不进行线程切换，而是<strong>以循环的方式</strong>不断地尝试获得锁，这样行为的锁称为自旋锁。(有点像开车挂挡挂不上，在那空转的感觉)</p>
 <p><strong>适应性自旋锁：</strong>自旋锁的缺点就是会消耗CPU资源，所以适应性自旋锁会自旋一定的次数，如果还拿不到锁就阻塞切换线程，而且自选次数不是固定的，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。</p>
 <p><strong>锁粗化：</strong> 频繁的申请和放弃锁会带来很多额外的开销，有些情况下（如下代码）<font color="red">JVM会将多个锁合并为一个锁而减少开销，称为锁粗化</font>。</p>
@@ -542,7 +542,7 @@
 <li><strong>修饰静态方法:</strong> 也就是给当前类加锁，会作用于类的所有对象实例，因为静态成员不属于任何一个实例对象，是类成员（ static 表明这是该类的一个静态资源，不管new了多少个对象，只有一份）。所以如果一个线程A调用一个实例对象的非静态 synchronized 方法，而线程B需要调用这个实例对象所属类的静态 synchronized 方法，是允许的，不会发生互斥现象，<strong>因为访问静态 synchronized 方法占用的锁是当前类的锁，而访问非静态 synchronized 方法占用的锁是当前实例对象锁</strong>。</li>
 <li><strong>修饰代码块:</strong> 指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁。</li>
 </ul>
-<h2 id="3-如何实现一个线程安全的单例模式？"><a href="#3-如何实现一个线程安全的单例模式？" class="headerlink" title="3. 如何实现一个线程安全的单例模式？"></a>3. 如何实现一个线程安全的单例模式？</h2><p><strong>双重校验锁实现对象单例（线程安全）</strong></p>
+<h2 id="3-如何实现一个线程安全的单例模式？"><a href="#3-如何实现一个线程安全的单例模式？" class="headerlink" title="*3. 如何实现一个线程安全的单例模式？"></a>*3. 如何实现一个线程安全的单例模式？</h2><p><strong>双重校验锁实现对象单例（线程安全）</strong></p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">{</span>
 
     <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> Singleton uniqueInstance<span class="token punctuation">;</span>
@@ -593,12 +593,12 @@
 </code></pre>
 <p>synchronized 修饰的方法并没有 monitorenter 指令和 monitorexit 指令，取得代之的确实是 ACC<em>SYNCHRONIZED 标识，该标识指明了该方法是一个同步方法，JVM 通过该 ACC</em>SYNCHRONIZED 访问标志来辨别一个方法是否声明为同步方法，从而执行相应的同步调用。</p>
 <p>（这里可以使用javap -c -s -v -l xxx.class查看）</p>
-<h2 id="5-简述JDK1-6-之后的Mark-Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？"><a href="#5-简述JDK1-6-之后的Mark-Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？" class="headerlink" title="5. 简述JDK1.6 之后的Mark Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？"></a>5. 简述JDK1.6 之后的Mark Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？</h2><p><strong>java Object对象的内存结构：</strong></p>
-<p><img src="/1.png"></p>
+<h2 id="5-简述JDK1-6-之后的Mark-Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？"><a href="#5-简述JDK1-6-之后的Mark-Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？" class="headerlink" title="*5. 简述JDK1.6 之后的Mark Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？"></a><font color="red">*5. 简述JDK1.6 之后的Mark Word、无锁状态、偏向锁状态、轻量级锁状态、重量级锁状态？</font></h2><p><strong>java Object对象的内存结构：</strong></p>
+<p><img src="/2022/07/20/javasems05/1.png"></p>
 <p><strong>Mark Word：</strong></p>
-<p><img src="/2.png"></p>
+<p><img src="/2022/07/20/javasems05/2.png"></p>
 <p>lock的2位是锁状态标记位，该标记的值不同，整个Mark Word表示的含义不同。biased_lock和lock一起，表达的锁状态含义如下：</p>
-<p><img src="/3.png"></p>
+<p><img src="/2022/07/20/javasems05/3.png"></p>
 <p><strong>未锁定状态和偏向锁状态：</strong></p>
 <p>此时，对象没有被任何线程锁定，或者只有一个同一个线程反复进进出出，此时如果使用传统的方式效率将大打折扣，所以此时可以使用偏向锁。事实上，是否在最开始使用偏向锁，是可以通过参数配置的，默认是打开的，通过 <strong>-XX:-UseBiasedLocking=false</strong>可以关闭关闭偏向锁。以下我们按照偏向锁打开模式讨论：</p>
 <p><strong>当Object被创建出来，没有加锁：</strong></p>
@@ -617,7 +617,7 @@
 <p>​	锁状态 = 10，同时线程A和线程B中的Lock Record会被释放，同时JVM会建立一个新的对象monitor，同时让Object原来放Mark Word的位置替换为monitor的指针。monitor对象的本质是调用操作系统的mutex功能，包括线程的挂起和唤醒，这些动作都必须由操作系统完成，JVM无法完成，只能当个传声筒。</p>
 <p>这样一来，线程B就被挂起并进入休眠状态，等着线程A运行完退出，然后唤醒线程B。即使线程B被唤醒，也是出于就绪状态，不能立即执行，是要等到下一次系统分配线程B以CPU资源的时候才会继续运行。所以，运行的效率更低。</p>
 <p><strong>重量级锁的主要特点是：没有获得锁的线程会被挂起，等待唤醒，同步是依靠操作系统的mutex和线程调度完成的。</strong></p>
-<h2 id="6-synchronized和ReentrantLock-的区别？"><a href="#6-synchronized和ReentrantLock-的区别？" class="headerlink" title="6. synchronized和ReentrantLock 的区别？"></a>6. synchronized和ReentrantLock 的区别？</h2><p>​	<strong>两者都是可重入锁</strong></p>
+<h2 id="6-synchronized和ReentrantLock-的区别？"><a href="#6-synchronized和ReentrantLock-的区别？" class="headerlink" title="*6. synchronized和ReentrantLock 的区别？"></a>*6. synchronized和ReentrantLock 的区别？</h2><p>​	<strong>两者都是可重入锁</strong></p>
 <p>​	“可重入锁”概念是：自己可以再次获取自己的内部锁。比如一个线程获得了某个对象的锁，此时这个对象锁还没有释放，当其再次想要获取这个对象的锁的时候还是可以获取的，如果不可锁重入的话，就会造成死锁。同一个线程每次获取锁，锁的计数器都自增1，所以要等到锁的计数器下降为0时才能释放锁。</p>
 <p>​	<strong>synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API</strong></p>
 <p>​	synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团队在 JDK1.6 为 synchronized 关键字进行了很多优化，但是这些优化都是在虚拟机层面实现的，并没有直接暴露给我们。ReentrantLock 是 JDK 层面实现的（也就是 API 层面，需要 lock() 和 unlock() 方法配合 try/finally 语句块来完成），所以我们可以通过查看它的源代码，来看它是如何实现的。</p>
@@ -630,12 +630,12 @@
 <li>synchronized关键字与wait()和notify()/notifyAll()方法相结合可以实现等待/通知机制，ReentrantLock类当然也可以实现，但是需要借助于Condition接口与newCondition() 方法。Condition是JDK1.5之后才有的，它具有很好的灵活性，比如可以实现多路通知功能也就是在一个Lock对象中可以创建多个Condition实例（即对象监视器），<strong>线程对象可以注册在指定的Condition中，从而可以有选择性的进行线程通知，在调度线程上更加灵活。 在使用notify()/notifyAll()方法进行通知时，被通知的线程是由 JVM 选择的，用ReentrantLock类结合Condition实例可以实现“选择性通知”</strong> ，这个功能非常重要，而且是Condition接口默认提供的。而synchronized关键字就相当于整个Lock对象中只有一个Condition实例，所有的线程都注册在它一个身上。如果执行notifyAll()方法的话就会通知所有处于等待状态的线程这样会造成很大的效率问题，而Condition实例的signalAll()方法 只会唤醒注册在该Condition实例中的所有等待线程。</li>
 </ul>
 <p>如果你想使用上述功能，那么选择ReentrantLock是一个不错的选择。</p>
-<h2 id="7-volatile对内存管理的影响？"><a href="#7-volatile对内存管理的影响？" class="headerlink" title="7. volatile对内存管理的影响？"></a>7. volatile对内存管理的影响？</h2><p>  在 JDK1.2 之前，Java的内存模型实现总是从<strong>主存</strong>（即共享内存）读取变量，是不需要进行特别的注意的。而在当前的 Java 内存模型下，线程可以把变量保存<strong>本地内存</strong>（比如机器的寄存器）中，而不是直接在主存中进行读写。这就可能造成一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>
-<p><img src="/1.jpg"></p>
+<h2 id="7-volatile对内存管理的影响？"><a href="#7-volatile对内存管理的影响？" class="headerlink" title="*7. volatile对内存管理的影响？"></a>*7. volatile对内存管理的影响？</h2><p>  在 JDK1.2 之前，Java的内存模型实现总是从<strong>主存</strong>（即共享内存）读取变量，是不需要进行特别的注意的。而在当前的 Java 内存模型下，线程可以把变量保存<strong>本地内存</strong>（比如机器的寄存器）中，而不是直接在主存中进行读写。这就可能造成一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成<strong>数据的不一致</strong>。</p>
+<p><img src="/2022/07/20/javasems05/1.jpg"></p>
 <p>要解决这个问题，就需要把变量声明为<strong>volatile</strong>，这就指示 JVM，这个变量是不稳定的，每次使用它都到主存中进行读取。</p>
 <p>说白了， <strong>volatile</strong> 关键字的主要作用就是保证变量的可见性然后还有一个作用是防止指令重排序。</p>
-<p><img src="/2.jpg"></p>
-<h2 id="8-synchronized-关键字和-volatile-关键字的区别？"><a href="#8-synchronized-关键字和-volatile-关键字的区别？" class="headerlink" title="8. synchronized 关键字和 volatile 关键字的区别？"></a>8. synchronized 关键字和 volatile 关键字的区别？</h2><p>  synchronized关键字和volatile关键字比较：</p>
+<p><img src="/2022/07/20/javasems05/2.jpg"></p>
+<h2 id="8-synchronized-关键字和-volatile-关键字的区别？"><a href="#8-synchronized-关键字和-volatile-关键字的区别？" class="headerlink" title="*8. synchronized 关键字和 volatile 关键字的区别？"></a>*8. synchronized 关键字和 volatile 关键字的区别？</h2><p>  synchronized关键字和volatile关键字比较：</p>
 <ul>
 <li><strong>volatile关键字</strong>是线程同步的<strong>轻量级实现</strong>，所以<strong>volatile性能肯定比synchronized关键字要好</strong>。但是<strong>volatile关键字只能用于变量而synchronized关键字可以修饰方法以及代码块</strong>。synchronized关键字在JavaSE1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁以及其它各种优化之后执行效率有了显著提升，<strong>实际开发中使用 synchronized 关键字的场景还是更多一些</strong>。</li>
 <li><strong>多线程访问volatile关键字不会发生阻塞，而synchronized关键字可能会发生阻塞</strong></li>
@@ -705,7 +705,7 @@ ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap inheritableThr
 <p>通过上面这些内容，我们足以通过猜测得出结论：<strong>最终的变量是放在了当前线程的</strong>  <code>ThreadLocalMap</code> 中，并不是存在 <code>ThreadLocal</code> 上，<code>ThreadLocal</code>可以理解为只是<code>ThreadLocalMap</code>的封装，传递了变量值。<code>ThrealLocal</code> 类中可以通过<code>Thread.currentThread()</code>获取到当前线程对象后，直接通过<code>getMap(Thread t)</code>可以访问到该线程的<code>ThreadLocalMap</code>对象。</p>
 <p><strong>每个<code>Thread</code>中都具备一个<code>ThreadLocalMap</code>，而<code>ThreadLocalMap</code>可以存储以<code>ThreadLocal</code>为key的键值对。</strong> 比如我们在同一个线程中声明了两个 <code>ThreadLocal</code> 对象的话，会使用 <code>Thread</code>内部都是使用仅有那个<code>ThreadLocalMap</code> 存放数据的，<code>ThreadLocalMap</code>的 key 就是 <code>ThreadLocal</code>对象，value 就是 <code>ThreadLocal</code> 对象调用<code>set</code>方法设置的值。<code>ThreadLocal</code> 是 map结构是为了让每个线程可以关联多个 <code>ThreadLocal</code>变量。这也就解释了 ThreadLocal 声明的变量为什么在每一个线程都有自己的专属本地变量。</p>
 <p><code>ThreadLocalMap</code>是<code>ThreadLocal</code>的静态内部类。</p>
-<p><img src="/3.jpg" alt="ThreadLocal内部类"></p>
+<p><img src="/2022/07/20/javasems05/3.jpg" alt="ThreadLocal内部类"></p>
 <h2 id="12-简述ThreadLocal的内存泄露问题？"><a href="#12-简述ThreadLocal的内存泄露问题？" class="headerlink" title="12. 简述ThreadLocal的内存泄露问题？"></a>12. 简述ThreadLocal的内存泄露问题？</h2><p><code>ThreadLocalMap</code> 中使用的 key 为 <code>ThreadLocal</code> 的弱引用,而 value 是强引用。所以，如果 <code>ThreadLocal</code> 没有被外部强引用的情况下，在垃圾回收的时候，key 会被清理掉，而 value 不会被清理掉。这样一来，<code>ThreadLocalMap</code> 中就会出现key为null的Entry。假如我们不做任何措施的话，value 永远无法被GC 回收，这个时候就可能会产生内存泄露。ThreadLocalMap实现中已经考虑了这种情况，在调用 <code>set()</code>、<code>get()</code>、<code>remove()</code> 方法的时候，会清理掉 key 为 null 的记录。使用完 <code>ThreadLocal</code>方法后 最好手动调用<code>remove()</code>方法</p>
 <pre class=" language-java"><code class="language-java">      <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Entry</span> <span class="token keyword">extends</span> <span class="token class-name">WeakReference</span><span class="token operator">&lt;</span>ThreadLocal<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">>></span> <span class="token punctuation">{</span>
             <span class="token comment" spellcheck="true">/** The value associated with this ThreadLocal. */</span>

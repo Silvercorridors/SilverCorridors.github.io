@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题04, 银色回廊">
+    <meta name="keywords" content="javaSE 面试题04：类的概念, 银色回廊">
     <meta name="description" content="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？​	改变了，因为传递是对象的引用，操作的是引用所指向的对象
 2. 实例化数组后，能不能改变数组长度呢？​	不能，数组一旦实例化，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
 
     
 
-    <title>javaSE 面试题04 | 银色回廊</title>
+    <title>javaSE 面试题04：类的概念 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -326,12 +326,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题04</h1>
+                    <h1 class="description center-align post-title">javaSE 面试题04：类的概念</h1>
                 </div>
             </div>
         </div>
@@ -510,12 +510,12 @@
                 <h2 id="1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"><a href="#1-把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？" class="headerlink" title="1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？"></a>1. 把实例化的数组的变量当成方法参数，在方法执行的时候改变了数组内的元素，那么在方法外，数组元素有发生改变吗？</h2><p>​	改变了，因为传递是对象的引用，操作的是引用所指向的对象</p>
 <h2 id="2-实例化数组后，能不能改变数组长度呢？"><a href="#2-实例化数组后，能不能改变数组长度呢？" class="headerlink" title="2. 实例化数组后，能不能改变数组长度呢？"></a>2. 实例化数组后，能不能改变数组长度呢？</h2><p>​	不能，数组一旦实例化，它的长度就是固定的</p>
 <h2 id="3-形参与实参？"><a href="#3-形参与实参？" class="headerlink" title="3. 形参与实参？"></a>3. 形参与实参？</h2><p>​	形参：全称为“形式参数”，是在定义方法名和方法体的时候使用的参数，用于接收调用该方法时传入的实际值；	实参：全称为“实际参数”，是在调用方法时传递给该方法的实际值。</p>
-<h2 id="4-内部类与静态内部类的区别？"><a href="#4-内部类与静态内部类的区别？" class="headerlink" title="4. 内部类与静态内部类的区别？"></a>4. 内部类与静态内部类的区别？</h2><p>  静态内部类相对与外部类是独立存在的，在静态内部类中无法直接访问外部类中变量、方法。但是可以直接访问静态的变量、调用静态的方法；</p>
+<h2 id="4-内部类与静态内部类的区别？"><a href="#4-内部类与静态内部类的区别？" class="headerlink" title="*4. 内部类与静态内部类的区别？"></a>*4. 内部类与静态内部类的区别？</h2><p>  静态内部类相对与外部类是独立存在的，在静态内部类中无法直接访问外部类中变量、方法。但是可以直接访问静态的变量、调用静态的方法；</p>
 <p>​	普通内部类作为外部类一个成员而存在，在普通内部类中可以直接访问外部类属性，调用外部类的方法。</p>
 <p>​	如果外部类要访问内部类的属性或者调用内部类的方法，必须要创建一个内部类的对象，使用该对象访问属性或者调用方法。</p>
-<p>​	如果其他的类要访问普通内部类的属性或者调用普通内部类的方法，必须要在外部类中创建一个普通内部类的对象作为一个属性，外同类可以通过该属性调用普通内部类的方法或者访问普通内部类的属性</p>
+<p>​	如果其他的类要访问普通内部类的属性或者调用普通内部类的方法，必须要在外部类中创建一个普通内部类的对象作为一个属性，外部类可以通过该属性调用普通内部类的方法或者访问普通内部类的属性</p>
 <p>​	如果其他的类要访问静态内部类的属性或者调用静态内部类的方法，直接创建一个静态内部类对象即可。</p>
-<h2 id="5-Static关键字有什么作用？"><a href="#5-Static关键字有什么作用？" class="headerlink" title="5. Static关键字有什么作用？"></a>5. Static关键字有什么作用？</h2><p>​	Static可以修饰内部类、方法、变量、代码块</p>
+<h2 id="5-Static关键字有什么作用？"><a href="#5-Static关键字有什么作用？" class="headerlink" title="*5. Static关键字有什么作用？"></a>*5. Static关键字有什么作用？</h2><p>​	Static可以修饰内部类、方法、变量、代码块</p>
 <p>​		Static修饰的类是静态内部类</p>
 <p>​		Static修饰的方法是静态方法，表示该方法属于当前类的，而不属于某个对象的，静态方法也不能被重写，可以直接使用类名来调用。在static方法中不能使用this或者super关键字。</p>
 <p>​		Static修饰变量是静态变量或者叫类变量，静态变量被所有实例所共享，不会依赖于对象。静态变量在内存中只有一份拷贝，在JVM加载类的时候，只为静态分配一次内存。</p>
@@ -544,13 +544,13 @@
 <p>​	接口的实现，是可以实现多个接口。</p>
 <h2 id="11-抽象类必须要有抽象方法吗？"><a href="#11-抽象类必须要有抽象方法吗？" class="headerlink" title="11. 抽象类必须要有抽象方法吗？"></a>11. 抽象类必须要有抽象方法吗？</h2><p>​	当然不是，但是即使这样也不能实例化。（有点不讲道理是吧，谁让你声明的？）</p>
 <h2 id="12-如果一个类中有抽象方法，那么这个一定是抽象类？"><a href="#12-如果一个类中有抽象方法，那么这个一定是抽象类？" class="headerlink" title="12. 如果一个类中有抽象方法，那么这个一定是抽象类？"></a>12. 如果一个类中有抽象方法，那么这个一定是抽象类？</h2><p>​	是的，java的编译器硬性要求一个包含抽象方法的类必须声明为抽象类，否则编译报错。不信你可以试试。</p>
-<h2 id="13-抽象类可以使用final修饰吗？"><a href="#13-抽象类可以使用final修饰吗？" class="headerlink" title="13. 抽象类可以使用final修饰吗？"></a>13. 抽象类可以使用final修饰吗？</h2><p>​	不行，抽象类就是要被继承的，但是final使得类无法被继承。这么写编译过不了的。</p>
+<h2 id="13-抽象类可以使用final修饰吗？"><a href="#13-抽象类可以使用final修饰吗？" class="headerlink" title="*13. 抽象类可以使用final修饰吗？"></a>*13. 抽象类可以使用final修饰吗？</h2><p>​	不行，抽象类就是要被继承的，但是final使得类无法被继承。这么写编译过不了的。</p>
 <h2 id="14-普通类与抽象类有什么区别？"><a href="#14-普通类与抽象类有什么区别？" class="headerlink" title="14. 普通类与抽象类有什么区别？"></a>14. 普通类与抽象类有什么区别？</h2><p> 普通类不能包含抽象方法，抽象类可以包含抽象方法。</p>
 <p>​	抽象类不能直接实例化，普通类可以直接实例化。</p>
 <h2 id="15-什么是接口？JAVA为什么需要接口？"><a href="#15-什么是接口？JAVA为什么需要接口？" class="headerlink" title="15. 什么是接口？JAVA为什么需要接口？"></a>15. 什么是接口？JAVA为什么需要接口？</h2><p> 接口内定义了若干抽象方法但是没有成员变量（但是可以由public static final的常量），可以视为一组功能的声明。实现某个接口的类就必须将这些方法全部Override。</p>
 <p>​	应该是因为Java的类继承只有单继承，所以需要接口，并且一个类可以实现多个接口。如果你了解C++的多继承以及虚继承，你就会知道多继承所带来的复杂，C++中没有接口。</p>
 <p>​	</p>
-<h2 id="16-接口有什么特点？"><a href="#16-接口有什么特点？" class="headerlink" title="16. 接口有什么特点？"></a>16. 接口有什么特点？</h2><p>​	接口中声明全是public <strong>static</strong> final修饰的常量，</p>
+<h2 id="16-接口有什么特点？"><a href="#16-接口有什么特点？" class="headerlink" title="*16. 接口有什么特点？"></a>*16. 接口有什么特点？</h2><p>​	接口中声明全是public <strong>static</strong> final修饰的常量，</p>
 <p>​	接口中不能有：成员变量，构造函数，static静态代码块，</p>
 <p>​	接口中的方法一般都是抽象方法，但是也可以有默认方法，有实现。</p>
 <p>​	接口也不能直接实例化，</p>
@@ -1006,9 +1006,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="javaSE 面试题03">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="javaSE 面试题03：运算">
                         
-                        <span class="card-title">javaSE 面试题03</span>
+                        <span class="card-title">javaSE 面试题03：运算</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

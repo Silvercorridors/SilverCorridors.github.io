@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题02（HashMap原理）, 银色回廊">
+    <meta name="keywords" content="javaSE 面试题02:HashMap, 银色回廊">
     <meta name="description" content="1. 一个类的构造方法的作用是什么？构造方法有哪些特性？构造函数用于完成对象的初始化工作。
 如果一个类没有声明构造函数，编译器会 为类生成默认的、不带参数的构造方法。
 构造函数的特性：
@@ -23,7 +23,7 @@
 
     
 
-    <title>javaSE 面试题02（HashMap原理） | 银色回廊</title>
+    <title>javaSE 面试题02:HashMap | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -329,12 +329,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题02（HashMap原理）</h1>
+                    <h1 class="description center-align post-title">javaSE 面试题02:HashMap</h1>
                 </div>
             </div>
         </div>
@@ -488,7 +488,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10.3k
+                    13k
                 </div>
                 
 
@@ -525,10 +525,10 @@
 <li>String不可变，是说实例对象中的数组不可变。</li>
 <li>但是，事实上是可以通过反射技术改变数组的</li>
 </ol>
-<h2 id="4-什么是反射？"><a href="#4-什么是反射？" class="headerlink" title="4. 什么是反射？"></a><font color="red">4. 什么是反射？</font></h2><p><strong>什么是反射？</strong></p>
+<h2 id="4-什么是反射？"><a href="#4-什么是反射？" class="headerlink" title="*4. 什么是反射？"></a><font color="red">*4. 什么是反射？</font></h2><p><strong>什么是反射？</strong></p>
 <p>在运行状态中，对于任意一个类，能够获取这个类的所有属性和方法，并且可以实例化。</p>
 <p>在运行状态中，对于任意一个对象，能够获取这个实例的类的所有属性和方法，能够调用对象的任意一个方法和属性；</p>
-<p>这种动态获取信息、以及动态调用对象方法的功能，称为java语言的反射机制。</p>
+<p>这种<strong>动态获取信息、以及动态调用</strong>对象方法的功能，称为java语言的反射机制。</p>
 <p><strong>静态编译和动态编译</strong></p>
 <p>​	<strong>静态编译：</strong>代码写死，在编译时类型确定，绑定对象</p>
 <p>​	<strong>动态编译：</strong>运行时确定类型，绑定对象</p>
@@ -538,28 +538,43 @@
 <h2 id="5-List，Set，Map三者的区别："><a href="#5-List，Set，Map三者的区别：" class="headerlink" title="5. List，Set，Map三者的区别："></a>5. List，Set，Map三者的区别：</h2><p>​	<strong>List：</strong> 有序，可重复</p>
 <p>​	<strong>Set：</strong> 不可重复，无序</p>
 <p>​	<strong>Map：</strong> Key-Value，不可重复</p>
-<h2 id="6-ArrayList、LinkedList、Vector三者的区别："><a href="#6-ArrayList、LinkedList、Vector三者的区别：" class="headerlink" title="6. ArrayList、LinkedList、Vector三者的区别："></a>6. ArrayList、LinkedList、Vector三者的区别：</h2><p>​	继承关系：</p>
+<h2 id="6-ArrayList、LinkedList、Vector三者的区别："><a href="#6-ArrayList、LinkedList、Vector三者的区别：" class="headerlink" title="*6. ArrayList、LinkedList、Vector三者的区别："></a>*6. ArrayList、LinkedList、Vector三者的区别：</h2><p>​	继承关系：</p>
 <p><img src="/2022/06/30/javasems02/20480692-eee8-480e-86e8-74ef79d4f75a-2346068.jpg" alt="img"></p>
 <p>​	<strong>ArrayList：</strong> 底层使用数组，随机读取速度快（O(1)），但是插入删除需要移动数据（O(N)）</p>
 <p>​	<strong>LinkedList：</strong> 底层使用<strong>双向链表</strong>，随机读取速度慢（O(N)），但是插入删除不需要移动数据</p>
-<p>​	<strong>Vector：</strong> Vector是线程安全的，但是性能比ArrayList要低。</p>
-<p>，内部用的同步；ArrayList和LinkedList都不是线程安全的。</p>
-<h2 id="7-HashMap、HashSet、HashTable三者的区别："><a href="#7-HashMap、HashSet、HashTable三者的区别：" class="headerlink" title="7. HashMap、HashSet、HashTable三者的区别："></a>7. HashMap、HashSet、HashTable三者的区别：</h2><p>继承关系：</p>
+<p>​	<strong>Vector：</strong> 底层使用数组，Vector是线程安全的，但是性能比ArrayList要低，内部用的同步；ArrayList和LinkedList都不是线程安全的。</p>
+<h2 id="7-HashMap、HashSet、HashTable三者的区别："><a href="#7-HashMap、HashSet、HashTable三者的区别：" class="headerlink" title="*7. HashMap、HashSet、HashTable三者的区别："></a>*7. HashMap、HashSet、HashTable三者的区别：</h2><p>继承关系：</p>
 <p><img src="/2022/06/30/javasems02/603b32e9-3238-41ec-b101-732080467f29-2346068.jpg" alt="img"></p>
-<p>​    	<strong>HashMap：</strong> Key-Value方式，底层是哈希表，Key的判等是根据HashCode()和equals()的返回决定，相同的Key，后面的写操作会覆盖以前的数据。</p>
+<p>HashMap 和 HashSet 是 Java Collection 的两个重要成员，其中 HashMap 是 Map 接口的常用实现类，HashSet 是 Set 接口的常用实现类。虽然 HashMap 和 HashSet 实现的接口规范不同，但它们底层的 Hash 存储机制完全一样，甚至 HashSet 本身就采用 HashMap 来实现的。    </p>
+<p>​	<strong>HashMap：</strong> Key-Value方式，底层是哈希表，Key的判等是根据HashCode()和equals()的返回决定，相同的Key，后面的写操作会覆盖以前的数据。</p>
 <p>  <strong>HashSet：</strong>  使用实例本身计算HashCode当做key，本质也是HashMap，JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数大于8个）+红黑树（个数小于8个）</p>
 <p>  <strong>HashTable：</strong> HashTable和HashMap很接近，区别仅在于HashTable是线程安全的，而前两者不是；另外，HashTable不允许Key是null，但是HashMap允许。</p>
-<h2 id="8-HashMap、ConcurrentHashMap的区别"><a href="#8-HashMap、ConcurrentHashMap的区别" class="headerlink" title="8. HashMap、ConcurrentHashMap的区别"></a>8. HashMap、ConcurrentHashMap的区别</h2><p>​	<strong>HashMap：</strong> HashMap不是线程安全的；允许Key是null</p>
+<h2 id="8-HashMap、ConcurrentHashMap的区别"><a href="#8-HashMap、ConcurrentHashMap的区别" class="headerlink" title="*8. HashMap、ConcurrentHashMap的区别"></a>*8. HashMap、ConcurrentHashMap的区别</h2><p>​	<strong>HashMap：</strong> HashMap不是线程安全的；允许Key是null</p>
 <p>​	<strong>ConcurrentHashMap：</strong> ConcurrentHashMap是线程安全的，与HashTable相比，HashTable使用的是synchronized的锁，而ConcurrentHashMap则将自己的Key空间进行了<strong>分段（Segment）加锁</strong>(<strong>在 1.7 以前使用的是分段锁机制实现的线程安全的。但是在 1.8 以后使用 synchronized 关键字实现的线程安全</strong>，并且在JDK1.8开始使用CAS)，所以ConcurrentHashMap比HashTable具有更高的并发性能；不允许Key是null。</p>
-<h2 id="9-comparable-和-comparator的区别？"><a href="#9-comparable-和-comparator的区别？" class="headerlink" title="9.comparable 和 comparator的区别？"></a>9.comparable 和 comparator的区别？</h2><p>​	<strong>comparable：</strong>  接口，需要类Override compareTo方法，一个类只能有一种compareTo方法。</p>
-<p>Comparable是排序接口。若一个类实现了Comparable接口，就意味着该类支持排序。实现了Comparable接口的类的对象的列表或数组可以通过Collections.sort或Arrays.sort进行自动排序。</p>
+<h2 id="9-comparable-和-comparator的区别？"><a href="#9-comparable-和-comparator的区别？" class="headerlink" title="*9.comparable 和 comparator的区别？"></a>*9.comparable 和 comparator的区别？</h2><p>​	<strong>comparable：</strong>  接口，需要类Override compareTo方法，一个类只能有一种compareTo方法。Comparable是排序接口。若一个类实现了Comparable接口，就意味着该类支持排序。实际上所有实现了 Comparable 接口的 Java 核心类的结果都和 equlas 方法保持一致。实现了 Comparable 接口的 List 或者数组可以使用 <code>Collections.sort()</code> 或者 <code>Arrays.sort()</code> 方法进行排序。</p>
+<p>int compare(T o1, T o2) 是“比较o1和o2的大小”。返回“负数”，意味着“o1比o2小”；返回“零”，意味着“o1等于o2”；返回“正数”，意味着“o1大于o2”。</p>
+<blockquote>
+<p>Comparable 可以让实现它的类的对象进行比较，具体的比较规则是按照 compareTo 方法中的规则进行。这种顺序称为 <strong>自然顺序</strong>。</p>
+<p>compareTo 方法的返回值有三种情况：</p>
+<ul>
+<li>e1.compareTo(e2) &gt; 0 即 e1 &gt; e2</li>
+<li>e1.compareTo(e2) = 0 即 e1 = e2</li>
+<li>e1.compareTo(e2) &lt; 0 即 e1 &lt; e2</li>
+</ul>
+<p>1.由于 null 不是一个类，也不是一个对象，因此在重写 compareTo 方法时应该注意 e.compareTo(null) 的情况，即使 e.equals(null) 返回 false，compareTo 方法也应该主动抛出一个空指针异常 NullPointerException。</p>
+<p>2.Comparable 实现类重写 compareTo 方法时一般要求 e1.compareTo(e2) == 0 的结果要和 e1.equals(e2) 一致。这样将来使用 SortedSet 等<strong>根据类的自然排序进行排序</strong>的集合容器时可以保证保存的数据的顺序和想象中一致。举个例子，如果你往一个 SortedSet 中先后添加两个对象 a 和 b，a b 满足 (!a.equals(b) &amp;&amp; a.compareTo(b) == 0)，同时也没有另外指定个 Comparator，那当你添加完 a 再添加 b 时会添加失败返回 false, SortedSet 的 size 也不会增加，因为在 SortedSet 看来它们是相同的，而 SortedSet 中是不允许重复的。</p>
+</blockquote>
 <p>​	<strong>comparator：</strong> 接口，实现该接口的比较类是独立于被比较的类的，比较类需要Override compare方法，一个类可以有多个不同的比较类。</p>
-<p>Comparator是比较接口，我们如果需要控制某个类的次序，而该类本身不支持排序(即没有实现Comparable接口)，那么我们就可以建立一个“该类的比较器”来进行排序，这个“比较器”只需要实现Comparator接口即可。也就是说，我们可以通过实现Comparator来新建一个比较器，然后通过这个比较器对类进行排序。</p>
-<p>1、若一个类要实现Comparator接口：它一定要实现compare(T o1, T o2) 函数，但可以不实现 equals(Object obj) 函数。</p>
-<p>2、int compare(T o1, T o2) 是“比较o1和o2的大小”。返回“负数”，意味着“o1比o2小”；返回“零”，意味着“o1等于o2”；返回“正数”，意味着“o1大于o2”。</p>
+<p>从上面内容可知使用自然排序需要类实现 Comparable，并且在内部重写 comparaTo 方法。而 Comparator 则是在<strong>外部制定排序规则</strong>，然后作为排序策略参数传递给某些类，比如 Collections.sort(), Arrays.sort(), 或者一些内部有序的集合（比如 SortedSet，SortedMap 等）。</p>
+<p>若一个类要实现Comparator接口：它一定要实现compare(T o1, T o2) 函数，但可以不实现 equals(Object obj) 函数。</p>
+<p>Java 中的两种排序方式：</p>
+<ol>
+<li>Comparable 自然排序。（实体类实现）</li>
+<li>Comparator 是定制排序。（无法修改实体类时，直接在调用方创建）</li>
+</ol>
 <h2 id="10-如何对Object的list排序？"><a href="#10-如何对Object的list排序？" class="headerlink" title="10. 如何对Object的list排序？"></a>10. 如何对Object的list排序？</h2><p>​	对objects数组进行排序，我们可以用Arrays.sort()方法。</p>
 <p>​	对objects的集合进行排序，需要使用Collections.sort()方法。</p>
-<h2 id="11-简述HashMap的工作原理以及分析源码"><a href="#11-简述HashMap的工作原理以及分析源码" class="headerlink" title="11. 简述HashMap的工作原理以及分析源码"></a><font color="red">11. 简述HashMap的工作原理以及分析源码</font></h2><p><strong><font color="blue">关键思路：1.简单说一下， JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数小于8个）+红黑树（个数大于8个）&nbsp; 2.介绍哈希表存储位置的计算（哈希函数）3. Hash冲突&nbsp; 4.哈希表数据结构以及相关操作时间复杂度 5.影响因子&nbsp;&nbsp;</font></strong></p>
+<h2 id="11-简述HashMap的工作原理以及分析源码"><a href="#11-简述HashMap的工作原理以及分析源码" class="headerlink" title="*11. 简述HashMap的工作原理以及分析源码"></a><font color="red">*11. 简述HashMap的工作原理以及分析源码</font></h2><p><strong><font color="blue">关键思路：1.简单说一下， JDK1.8前底层是哈希数组+链表，JDK1.8开始是哈希数组+链表（个数小于8个）+红黑树（个数大于8个）&nbsp; 2.介绍哈希表存储位置的计算（哈希函数）3. Hash冲突&nbsp; 4.哈希表数据结构以及相关操作时间复杂度 5.影响因子&nbsp;&nbsp;</font></strong></p>
 <p><strong>简介</strong></p>
 <p>HashMap主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。与HashTable主要区别为不支持同步和允许null作为key和value，所以如果你想要保证线程安全，可以使用ConcurrentHashMap代替而不是线程安全的HashTable，因为HashTable基本已经被淘汰。</p>
 <p><strong>内部结构分析</strong></p>
@@ -1207,7 +1222,7 @@
 
 <span class="token punctuation">}</span>
 </code></pre>
-<h2 id="12-简述ConcurrentHashMap-的工作原理及分析源码"><a href="#12-简述ConcurrentHashMap-的工作原理及分析源码" class="headerlink" title="12. 简述ConcurrentHashMap 的工作原理及分析源码"></a><font color="red">12. 简述ConcurrentHashMap 的工作原理及分析源码</font></h2><p><strong><font color="blue">思路：先介绍HashMap和HashTable在线程安全方面的问题，再介绍ConcurrentHashMap在线程安全方面的优势,采用了什么技术。</font></strong></p>
+<h2 id="12-简述ConcurrentHashMap-的工作原理及分析源码（1-7版本）"><a href="#12-简述ConcurrentHashMap-的工作原理及分析源码（1-7版本）" class="headerlink" title="*12. 简述ConcurrentHashMap 的工作原理及分析源码（1.7版本）"></a><font color="red">*12. 简述ConcurrentHashMap 的工作原理及分析源码（1.7版本）</font></h2><p><strong><font color="blue">思路：先介绍HashMap和HashTable在线程安全方面的问题，再介绍ConcurrentHashMap在线程安全方面的优势,采用了什么技术。</font></strong></p>
 <p>ConcurrentHashMap是Java并发包中提供的一个线程安全且高效的HashMap实现，ConcurrentHashMap在并发编程的场景中使用频率非常之高，本文就来分析下ConcurrentHashMap的实现原理，并对其实现原理进行分析（JDK1.7).</p>
 <p><strong>ConcurrentHashMap实现原理</strong></p>
 <p>　　众所周知，哈希表是种非常高效，复杂度为O(1)的数据结构，在Java开发中，我们最常见到最频繁使用的就是HashMap和HashTable，但是在线程竞争激烈的并发场景中使用都不够合理。</p>
@@ -1216,7 +1231,7 @@
 <p><img src="/2022/06/30/javasems02/3.png" alt="img"></p>
 <p>　　HashTable性能差主要是由于所有操作需要竞争同一把锁，而如果容器中有多把锁，每一把锁锁一段数据，这样在多线程访问时不同段的数据时，就不会存在锁竞争了，这样便可以有效地提高并发效率。这就是ConcurrentHashMap所采用的”<strong>分段锁</strong>“思想。</p>
 <p>　　<img src="/2022/06/30/javasems02/4.png" alt="img"></p>
-<p><strong>ConcurrentHashMap源码分析</strong></p>
+<p><strong>ConcurrentHashMap源码分析（1.7版本）</strong></p>
 <p>ConcurrentHashMap采用了非常精妙的”分段锁”策略，ConcurrentHashMap的主干是个Segment数组。</p>
 <pre class=" language-java"><code class="language-java"> <span class="token keyword">final</span> Segment<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> segments<span class="token punctuation">;</span>
 </code></pre>
@@ -1368,6 +1383,76 @@
 </code></pre>
 <p> 总结</p>
 <p>　　ConcurrentHashMap作为一种线程安全且高效的哈希表的解决方案，尤其其中的”分段锁”的方案，相比HashTable的全表锁在性能上的提升非常之大。</p>
+<h2 id="13-介绍-JDK1-8-的ConcurrentHashMap"><a href="#13-介绍-JDK1-8-的ConcurrentHashMap" class="headerlink" title="*13. 介绍 JDK1.8  的ConcurrentHashMap"></a>*13. 介绍 JDK1.8  的ConcurrentHashMap</h2><h3 id="01-做了什么改进？"><a href="#01-做了什么改进？" class="headerlink" title="01 做了什么改进？"></a>01 做了什么改进？</h3><p>在 JDK1.7 版本中，ConcurrentHashMap 由数组 + Segment + 分段锁实现，其内部分为一个个段（Segment）数组，Segment 通过继承 ReentrantLock 来进行加锁，通过每次锁住一个 segment 来降低锁的粒度而且保证了每个 segment 内地操作的线程安全性，从而实现全局线程安全。</p>
+<p>但是这么做的缺陷就是每次通过 hash 确认位置时需要 2 次才能定位到当前 key 应该落在哪个槽：</p>
+<ol>
+<li>通过 hash 值和 段数组长度-1 进行位运算确认当前 key 属于哪个段，即确认其在 segments 数组的位置。</li>
+<li>再次通过 hash 值和 table 数组（即 ConcurrentHashMap 底层存储数据的数组）长度 - 1进行位运算确认其所在桶。</li>
+</ol>
+<p>为了进一步优化性能，在 jdk1.8 版本中，对 ConcurrentHashMap 做了优化，取消了分段锁的设计，<strong>取而代之的是通过 cas 操作和 synchronized 关键字</strong>来实现优化，而扩容的时候也利用了一种分而治之的思想来提升扩容效率，在 JDK1.8 中 ConcurrentHashMap 的存储结构和 HashMap 基本一致，如下图所示：</p>
+<p><img src="/64b425c5f972408caac40ad30f918a48tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp" alt="img"></p>
+<h3 id="02-为什么-key-和-value-不允许为-null？"><a href="#02-为什么-key-和-value-不允许为-null？" class="headerlink" title="02 为什么 key 和 value 不允许为 null？"></a>02 为什么 key 和 value 不允许为 null？</h3><p>在 HashMap 中，key 和 value 都是可以为 null 的，但是在 ConcurrentHashMap 中却不允许，这是为什么呢？</p>
+<p>作者 Doug Lea 本身对这个问题有过回答，在并发编程中，null 值容易引来歧义， 假如先调用 get(key) 返回的结果是 null，那么我们无法确认是因为当时这个 key 对应的 value 本身放的就是 null，还是说这个 key 值根本不存在，这会引起歧义，如果在非并发编程中，可以进一步通过调用 containsKey 方法来进行判断，但是并发编程中无法保证两个方法之间没有其他线程来修改 key 值，所以就直接禁止了 null 值的存在。</p>
+<p>而且作者 Doug Lea 本身也认为，假如允许在集合，如 map 和 set 等存在 null 值的话，即使在非并发集合中也有一种公开允许程序中存在错误的意思，这也是 Doug Lea 和 Josh Bloch（HashMap作者之一） 在设计问题上少数不同意见之一，而 ConcurrentHashMap 是 Doug Lea 一个人开发的，所以就直接禁止了 null 值的存在。</p>
+<h3 id="03-ConcurrentHashMap-如何保证线程的安全性？"><a href="#03-ConcurrentHashMap-如何保证线程的安全性？" class="headerlink" title="03 ConcurrentHashMap 如何保证线程的安全性？"></a>03 ConcurrentHashMap 如何保证线程的安全性？</h3><p>在 ConcurrentHashMap 中，采用了大量的<strong>分而治之</strong>的思想来降低锁的粒度，提升并发性能。其源码中大量使用了<code>CAS</code>操作来保证安全性，而不是和 HashTable 一样，不论什么方法，直接简单粗暴的使用 synchronized关键字来实现，接下来的原理分析中，部分和 HashMap 类似之处本文就不再重复，本文主要从安全性方面来分析 ConcurrentHashMap 的设计。</p>
+<h4 id="03-1如何用-CAS-保证数组初始化的安全？"><a href="#03-1如何用-CAS-保证数组初始化的安全？" class="headerlink" title="03 - 1如何用 CAS 保证数组初始化的安全？"></a>03 - 1如何用 CAS 保证数组初始化的安全？</h4><p>下面就是初始化的方法：</p>
+<p><img src="/2022/06/30/javasems02/410dccd1b0f84681929c079f40af56a2tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp"></p>
+<p>这里面有一个非常重要的变量 sizeCtl，这个变量对理解整个 ConcurrentHashMap 的原理非常重要。</p>
+<p>sizeCtl 有四个含义：</p>
+<ul>
+<li>sizeCtl&lt;-1 表示有 N-1 个线程正在执行扩容操作，如 -2 就表示有 2-1 个线程正在扩容。</li>
+<li>sizeCtl=-1 占位符，表示当前正在初始化数组。</li>
+<li>sizeCtl=0 默认状态，表示数组还没有被初始化。</li>
+<li>sizeCtl&gt;0 记录下一次需要扩容的大小。</li>
+</ul>
+<p>知道了这个变量的含义，上面的方法就好理解了，第二个分支采用了 CAS 操作，因为 SIZECTL 默认为 0，所以这里如果可以替换成功，则当前线程可以执行初始化操作，CAS 失败，说明其他线程抢先一步把 sizeCtl 改为了 -1。扩容成功之后会把下一次扩容的阈值赋值给 sc，即 sizeClt。</p>
+<h4 id="03-1-put-操作如何保证数组元素的可见性？"><a href="#03-1-put-操作如何保证数组元素的可见性？" class="headerlink" title="03-1 put 操作如何保证数组元素的可见性？"></a>03-1 put 操作如何保证数组元素的可见性？</h4><p>ConcurrentHashMap 中存储数据采用的 Node 数组是采用了 volatile 来修饰的，但是这只能保证数组的引用在不同线程之间是可用的，并不能保证数组内部的元素在各个线程之间也是可见的，所以这里我们判定某一个下标是否有元素，并不能直接通过下标来访问，那么应该如何访问呢？</p>
+<p><img src="/2022/06/30/javasems02/4e824effcecc45aca2f4cde0ab168665tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp" alt="put时判断下标是否有元素"></p>
+<p>可以看到，这里是通过 tabAt 方法来获取元素，而 tableAt 方法实际上就是一个 CAS 操作：</p>
+<p><img src="/2022/06/30/javasems02/b1648a14308947ea92bff60a50a4381ftplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp"></p>
+<p>如果发现当前节点元素为空，也是通过 CAS 操作（casTabAt）来存储当前元素。</p>
+<p>如果当前节点元素不为空，则会使用 synchronized 关键字锁住当前节点（数组中的节点），并进行对应的设值 操作：</p>
+<p><img src="/2022/06/30/javasems02/0fea75b253db47f6b03f698092bbb02btplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp"></p>
+<h4 id="精妙的计数方式"><a href="#精妙的计数方式" class="headerlink" title="精妙的计数方式"></a>精妙的计数方式</h4><p>在HashMap中，调用 put 方法之后会通过 ++size 的方式来存储当前集合中元素的个数，但是在并发模式下，这种操作是不安全的，所以不能通过这种方式，那么是否可以通过 CAS 操作来修改 size 呢？</p>
+<p>直接通过 CAS 操作来修改 size 是可行的，但是假如同时有非常多的线程要修改 size 操作，那么只会有一个线程能够替换成功，其他线程只能不断地尝试 CAS，这会影响到 ConcurrentHashMap 集合的性能，所以作者就想到了一个分而治之的思想来完成计数。</p>
+<p>作者定义了一个数组来计数，而且这个用来计数的数组也能扩容，每次线程需要计数的时候，都通过随机的方式获取一个数组下标的位置进行操作，这样就可以尽可能的降低了锁的粒度，最后获取 size 时，则通过遍历数组来实现计数：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//用来计数的数组，大小为2的N次幂，默认为2</span>
+<span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> CounterCell<span class="token punctuation">[</span><span class="token punctuation">]</span> counterCells<span class="token punctuation">;</span>
+<span class="token annotation punctuation">@sun</span><span class="token punctuation">.</span>misc<span class="token punctuation">.</span>Contended <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">CounterCell</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//数组中的对象</span>
+        <span class="token keyword">volatile</span> <span class="token keyword">long</span> value<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存储元素个数</span>
+        <span class="token function">CounterCell</span><span class="token punctuation">(</span><span class="token keyword">long</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> value <span class="token operator">=</span> x<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p><strong>addCount 计数方法</strong></p>
+<p>接下来我们看看 addCount 方法：</p>
+<p><img src="/2022/06/30/javasems02/af4cfd8f6de1441bb9731ecc31632335tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp" alt="addCount"></p>
+<p>首先会判断 CounterCell 数组是不是为空，需要这里的是，这里的 CAS 操作是将 BASECOUNT 和 baseCount 进行比较，如果相等，则说明当前没有其他线程过来修改 baseCount（即 CAS 操作成功），此时则不需要使用 CounterCell 数组，而直接采用 baseCount 来计数。</p>
+<p>假如 CounterCell 为空且 CAS 失败，那么就会通过调用 fullAddCount 方法来对 CounterCell 数组进行初始化。</p>
+<p><strong>fullAddCount 方法</strong></p>
+<p>这个方法也很长，看起来比较复杂，里面包含了对 CounterCell 数组的初始化和赋值等操作。</p>
+<p><strong>（1）初始化 CounterCell 数组</strong></p>
+<p>我们先不管，直接进入初始化的逻辑：</p>
+<p><img src="/f75447ee2b9f485bb7effd1945965f2ctplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp" alt="img"></p>
+<p>这里面有一个比较重要的变量 cellsBusy，默认是 0，表示当前没有线程在初始化或者扩容，所以这里判断如果 cellsBusy==0，而 as 其实在前面就是把全局变量 CounterCell 数组的赋值，这里之所以再判断一次就是再确认有没有其他线程修改过全局数组 CounterCell，所以条件满足的话就会通过 CAS 操作修改 cellsBusy 为 1，表示当前自己在初始化了，其他线程就不能同时进行初始化操作了。</p>
+<p>最后可以看到，默认是一个长度为 2 的数组，也就是采用了 2 个数组位置进行存储当前 ConcurrentHashMap 的元素数量。</p>
+<p><strong>（2）CounterCell 如何赋值</strong></p>
+<p>初始化完成之后，如果再次调用 put 方法，那么就会进入 fullAddCount 方法的另一个分支：</p>
+<p><img src="/2022/06/30/javasems02/20c174043b514514a5a1d6a09a146de2tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp"></p>
+<p>这里面首先判断了 CounterCell 数组不为空，然后会再次判断数组中的元素是不是为空，因为如果元素为空，就需要初始化一个 CounterCell 对象放到数组，而如果元素不为空，则只需要 CAS 操作替换元素中的数量即可。</p>
+<p>所以这里面的逻辑也很清晰，初始化 CounterCell 对象的时候也需要将 cellBusy 由 0 改成 1。</p>
+<p><strong>（3）计数数组 CounterCell 也能扩容吗？</strong></p>
+<p>最后我们再继续看其他分支：</p>
+<p><img src="/2022/06/30/javasems02/ea60c4fc8274459a976c1d95d1ecfd63tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.webp"></p>
+<p>主要看上图红框中的分支，一旦会进入这个分支，就说明前面所有分支都不满足，即：</p>
+<ul>
+<li>当前 CounterCell 数组已经初始化完成。</li>
+<li>当前通过 hash 计算出来的 CounterCell 数组下标中的元素不为 null。</li>
+<li>直接通过 CAS 操作修改 CounterCell 数组中指定下标位置中对象的数量失败，说明有其他线程在竞争修改同一个数组下标中的元素。</li>
+<li>当前操作不满足不允许扩容的条件。</li>
+<li>当前没有其他线程创建了新的 CounterCell 数组，且当前 CounterCell 数组的大小仍然小于 CPU 数量。</li>
+</ul>
+<p>所以接下来就需要对 CounterCell 数组也进行扩容，这个扩容的方式和 ConcurrentHashMap 的扩容一样，也是将原有容量乘以 2，所以其实 CounterCell 数组的容量也是满足 2 的 N 次幂</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6961288808742518798">https://juejin.cn/post/6961288808742518798</a></p>
 
                 
             </div>

@@ -4,11 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题03, 银色回廊">
+    <meta name="keywords" content="javaSE 面试题03：运算, 银色回廊">
     <meta name="description" content="1. Java是否需要开发人员回收内存垃圾吗？不需要
 Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程负责运行，不需要程序员考虑回收内存垃圾。
-2. Java的数据结构有那些？线性表：ArrayList
-链表：LinkedL">
+具体垃圾回收机制看这里：深入详解Java垃圾回收（GC）机制
+2. Java的数">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +22,7 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 
     
 
-    <title>javaSE 面试题03 | 银色回廊</title>
+    <title>javaSE 面试题03：运算 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -328,12 +328,12 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题03</h1>
+                    <h1 class="description center-align post-title">javaSE 面试题03：运算</h1>
                 </div>
             </div>
         </div>
@@ -487,7 +487,7 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.1k
                 </div>
                 
 
@@ -511,13 +511,15 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
             <div id="articleContent">
                 <h2 id="1-Java是否需要开发人员回收内存垃圾吗？"><a href="#1-Java是否需要开发人员回收内存垃圾吗？" class="headerlink" title="1. Java是否需要开发人员回收内存垃圾吗？"></a>1. Java是否需要开发人员回收内存垃圾吗？</h2><p>不需要</p>
 <p>Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程负责运行，不需要程序员考虑回收内存垃圾。</p>
+<p>具体垃圾回收机制看这里：<a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/296981">深入详解Java垃圾回收（GC）机制</a></p>
 <h2 id="2-Java的数据结构有那些？"><a href="#2-Java的数据结构有那些？" class="headerlink" title="2. Java的数据结构有那些？"></a>2. Java的数据结构有那些？</h2><p>线性表：ArrayList</p>
 <p>链表：LinkedList</p>
 <p>栈：Stack</p>
 <p>队列：Queue</p>
 <p>图：Map</p>
 <p>树：Tree</p>
-<h2 id="3-Java中有几种数据类型"><a href="#3-Java中有几种数据类型" class="headerlink" title="3. Java中有几种数据类型"></a>3. Java中有几种数据类型</h2><p>整形：byte，short，int，long</p>
+<h2 id="3-Java中有几种数据类型"><a href="#3-Java中有几种数据类型" class="headerlink" title="*3. Java中有几种数据类型"></a>*3. Java中有几种数据类型</h2><p>8种基础数据类型</p>
+<p>整形：byte，short，int，long</p>
 <p>浮点型：float，double</p>
 <p>字符型：char</p>
 <p>布尔型：boolean</p>
@@ -526,7 +528,7 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 <p>​	隐式转换就是派生类类型变量转化为基类类型变量，不可能失败；</p>
 <p>​	另外，基础类型之间也存在隐式类型转换，例如int转换为long，因为每一个int都可以转化为long。</p>
 <p>​	隐式转换和显式转换其实就是自动类型转换和强制类型转换。</p>
-<h2 id="5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"><a href="#5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型" class="headerlink" title="5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"></a>5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型</h2><p>​	Char在java中也是比较特殊的类型，它的int值从1开始，一共有2的16次方个数据；</p>
+<h2 id="5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"><a href="#5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型" class="headerlink" title="*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"></a>*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型</h2><p>​	Char在java中也是比较特殊的类型，它的int值从1开始，一共有2的16次方个数据；</p>
 <p>​	Char&lt;int&lt;long&lt;float&lt;double；Char类型可以隐式转成int,double类型，但是不能隐式转换成string；</p>
 <p>​	如果char类型转成byte，short类型的时候，需要强转。</p>
 <h2 id="6-简述Java中的包装类都是哪些？"><a href="#6-简述Java中的包装类都是哪些？" class="headerlink" title="6. 简述Java中的包装类都是哪些？"></a>6. 简述Java中的包装类都是哪些？</h2><p>​	byte：Byte</p>
@@ -559,8 +561,8 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 <p>notify</p>
 <p>clone</p>
 <p>getClass</p>
-<h2 id="16-java中有没有指针？"><a href="#16-java中有没有指针？" class="headerlink" title="16. java中有没有指针？"></a>16. java中有没有指针？</h2><p>​	理论上说有，但是不允许开发人员使用，只能由JVM来操作。</p>
-<h2 id="17-java中是值传递引用传递？"><a href="#17-java中是值传递引用传递？" class="headerlink" title="17. java中是值传递引用传递？"></a><font color="red">17. java中是值传递引用传递？</font></h2><p>  理论上说，java都是引用传递，<strong>对于基本数据类型，传递是值的副本，而不是值本身</strong>。对于对象类型，传递是对象的引用，当在一个方法操作操作参数的时候，其实操作的是引用所指向的对象。</p>
+<h2 id="16-java中有没有指针？"><a href="#16-java中有没有指针？" class="headerlink" title="*16. java中有没有指针？"></a>*16. java中有没有指针？</h2><p>​	理论上说有，但是不允许开发人员使用，只能由JVM来操作。</p>
+<h2 id="17-java中是值传递引用传递？"><a href="#17-java中是值传递引用传递？" class="headerlink" title="*17. java中是值传递引用传递？"></a><font color="red">*17. java中是值传递引用传递？</font></h2><p>  理论上说，java都是引用传递，<strong>对于基本数据类型，传递是值的副本，而不是值本身</strong>。对于对象类型，传递是对象的引用，当在一个方法操作操作参数的时候，其实操作的是引用所指向的对象。</p>
 <h2 id="18-什么是-Java-程序的主类-应用程序和小程序的主类有何不同"><a href="#18-什么是-Java-程序的主类-应用程序和小程序的主类有何不同" class="headerlink" title="18. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同?"></a>18. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同?</h2><p>一个程序中可以有多个类，但只能有一个类是主类。在 Java 应用程序中，这个主类是指包含 main（）方法的类。而在 Java 小程序中，这个主类是一个继承自系统类 JApplet 或 Applet 的子类。应用程序的主类不一定要求是 public 类，但小程序的主类要求必须是 public 类。主类是 Java 程序执行的入口点。</p>
 <h2 id="19-Java-应用程序与小程序之间有哪些差别"><a href="#19-Java-应用程序与小程序之间有哪些差别" class="headerlink" title="19. Java 应用程序与小程序之间有哪些差别?"></a>19. Java 应用程序与小程序之间有哪些差别?</h2><p>简单说应用程序是从主线程启动(也就是 <code>main()</code> 方法)。applet 小程序没有 <code>main()</code> 方法，主要是嵌在浏览器页面上运行(调用<code>init()</code>或者<code>run()</code>来启动)，嵌入浏览器这点跟 flash 的小游戏类似。</p>
 
@@ -955,9 +957,9 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="javaSE 面试题04">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="javaSE 面试题04：类的概念">
                         
-                        <span class="card-title">javaSE 面试题04</span>
+                        <span class="card-title">javaSE 面试题04：类的概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

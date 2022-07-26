@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="javaSE 面试题01, 银色回廊">
+    <meta name="keywords" content="javaSE 面试题01：Java特点, 银色回廊">
     <meta name="description" content="1. 面向对象和面向过程的区别面向过程： 
 优点：性能高，类的实例化是有较大开销的，且占用更多的内存，在注重性能的开发场合，例如单片机、嵌入式开发、Linux/Unix内核等场景中一般采用面向过程开发。
 缺点：代码逻辑贴近机器逻辑，不易维护">
@@ -21,7 +21,7 @@
 
     
 
-    <title>javaSE 面试题01 | 银色回廊</title>
+    <title>javaSE 面试题01：Java特点 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -327,12 +327,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">javaSE 面试题01</h1>
+                    <h1 class="description center-align post-title">javaSE 面试题01：Java特点</h1>
                 </div>
             </div>
         </div>
@@ -517,7 +517,7 @@
 <h2 id="2-Java语言有哪些特点？"><a href="#2-Java语言有哪些特点？" class="headerlink" title="2. Java语言有哪些特点？"></a>2. Java语言有哪些特点？</h2><p>面向对象（封装，继承，多态）；</p>
 <p>平台无关性（Java虚拟机实现平台无关性），编译与解释并存；</p>
 <p>使用广泛，有很多可用的库</p>
-<h2 id="3-什么是字节码？采用字节码的最大好处是什么？"><a href="#3-什么是字节码？采用字节码的最大好处是什么？" class="headerlink" title="3. 什么是字节码？采用字节码的最大好处是什么？"></a><font color="red">3. 什么是字节码？采用字节码的最大好处是什么？</font></h2><p><strong>思路：1.先简单介绍一下Java源代码到可执行文件的过程。（谁负责编译、谁负责解释）2. 介绍一下JIT并说明其原理 3.采用字节码的好处</strong></p>
+<h2 id="3-什么是字节码？采用字节码的最大好处是什么？"><a href="#3-什么是字节码？采用字节码的最大好处是什么？" class="headerlink" title="*3. 什么是字节码？采用字节码的最大好处是什么？"></a>*<font color="red">3. 什么是字节码？采用字节码的最大好处是什么？</font></h2><p><strong>思路：1.先简单介绍一下Java源代码到可执行文件的过程。（谁负责编译、谁负责解释）2. 介绍一下JIT并说明其原理 3.采用字节码的好处</strong></p>
 <p><strong>java中的编译器和解释器：</strong> </p>
 <p>Java引入了虚拟机（JVM），即在机器和编译程序之间加入了一层抽象的虚拟的机器。</p>
 <p>在不同的操作系统上，其实有不同的虚拟机，但是他们都提供给编译程序一个的共同的接口。编译程序只需要面向虚拟机，生成虚拟机能够理解的代码，然后由解释器来将虚拟机代码转换为特定系统的机器码执行。这种<strong>供虚拟机理解的代码叫做字节码</strong>（Java中是扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。</p>
@@ -550,7 +550,7 @@
 <li>java在运行字节码时，需要通过-classpath指定java类的所在位置，否则会报无法加载主类的错误</li>
 <li>设定%CLASSPATH%后，可以使用这个变量用于指定-classpath参数</li>
 </ol>
-<h2 id="6-字符型常量和字符串常量的区别"><a href="#6-字符型常量和字符串常量的区别" class="headerlink" title="6. 字符型常量和字符串常量的区别"></a>6. 字符型常量和字符串常量的区别</h2><ol>
+<h2 id="6-字符型常量和字符串常量的区别"><a href="#6-字符型常量和字符串常量的区别" class="headerlink" title="*6. 字符型常量和字符串常量的区别"></a>*6. 字符型常量和字符串常量的区别</h2><ol>
 <li>形式上：字符常量是单引号引起的一个字符 字符串常量是双引号引起的若干个字符</li>
 <li>含义上：字符常量相当于一个整形值(ASCII值),可以参加表达式运算 字符串常量代表一个地址值(该字符串在内存中存放位置)</li>
 <li>占内存大小：字符常量只占2个字节 字符串常量占若干个字节(<strong>java和C\C++不一样，字符串不需要\0结尾</strong>)。 (<strong>注意： char 在 Java 中占两个字节</strong>)</li>
@@ -562,7 +562,7 @@
 <p><strong>override和overload的区别：</strong></p>
 <p>override：发生在父子类中，方法名、参数列表必须相同，返回值小于等于父类，抛出的异常小于等于父类，访问修饰符大于等于父类；如果父类方法访问修饰符为private则子类中就不是重写。</p>
 <p>overload：发生在同一个类中，方法名必须相同，参数类型不同、个数不同、顺序不同，方法返回值和访问修饰符可以不同，发生在编译时。</p>
-<h2 id="9-java-面向对象编程三大特性"><a href="#9-java-面向对象编程三大特性" class="headerlink" title="9. java 面向对象编程三大特性"></a><font color="red">9. java 面向对象编程三大特性</font></h2><p><strong>封装</strong>：对象的属性或者方法，可以隐藏起来，禁止被外部访问</p>
+<h2 id="9-java-面向对象编程三大特性"><a href="#9-java-面向对象编程三大特性" class="headerlink" title="*9. java 面向对象编程三大特性"></a><font color="red">*9. java 面向对象编程三大特性</font></h2><p><strong>封装</strong>：对象的属性或者方法，可以隐藏起来，禁止被外部访问</p>
 <pre class=" language-markdown"><code class="language-markdown"><span class="token code keyword">    9. 封装：访问权限 protected friendly(什么都不写，default)</span>
 <span class="token code keyword">                 当前类   派生类   同一个package里的类    不同package里的类</span>
 <span class="token code keyword">        public    Yes     Yes            Yes              Yes</span>
@@ -609,7 +609,7 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 </code></pre>
 <p>s5 == s6: false</p>
 <p>s5.equals(s6): false</p>
-<h2 id="11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"><a href="#11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？" class="headerlink" title="11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"></a><font color="red">11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？</font></h2><p><strong>可变性</strong> </p>
+<h2 id="11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"><a href="#11-String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？" class="headerlink" title="*11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？"></a><font color="red">*11. String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？</font></h2><p><strong>可变性</strong> </p>
 <p>String类中使用<strong>字符数组保存字符串</strong>，private <strong>final</strong> char value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[]value，这两种对象都是可变的。  </p>
 <p><strong>线程安全性</strong></p>
 <p>String中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。StringBuilder并没有对方法进行加同步锁，所以是非线程安全的。  </p>
@@ -638,7 +638,7 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 <p>报错：注意，虽然C\C++这样写是对的，java中static不可以修饰局部变量。</p>
 <h2 id="14-在一个静态方法内调用一个非静态成员为什么是非法的？"><a href="#14-在一个静态方法内调用一个非静态成员为什么是非法的？" class="headerlink" title="14. 在一个静态方法内调用一个非静态成员为什么是非法的？"></a>14. 在一个静态方法内调用一个非静态成员为什么是非法的？</h2><p>  由于静态方法可以不通过对象进行调用，因此在静态方法里，不能调用其他非静态变量，也不可以访问非静态变量成员。</p>
 <h2 id="15-在Java中定义一个不做事且没有参数的构造方法的作用"><a href="#15-在Java中定义一个不做事且没有参数的构造方法的作用" class="headerlink" title="15. 在Java中定义一个不做事且没有参数的构造方法的作用"></a>15. 在Java中定义一个不做事且没有参数的构造方法的作用</h2><p>  Java程序在执行子类的构造方法之前，如果没有用super()来调用父类特定的构造方法，则会调用父类中“没有参数的构造方法”。因此，如果父类中只定义了有参数的构造方法，而在子类的构造方法中又没有用super()来调用父类中特定的构造方法，则编译时将发生错误，因为Java程序在父类中找不到没有参数的构造方法可供执行。解决办法是在父类里加上一个不做事且没有参数的构造方法。</p>
-<h2 id="16-接口和抽象类的区别是什么？"><a href="#16-接口和抽象类的区别是什么？" class="headerlink" title="16. 接口和抽象类的区别是什么？"></a>16. 接口和抽象类的区别是什么？</h2><ol>
+<h2 id="16-接口和抽象类的区别是什么？"><a href="#16-接口和抽象类的区别是什么？" class="headerlink" title="*16. 接口和抽象类的区别是什么？"></a>*16. 接口和抽象类的区别是什么？</h2><ol>
 <li><p><strong>接口的方法默认是public</strong>，在JDK 7及以前，所有方法在接口中不能有实现，JDK 8 及以后接口中可以用default关键字实现方法，<strong>抽象类可以有非抽象的方法</strong></p>
 </li>
 <li><p><strong>接口中不能有变量，构造函数和static静态代码块</strong>，只能有常量 public static final，而抽象类没有限制</p>
