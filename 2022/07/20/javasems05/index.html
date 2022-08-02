@@ -541,9 +541,9 @@ Error表示的是系统错误">
 </ol>
 <h2 id="10-amp-和-amp-amp-的区别？"><a href="#10-amp-和-amp-amp-的区别？" class="headerlink" title="10. &amp;和&amp;&amp;的区别？"></a>10. &amp;和&amp;&amp;的区别？</h2><p>​	&amp;是位运算符。&amp;&amp;是布尔逻辑运算符，在进行逻辑判断时用&amp;处理的前面为false后面的内容仍需处理，用&amp;&amp;处理的前面为false不再处理后面的内容。</p>
 <h2 id="11-如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？"><a href="#11-如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？" class="headerlink" title="11. 如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？"></a>11. 如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？</h2><p>​	不会，在下一个垃圾回收周期中，这个对象将是可被回收的。</p>
-<h2 id="12-简述分带收集策略，并描述Serial-GC的回收过程"><a href="#12-简述分带收集策略，并描述Serial-GC的回收过程" class="headerlink" title="12. 简述分带收集策略，并描述Serial GC的回收过程"></a>12. 简述分带收集策略，并描述Serial GC的回收过程</h2><p><strong>弱代假设（weak generational hypothesis）和分代收集策略：</strong></p>
-<pre><code>1. 大部分最近创建的对象不会存在很长时间，比如函数、代码块内部创建的局部变量。
-2. 已经存活很长时间对象，在未来被释放的概率也很低，因为他们甚至有可能是static的。
+<h2 id="12-简述分代收集策略，并描述Serial-GC的回收过程"><a href="#12-简述分代收集策略，并描述Serial-GC的回收过程" class="headerlink" title="*12. 简述分代收集策略，并描述Serial GC的回收过程"></a><font color="red">*12. 简述分代收集策略，并描述Serial GC的回收过程</font></h2><p><strong>弱代假设（weak generational hypothesis）和分代收集策略：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown"><span class="token list punctuation">1.</span> 大部分最近创建的对象不会存在很长时间，比如函数、代码块内部创建的局部变量。
+<span class="token list punctuation">2.</span> 已经存活很长时间对象，在未来被释放的概率也很低，因为他们甚至有可能是static的。
 </code></pre>
 <p>串行GC和并行GC：</p>
 <p>​	串行，比较简单，事情一件一件按顺序做，单线程执行GC的所有工作。</p>
@@ -553,9 +553,9 @@ Error表示的是系统错误">
 <p>​	Stop The World，顾名思义，就是GC运行时会停止所有的其他线程。</p>
 <p>整理(Compacting) vs 不整理(Non-compacting)：</p>
 <p>​	因为内存的分配是顺序的，但是释放不一定是顺序，这样会出现内存碎片，因为对象内存的分配必须是连续的，所以多块小内存碎片（每片大小都小于需求，但是总体容量大于需求）是无法满足一个大内存需求的。</p>
-<p>​	Compacting型的算法，就是在GC的时候，会把或者的对象向一端移动，使对象紧凑的挨在一起，消除内存碎片带来的问题. 除了避免了碎片问题外，对象的分配也变得简单多了，只需要维护一个top和end指针即可，当需要分配的对象大小加上top不超过end时，直接返回当前的top值，然后将top往end端移动对象大小的字节偏移即可. 即使在并发情况下，也只需要CAS(compare and swap)指令就能完成. 不过凡事有利有弊，因为要移动对象，对象的位置发生了改变，必须同步修改引用对象的那些位置，为了维持一致性，通常需要在GC安全点的环境下移动对象，当要整理的heap很大时，将耗费较长的时间。</p>
+<p>​	Compacting型的算法，就是在GC的时候，会把获得的对象向一端移动，使对象紧凑的挨在一起，消除内存碎片带来的问题. 除了避免了碎片问题外，对象的分配也变得简单多了，只需要维护一个top和end指针即可，当需要分配的对象大小加上top不超过end时，直接返回当前的top值，然后将top往end端移动对象大小的字节偏移即可. 即使在并发情况下，也只需要CAS(compare and swap)指令就能完成. 不过凡事有利有弊，因为要移动对象，对象的位置发生了改变，必须同步修改引用对象的那些位置，为了维持一致性，通常需要在GC安全点的环境下移动对象，当要整理的heap很大时，将耗费较长的时间。</p>
 <p>​	Non-compacting型的算法就是另一种，不整理的，空闲区域一般通过链表进行管理. 相比于Compacting的方式，需要维护额外的链表结构，并且分配也变得复杂，同时也可能引发内存碎片问题。另一方面，由于不移动对象，节省了内存copy的时间，同时对象的释放可以和应用的代码一起执行，这是它的一个优势。	</p>
-<p>JVM中的heap被分成年轻代和老年代，年轻代会执行更频繁的GC，老年代的GC则很少触发，但是触发后运行时间更长。同时，年轻代和老年代可以使用不同的策略，比如串行或者并行，并发或者stop the world，整理或者不整理。</p>
+<p><font color="red">JVM中的heap被分成年轻代和老年代，年轻代会执行更频繁的GC，老年代的GC则很少触发，但是触发后运行时间更长。同时，年轻代和老年代可以使用不同的策略，比如串行或者并行，并发或者stop the world，整理或者不整理。</font>&gt;</p>
 <p><strong>Serial GC（串行GC）</strong></p>
 <p>串行GC是hotspot中最简单的一种GC，不过麻雀虽小五脏俱全。除了速度相较其他几种GC比较慢之外，完成的功能是一样的：<strong>回收不再使用的对象，为新的对象分配空间</strong>。</p>
 <p><strong>Serial GC 的内存分布：</strong></p>
