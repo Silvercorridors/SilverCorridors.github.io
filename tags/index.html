@@ -468,6 +468,15 @@
                 </a>
                 
                 
+                <a href="/tags/MySQL/" title="MySQL: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="MySQL" style="background-color: #F9E79F;">MySQL
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
                 <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
@@ -477,11 +486,11 @@
                 </a>
                 
                 
-                <a href="/tags/MySQL/" title="MySQL: 2">
+                <a href="/tags/gradle/" title="gradle: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="MySQL" style="background-color: #F9EBEA;">MySQL
-                        <span class="tag-length">2</span>
+                            data-tagname="gradle" style="background-color: #F9EBEA;">gradle
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -490,15 +499,6 @@
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             data-tagname="正则表达式" style="background-color: #FFF;">正则表达式
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/gradle/" title="gradle: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="gradle" style="background-color: #F9EBEA;">gradle
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -527,7 +527,7 @@
 <script type="text/javascript">
     
 
-    $('#tag-wordcloud').jQCloud([{"text":"网络爬虫","weight":2,"link":"/tags/网络爬虫/"},{"text":"开源项目","weight":2,"link":"/tags/开源项目/"},{"text":"leetcode","weight":2,"link":"/tags/leetcode/"},{"text":"写作","weight":1,"link":"/tags/写作/"},{"text":"Java","weight":2,"link":"/tags/Java/"},{"text":"java","weight":9,"link":"/tags/java/"},{"text":"面试题","weight":7,"link":"/tags/面试题/"},{"text":"多线程","weight":2,"link":"/tags/多线程/"},{"text":"Spring","weight":4,"link":"/tags/Spring/"},{"text":"Spring MVC","weight":6,"link":"/tags/Spring-MVC/"},{"text":"springboot","weight":6,"link":"/tags/springboot/"},{"text":"数据库","weight":2,"link":"/tags/数据库/"},{"text":"MySQL","weight":2,"link":"/tags/MySQL/"},{"text":"正则表达式","weight":1,"link":"/tags/正则表达式/"},{"text":"gradle","weight":1,"link":"/tags/gradle/"}], {
+    $('#tag-wordcloud').jQCloud([{"text":"网络爬虫","weight":2,"link":"/tags/网络爬虫/"},{"text":"开源项目","weight":2,"link":"/tags/开源项目/"},{"text":"leetcode","weight":2,"link":"/tags/leetcode/"},{"text":"写作","weight":1,"link":"/tags/写作/"},{"text":"Java","weight":2,"link":"/tags/Java/"},{"text":"java","weight":9,"link":"/tags/java/"},{"text":"面试题","weight":7,"link":"/tags/面试题/"},{"text":"多线程","weight":2,"link":"/tags/多线程/"},{"text":"Spring","weight":4,"link":"/tags/Spring/"},{"text":"Spring MVC","weight":6,"link":"/tags/Spring-MVC/"},{"text":"springboot","weight":6,"link":"/tags/springboot/"},{"text":"MySQL","weight":2,"link":"/tags/MySQL/"},{"text":"数据库","weight":2,"link":"/tags/数据库/"},{"text":"gradle","weight":1,"link":"/tags/gradle/"},{"text":"正则表达式","weight":1,"link":"/tags/正则表达式/"}], {
         autoResize: true
     });
 </script>
@@ -586,7 +586,7 @@
     
 
     <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
+         style="margin-bottom: 15px !important;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
@@ -616,6 +616,60 @@
             <br>
 
             <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2022";
+                        var startMonth = "6";
+                        var startDate = "21";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
             
             <br>
             
