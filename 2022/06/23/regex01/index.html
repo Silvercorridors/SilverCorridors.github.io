@@ -18,11 +18,8 @@ ps:正则表">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    
-
     <title>了解正则表达式 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
@@ -30,16 +27,18 @@ ps:正则表">
     <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/css/dark.css">
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script> 
-    <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto&min_length=64&max_length=255" defer></script>
 <meta name="generator" content="Hexo 6.2.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
+
+
 <body>
-    <header class="navbar-fixed">
+<header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -308,7 +307,8 @@ ps:正则表">
 
 </header>
 
-    
+
+<main id="main_wrap">
     
 <script src="/libs/cryptojs/crypto-js.min.js"></script>
 <script>
@@ -420,7 +420,7 @@ ps:正则表">
     #floating-toc-btn {
         position: fixed;
         right: 15px;
-        bottom: 76px;
+        bottom: 137px;
         padding-top: 15px;
         margin-bottom: 0;
         z-index: 998;
@@ -1132,7 +1132,8 @@ ps:正则表">
 </style>
 
 <div class="card valine-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+    <div class="comment_headling"
+         style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
         <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
         <span>评论</span>
     </div>
@@ -1140,28 +1141,28 @@ ps:正则表">
     </div>
 </div>
 
-<script src="/libs/valine/av-min.js"></script>
-<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
-    new Valine({
-        el: '#vcomments',
-        appId: 'HTBcxQGRcCd3jaVu23q9MvFc-gzGzoHsz',
-        appKey: 'RwxbcLmRdHhPImhnOl6XHoE9',
-        serverURLs: '',
-        notify: 'true' === 'true',
-        verify: 'true' === 'true',
-        visitor: 'true' === 'true',
-        avatar: 'retro',
-        pageSize: '10',
-        lang: 'zh-cn',
-        placeholder: '想说点啥？ just go go~'
-    });
+    $.getScript("/libs/valine/av-min.js", function () {
+        $.getScript("https://unpkg.com/valine/dist/Valine.min.js", function () {
+            new Valine({
+                el: '#vcomments',
+                appId: 'HTBcxQGRcCd3jaVu23q9MvFc-gzGzoHsz',
+                appKey: 'RwxbcLmRdHhPImhnOl6XHoE9',
+                notify: 'true' === 'true',
+                verify: 'true' === 'true',
+                visitor: 'true' === 'true',
+                avatar: 'retro',
+                pageSize: '10',
+                lang: 'zh-cn',
+                placeholder: '想说点啥？ just go go~'
+            });
+
+        })
+    })
 </script>
 
 <!--酷Q推送-->
 
-
-    
 
     
 
@@ -1267,12 +1268,12 @@ ps:正则表">
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
                     <a href="/tags/MySQL/">
                         <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
@@ -1290,8 +1291,6 @@ ps:正则表">
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
-
-
 <!-- 代码语言 -->
 
 <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
@@ -1307,10 +1306,9 @@ ps:正则表">
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
 
-
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
+        <div class="toc-widget card">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
             <div id="toc-content"></div>
         </div>
@@ -1326,15 +1324,28 @@ ps:正则表">
 </div>
 
 
-<script src="/libs/tocbot/tocbot.min.js"></script>
+<script src=""></script>
 <script>
-    $(function () {
+    $.getScript("/libs/tocbot/tocbot.min.js",function () {
         tocbot.init({
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
         });
 
         // Set scroll toc fixed.
@@ -1386,7 +1397,7 @@ ps:正则表">
             fixPostCardWidth('artDetail', 'prenext-posts');
         });
         
-    });
+    })
 </script>
 
     
@@ -1395,8 +1406,9 @@ ps:正则表">
 
 
 
+</main>
 
-    <footer class="page-footer bg-color">
+<footer class="page-footer bg-color">
     
         <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
 <style>
@@ -1443,7 +1455,6 @@ ps:正则表">
 <script src="/libs/aplayer/Meting.min.js"></script>
 
     
-
     <div class="container row center-align"
          style="margin-bottom: 15px !important;">
         <div class="col s12 m8 l8 copy-right">
@@ -1567,7 +1578,7 @@ ps:正则表">
 <div class="progress-bar"></div>
 
 
-    <!-- 搜索遮罩框 -->
+<!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
@@ -1671,7 +1682,11 @@ $(function () {
 });
 </script>
 
-    <!-- 回到顶部按钮 -->
+<!-- 深色模式按钮 -->
+<a onclick="switchNightMode()" id="sma" title="模式切换">
+    <i class="fa fa-moon" id="nightMode" aria-hidden="true"></i>
+</a>
+<!-- 回到顶部按钮 -->
 <div id="backTop" class="top-scroll">
     <a class="btn-floating btn-large waves-effect waves-light" href="#!">
         <i class="fas fa-arrow-up"></i>
@@ -1679,44 +1694,85 @@ $(function () {
 </div>
 
 
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
+<script type="text/javascript">
+    $.getScript("https://cdn.jsdelivr.net/npm/pjax/pjax.min.js",loadPjax)
+    function loadPjax(){
+        var pjax = new Pjax({
+            selectors: [
+                "head title",
+                'head meta[name="keywords"]',
+                'head meta[name="description"]',
+                "main#main_wrap",
+                "#rightside"
+            ],
+            cache: true,
+            cacheBust: false
+        });
+    }
 
-    
+    // 开始 PJAX 执行的函数
+    document.addEventListener('pjax:send', function () {
+    });
+    // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+    document.addEventListener('pjax:complete', function () {
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+    });
 
-    
+    // Pjax请求错误时，跳转到404页面
+    document.addEventListener('pjax:error', (err) => {
+        if (err.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+</script>
 
-    <!-- 雪花特效 -->
-     
-        <script type="text/javascript">
-            // 只在桌面版网页启用特效
-            var windowWidth = $(window).width();
-            if (windowWidth > 768) {
-                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
-            }
-        </script>
-    
 
-    <!-- 鼠标星星特效 -->
-     
-        <script type="text/javascript">
-            // 只在桌面版网页启用特效
-            var windowWidth = $(window).width();
-            if (windowWidth > 768) {
-                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-            }
-        </script>
-    
 
-    
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
 
-    <!-- Baidu Analytics -->
 
-    <!-- Baidu Push -->
+
+
+
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+        }
+    </script>
+
+
+<!-- 雪花特效 -->
+
+
+<!-- 鼠标星星特效 -->
+
+    <script type="text/javascript">
+        // 只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+        }
+    </script>
+
+
+
+
+<!-- Baidu Analytics -->
+
+<!-- Baidu Push -->
 
 <script>
     (function () {
@@ -1732,31 +1788,29 @@ $(function () {
     })();
 </script>
 
-    
+
     <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
+
+
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
 
-    
 
-    
 
-    <!--腾讯兔小巢-->
-    
-    
 
-    
 
-    
 
-    
+<!--腾讯兔小巢-->
+
+
+
+
+
+
+
+
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
 
 
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":180,"height":360,"hOffset":20},"mobile":{"show":false},"dialog":{"enable":true,"hitokoto":true},"log":false});</script></body>
 
 </html>
