@@ -522,7 +522,7 @@
 <p>因为goto语句是在源码级上的跳转，这使得它臭名昭著。对于这个问题，java采用的策略是中庸之道：goto是Java中的一个关键字，但是在语言中并没有使用它，也就是说Java中没有goto。</p>
 <p>然而，Java中也能完成一些类似跳转的操作，这与break和continue有关。他们其实不是跳转，而是中断迭代语句的一种方法。之后以把他们和goto相提并论，是因为他们都使用了<strong>标签</strong>机制。Java里使用标签的唯一理由就是因为有循环嵌套存在。</p>
 <p>标签就是后面跟有冒号的标识，就像这样：</p>
-<pre class=" language-markdown"><code class="language-markdown">label1：
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">label1：
 </code></pre>
 <p>然而在Dijkstra（发明最短路径算法的那位）的《Goto有害》论文中，它最反对的就是标签，而非goto。因为一个程序里面，标签越多，错误也就会越多，并且还会让程序难以分析。但是，Java里面的标签不会造成这种问题，因为他们的应用场合已经受到了限制。这也引出了一个现象：通过限制语句的能力，反而能使一项语言特性更加有用。（有点哲学的味道）</p>
 <h2 id="03-this、static"><a href="#03-this、static" class="headerlink" title="03 - this、static"></a>03 - this、static</h2><p>假设你希望在方法的内部获得当前对象的引用。由于这个引用是由编译器“偷偷”传入的，所以没有标识符可用。但是， 有个专门的关键字：<strong>this</strong>，this关键字只能在方法内部使用，表示“调用方法的那个对象”。</p>
@@ -1477,27 +1477,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

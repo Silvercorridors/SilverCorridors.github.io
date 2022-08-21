@@ -484,7 +484,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.1k
                 </div>
                 
 
@@ -519,18 +519,22 @@
 <li><p>使用一个已经存在的框架。例如<code>JUL、Log4j、Logback、Log4j2</code>(其本身也提供日志门面接口)，目前主流使用<code>slf4j</code>+<code>logback</code>，未来趋势会使用<code>slf4j</code>+<code>log4j2</code>。</p>
 </li>
 </ol>
-<h2 id="相关的日志门面与日志实现"><a href="#相关的日志门面与日志实现" class="headerlink" title="相关的日志门面与日志实现"></a>相关的日志门面与日志实现</h2><h3 id="目前市面上的日志框架"><a href="#目前市面上的日志框架" class="headerlink" title="目前市面上的日志框架"></a>目前市面上的日志框架</h3><table>
+<h2 id="相关的日志门面与日志实现"><a href="#相关的日志门面与日志实现" class="headerlink" title="相关的日志门面与日志实现"></a>相关的日志门面与日志实现</h2><h3 id="目前市面上的日志框架"><a href="#目前市面上的日志框架" class="headerlink" title="目前市面上的日志框架"></a>目前市面上的日志框架</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>日志门面（抽象层）</th>
 <th>日志实现(实现层)</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>JCL</code>、<code>SLF4j</code>、<code>Jboss-logging</code></td>
 <td><code>Log4j</code>、<code>JUL(java.util.logging)</code>、 <code>Log4j2</code>、<code>Logback</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>日志门面</strong></p>
 <ul>
 <li><strong>JCL</strong>：当时设计时只考虑了主流的几个日志框架，而对于未来新兴框架并没有提供接口，之后随着slf4j出现就慢慢也不再使用了，最后一次版本更新停在2014年，现不再更新维护已被淘汰，不考虑使用。</li>
@@ -543,7 +547,7 @@
 <li><strong>log4j</strong>：Apache推出的，之后出现了Logback(性能更好)，就开始慢慢被Logback取代了。</li>
 <li><strong>log4j2</strong>：Apache根据Logback的设计思想推出了Log4j2，号称日志性能最好的实现技术，其本身也有日志门面只不过大多使用slf4j来作为日志门面。</li>
 </ul>
-<h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>日志框架出现的历史顺序： <code>log4j</code> –&gt;<code>JUL</code>–&gt;<code>JCL</code>–&gt; <code>slf4j</code>–&gt; <code>logback</code> –&gt; <code>log4j2</code></p>
+<h3 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h3><p>日志框架出现的历史顺序： <code>log4j</code> —&gt;<code>JUL</code>–&gt;<code>JCL</code>–&gt; <code>slf4j</code>–&gt; <code>logback</code> —&gt; <code>log4j2</code></p>
 <p>首先出现的是<code>Log4j</code>(Apache推出)，<code>JUL</code>是在jdk1.4的时候出现的，<code>JCL</code>门面日志出现开始统一管理主流的日志框架，之后<code>Log4j</code>的创造者因为与Apache有些矛盾离开了Apache，开发出了<code>Slf4j</code>日志门面(能够管理所有的日志API，让JCL开始逐渐淘汰)，之后也是那个创造者设计实现了<code>Logback</code>日志框架(性能优于Log4j，Log4j也开始逐渐淘汰)，之后Apache组织根据Logback的设计思想推出了<code>Log4j2</code>，号称为目前性能最好的日志，其自身既包含日志门面也包含日志实现只不过一般不使用其日志门面(即接口)。</p>
 <h2 id="日志门面与日志实现的关系"><a href="#日志门面与日志实现的关系" class="headerlink" title="日志门面与日志实现的关系"></a>日志门面与日志实现的关系</h2><p><img src="/2022/07/22/log01/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_30,g_se,x_10,y_10,shadow_20,type_ZmFuZ3poZW5naGVpdGk=.png" alt="日志门面与日志实现关系图"></p>
 <h2 id="日志桥接-适配层"><a href="#日志桥接-适配层" class="headerlink" title="日志桥接(适配层)"></a>日志桥接(适配层)</h2><p>日志框架通常分为日志门面(抽象层)、日志实现(实现层)，如果我们需要进行升级更新，则只需要修改实现层的内容，问题来了，如果抽象层也需要更新怎么办?。</p>
@@ -551,147 +555,147 @@
 <p>适配器模式的英文翻译是 Adapter Design Pattern。顾名思义，这个模式就是用来做适配的，它将不兼容的接口转换为可兼容的接口，让原本由于接口不兼容而不能一起工作的类可以一起工作。对于这个模式，有一个经常被拿来解释它的例子，就是USB转接头充当适配器，把两种不兼容的接口，通过转接变得可以一起工作。</p>
 <p><img src="/2022/07/22/log01/image-20220722174544892.png" alt="适配层，抽象层"></p>
 <p>原理很简单，适配器模式有两种实现方式：类适配器和对象适配器。其中，类适配器使用继承关系来实现，对象适配器使用组合关系来实现。两种模式的类图如下：</p>
-<p><img src="/2022/07/22/log01/2021032317173723.png"></p>
+<p><img src="/2022/07/22/log01/2021032317173723.png" alt=""></p>
 <p>具体实现的示例代码如下。</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 抽象层</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-  <span class="token keyword">void</span> <span class="token function">operation1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">void</span> <span class="token function">operation2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">// 实现层</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptee</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fun_a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//... }</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fun_b</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//... }</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fun_c</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//... }</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">// 抽象层
+public interface Target {
+  void operation1();
+  void operation2();
+}
+// 实现层
+public class Adaptee {
+  public void fun_a() { //... }
+  public void fun_b() { //... }
+  public void fun_c() { //... }
+}
 
-<span class="token comment" spellcheck="true">// 类适配器: 基于继承</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptor</span> <span class="token keyword">extends</span> <span class="token class-name">Adaptee</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
+// 类适配器: 基于继承
+public class Adaptor extends Adaptee implements Target {
 
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">fun_a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//...重新实现fun_b()...</span>
-  <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">// 这里fun_c()不重写，直接继承自Adaptee</span>
-<span class="token punctuation">}</span>
+  @Override
+  public void operation1() {
+    super.fun_a();
+  }
 
-<span class="token comment" spellcheck="true">// 对象适配器：基于组合</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptor</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//组合</span>
-  <span class="token keyword">private</span> Adaptee adaptee<span class="token punctuation">;</span>
-  
-  <span class="token keyword">public</span> <span class="token function">Adaptor</span><span class="token punctuation">(</span>Adaptee adaptee<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>adaptee <span class="token operator">=</span> adaptee<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//委托给Adaptee</span>
-    adaptee<span class="token punctuation">.</span><span class="token function">fun_a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-  <span class="token punctuation">}</span>
-  
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//...重新实现fun_b()...</span>
-  <span class="token punctuation">}</span>
-  
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    adaptee<span class="token punctuation">.</span><span class="token function">fun_c</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+  @Override
+  public void operation2() {
+    //...重新实现fun_b()...
+  }
+  // 这里fun_c()不重写，直接继承自Adaptee
+}
+
+// 对象适配器：基于组合
+public class Adaptor implements Target {
+  //组合
+  private Adaptee adaptee;
+
+  public Adaptor(Adaptee adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  @Override
+  public void operation1() {
+    //委托给Adaptee
+    adaptee.fun_a(); 
+  }
+
+  @Override
+  public void operation2() {
+    //...重新实现fun_b()...
+  }
+
+  public void operation3() {
+    adaptee.fun_c();
+  }
+}
 </code></pre>
 <p>类适配器与对象适配器都符合开闭原则。针对这两种实现方式，在实际的开发中，到底该如何选择使用哪一种呢？</p>
 <p>如果Adaptee类定义的方法很多，而且Target接口定义的方法大部分都相同，那我们推荐使用类适配器，因为Adaptor复用父类Adaptee的方法，比起对象适配器的实现方式代码量要少一些。如果Adaptee类定义的方法很多，而且Target接口定义的方法大部分都不相同，此时推荐使用对象适配器，因为组合结构相对于继承更加灵活。</p>
 <h2 id="适配器模式应用到Java日志体系"><a href="#适配器模式应用到Java日志体系" class="headerlink" title="适配器模式应用到Java日志体系"></a>适配器模式应用到Java日志体系</h2><p>在Java的日志体系中，<code>Slf4j</code>这个框架就相当于JDBC规范，它提供了一套打印日志的统一接口规范。不过，它只定义了接口，并没有提供具体的实现，需要配合其他日志框架（log4j、logback等）来使用。</p>
 <p>Slf4j 的出现晚于JUL、JCL、log4j等日志框架，所以，这些日志框架也不可能牺牲掉版本兼容性，将接口改造成符合Slf4j接口规范。Slf4j也事先考虑到了这个问题，所以，它不仅仅提供了统一的接口定义，还提供了针对不同日志框架的适配器。对不同日志框架的接口进行二次封装，适配成统一的Slf4j接口定义。</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// slf4j统一的Logger接口定义，日志门面(抽象层)</span>
-<span class="token keyword">package</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">;</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Logger</span> <span class="token punctuation">{</span>
-    <span class="token keyword">final</span> <span class="token keyword">public</span> String ROOT_LOGGER_NAME <span class="token operator">=</span> <span class="token string">"ROOT"</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isInfoEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg1<span class="token punctuation">,</span> Object arg2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>String msg<span class="token punctuation">,</span> Throwable t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isInfoEnabled</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object arg1<span class="token punctuation">,</span> Object arg2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String msg<span class="token punctuation">,</span> Throwable t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">// slf4j统一的Logger接口定义，日志门面(抽象层)
+package org.slf4j;
+public interface Logger {
+    final public String ROOT_LOGGER_NAME = "ROOT";
+    public String getName();
+    public boolean isInfoEnabled();
+    public void info(String msg);
+    public void info(String format, Object arg);
+    public void info(String format, Object arg1, Object arg2);
+    public void info(String format, Object... arguments);
+    public void info(String msg, Throwable t);
+    public boolean isInfoEnabled(Marker marker);
+    public void info(Marker marker, String msg);
+    public void info(Marker marker, String format, Object arg);
+    public void info(Marker marker, String format, Object arg1, Object arg2);
+    public void info(Marker marker, String format, Object... arguments);
+    public void info(Marker marker, String msg, Throwable t);
 
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isErrorEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg1<span class="token punctuation">,</span> Object arg2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>String msg<span class="token punctuation">,</span> Throwable t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isErrorEnabled</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object arg1<span class="token punctuation">,</span> Object arg2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String format<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">error</span><span class="token punctuation">(</span>Marker marker<span class="token punctuation">,</span> String msg<span class="token punctuation">,</span> Throwable t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//...省略trace、warn等众多方法</span>
-<span class="token punctuation">}</span>
+    public boolean isErrorEnabled();
+    public void error(String msg);
+    public void error(String format, Object arg);
+    public void error(String format, Object arg1, Object arg2);
+    public void error(String format, Object... arguments);
+    public void error(String msg, Throwable t);
+    public boolean isErrorEnabled(Marker marker);
+    public void error(Marker marker, String msg);
+    public void error(Marker marker, String format, Object arg);
+    public void error(Marker marker, String format, Object arg1, Object arg2);
+    public void error(Marker marker, String format, Object... arguments);
+    public void error(Marker marker, String msg, Throwable t);
+    //...省略trace、warn等众多方法
+}
 </code></pre>
 <p>Slf4j提供的log4j日志框架适配器源码如下，其中Log4jLoggerAdapter实现了LocationAwareLogger接口，而其中LocationAwareLogger继承了Logger接口。</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// log4j日志框架的适配器</span>
-<span class="token keyword">package</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>impl<span class="token punctuation">;</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Log4jLoggerAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">MarkerIgnoringBase</span>
-  <span class="token keyword">implements</span> <span class="token class-name">LocationAwareLogger</span><span class="token punctuation">,</span> Serializable <span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">// log4j</span>
-  <span class="token keyword">final</span> <span class="token keyword">transient</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>log4j<span class="token punctuation">.</span>Logger logger<span class="token punctuation">;</span> 
-  <span class="token keyword">static</span> <span class="token keyword">final</span> String FQCN <span class="token operator">=</span> Log4jLoggerAdapter<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">final</span> <span class="token keyword">boolean</span> traceCapable<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">// log4j日志框架的适配器
+package org.slf4j.impl;
+public final class Log4jLoggerAdapter extends MarkerIgnoringBase
+  implements LocationAwareLogger, Serializable {
+  // log4j
+  final transient org.apache.log4j.Logger logger; 
+  static final String FQCN = Log4jLoggerAdapter.class.getName();
+  final boolean traceCapable;
 
-  <span class="token function">Log4jLoggerAdapter</span><span class="token punctuation">(</span>Logger logger<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>logger <span class="token operator">=</span> logger<span class="token punctuation">;</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> logger<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>traceCapable <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isTraceCapable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">debug</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>FQCN<span class="token punctuation">,</span> Level<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span> msg<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">debug</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      FormattingTuple ft <span class="token operator">=</span> MessageFormatter<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>FQCN<span class="token punctuation">,</span> Level<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getThrowable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">debug</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object arg1<span class="token punctuation">,</span> Object arg2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      FormattingTuple ft <span class="token operator">=</span> MessageFormatter<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> arg1<span class="token punctuation">,</span> arg2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>FQCN<span class="token punctuation">,</span> Level<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getThrowable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">debug</span><span class="token punctuation">(</span>String format<span class="token punctuation">,</span> Object<span class="token punctuation">[</span><span class="token punctuation">]</span> argArray<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      FormattingTuple ft <span class="token operator">=</span> MessageFormatter<span class="token punctuation">.</span><span class="token function">arrayFormat</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> argArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>FQCN<span class="token punctuation">,</span> Level<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ft<span class="token punctuation">.</span><span class="token function">getThrowable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
- 
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">debug</span><span class="token punctuation">(</span>String msg<span class="token punctuation">,</span> Throwable t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>FQCN<span class="token punctuation">,</span> Level<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span> msg<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">//...省略其他接口的实现...</span>
-<span class="token punctuation">}</span>
+  Log4jLoggerAdapter(Logger logger) {
+      this.logger = logger;
+      this.name = logger.getName();
+      this.traceCapable = this.isTraceCapable();
+  }
+
+  public boolean isDebugEnabled() {
+    return logger.isDebugEnabled();
+  }
+
+  public void debug(String msg) {
+    logger.log(FQCN, Level.DEBUG, msg, null);
+  }
+
+  public void debug(String format, Object arg) {
+    if (logger.isDebugEnabled()) {
+      FormattingTuple ft = MessageFormatter.format(format, arg);
+      logger.log(FQCN, Level.DEBUG, ft.getMessage(), ft.getThrowable());
+    }
+  }
+
+  public void debug(String format, Object arg1, Object arg2) {
+    if (logger.isDebugEnabled()) {
+      FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+      logger.log(FQCN, Level.DEBUG, ft.getMessage(), ft.getThrowable());
+    }
+  }
+
+  public void debug(String format, Object[] argArray) {
+    if (logger.isDebugEnabled()) {
+      FormattingTuple ft = MessageFormatter.arrayFormat(format, argArray);
+      logger.log(FQCN, Level.DEBUG, ft.getMessage(), ft.getThrowable());
+    }
+  }
+
+  public void debug(String msg, Throwable t) {
+    logger.log(FQCN, Level.DEBUG, msg, t);
+  }
+  //...省略其他接口的实现...
+}
 </code></pre>
 <p>在开发业务系统或者开发框架、组件的时候，我们统一使用Slf4j提供的接口来编写打印日志的代码，具体使用哪种日志框架实现（log4j、logback等），是<font color="red">可以动态地指定的（使用Java的SPI技术），只需要将相应的SDK导入到项目中即可</font>。</p>
 <p>但是，如果一些老的项目没有使用 Slf4j，而是直接使用比如JCL来打印日志，那如果想要替换成其他日志框架，比如log4j，该怎么办呢？实际上，Slf4j不仅仅提供了从其他日志框架到Slf4j的适配器，还提供了<font color="skyblue"><strong>反向适配器</strong></font>，也就是从Slf4j到其他日志框架的适配。我们可以先将JCL切换为Slf4j，然后再将Slf4j切换为log4j。经过两次适配器的转换，我们就能成功将JCL切换成了log4j。</p>
@@ -705,84 +709,84 @@
 <p>trace &lt; debug &lt; info &lt; warn &lt; error</p>
 <p>缺省的log级别是info</p>
 <p>yaml设置log级别：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">logging</span><span class="token punctuation">:</span>
-  <span class="token key atrule">level</span><span class="token punctuation">:</span>
-    <span class="token key atrule">cn</span><span class="token punctuation">:</span>
-      <span class="token key atrule">silvercorridors</span><span class="token punctuation">:</span> trace
+<pre class=" language-lang-yaml"><code class="language-lang-yaml">logging:
+  level:
+    cn:
+      silvercorridors: trace
 </code></pre>
 <h3 id="日志的位置"><a href="#日志的位置" class="headerlink" title="日志的位置"></a>日志的位置</h3><p>缺省打在console。 </p>
 <p>yaml设置日志位置：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">logging</span><span class="token punctuation">:</span>
-  <span class="token key atrule">file</span><span class="token punctuation">:</span>
-    <span class="token key atrule">path</span><span class="token punctuation">:</span> D<span class="token punctuation">:</span>\logs\springlog
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> D<span class="token punctuation">:</span>\logs\springlog\a.log   <span class="token comment" spellcheck="true"># 如果name设置了，path就失效了,name中给出路径+文件名</span>
+<pre class=" language-lang-yaml"><code class="language-lang-yaml">logging:
+  file:
+    path: D:\logs\springlog
+    name: D:\logs\springlog\a.log   # 如果name设置了，path就失效了,name中给出路径+文件名
 </code></pre>
 <h3 id="日志的格式"><a href="#日志的格式" class="headerlink" title="日志的格式"></a>日志的格式</h3><p>在logging.pattern.console设置</p>
-<pre class=" language-markdown"><code class="language-markdown">%d:日期，可以控制格式
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">%d:日期，可以控制格式
 %n:回车
 %thread:线程运行时的函数名
 %level：log级别
 </code></pre>
 <p>在%后单词加数字、小数点(.)（超位截取）、负号(-)表示制表对齐</p>
 <h3 id="LogBack配置"><a href="#LogBack配置" class="headerlink" title="LogBack配置"></a>LogBack配置</h3><p>org.springframework.boot.logging.logback中的base.xml</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>included</span><span class="token punctuation">></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>include</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org/springframework/boot/logging/logback/defaults.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>LOG_FILE<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>include</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org/springframework/boot/logging/logback/console-appender.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>include</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org/springframework/boot/logging/logback/file-appender.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-   <span class="token comment" spellcheck="true">&lt;!-- 缺省日志等级 --></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>root</span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>INFO<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appender-ref</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CONSOLE<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appender-ref</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FILE<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>root</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>included</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml"><included>
+   <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+   <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
+   <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+   <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+   <!-- 缺省日志等级 -->
+   <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="FILE" />
+   </root>
+</included>
 </code></pre>
 <p>defaults.xml</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>included</span><span class="token punctuation">></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>conversionRule</span> <span class="token attr-name">conversionWord</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>clr<span class="token punctuation">"</span></span> <span class="token attr-name">converterClass</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.boot.logging.logback.ColorConverter<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>conversionRule</span> <span class="token attr-name">conversionWord</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wex<span class="token punctuation">"</span></span> <span class="token attr-name">converterClass</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>conversionRule</span> <span class="token attr-name">conversionWord</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wEx<span class="token punctuation">"</span></span> <span class="token attr-name">converterClass</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-    <span class="token comment" spellcheck="true">&lt;!-- console中缺省log的样式 --></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CONSOLE_LOG_PATTERN<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CONSOLE_LOG_CHARSET<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${CONSOLE_LOG_CHARSET:-${file.encoding:-UTF-8}}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token comment" spellcheck="true">&lt;!-- file中缺省log的样式 --></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FILE_LOG_PATTERN<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>FILE_LOG_CHARSET<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${FILE_LOG_CHARSET:-${file.encoding:-UTF-8}}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-    <span class="token comment" spellcheck="true">&lt;!--定义一些包的默认日志等级--></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.catalina.startup.DigesterFactory<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ERROR<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.catalina.util.LifecycleBase<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ERROR<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.coyote.http11.Http11NioProtocol<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WARN<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.sshd.common.util.SecurityUtils<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WARN<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.tomcat.util.net.NioSelectorPool<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WARN<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.eclipse.jetty.util.component.AbstractLifeCycle<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ERROR<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.hibernate.validator.internal.util.Version<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WARN<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>logger</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.boot.actuate.endpoint.jmx<span class="token punctuation">"</span></span> <span class="token attr-name">level</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WARN<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>included</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml"><included>
+   <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+   <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+   <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <!-- console中缺省log的样式 -->
+   <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+   <property name="CONSOLE_LOG_CHARSET" value="${CONSOLE_LOG_CHARSET:-${file.encoding:-UTF-8}}"/>
+   <!-- file中缺省log的样式 -->
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+   <property name="FILE_LOG_CHARSET" value="${FILE_LOG_CHARSET:-${file.encoding:-UTF-8}}"/>
+    <!--定义一些包的默认日志等级-->
+   <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+   <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+   <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+   <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+   <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+   <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+   <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+   <logger name="org.springframework.boot.actuate.endpoint.jmx" level="WARN"/>
+</included>
 </code></pre>
-<h3 id="SLF4j使用"><a href="#SLF4j使用" class="headerlink" title="SLF4j使用"></a>SLF4j使用</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
+<h3 id="SLF4j使用"><a href="#SLF4j使用" class="headerlink" title="SLF4j使用"></a>SLF4j使用</h3><pre class=" language-lang-java"><code class="language-lang-java">import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>HelloWorld<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+public class HelloWorld {
+    public static void main(String[] args) {
+        Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+        logger.info("Hello World");
+    }
+}
 </code></pre>
 <h3 id="SLF4j框架的实现层"><a href="#SLF4j框架的实现层" class="headerlink" title="SLF4j框架的实现层"></a>SLF4j框架的实现层</h3><p>官网图示</p>
-<p><img src="/2022/07/22/log01/format,png.png"></p>
+<p><img src="/2022/07/22/log01/format,png.png" alt=""></p>
 <p>每一个日志的实现框架都有自己的配置文件。使用slf4j以后，配置文件还是做成日志实现框架自己本身的配置文件；</p>
 <h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><p>当一个系统使用了多个框架，而这些框架又使用了不同的日志框架时，这时候我们就需要进行多日志的统一，</p>
 <p>spring Boot(slf4j + logback)、 Spring(commons-loggin)、Hibernate(Jboss-logging)、Mybatis…</p>
 <p>统一日志记录，即使是别的框架也要和我一起使用slf4j进行输出：</p>
-<p><img src="/2022/07/22/log01/format,png-16602169108945.png"></p>
+<p><img src="/2022/07/22/log01/format,png-16602169108945.png" alt=""></p>
 <p><strong>让系统中所有的日志都统一到slf4j：</strong></p>
 <ol>
 <li>将系统中的其他日志框架先排除出去；</li>
 <li>用中间包（适配层）来替换原有的日志框架</li>
 <li>导入slf4j其他的实现</li>
 </ol>
-<h2 id="SpringBoot日志底层依赖关系"><a href="#SpringBoot日志底层依赖关系" class="headerlink" title="SpringBoot日志底层依赖关系"></a>SpringBoot日志底层依赖关系</h2><p><img src="/2022/07/22/log01/format,png-16602177404028.png"></p>
+<h2 id="SpringBoot日志底层依赖关系"><a href="#SpringBoot日志底层依赖关系" class="headerlink" title="SpringBoot日志底层依赖关系"></a>SpringBoot日志底层依赖关系</h2><p><img src="/2022/07/22/log01/format,png-16602177404028.png" alt=""></p>
 <h2 id="适配器模式与装饰器模式的区别"><a href="#适配器模式与装饰器模式的区别" class="headerlink" title="适配器模式与装饰器模式的区别"></a>适配器模式与装饰器模式的区别</h2><p>装饰器与适配器都有一个别名叫做包装模式(Wrapper)，它们看似都是起到包装一个类或对象的作用，但是使用它们的目的很不一一样。</p>
 <p><font color="red">适配器模式是一种事后的补救策略，它提供跟原始类不同的接口，适配器模式的意义是将一个接口转变成另一个接口，它的目的是通过改变接口来达到重复使用的目的。而装饰器模式不是要改变被装饰对象的接口，而是恰恰要保持原有的接口，但是增强原有对象的功能，或者改变原有对象的处理方式而提升性能</font>。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fuzhongmin05/article/details/115131133">适配器模式及其在Java日志体系中的应用</a></p>
@@ -1734,27 +1738,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

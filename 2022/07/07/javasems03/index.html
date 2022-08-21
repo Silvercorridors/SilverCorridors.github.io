@@ -525,29 +525,29 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 <p>布尔型：boolean</p>
 <h2 id="4-什么是隐式转换，什么是显式转换？"><a href="#4-什么是隐式转换，什么是显式转换？" class="headerlink" title="4. 什么是隐式转换，什么是显式转换？"></a>4. 什么是隐式转换，什么是显式转换？</h2><p>显示：基转派，隐式：派转基 </p>
 <p>显示转换就是类型强转，把一个基类类型的数据强制赋值给派生类类型的变量，有可能失败；</p>
-<p>​	隐式转换就是派生类类型变量转化为基类类型变量，不可能失败；</p>
-<p>​	另外，基础类型之间也存在隐式类型转换，例如int转换为long，因为每一个int都可以转化为long。</p>
-<p>​	隐式转换和显式转换其实就是自动类型转换和强制类型转换。</p>
-<h2 id="5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"><a href="#5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型" class="headerlink" title="*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"></a>*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型</h2><p>​	Char在java中也是比较特殊的类型，它的int值从1开始，一共有2的16次方个数据；</p>
-<p>​	Char&lt;int&lt;long&lt;float&lt;double；Char类型可以隐式转成int,double类型，但是不能隐式转换成string；</p>
-<p>​	如果char类型转成byte，short类型的时候，需要强转。</p>
-<h2 id="6-简述Java中的包装类都是哪些？"><a href="#6-简述Java中的包装类都是哪些？" class="headerlink" title="6. 简述Java中的包装类都是哪些？"></a>6. 简述Java中的包装类都是哪些？</h2><p>​	byte：Byte</p>
-<p>​	short：Short</p>
-<p>​	int：Integer</p>
-<p>​	long：Long</p>
-<p>​	float：Float</p>
-<p>​	double：Double</p>
-<p>​	char：Character</p>
-<p>​	boolean：Boolean</p>
+<p>​    隐式转换就是派生类类型变量转化为基类类型变量，不可能失败；</p>
+<p>​    另外，基础类型之间也存在隐式类型转换，例如int转换为long，因为每一个int都可以转化为long。</p>
+<p>​    隐式转换和显式转换其实就是自动类型转换和强制类型转换。</p>
+<h2 id="5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"><a href="#5-Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型" class="headerlink" title="*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型"></a>*5. Char类型能不能转成int类型？能不能转化成string类型，能不能转成double类型</h2><p>​    Char在java中也是比较特殊的类型，它的int值从1开始，一共有2的16次方个数据；</p>
+<p>​    Char&lt;int&lt;long&lt;float&lt;double；Char类型可以隐式转成int,double类型，但是不能隐式转换成string；</p>
+<p>​    如果char类型转成byte，short类型的时候，需要强转。</p>
+<h2 id="6-简述Java中的包装类都是哪些？"><a href="#6-简述Java中的包装类都是哪些？" class="headerlink" title="6. 简述Java中的包装类都是哪些？"></a>6. 简述Java中的包装类都是哪些？</h2><p>​    byte：Byte</p>
+<p>​    short：Short</p>
+<p>​    int：Integer</p>
+<p>​    long：Long</p>
+<p>​    float：Float</p>
+<p>​    double：Double</p>
+<p>​    char：Character</p>
+<p>​    boolean：Boolean</p>
 <h2 id="7-一个java类中包含那些内容？"><a href="#7-一个java类中包含那些内容？" class="headerlink" title="7. 一个java类中包含那些内容？"></a>7. 一个java类中包含那些内容？</h2><p>  属性、方法、内部类、构造方法、代码块</p>
-<h2 id="8-评价：-if-a-1-0-x3D-x3D-4-0-，这样做好吗？"><a href="#8-评价：-if-a-1-0-x3D-x3D-4-0-，这样做好吗？" class="headerlink" title="8. 评价： if (a+1.0==4.0)，这样做好吗？"></a>8. 评价： if (a+1.0==4.0)，这样做好吗？</h2><p>  不好，因为计算机在浮点型数据运算的时候，会有误差，尽量在布尔表达式中不使用浮点型数据(if,while,switch中判断条件不使用浮点型)</p>
-<h2 id="9-那针对浮点型数据运算出现的误差的问题，你怎么解决？"><a href="#9-那针对浮点型数据运算出现的误差的问题，你怎么解决？" class="headerlink" title="9. 那针对浮点型数据运算出现的误差的问题，你怎么解决？"></a>9. 那针对浮点型数据运算出现的误差的问题，你怎么解决？</h2><p>​	使用Bigdecimal类进行浮点型数据的运算</p>
-<h2 id="10-i与i-的区别"><a href="#10-i与i-的区别" class="headerlink" title="10. ++i与i++的区别"></a>10. ++i与i++的区别</h2><p>​	++i：先赋值，后计算 i++：先计算，后赋值</p>
-<h2 id="11-程序的结构有那些？"><a href="#11-程序的结构有那些？" class="headerlink" title="11. 程序的结构有那些？"></a>11. 程序的结构有那些？</h2><p>​	顺序结构</p>
-<p>​	选择结构</p>
-<p>​	循环结构</p>
-<h2 id="12-数组实例化有几种方式？"><a href="#12-数组实例化有几种方式？" class="headerlink" title="12. 数组实例化有几种方式？"></a>12. 数组实例化有几种方式？</h2><p>​	静态实例化：创建数组的时候已经指定数组中的元素，可以不用指定长度。</p>
-<p>​	动态实例化：实例化数组的时候，只指定了数组长度。</p>
+<h2 id="8-评价：-if-a-1-0-4-0-，这样做好吗？"><a href="#8-评价：-if-a-1-0-4-0-，这样做好吗？" class="headerlink" title="8. 评价： if (a+1.0==4.0)，这样做好吗？"></a>8. 评价： if (a+1.0==4.0)，这样做好吗？</h2><p>  不好，因为计算机在浮点型数据运算的时候，会有误差，尽量在布尔表达式中不使用浮点型数据(if,while,switch中判断条件不使用浮点型)</p>
+<h2 id="9-那针对浮点型数据运算出现的误差的问题，你怎么解决？"><a href="#9-那针对浮点型数据运算出现的误差的问题，你怎么解决？" class="headerlink" title="9. 那针对浮点型数据运算出现的误差的问题，你怎么解决？"></a>9. 那针对浮点型数据运算出现的误差的问题，你怎么解决？</h2><p>​    使用Bigdecimal类进行浮点型数据的运算</p>
+<h2 id="10-i与i-的区别"><a href="#10-i与i-的区别" class="headerlink" title="10. ++i与i++的区别"></a>10. ++i与i++的区别</h2><p>​    ++i：先赋值，后计算 i++：先计算，后赋值</p>
+<h2 id="11-程序的结构有那些？"><a href="#11-程序的结构有那些？" class="headerlink" title="11. 程序的结构有那些？"></a>11. 程序的结构有那些？</h2><p>​    顺序结构</p>
+<p>​    选择结构</p>
+<p>​    循环结构</p>
+<h2 id="12-数组实例化有几种方式？"><a href="#12-数组实例化有几种方式？" class="headerlink" title="12. 数组实例化有几种方式？"></a>12. 数组实例化有几种方式？</h2><p>​    静态实例化：创建数组的时候已经指定数组中的元素，可以不用指定长度。</p>
+<p>​    动态实例化：实例化数组的时候，只指定了数组长度。</p>
 <h2 id="13-Java中各种数据默认值"><a href="#13-Java中各种数据默认值" class="headerlink" title="13. Java中各种数据默认值"></a>13. Java中各种数据默认值</h2><p>byte,short,int,long默认是都是0</p>
 <p>boolean默认值是false</p>
 <p>char类型的默认值是’/u0000’</p>
@@ -561,7 +561,7 @@ Java有独立的垃圾收集算法（GC），并且有JVM提供的独立线程�
 <p>notify</p>
 <p>clone</p>
 <p>getClass</p>
-<h2 id="16-java中有没有指针？"><a href="#16-java中有没有指针？" class="headerlink" title="*16. java中有没有指针？"></a>*16. java中有没有指针？</h2><p>​	理论上说有，但是不允许开发人员使用，只能由JVM来操作。</p>
+<h2 id="16-java中有没有指针？"><a href="#16-java中有没有指针？" class="headerlink" title="*16. java中有没有指针？"></a>*16. java中有没有指针？</h2><p>​    理论上说有，但是不允许开发人员使用，只能由JVM来操作。</p>
 <h2 id="17-java中是值传递引用传递？"><a href="#17-java中是值传递引用传递？" class="headerlink" title="*17. java中是值传递引用传递？"></a><font color="red">*17. java中是值传递引用传递？</font></h2><p>  理论上说，java都是引用传递，<strong>对于基本数据类型，传递是值的副本，而不是值本身</strong>。对于对象类型，传递是对象的引用，当在一个方法操作操作参数的时候，其实操作的是引用所指向的对象。</p>
 <h2 id="18-什么是-Java-程序的主类-应用程序和小程序的主类有何不同"><a href="#18-什么是-Java-程序的主类-应用程序和小程序的主类有何不同" class="headerlink" title="18. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同?"></a>18. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同?</h2><p>一个程序中可以有多个类，但只能有一个类是主类。在 Java 应用程序中，这个主类是指包含 main（）方法的类。而在 Java 小程序中，这个主类是一个继承自系统类 JApplet 或 Applet 的子类。应用程序的主类不一定要求是 public 类，但小程序的主类要求必须是 public 类。主类是 Java 程序执行的入口点。</p>
 <h2 id="19-Java-应用程序与小程序之间有哪些差别"><a href="#19-Java-应用程序与小程序之间有哪些差别" class="headerlink" title="19. Java 应用程序与小程序之间有哪些差别?"></a>19. Java 应用程序与小程序之间有哪些差别?</h2><p>简单说应用程序是从主线程启动(也就是 <code>main()</code> 方法)。applet 小程序没有 <code>main()</code> 方法，主要是嵌在浏览器页面上运行(调用<code>init()</code>或者<code>run()</code>来启动)，嵌入浏览器这点跟 flash 的小游戏类似。</p>
@@ -1514,27 +1514,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

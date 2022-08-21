@@ -504,7 +504,7 @@ Spring">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Spring-学习日记01：基础概念"><a href="#Spring-学习日记01：基础概念" class="headerlink" title="Spring 学习日记01：基础概念"></a>Spring 学习日记01：基础概念</h1><h2 id="Spring是什么？"><a href="#Spring是什么？" class="headerlink" title="Spring是什么？"></a>Spring是什么？</h2><p><strong>历史背景：</strong>简单的说就是以前Java用的EJB框架存在许多问题，不好用，一个大佬就写了本书叫&lt;不用EJB进行JAVA开发&gt;，后面blblbl产生了Spring。</p>
-<p>SpringFramework是一个轻量级J2EE开发解决方案（框架）–Spring。目前最新版本为5.X。</p>
+<p>SpringFramework是一个轻量级J2EE开发解决方案（框架）—Spring。目前最新版本为5.X。</p>
 <p>Spring框架包含几个模块，例如 IOC，AOP，DAO，Context，ORM，WEB MVC 等。</p>
 <h2 id="Spring全家桶有哪些？"><a href="#Spring全家桶有哪些？" class="headerlink" title="Spring全家桶有哪些？"></a>Spring全家桶有哪些？</h2><p>SpringFramework（依赖注入、事务处理、webapps、数据访问）</p>
 <p>Spring MVC</p>
@@ -513,19 +513,19 @@ Spring">
 <h2 id="Spring的优点"><a href="#Spring的优点" class="headerlink" title="Spring的优点"></a>Spring的优点</h2><ul>
 <li>轻量级</li>
 </ul>
-<pre class=" language-markdown"><code class="language-markdown">1.对于运行环境没有额外要求
-<span class="token code keyword">    开源 tomcat resion jetty</span>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">1.对于运行环境没有额外要求
+    开源 tomcat resion jetty
 2.代码移植性高
-<span class="token code keyword">    不需要实现额外接口</span>
+    不需要实现额外接口
 </code></pre>
 <ul>
 <li>JavaEE的解决方案</li>
 </ul>
-<p>​		<strong>Java开发体系<img src="/2022/06/30/spring01/image-20220630181036070.png" alt="Java开发体系"></strong></p>
+<p>​        <strong>Java开发体系<img src="/2022/06/30/spring01/image-20220630181036070.png" alt="Java开发体系"></strong></p>
 <ul>
 <li>整合了<strong>设计模式(Design Pattern)</strong></li>
 </ul>
-<pre class=" language-markdown"><code class="language-markdown">1、工厂
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">1、工厂
 2、代理
 3、模板
 4、策略
@@ -534,141 +534,141 @@ Spring">
 <p>支持面向切面编程(<strong>AOP</strong>)</p>
 <h2 id="控制反转（Inversion-of-Control）与工厂模式"><a href="#控制反转（Inversion-of-Control）与工厂模式" class="headerlink" title="控制反转（Inversion of Control）与工厂模式"></a>控制反转（Inversion of Control）与工厂模式</h2><p><strong>所谓IoC，对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。</strong></p>
 <p>举个例子。没有IoC之前，我们假设要设计一个 耳机、一个 手机(Phone)，通常都是通过面向对象来new的方式。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AirPod</span><span class="token punctuation">{</span>
-    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Phone</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> AirPod airPod<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token function">Phone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 1.Phone是依赖于airPod的类</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AirPod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"I am an airPod."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class AirPod{
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public void play(){
+        System.out.println(this.name);
+    }
+}
+public class Phone {
+    private AirPod airPod;
+    public Phone() {
+        // 1.Phone是依赖于airPod的类
+        this.airPod = new AirPod();
+        this.airPod.setName("I am an airPod.");
+    }
+    public void play(){
+        this.airPod.play();
+    }
 </code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> args <span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 1.Phone类依赖于AirPod这个具体类</span>
-        <span class="token comment" spellcheck="true">// 编译时如果没有AirPod这个类一定会出错</span>
-        Phone phone <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Phone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        phone<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public static void main( String[] args )
+    {
+        // 1.Phone类依赖于AirPod这个具体类
+        // 编译时如果没有AirPod这个类一定会出错
+        Phone phone = new Phone();
+        phone.play();
+    }
 </code></pre>
 <p>这样做的弊端有：</p>
 <p>1.如果AirPod还没有实现的情况，编译是通不过的。</p>
 <p>2.假设我们以后新创建了一个类(AirPod2)以后。原来的代码都是固定死的，不易进行代码更新维护。</p>
 <p><strong>一种简单的处理方案：</strong></p>
 <p>通过接口来降低手机类与耳机类的耦合，这就算一种IoC的思想：使用 <strong>抽象</strong> 的 ， 而不使用 <strong>具体</strong> 的。设计一个接口类。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IEarPhone</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public interface IEarPhone
+{
+    void play();
+    void setName(String name);
+}
 </code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AirPod</span> <span class="token keyword">implements</span> <span class="token class-name">IEarPhone</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Phone</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> IEarPhone airPod<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token function">Phone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 2.此时Phone类不再依赖于接口IEarPhone，但是new AirPod依然依赖AirPod</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AirPod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"I am an airPod."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class AirPod implements IEarPhone {
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public void play(){
+        System.out.println(this.name);
+    }
+}
+public class Phone {
+    private IEarPhone airPod;
+    public Phone() {
+        // 2.此时Phone类不再依赖于接口IEarPhone，但是new AirPod依然依赖AirPod
+        this.airPod = new AirPod();
+        this.airPod.setName("I am an airPod.");
+    }
+    public void play(){
+        this.airPod.play();
+    }
+}
 </code></pre>
 <p>但是目前，如果AirPod还没有实现的情况，编译还是通不过的。</p>
 <p>现在我们就要谈到一个重要的东西——工厂模式。</p>
 <h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>概念：工厂方法模式基于”输入”，应用在超类和多个子类之间的情况，这种模式将创建对象的责任转移到工厂类，通过工厂类的工厂方法来创建对象。</p>
 <p><strong>好处：</strong>1.面向接口编程，体现了面向对象的思想；2.将创建对象的工作转移到了工厂类，解耦合；</p>
 <p>现在用工厂模式来对手机与耳机的关系进行操作代价就小很多了。</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 静态工厂：用于创造实例并返回实例的方法。使用时不需要实例化工厂</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanFactory</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> IEarPhone <span class="token function">getEarPhone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AirPod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">// 静态工厂：用于创造实例并返回实例的方法。使用时不需要实例化工厂
+public class BeanFactory {
+    public static IEarPhone getEarPhone(){
+        return new AirPod();
+    }
+}
 </code></pre>
 <p>但是!!!目前，如果AirPod还没有实现的情况，编译还是通不过的。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Phone</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> IEarPhone airPod<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token function">Phone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 3.使用静态工厂,Phone类不再依赖于AirPod，而BeanFactory依赖于AirPod</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod <span class="token operator">=</span> BeanFactory<span class="token punctuation">.</span><span class="token function">getEarPhone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"I am an airPod."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class Phone {
+    private IEarPhone airPod;
+    public Phone() {
+        // 3.使用静态工厂,Phone类不再依赖于AirPod，而BeanFactory依赖于AirPod
+        this.airPod = BeanFactory.getEarPhone();
+        this.airPod.setName("I am an airPod.");
+    }
+    public void play(){
+        this.airPod.play();
+    }
+}
 </code></pre>
 <p>所以我们要利用反射的技术了</p>
 <h3 id="工厂模式-（配置-反射）-》DI-Dependecy-Injection"><a href="#工厂模式-（配置-反射）-》DI-Dependecy-Injection" class="headerlink" title="工厂模式+（配置+反射）-》DI (Dependecy Injection)"></a>工厂模式+（配置+反射）-》DI (Dependecy Injection)</h3><p>首先创建一个配置文件bean.properties(其实还可以使用xml形式配置)</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">airPod</span><span class="token punctuation">=</span><span class="token attr-value">cn.silverCorridors.AirPod</span>
+<pre class=" language-lang-properties"><code class="language-lang-properties">airPod=cn.silverCorridors.AirPod
 </code></pre>
 <p><strong>然后在工厂类中</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanFactory</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> Properties props<span class="token punctuation">;</span>
-    <span class="token keyword">static</span> <span class="token punctuation">{</span>
-        <span class="token keyword">try</span><span class="token punctuation">{</span>
-            props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//Properties被替换的可能性极小</span>
-            InputStream in <span class="token operator">=</span> BeanFactory<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"bean.properties"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            props<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ExceptionInInitializerError</span><span class="token punctuation">(</span><span class="token string">"Cannot find bean.properties"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    
-    <span class="token comment" spellcheck="true">// 通用工厂</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> Object <span class="token function">getBean</span><span class="token punctuation">(</span>String beanName<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        Object bean <span class="token operator">=</span> null<span class="token punctuation">;</span>
-        <span class="token keyword">try</span><span class="token punctuation">{</span>
-            String beanPath <span class="token operator">=</span> props<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            bean <span class="token operator">=</span> Class<span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span>beanPath<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getDeclaredConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> bean<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class BeanFactory {
+    private static Properties props;
+    static {
+        try{
+            props = new Properties();//Properties被替换的可能性极小
+            InputStream in = BeanFactory.class.getClassLoader().getResourceAsStream("bean.properties");
+            props.load(in);
+        } catch (IOException e) {
+            throw new ExceptionInInitializerError("Cannot find bean.properties");
+        }
+    }
+
+    // 通用工厂
+    public static Object getBean(String beanName){
+        Object bean = null;
+        try{
+            String beanPath = props.getProperty(beanName);
+            bean = Class.forName(beanPath).getDeclaredConstructor().newInstance();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return bean;
+    }
+}
 </code></pre>
 <p>此时Phone中的工厂就可以不用在依赖于AirPod啦</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Phone</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> IEarPhone airPod<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token function">Phone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 4.静态工厂+配置文件+反射，BeanFactory不依赖于AirPod，但是运行时要求AirPod存在</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod <span class="token operator">=</span> <span class="token punctuation">(</span>IEarPhone<span class="token punctuation">)</span> BeanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"airPod"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"I am an airPod."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>airPod<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class Phone {
+    private IEarPhone airPod;
+    public Phone() {
+        // 4.静态工厂+配置文件+反射，BeanFactory不依赖于AirPod，但是运行时要求AirPod存在
+        this.airPod = (IEarPhone) BeanFactory.getBean("airPod");
+        this.airPod.setName("I am an airPod.");
+    }
+    public void play(){
+        this.airPod.play();
+    }
+}
 </code></pre>
 <p>通过这种方式，只要使用配置文件的方式就即时没有AirPod这个类也可以编译通过了。</p>
 <h4 id="工厂模式的意义"><a href="#工厂模式的意义" class="headerlink" title="工厂模式的意义"></a>工厂模式的意义</h4><p>使用者只依赖于工厂类，而不依赖于资源</p>
@@ -1620,27 +1620,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

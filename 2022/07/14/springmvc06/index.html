@@ -483,7 +483,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    3.6k
                 </div>
                 
 
@@ -525,32 +525,32 @@
 <p>对于<code>AsyncHandlerInterceptor</code>接口，其在继承<code>HandlerInterceptor</code>接口的同时，又声明了一个新的方法<code>afterConcurrentHandlingStarted()</code>；而<code>HandlerInterceptorAdapter</code>抽象类，则是更进一步，在其继承<code>AsyncHandlerInterceptor</code>接口的同时，又复写了<code>preHandle</code>方法。因此，<code>AsyncHandlerInterceptor</code>更像是一个过渡的接口。</p>
 <p>接下来，我们先看一个配置拦截器的例子</p>
 <p>新建一个类，MyInterceptor.java</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">HandlerInterceptor</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// Controller调用之前</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"preHandle()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">// Controller调用之后</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> ModelAndView modelAndView<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"postHandle()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment" spellcheck="true">// JSP运行完以后调用</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"afterCompletion"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class MyInterceptor implements HandlerInterceptor {
+    // Controller调用之前
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("preHandle()");
+        return true;
+    }
+    // Controller调用之后
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+       System.out.println("postHandle()");
+    }
+    // JSP运行完以后调用
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        System.out.println("afterCompletion");
+    }
+}
 </code></pre>
 <p>给SpringMVC.xml添加配置</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>interceptors</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>interceptor</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>mapping</span> <span class="token attr-name">path</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/helloworld2/hello3<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> <span class="token comment" spellcheck="true">&lt;!--要拦截的路径--></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.MyInterceptor<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span><span class="token comment" spellcheck="true">&lt;!--拦截类--></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>interceptor</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>interceptors</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml"><mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/helloworld2/hello3"/> <!--要拦截的路径-->
+        <bean class="cn.silverCorridors.MyInterceptor"></bean><!--拦截类-->
+    </mvc:interceptor>
+</mvc:interceptors>
 </code></pre>
 <p>这样就简单配置好了一个拦截器。注意拦截顺序</p>
 <p>在实际应用中，我们一般都是通过实现<code>HandlerInterceptor</code>接口或者继承<code>HandlerInterceptorAdapter</code>抽象类，复写<code>preHandle()</code>、<code>postHandle()</code>和<code>afterCompletion()</code>这 3 个方法来对用户的请求进行拦截处理的。下面，我们就详细介绍这个 3 个方法。</p>
@@ -561,94 +561,94 @@
 </ul>
 <p>接下来，我们在看看以上接口和抽象类的具体代码：</p>
 <p><strong><code>HandlerInterceptor</code> 接口：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package org.springframework.web.servlet;
 
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletRequest<span class="token punctuation">;</span>
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletResponse<span class="token punctuation">;</span>
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">HandlerInterceptor</span> <span class="token punctuation">{</span>
+public interface HandlerInterceptor {
 
-    <span class="token keyword">boolean</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span>
-        <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+        throws Exception;
 
-    <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> ModelAndView modelAndView<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    void postHandle(
+            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+            throws Exception;
 
-    <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    void afterCompletion(
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception;
+}
 </code></pre>
 <p><strong><code>AsyncHandlerInterceptor</code> 接口：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package org.springframework.web.servlet;
 
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletRequest<span class="token punctuation">;</span>
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletResponse<span class="token punctuation">;</span>
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">AsyncHandlerInterceptor</span> <span class="token keyword">extends</span> <span class="token class-name">HandlerInterceptor</span> <span class="token punctuation">{</span>
+public interface AsyncHandlerInterceptor extends HandlerInterceptor {
 
-    <span class="token keyword">void</span> <span class="token function">afterConcurrentHandlingStarted</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    void afterConcurrentHandlingStarted(
+            HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception;
+}
 </code></pre>
 <p><strong><code>HandlerInterceptorAdapter</code> 抽象类：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>handler<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package org.springframework.web.servlet.handler;
 
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletRequest<span class="token punctuation">;</span>
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletResponse<span class="token punctuation">;</span>
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>AsyncHandlerInterceptor<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>ModelAndView<span class="token punctuation">;</span>
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
-<span class="token comment" spellcheck="true">/**
+/**
  * Abstract adapter class for the HandlerInterceptor interface,
  * for simplified implementation of pre-only/post-only interceptors.
  *
  * @author Juergen Hoeller
  * @since 05.12.2003
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">HandlerInterceptorAdapter</span> <span class="token keyword">implements</span> <span class="token class-name">AsyncHandlerInterceptor</span> <span class="token punctuation">{</span>
+ */
+public abstract class HandlerInterceptorAdapter implements AsyncHandlerInterceptor {
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * This implementation always returns {@code true}.
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span>
-        <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+     */
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+        throws Exception {
+        return true;
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * This implementation is empty.
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> ModelAndView modelAndView<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
+     */
+    public void postHandle(
+            HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+            throws Exception {
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * This implementation is empty.
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
+     */
+    public void afterCompletion(
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * This implementation is empty.
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterConcurrentHandlingStarted</span><span class="token punctuation">(</span>
-            HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+     */
+    public void afterConcurrentHandlingStarted(
+            HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+    }
+}
 </code></pre>
-<h3 id="WebRequestInterceptor-接口"><a href="#WebRequestInterceptor-接口" class="headerlink" title="WebRequestInterceptor 接口"></a>WebRequestInterceptor 接口</h3><p>在<code>WebRequestInterceptor</code>接口中也定义了 3 个方法，同<code>HandlerInterceptor</code>接口完全相同，也是通过复写这 3 个方法来对用户的请求进行拦截处理的。而且这 3 个方法都传递了同一个参数**<code>WebRequest</code>**，那么这个<code>WebRequest</code>到底是什么呢？其实这个<code>WebRequest</code>是 Spring 中定义的一个接口，它里面的方法定义跟<code>HttpServletRequest</code>类似，在<code>WebRequestInterceptor</code>中对<code>WebRequest</code>进行的所有操作都将同步到<code>HttpServletRequest</code>中，然后在当前请求中依次传递。</p>
+<h3 id="WebRequestInterceptor-接口"><a href="#WebRequestInterceptor-接口" class="headerlink" title="WebRequestInterceptor 接口"></a>WebRequestInterceptor 接口</h3><p>在<code>WebRequestInterceptor</code>接口中也定义了 3 个方法，同<code>HandlerInterceptor</code>接口完全相同，也是通过复写这 3 个方法来对用户的请求进行拦截处理的。而且这 3 个方法都传递了同一个参数<strong><code>WebRequest</code></strong>，那么这个<code>WebRequest</code>到底是什么呢？其实这个<code>WebRequest</code>是 Spring 中定义的一个接口，它里面的方法定义跟<code>HttpServletRequest</code>类似，在<code>WebRequestInterceptor</code>中对<code>WebRequest</code>进行的所有操作都将同步到<code>HttpServletRequest</code>中，然后在当前请求中依次传递。</p>
 <p>在 Spring 框架之中，还提供了一个和<code>WebRequestInterceptor</code>接口长的很像的抽象类，那就是：<code>WebRequestInterceptorAdapter</code>，其实现了<code>AsyncHandlerInterceptor</code>接口，并在内部调用了<code>WebRequestInterceptor</code>接口。</p>
 <p><code>WebRequestInterceptor</code>接口的 3 个函数：</p>
 <ul>
-<li><p><code>preHandle(WebRequest request)</code>方法，该方法在请求处理之前进行调用，也就是说，其会在控制器中的方法调用之前被调用。**<font color="skyblue">这个方法跟<code>HandlerInterceptor</code>中的<code>preHandle</code>不同，主要区别在于该方法的返回值是<code>void</code>类型的，也就是没有返回值，因此我们主要用它来进行资源的准备工作</font>，**比如我们在使用 Hibernate 的时候，可以在这个方法中准备一个 Hibernate 的<code>Session</code>对象，然后利用<code>WebRequest</code>的<code>setAttribute(name, value, scope)</code>把它放到<code>WebRequest</code>的属性中。在这里，进一步说说<code>setAttribute</code>方法的第三个参数<code>scope</code>，该参数是一个<code>Integer</code>类型的。在<code>WebRequest</code>的父层接口<code>RequestAttributes</code>中对它定义了三个常量，分别为：</p>
+<li><p><code>preHandle(WebRequest request)</code>方法，该方法在请求处理之前进行调用，也就是说，其会在控制器中的方法调用之前被调用。<strong><font color="skyblue">这个方法跟<code>HandlerInterceptor</code>中的<code>preHandle</code>不同，主要区别在于该方法的返回值是<code>void</code>类型的，也就是没有返回值，因此我们主要用它来进行资源的准备工作</font>，</strong>比如我们在使用 Hibernate 的时候，可以在这个方法中准备一个 Hibernate 的<code>Session</code>对象，然后利用<code>WebRequest</code>的<code>setAttribute(name, value, scope)</code>把它放到<code>WebRequest</code>的属性中。在这里，进一步说说<code>setAttribute</code>方法的第三个参数<code>scope</code>，该参数是一个<code>Integer</code>类型的。在<code>WebRequest</code>的父层接口<code>RequestAttributes</code>中对它定义了三个常量，分别为：</p>
 <ul>
 <li><p><code>SCOPE_REQUEST</code>，它的值是<code>0</code>，表示只有在<code>request</code>中可以访问。</p>
 </li>
@@ -665,34 +665,34 @@
 </ul>
 <p>接下来，看看以上接口和抽象类的具体代码：</p>
 <p><strong><code>WebRequestInterceptor</code> 接口：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>context<span class="token punctuation">.</span>request<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package org.springframework.web.context.request;
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>ui<span class="token punctuation">.</span>ModelMap<span class="token punctuation">;</span>
+import org.springframework.ui.ModelMap;
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">WebRequestInterceptor</span> <span class="token punctuation">{</span>
+public interface WebRequestInterceptor {
 
-    <span class="token keyword">void</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    void preHandle(WebRequest request) throws Exception;
 
-    <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">,</span> ModelMap model<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    void postHandle(WebRequest request, ModelMap model) throws Exception;
 
-    <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    void afterCompletion(WebRequest request, Exception ex) throws Exception;
 
-<span class="token punctuation">}</span>
-<span class="token number">12345678910111213</span>
+}
+12345678910111213
 </code></pre>
 <p><strong><code>WebRequestInterceptorAdapter</code> 抽象类：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>handler<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package org.springframework.web.servlet.handler;
 
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletRequest<span class="token punctuation">;</span>
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletResponse<span class="token punctuation">;</span>
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Assert<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>context<span class="token punctuation">.</span>request<span class="token punctuation">.</span>AsyncWebRequestInterceptor<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>context<span class="token punctuation">.</span>request<span class="token punctuation">.</span>WebRequestInterceptor<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>AsyncHandlerInterceptor<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>ModelAndView<span class="token punctuation">;</span>
+import org.springframework.util.Assert;
+import org.springframework.web.context.request.AsyncWebRequestInterceptor;
+import org.springframework.web.context.request.WebRequestInterceptor;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
-<span class="token comment" spellcheck="true">/**
+/**
  * Adapter that implements the Servlet HandlerInterceptor interface
  * and wraps an underlying WebRequestInterceptor.
  *
@@ -700,80 +700,80 @@
  * @since 2.0
  * @see org.springframework.web.context.request.WebRequestInterceptor
  * @see org.springframework.web.servlet.HandlerInterceptor
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebRequestHandlerInterceptorAdapter</span> <span class="token keyword">implements</span> <span class="token class-name">AsyncHandlerInterceptor</span> <span class="token punctuation">{</span>
+ */
+public class WebRequestHandlerInterceptorAdapter implements AsyncHandlerInterceptor {
 
-    <span class="token keyword">private</span> <span class="token keyword">final</span> WebRequestInterceptor requestInterceptor<span class="token punctuation">;</span>
+    private final WebRequestInterceptor requestInterceptor;
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * Create a new WebRequestHandlerInterceptorAdapter for the given WebRequestInterceptor.
      * @param requestInterceptor the WebRequestInterceptor to wrap
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">WebRequestHandlerInterceptorAdapter</span><span class="token punctuation">(</span>WebRequestInterceptor requestInterceptor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>requestInterceptor<span class="token punctuation">,</span> <span class="token string">"WebRequestInterceptor must not be null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor <span class="token operator">=</span> requestInterceptor<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+     */
+    public WebRequestHandlerInterceptorAdapter(WebRequestInterceptor requestInterceptor) {
+        Assert.notNull(requestInterceptor, "WebRequestInterceptor must not be null");
+        this.requestInterceptor = requestInterceptor;
+    }
 
 
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
 
-        <span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor<span class="token punctuation">.</span><span class="token function">preHandle</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DispatcherServletWebRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+        this.requestInterceptor.preHandle(new DispatcherServletWebRequest(request, response));
+        return true;
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> ModelAndView modelAndView<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+            throws Exception {
 
-        <span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor<span class="token punctuation">.</span><span class="token function">postHandle</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DispatcherServletWebRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">,</span>
-                <span class="token punctuation">(</span>modelAndView <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>modelAndView<span class="token punctuation">.</span><span class="token function">wasCleared</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> modelAndView<span class="token punctuation">.</span><span class="token function">getModelMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+        this.requestInterceptor.postHandle(new DispatcherServletWebRequest(request, response),
+                (modelAndView != null && !modelAndView.wasCleared() ? modelAndView.getModelMap() : null));
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span>
-            <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
 
-        <span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor<span class="token punctuation">.</span><span class="token function">afterCompletion</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DispatcherServletWebRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">,</span> ex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+        this.requestInterceptor.afterCompletion(new DispatcherServletWebRequest(request, response), ex);
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterConcurrentHandlingStarted</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor <span class="token keyword">instanceof</span> <span class="token class-name">AsyncWebRequestInterceptor</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            AsyncWebRequestInterceptor asyncInterceptor <span class="token operator">=</span> <span class="token punctuation">(</span>AsyncWebRequestInterceptor<span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>requestInterceptor<span class="token punctuation">;</span>
-            DispatcherServletWebRequest webRequest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DispatcherServletWebRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            asyncInterceptor<span class="token punctuation">.</span><span class="token function">afterConcurrentHandlingStarted</span><span class="token punctuation">(</span>webRequest<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token number">1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162</span>
+    public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (this.requestInterceptor instanceof AsyncWebRequestInterceptor) {
+            AsyncWebRequestInterceptor asyncInterceptor = (AsyncWebRequestInterceptor) this.requestInterceptor;
+            DispatcherServletWebRequest webRequest = new DispatcherServletWebRequest(request, response);
+            asyncInterceptor.afterConcurrentHandlingStarted(webRequest);
+        }
+    }
+}
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162
 </code></pre>
 <p>如上面的代码所示，展示了<code>WebRequestInterceptor</code>接口和<code>WebRequestInterceptorAdapter</code>抽象类的源码。下面，我们以实现<code>WebRequestInterceptor</code>接口为例进行演示：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>hit<span class="token punctuation">.</span>interceptor<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package com.hit.interceptor;
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>ui<span class="token punctuation">.</span>ModelMap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>context<span class="token punctuation">.</span>request<span class="token punctuation">.</span>WebRequest<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>context<span class="token punctuation">.</span>request<span class="token punctuation">.</span>WebRequestInterceptor<span class="token punctuation">;</span>
+import org.springframework.ui.ModelMap;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.context.request.WebRequestInterceptor;
 
-<span class="token comment" spellcheck="true">/**
+/**
  * @author 维C果糖
  * @create 2017-03-31
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WrongCodeInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">WebRequestInterceptor</span> <span class="token punctuation">{</span>
+ */
+public class WrongCodeInterceptor implements WebRequestInterceptor {
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"WrongCodeInterceptor, preHandle......"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    @Override
+    public void preHandle(WebRequest request) throws Exception {
+        System.out.println("WrongCodeInterceptor, preHandle......");
+    }
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">,</span> ModelMap model<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"WrongCodeInterceptor, postHandle......"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    @Override
+    public void postHandle(WebRequest request, ModelMap model) throws Exception {
+        System.out.println("WrongCodeInterceptor, postHandle......");
+    }
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>WebRequest request<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"WrongCodeInterceptor, afterCompletion......"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token number">123456789101112131415161718192021222324252627</span>
+    @Override
+    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
+        System.out.println("WrongCodeInterceptor, afterCompletion......");
+    }
+}
+123456789101112131415161718192021222324252627
 </code></pre>
 <h2 id="3-3-AbstractInterceptor-抽象类"><a href="#3-3-AbstractInterceptor-抽象类" class="headerlink" title="3.3 AbstractInterceptor 抽象类"></a>3.3 AbstractInterceptor 抽象类</h2><p>除了上面<code>3.2</code> 和<code>3.3</code>所讲的内容，我们还可以通过继承 Struts2 框架提供的<code>AbstractInterceptor</code>抽象类来实现拦截的功能。如果我们在深入一点研究，会发现<code>AbstractInterceptor</code>实现了<code>Interceptor</code>接口，而<code>Interceptor</code>接口又继承了<code>Serializable</code>接口。</p>
 <p>在<code>Interceptor</code>接口中，提供了 3 个方法供我们使用，分别为<code>init()</code>、<code>destroy()</code>和<code>intercept()</code>，由于<code>AbstractInterceptor</code>实现了<code>Interceptor</code>接口，因此我们就可以直接继承<code>AbstractInterceptor</code>，然后复写方法就可以啦！至于为什么继承<code>AbstractInterceptor</code>而不是直接实现<code>Interceptor</code>接口，是因为<code>AbstractInterceptor</code>已经帮我们实现了空的<code>init()</code>和<code>destroy()</code>方法，不需要我们自己去复写了，我们直接复写<code>intercept()</code>方法就可以了。现在，我们大致了解一下这 3 个方法的作用：</p>
@@ -784,65 +784,65 @@
 </ul>
 <p>接下来，我们再看看以上接口和抽象类的具体代码：</p>
 <p><strong><code>Interceptor</code> 接口：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>opensymphony<span class="token punctuation">.</span>xwork2<span class="token punctuation">.</span>interceptor<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package com.opensymphony.xwork2.interceptor;
 
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>opensymphony<span class="token punctuation">.</span>xwork2<span class="token punctuation">.</span>ActionInvocation<span class="token punctuation">;</span>
+import com.opensymphony.xwork2.ActionInvocation;
 
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>Serializable<span class="token punctuation">;</span>
+import java.io.Serializable;
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Interceptor</span> <span class="token keyword">extends</span> <span class="token class-name">Serializable</span> <span class="token punctuation">{</span>
+public interface Interceptor extends Serializable {
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * Called to let an interceptor clean up any resources it has allocated.
-     */</span>
-    <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     */
+    void destroy();
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * Called after an interceptor is created, but before any requests are processed using
      * {@link #intercept(com.opensymphony.xwork2.ActionInvocation) intercept} , giving
      * the Interceptor a chance to initialize any needed resources.
-     */</span>
-    <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     */
+    void init();
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * Allows the Interceptor to do some processing on the request before and/or after the rest of the processing of the
      * request by the {@link ActionInvocation} or to short-circuit the processing and just return a String return code.
      *
      * @param invocation the action invocation
      * @return the return code, either returned from {@link ActionInvocation#invoke()}, or from the interceptor itself.
      * @throws Exception any system-level error, as defined in {@link com.opensymphony.xwork2.Action#execute()}.
-     */</span>
-    String <span class="token function">intercept</span><span class="token punctuation">(</span>ActionInvocation invocation<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+     */
+    String intercept(ActionInvocation invocation) throws Exception;
 
-<span class="token punctuation">}</span>
+}
 </code></pre>
 <p><strong><code>AbstractInterceptor</code> 接口：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>opensymphony<span class="token punctuation">.</span>xwork2<span class="token punctuation">.</span>interceptor<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">package com.opensymphony.xwork2.interceptor;
 
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>opensymphony<span class="token punctuation">.</span>xwork2<span class="token punctuation">.</span>ActionInvocation<span class="token punctuation">;</span>
+import com.opensymphony.xwork2.ActionInvocation;
 
-<span class="token comment" spellcheck="true">/**
+/**
  * Provides default implementations of optional lifecycle methods
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">Interceptor</span> <span class="token punctuation">{</span>
+ */
+public abstract class AbstractInterceptor implements Interceptor {
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      * Does nothing
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-    
-    <span class="token comment" spellcheck="true">/**
-     * Does nothing
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
+     */
+    public void init() {
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
+     * Does nothing
+     */
+    public void destroy() {
+    }
+
+    /**
      * Override to handle interception
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> String <span class="token function">intercept</span><span class="token punctuation">(</span>ActionInvocation invocation<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+     */
+    public abstract String intercept(ActionInvocation invocation) throws Exception;
+}
 </code></pre>
 <p>如上面的代码所示，展示了<code>Interceptor</code>接口和<code>AbstractInterceptor</code>抽象类的源码。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000024464165">SpringMVC拦截器的应用</a></p>
@@ -1788,27 +1788,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

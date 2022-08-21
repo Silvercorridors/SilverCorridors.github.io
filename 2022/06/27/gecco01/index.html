@@ -506,7 +506,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="网络爬虫的定义与Gecco快速开始"><a href="#网络爬虫的定义与Gecco快速开始" class="headerlink" title="网络爬虫的定义与Gecco快速开始"></a>网络爬虫的定义与Gecco快速开始</h1><h2 id="什么是爬虫？"><a href="#什么是爬虫？" class="headerlink" title="什么是爬虫？"></a>什么是爬虫？</h2><p>WiKi中的定义：网络爬虫（英语：web crawler），也叫网络蜘蛛（spider），是一种用来自动浏览万维网的网络机器人。其目的一般为编纂<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E7%B4%A2%E5%BC%95">网络索引</a>。<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">网络</a><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">搜索引擎</a>等站点通过爬虫软件更新自身的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E7%B6%B2%E7%AB%99%E5%85%A7%E5%AE%B9&amp;action=edit&amp;redlink=1">网站内容</a>或其对其他网站的索引。网络爬虫可以将自己所访问的页面保存下来，以便搜索引擎事后生成<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E7%B4%A2%E5%BC%95_(%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E)&amp;action=edit&amp;redlink=1">索引</a>供用户搜索。</p>
+                <h1 id="网络爬虫的定义与Gecco快速开始"><a href="#网络爬虫的定义与Gecco快速开始" class="headerlink" title="网络爬虫的定义与Gecco快速开始"></a>网络爬虫的定义与Gecco快速开始</h1><h2 id="什么是爬虫？"><a href="#什么是爬虫？" class="headerlink" title="什么是爬虫？"></a>什么是爬虫？</h2><p>WiKi中的定义：网络爬虫（英语：web crawler），也叫网络蜘蛛（spider），是一种用来自动浏览万维网的网络机器人。其目的一般为编纂<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/网络索引">网络索引</a>。<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/网络搜索引擎">网络</a><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/搜索引擎">搜索引擎</a>等站点通过爬虫软件更新自身的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=網站內容&amp;action=edit&amp;redlink=1">网站内容</a>或其对其他网站的索引。网络爬虫可以将自己所访问的页面保存下来，以便搜索引擎事后生成<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=索引_(搜索引擎">索引</a>&amp;action=edit&amp;redlink=1)供用户搜索。</p>
 <p>通俗来讲，爬虫就是一个探测机器，它的基本操作就是模拟人的行为去各个网站溜达，点点按钮，查查数据，或者把看到的信息背回来。就像一只虫子在一幢楼里不知疲倦地爬来爬去。</p>
 <p>由此我们可以知道，爬虫的应用领域有：搜索引擎、比价网站、舆情系统、知识信息储备。</p>
 <h2 id="网络爬虫工作原理是什么？"><a href="#网络爬虫工作原理是什么？" class="headerlink" title="网络爬虫工作原理是什么？"></a><strong>网络爬虫工作原理是什么？</strong></h2><p>网络爬虫一般分为如下两个阶段：第一阶段，<strong>URL库初始化</strong>然后开始爬取；第二阶段，爬虫读取没有访问过的URL，来确定它的工作范围。对于所要抓取的URL，具体步骤如下：</p>
@@ -565,98 +565,98 @@
 <h2 id="非阻塞启动和阻塞启动"><a href="#非阻塞启动和阻塞启动" class="headerlink" title="非阻塞启动和阻塞启动"></a>非阻塞启动和阻塞启动</h2><ul>
 <li>start()：非阻塞启动，GeccoEngine会单独启动线程运行，推荐以该方式运行。线程模型如下：</li>
 </ul>
-<p>Main Thread–&gt;GeccoEngine Thread–&gt;Spider Thread</p>
+<p>Main Thread—&gt;GeccoEngine Thread—&gt;Spider Thread</p>
 <ul>
 <li>run()：阻塞启动，GeccoEngine在主线程中启动运行，非循环模式GeccoEngine需要等待其他爬虫线程运行完毕后才会退出。线程模型r如下：</li>
 </ul>
-<p>Main Thread–&gt;Spider Thread</p>
-<h2 id="Maven导入jar包"><a href="#Maven导入jar包" class="headerlink" title="Maven导入jar包"></a>Maven导入jar包</h2><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.geccocrawler<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>gecco<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>x.x.x<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<p>Main Thread—&gt;Spider Thread</p>
+<h2 id="Maven导入jar包"><a href="#Maven导入jar包" class="headerlink" title="Maven导入jar包"></a>Maven导入jar包</h2><pre class=" language-lang-xml"><code class="language-lang-xml"><dependency>
+    <groupId>com.geccocrawler</groupId>
+    <artifactId>gecco</artifactId>
+    <version>x.x.x</version>
+</dependency>
 </code></pre>
 <h2 id="项目quick-start"><a href="#项目quick-start" class="headerlink" title="项目quick-start"></a>项目quick-start</h2><p>快速入门源码：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Gecco</span><span class="token punctuation">(</span>matchUrl<span class="token operator">=</span><span class="token string">"https://github.com/{user}/{project}"</span><span class="token punctuation">,</span>pipelines<span class="token operator">=</span><span class="token string">"consolePipeline"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyGithub</span> <span class="token keyword">implements</span> <span class="token class-name">HtmlBean</span> <span class="token punctuation">{</span>
-<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>7127412585200687225L<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Gecco(matchUrl="https://github.com/{user}/{project}",pipelines="consolePipeline")
+public class MyGithub implements HtmlBean {
+private static final long serialVersionUID = -7127412585200687225L;
 
-<span class="token annotation punctuation">@RequestParameter</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">)</span>
-<span class="token keyword">private</span> String user<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//url中的{user}值</span>
+@RequestParameter("user")
+private String user;//url中的{user}值
 
-<span class="token annotation punctuation">@RequestParameter</span><span class="token punctuation">(</span><span class="token string">"project"</span><span class="token punctuation">)</span>
-<span class="token keyword">private</span> String project<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//url中的{project}值</span>
+@RequestParameter("project")
+private String project;//url中的{project}值
 
-<span class="token annotation punctuation">@Text</span>
-<span class="token annotation punctuation">@HtmlField</span><span class="token punctuation">(</span>cssPath<span class="token operator">=</span><span class="token string">".pagehead-actions li:nth-child(2) .social-count"</span><span class="token punctuation">)</span>
-<span class="token keyword">private</span> String star<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//抽取页面中的star</span>
+@Text
+@HtmlField(cssPath=".pagehead-actions li:nth-child(2) .social-count")
+private String star;//抽取页面中的star
 
-<span class="token annotation punctuation">@Text</span>
-<span class="token annotation punctuation">@HtmlField</span><span class="token punctuation">(</span>cssPath<span class="token operator">=</span><span class="token string">".pagehead-actions li:nth-child(3) .social-count"</span><span class="token punctuation">)</span>
-<span class="token keyword">private</span> String fork<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//抽取页面中的fork</span>
+@Text
+@HtmlField(cssPath=".pagehead-actions li:nth-child(3) .social-count")
+private String fork;//抽取页面中的fork
 
-<span class="token annotation punctuation">@Html</span>
-<span class="token annotation punctuation">@HtmlField</span><span class="token punctuation">(</span>cssPath<span class="token operator">=</span><span class="token string">".entry-content"</span><span class="token punctuation">)</span>
-<span class="token keyword">private</span> String readme<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//抽取页面中的readme</span>
+@Html
+@HtmlField(cssPath=".entry-content")
+private String readme;//抽取页面中的readme
 
-<span class="token keyword">public</span> String <span class="token function">getReadme</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> readme<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public String getReadme() {
+    return readme;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setReadme</span><span class="token punctuation">(</span>String readme<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>readme <span class="token operator">=</span> readme<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public void setReadme(String readme) {
+    this.readme = readme;
+}
 
-<span class="token keyword">public</span> String <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> user<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public String getUser() {
+    return user;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setUser</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>user <span class="token operator">=</span> user<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public void setUser(String user) {
+    this.user = user;
+}
 
-<span class="token keyword">public</span> String <span class="token function">getProject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> project<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public String getProject() {
+    return project;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setProject</span><span class="token punctuation">(</span>String project<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>project <span class="token operator">=</span> project<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public void setProject(String project) {
+    this.project = project;
+}
 
-<span class="token keyword">public</span> String <span class="token function">getStar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> star<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public String getStar() {
+    return star;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setStar</span><span class="token punctuation">(</span>String star<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>star <span class="token operator">=</span> star<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public void setStar(String star) {
+    this.star = star;
+}
 
-<span class="token keyword">public</span> String <span class="token function">getFork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> fork<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public String getFork() {
+    return fork;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setFork</span><span class="token punctuation">(</span>String fork<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>fork <span class="token operator">=</span> fork<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+public void setFork(String fork) {
+    this.fork = fork;
+}
 
-<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    GeccoEngine<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//工程的包路径</span>
-    <span class="token punctuation">.</span><span class="token function">classpath</span><span class="token punctuation">(</span><span class="token string">"com.geccocrawler.gecco.demo"</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//开始抓取的页面地址</span>
-    <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token string">"https://github.com/xtuhcy/gecco"</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//开启几个爬虫线程</span>
-    <span class="token punctuation">.</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//单个爬虫每次抓取完一个请求后的间隔时间</span>
-    <span class="token punctuation">.</span><span class="token function">interval</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//循环抓取</span>
-    <span class="token punctuation">.</span><span class="token function">loop</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//使用pc端userAgent</span>
-    <span class="token punctuation">.</span><span class="token function">mobile</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true">//非阻塞方式运行</span>
-    <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+public static void main(String[] args) {
+    GeccoEngine.create()
+    //工程的包路径
+    .classpath("com.geccocrawler.gecco.demo")
+    //开始抓取的页面地址
+    .start("https://github.com/xtuhcy/gecco")
+    //开启几个爬虫线程
+    .thread(1)
+    //单个爬虫每次抓取完一个请求后的间隔时间
+    .interval(2000)
+    //循环抓取
+    .loop(true)
+    //使用pc端userAgent
+    .mobile(false)
+    //非阻塞方式运行
+    .start();
+    }
+}
 </code></pre>
 <h3 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h3><ul>
 <li>接口HtmlBean说明该爬虫是一个解析html页面的爬虫（gecco还支持json格式的解析）</li>
@@ -665,43 +665,43 @@
 <li>注解@HtmlField表示抽取html中的元素，cssPath采用类似jquery的css selector选取元素</li>
 <li>注解@Text表示获取@HtmlField抽取出来的元素的text内容</li>
 <li>注解@Html表示获取@HtmlField抽取出来的元素的html内容（如果不指定默认为@Html）</li>
-<li>GeccoEngine表示爬虫引擎，通过create()初始化，通过start()/run()运行。可以配置一些启动参数如：扫描**@Gecco注解**的包名classpath；开始抓取的url地址star；抓取线程数thread；抓取完一个页面后的间隔时间interval(ms)等</li>
+<li>GeccoEngine表示爬虫引擎，通过create()初始化，通过start()/run()运行。可以配置一些启动参数如：扫描<strong>@Gecco注解</strong>的包名classpath；开始抓取的url地址star；抓取线程数thread；抓取完一个页面后的间隔时间interval(ms)等</li>
 </ul>
 <p><code>@Gecco</code>自定义注解</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Inherited</span>
-<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">Gecco</span> <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Inherited
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Gecco {
 
-   <span class="token comment" spellcheck="true">/**
+   /**
     * 摒弃正则表达式的匹配方式，采用更容易理解的{value}方式
     * 如：https://github.com/{user}/{project}
     * 
     * @return url匹配规则
-    */</span>
-   String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">matchUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">"*"</span><span class="token punctuation">;</span>
-   
-   <span class="token comment" spellcheck="true">/**
+    */
+   String[] matchUrl() default "*";
+
+   /**
     * url下载器，默认为httpClientDownloader
     * 
     * @return 下载器
-    */</span>
-   String <span class="token function">downloader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
-   
-   <span class="token comment" spellcheck="true">/**
+    */
+   String downloader() default "";
+
+   /**
     * 下载超时时间
     * 
     * @return 下载超时时间
-    */</span>
-   <span class="token keyword">int</span> <span class="token function">timeout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token number">3000</span><span class="token punctuation">;</span>
-   
-   <span class="token comment" spellcheck="true">/**
+    */
+   int timeout() default 3000;
+
+   /**
     * bean渲染完成后，后续的管道过滤器
     * 
     * @return 管道过滤器
-    */</span>
-   String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">pipelines</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    */
+   String[] pipelines() default "";
+}
 </code></pre>
 <p><strong>伏笔</strong>：在启动quickstart之后，打印出了以下错误信息：</p>
 <p><img src="/2022/06/27/gecco01/image-20220628175501708.png" alt="image-20220628175501708"></p>
@@ -1662,27 +1662,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 

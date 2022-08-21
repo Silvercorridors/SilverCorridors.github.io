@@ -494,26 +494,26 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="算法刷题周记01"><a href="#算法刷题周记01" class="headerlink" title="算法刷题周记01"></a>算法刷题周记01</h1><h2 id="1-两数之和-简单"><a href="#1-两数之和-简单" class="headerlink" title="1.两数之和(简单)"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">1.两数之和</a>(简单)</h2><p>题目：给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 两个 <strong>整数</strong>，并返回他们的数组下标。</p>
+                <h1 id="算法刷题周记01"><a href="#算法刷题周记01" class="headerlink" title="算法刷题周记01"></a>算法刷题周记01</h1><h2 id="1-两数之和-简单"><a href="#1-两数之和-简单" class="headerlink" title="1.两数之和(简单)"></a>1.两数之和(简单)</h2><p>题目：给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 两个 <strong>整数</strong>，并返回他们的数组下标。</p>
 <p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
 <p>你可以按任意顺序返回答案。</p>
 <p> 示例 1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：nums = [2,7,11,15], target = 9
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：nums = [2,7,11,15], target = 9
 输出：[0,1]
 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
 </code></pre>
 <p>示例 2：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：nums = [3,2,4], target = 6
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：nums = [3,2,4], target = 6
 输出：[1,2]
 </code></pre>
 <p><strong>进阶：</strong>你可以想出一个时间复杂度小于 <strong>O(n^2^)</strong> 的算法吗？</p>
-<h3 id="解法（暴力法）"><a href="#解法（暴力法）" class="headerlink" title="解法（暴力法）"></a>解法（暴力法）</h3><p>个人第一想法：肯定是直接暴力法最简单，虽然时间会比较慢。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<h3 id="解法-暴力法"><a href="#解法-暴力法" class="headerlink" title="解法(暴力法)"></a>解法(暴力法)</h3><p>个人第一想法：肯定是直接暴力法最简单，虽然时间会比较慢。</p>
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         vector<int> index(2); // 存放结果
-        for(int i = 0;i<nums.size();i++){
-            for(int j = i + 1;j<nums.size();j++){
+        for(int i = 0;i < nums.size(); i++){
+            for(int j = i + 1;j < nums.size(); j++){
                 if(nums[j] + nums[i] == target){
                     index[0] = i;
                     index[1] = j;
@@ -525,20 +525,20 @@ public:
     }
 };
 </code></pre>
-<h3 id="解法（计算补数）"><a href="#解法（计算补数）" class="headerlink" title="解法（计算补数）"></a>解法（计算补数）</h3><p>在看完其他各路大神的解法之后，豁然开朗。原来可以通过map来提高效率。</p>
+<h3 id="解法-计算补数"><a href="#解法-计算补数" class="headerlink" title="解法(计算补数)"></a>解法(计算补数)</h3><p>在看完其他各路大神的解法之后，豁然开朗。原来可以通过map来提高效率。</p>
 <p>map中<strong>以数组的值为key</strong>，<strong>以数组的下标为value</strong>。然后两次遍历：第一次给映射表赋值，第二次查找对应的数。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         map<int,int> m; // 数组的映射表, 值为key, 下标为value
         vector<int> index(2);
-        for(int i = 0;i<nums.size();i++){
-            m.insert(pair<int,int> (nums[i],i) );
+        for(int i = 0;i < nums.size();i++){
+            m.insert(pair<int,int> (nums[i],i));
         }
         for(int i = 0;i<nums.size();i++)
         {
             // 如果映射表中存在补数，且不是当前数本身
-            if(m.count(target - nums[i])>0 && m[target - nums[i]] != i )
+            if(m.count(target - nums[i]) > 0 && m[target - nums[i]] != i)
             {
                 index[0] = i;
                 index[1] = m[target - nums[i]];
@@ -550,7 +550,7 @@ public:
 };
 </code></pre>
 <p>优化：一次遍历。注意此时判断不是当前数本身的条件就可以去掉了，因为只有在判断以后才会在映射表中插入，所以补数必定不是当前数本身。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         map<int,int> m; // 数组的映射表, 值为key, 下标为value
@@ -571,19 +571,19 @@ public:
 };
 </code></pre>
 <h2 id="2-两两交换链表中的节点-中等"><a href="#2-两两交换链表中的节点-中等" class="headerlink" title="2.两两交换链表中的节点(中等)"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/swap-nodes-in-pairs/">2.两两交换链表中的节点</a>(中等)</h2><p>给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。</p>
-<p>示例 1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：head = [1,2,3,4]
+<p><strong>示例 1：</strong></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：head = [1,2,3,4]
 输出：[2,1,4,3]
 </code></pre>
-<p>示例 2：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：head = []
+<p><strong>示例 2：</strong></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：head = []
 输出：[]
 </code></pre>
-<p>示例 3：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：head = [1]
+<p><strong>示例 3：</strong></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：head = [1]
 输出：[1]
 </code></pre>
-<h3 id="解法（三个指针）："><a href="#解法（三个指针）：" class="headerlink" title="解法（三个指针）："></a>解法（三个指针）：</h3><pre class=" language-c++"><code class="language-c++">/*
+<h3 id="解法-三个指针"><a href="#解法-三个指针" class="headerlink" title="解法(三个指针)"></a>解法(三个指针)</h3><pre class=" language-lang-c++"><code class="language-lang-c++">/*
   * 思路：三个指针：pre,p1,p2  p1 为奇数位结点， p2 为偶数位结点， pre 为 上一次交换的最后一个结点
           当偶数位结点不为空，触发交换
           当偶数位结点为空，就不用动
@@ -615,32 +615,32 @@ public:
 };
 </code></pre>
 <h2 id="3-删除有序数组中的重复项-简单"><a href="#3-删除有序数组中的重复项-简单" class="headerlink" title="3.删除有序数组中的重复项(简单)"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/">3.删除有序数组中的重复项</a>(简单)</h2><p>给你一个 <strong>升序排列</strong> 的数组 <strong>nums</strong> ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。</p>
-<p>由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 <code>k </code>个元素，那么 <strong>nums</strong> 的前<code>k</code>个元素应该保存最终结果。</p>
-<p>将最终结果插入 <strong>nums</strong> 的前<code> k</code> 个位置后返回 <code>k </code>。</p>
+<p>由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 <code>k</code>个元素，那么 <strong>nums</strong> 的前<code>k</code>个元素应该保存最终结果。</p>
+<p>将最终结果插入 <strong>nums</strong> 的前<code>k</code> 个位置后返回 <code>k</code>。</p>
 <p>不要使用额外的空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。</p>
 <p>判题标准:</p>
 <p>系统会用下面的代码来测试你的题解:</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 输入数组</span>
-<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> expectedNums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 长度正确的期望答案</span>
+<pre class=" language-lang-java"><code class="language-lang-java">int[] nums = [...]; // 输入数组
+int[] expectedNums = [...]; // 长度正确的期望答案
 
-<span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 调用</span>
+int k = removeDuplicates(nums); // 调用
 
-<span class="token keyword">assert</span> k <span class="token operator">==</span> expectedNums<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> k<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">assert</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> expectedNums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
 </code></pre>
 <p>如果所有断言都通过，那么您的题解将被 通过。</p>
 <p>示例 1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：nums = [1,1,2]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：nums = [1,1,2]
 输出：2, nums = [1,2,_]
 </code></pre>
 <p>解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。<br>示例 2：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：nums = [0,0,1,1,1,2,2,3,3,4]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：nums = [0,0,1,1,1,2,2,3,3,4]
 输出：5, nums = [0,1,2,3,4]
 </code></pre>
 <p>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</p>
-<h3 id="解法（快慢指针）："><a href="#解法（快慢指针）：" class="headerlink" title="解法（快慢指针）："></a>解法（快慢指针）：</h3><pre class=" language-c++"><code class="language-c++">/*
+<h3 id="解法（快慢指针）："><a href="#解法（快慢指针）：" class="headerlink" title="解法（快慢指针）："></a>解法（快慢指针）：</h3><pre class=" language-lang-c++"><code class="language-lang-c++">/*
 *   本质：快慢指针，一个一直跑，一个根据条件跑
 */
 class Solution {
@@ -665,16 +665,16 @@ public:
 <p>你可以：</p>
 <p>装满任意一个水壶<br>清空任意一个水壶<br>从一个水壶向另外一个水壶倒水，直到装满或者倒空</p>
 <p>示例 1: </p>
-<pre class=" language-markdown"><code class="language-markdown">输入: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
 输出: true
 解释：来自著名的 "Die Hard"
 </code></pre>
 <p>示例 2:</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: jug1Capacity = 2, jug2Capacity = 6, targetCapacity = 5
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: jug1Capacity = 2, jug2Capacity = 6, targetCapacity = 5
 输出: false
 </code></pre>
 <p>示例 3:</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: jug1Capacity = 1, jug2Capacity = 2, targetCapacity = 3
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: jug1Capacity = 1, jug2Capacity = 2, targetCapacity = 3
 输出: true
 </code></pre>
 <p>这题很有意思，虽然我没做出来。。。</p>
@@ -682,44 +682,44 @@ public:
 <h3 id="解法一：深度优先搜索"><a href="#解法一：深度优先搜索" class="headerlink" title="解法一：深度优先搜索"></a><strong>解法一：深度优先搜索</strong></h3><p>思路及算法</p>
 <p>首先对题目进行建模。观察题目可知，在任意一个时刻，此问题的状态可以由两个数字决定：X 壶中的水量，以及 Y 壶中的水量。</p>
 <p>在任意一个时刻，我们可以且仅可以采取以下几种操作：</p>
-<p>把 X 壶的水灌进 Y 壶，直至灌满或倒空；<br>把 Y 壶的水灌进 X 壶，直至灌满或倒空；<br>把 X 壶灌满；<br>把 Y 壶灌满；<br>把 X 壶倒空；<br>把 Y 壶倒空。<br>因此，本题可以使用深度优先搜索来解决。搜索中的每一步以 <code>remain_x</code>, <code>remain_y</code> 作为状态，即表示 X 壶和 Y 壶中的水量。在每一步搜索时，我们会依次尝试所有的操作，递归地搜索下去。这可能会导致我们陷入无止境的递归，因此我们还需要使用一个哈希结合（HashSet）存储所有已经搜索过的<code> remain_x</code>,<code>remain_y</code>状态，保证每个状态至多只被搜索一次。</p>
+<p>把 X 壶的水灌进 Y 壶，直至灌满或倒空；<br>把 Y 壶的水灌进 X 壶，直至灌满或倒空；<br>把 X 壶灌满；<br>把 Y 壶灌满；<br>把 X 壶倒空；<br>把 Y 壶倒空。<br>因此，本题可以使用深度优先搜索来解决。搜索中的每一步以 <code>remain_x</code>, <code>remain_y</code> 作为状态，即表示 X 壶和 Y 壶中的水量。在每一步搜索时，我们会依次尝试所有的操作，递归地搜索下去。这可能会导致我们陷入无止境的递归，因此我们还需要使用一个哈希结合（HashSet）存储所有已经搜索过的<code>remain_x</code>,<code>remain_y</code>状态，保证每个状态至多只被搜索一次。</p>
 <p>在实际的代码编写中，由于深度优先搜索导致的递归远远超过了 Python 的默认递归层数（可以使用 <code>sys</code> 库更改递归层数，但不推荐这么做），因此下面的代码使用栈来模拟递归，避免了真正使用递归而导致的问题。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">canMeasureWater</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        Deque<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Set<span class="token operator">&lt;</span>Long<span class="token operator">></span> seen <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Long<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>seen<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token function">hash</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">continue</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            seen<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">hash</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> state <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> remain_x <span class="token operator">=</span> state<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> remain_y <span class="token operator">=</span> state<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>remain_x <span class="token operator">==</span> z <span class="token operator">||</span> remain_y <span class="token operator">==</span> z <span class="token operator">||</span> remain_x <span class="token operator">+</span> remain_y <span class="token operator">==</span> z<span class="token punctuation">)</span> 			<span class="token punctuation">{</span>
-                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token comment" spellcheck="true">// 把 X 壶灌满。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>x<span class="token punctuation">,</span> remain_y<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 把 Y 壶灌满。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>remain_x<span class="token punctuation">,</span> y<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 把 X 壶倒空。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> remain_y<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 把 Y 壶倒空。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>remain_x<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 把 X 壶的水灌进 Y 壶，直至灌满或倒空。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>remain_x <span class="token operator">-</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>remain_x<span class="token punctuation">,</span> y <span class="token operator">-</span> remain_y<span class="token punctuation">)</span><span class="token punctuation">,</span> remain_y <span class="token operator">+</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>remain_x<span class="token punctuation">,</span> y <span class="token operator">-</span> remain_y<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 把 Y 壶的水灌进 X 壶，直至灌满或倒空。</span>
-            stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>remain_x <span class="token operator">+</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>remain_y<span class="token punctuation">,</span> x <span class="token operator">-</span> remain_x<span class="token punctuation">)</span><span class="token punctuation">,</span> remain_y <span class="token operator">-</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>remain_y<span class="token punctuation">,</span> x <span class="token operator">-</span> remain_x<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">class Solution {
+    public boolean canMeasureWater(int x, int y, int z) {
+        Deque<int[]> stack = new LinkedList<int[]>();
+        stack.push(new int[]{0, 0});
+        Set<Long> seen = new HashSet<Long>();
+        while (!stack.isEmpty()) {
+            if (seen.contains(hash(stack.peek()))) {
+                stack.pop();
+                continue;
+            }
+            seen.add(hash(stack.peek()));
+            int[] state = stack.pop();
+            int remain_x = state[0], remain_y = state[1];
+            if (remain_x == z || remain_y == z || remain_x + remain_y == z)             {
+                return true;
+            }
+            // 把 X 壶灌满。
+            stack.push(new int[]{x, remain_y});
+            // 把 Y 壶灌满。
+            stack.push(new int[]{remain_x, y});
+            // 把 X 壶倒空。
+            stack.push(new int[]{0, remain_y});
+            // 把 Y 壶倒空。
+            stack.push(new int[]{remain_x, 0});
+            // 把 X 壶的水灌进 Y 壶，直至灌满或倒空。
+            stack.push(new int[]{remain_x - Math.min(remain_x, y - remain_y), remain_y + Math.min(remain_x, y - remain_y)});
+            // 把 Y 壶的水灌进 X 壶，直至灌满或倒空。
+            stack.push(new int[]{remain_x + Math.min(remain_y, x - remain_x), remain_y - Math.min(remain_y, x - remain_x)});
+        }
+        return false;
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">hash</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> state<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">1000001</span> <span class="token operator">+</span> state<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    public long hash(int[] state) {
+        return (long) state[0] * 1000001 + state[1];
+    }
+}
 </code></pre>
 <p>简单来说，就是递归调用来分析所有可能。。。类似于暴力法的感觉</p>
 <p><strong>复杂度分析</strong></p>
@@ -727,7 +727,7 @@ public:
 <p>空间复杂度：$O(xy)$，由于状态数最多有$ (x+1)(y+1)$ 种，哈希集合中最多会有 $(x+1)(y+1)$项，因此空间复杂度为 $O(xy)$。</p>
 <h3 id="解法二：数学"><a href="#解法二：数学" class="headerlink" title="解法二：数学"></a>解法二：数学</h3><p>思路及算法</p>
 <p>预备知识：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liyuanbhu/article/details/37729751">贝祖定理</a></p>
-<p>我们认为，每次操作只会让桶里的水总量增加<code> x</code>，增加 <code>y</code>，减少 <code>x</code>，或者减少 <code>y</code>。</p>
+<p>我们认为，每次操作只会让桶里的水总量增加<code>x</code>，增加 <code>y</code>，减少 <code>x</code>，或者减少 <code>y</code>。</p>
 <p>你可能认为这有问题：如果往一个不满的桶里放水，或者把它排空呢？那变化量不就不是 <code>x</code> 或者 <code>y</code> 了吗？接下来我们来解释这一点：</p>
 <ul>
 <li><p>首先要清楚，在题目所给的操作下，两个桶不可能同时有水且不满。因为观察所有题目中的操作，操作的结果都至少有一个桶是空的或者满的；</p>
@@ -737,7 +737,9 @@ public:
 <li><p>再次，把一个不满的桶里面的水倒掉是没有意义的。因为如果另一个桶是空的，那么这个操作的结果等价于回到初始状态；而如果另一个桶是满的，那么这个操作的结果等价于从初始状态直接给另一个桶倒满。</p>
 </li>
 </ul>
-<p>因此，我们可以认为每次操作只会给水的总量带来<code> x</code> 或者 <code>y</code> 的变化量。因此我们的目标可以改写成：找到一对整数 a，b，使得<br>$$<br>ax + by = z<br>$$<br>而只要满足 $z\leq x+y$，且这样的 $a, b$ 存在，那么我们的目标就是可以达成的。这是因为：</p>
+<p>因此，我们可以认为每次操作只会给水的总量带来<code>x</code> 或者 <code>y</code> 的变化量。因此我们的目标可以改写成：找到一对整数 a，b，使得</p>
+<script type="math/tex; mode=display">
+ax + by = z</script><p>而只要满足 $z\leq x+y$，且这样的 $a, b$ 存在，那么我们的目标就是可以达成的。这是因为：</p>
 <p>若 $a\geq 0, b\geq 0$，那么显然可以达成目标。</p>
 <p>若 $a\lt 0$，那么可以进行以下操作：</p>
 <p>往 $y$ 壶倒水；</p>
@@ -746,7 +748,7 @@ public:
 <p>重复以上操作直至某一步时 $x$ 壶进行了 $a$ 次倒空操作，$y$ 壶进行了 $b$ 次倒水操作。</p>
 <p>若 $b\lt 0$，方法同上，<code>x</code> 与<code>y</code>互换。</p>
 <p>而贝祖定理告诉我们，$ax+by=z$ 有解当且仅当 $z$ 是 $x,y$ 的最大公约数的倍数。因此我们只需要找到 $x, y$ 的最大公约数并判断 $z$ 是否是它的倍数即可。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     bool canMeasureWater(int x, int y, int z) {
         if (x + y < z) {
@@ -760,7 +762,7 @@ public:
 };
 </code></pre>
 <h3 id="解法三：（大壶做加法小壶做减法）"><a href="#解法三：（大壶做加法小壶做减法）" class="headerlink" title="解法三：（大壶做加法小壶做减法）"></a>解法三：（大壶做加法小壶做减法）</h3><p>这是一个评论上看到的…大佬解法</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     bool canMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity) {
         if (jug1Capacity + jug2Capacity < targetCapacity) return false;
@@ -785,16 +787,16 @@ public:
 <p>你需要按照以下要求，给这些孩子分发糖果：</p>
 <p>每个孩子至少分配到 1 个糖果。<br>相邻两个孩子评分更高的孩子会获得更多的糖果。<br>请你给每个孩子分发糖果，计算并返回需要准备的 最少糖果数目 。</p>
 <p>示例 1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：ratings = [1,0,2]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：ratings = [1,0,2]
 输出：5
 解释：你可以分别给第一个、第二个、第三个孩子分发 2、1、2 颗糖果。
 </code></pre>
 <p>示例 2：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：ratings = [1,2,2]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：ratings = [1,2,2]
 输出：4
 解释：你可以分别给第一个、第二个、第三个孩子分发 1、2、1 颗糖果。第三个孩子只得到 1 颗糖果，这满足题面中的两个条件。
 </code></pre>
-<h3 id="解法（贪心策略）："><a href="#解法（贪心策略）：" class="headerlink" title="解法（贪心策略）："></a>解法（贪心策略）：</h3><pre class=" language-c++"><code class="language-c++">class Solution {
+<h3 id="解法（贪心策略）："><a href="#解法（贪心策略）：" class="headerlink" title="解法（贪心策略）："></a>解法（贪心策略）：</h3><pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     int candy(vector<int>& ratings) {
         int size = ratings.size();
@@ -820,20 +822,20 @@ public:
 </code></pre>
 <h2 id="6-无重叠区间（中等）"><a href="#6-无重叠区间（中等）" class="headerlink" title="6.无重叠区间（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/non-overlapping-intervals/">6.无重叠区间</a>（中等）</h2><p>给定一个区间的集合 intervals ，其中 intervals[i] = $[start_i, end_i] $。返回 需要移除区间的最小数量，使剩余区间互不重叠 。</p>
 <p> 示例 1:</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: intervals = [[1,2],[2,3],[3,4],[1,3]]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: intervals = [[1,2],[2,3],[3,4],[1,3]]
 输出: 1
 </code></pre>
 <p>解释: 移除 [1,3] 后，剩下的区间没有重叠。<br>示例 2:</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: intervals = [ [1,2], [1,2], [1,2] ]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: intervals = [ [1,2], [1,2], [1,2] ]
 输出: 2
 </code></pre>
 <p>解释: 你需要移除两个 [1,2] 来使剩下的区间没有重叠。<br>示例 3:</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: intervals = [ [1,2], [2,3] ]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: intervals = [ [1,2], [2,3] ]
 输出: 0
 </code></pre>
 <p>解释: 你不需要移除任何区间，因为它们已经是无重叠的了。</p>
 <h3 id="解法（排序-贪心策略）"><a href="#解法（排序-贪心策略）" class="headerlink" title="解法（排序+贪心策略）"></a>解法（排序+贪心策略）</h3><p>先将区间按右端点进行增序排序，因为选择的区间结尾越小，余留给其他区间的空间就越大，就能保留越多的区间。然后每次选择结尾最小和前一个选择区间不重叠的区间。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         if(intervals.empty())
@@ -862,18 +864,18 @@ public:
 <p>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
 <p><img src="/2022/07/27/leetcode01/200px-telephone-keypad2svg.png" alt=" "></p>
 <p>示例 1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：digits = "23"
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：digits = "23"
 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
 </code></pre>
 <p>示例 2：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：digits = ""
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：digits = ""
 输出：[]
 </code></pre>
 <p>示例 3：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：digits = "2"
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：digits = "2"
 输出：["a","b","c"]
 </code></pre>
-<h3 id="解法：暴力深度优先"><a href="#解法：暴力深度优先" class="headerlink" title="解法：暴力深度优先"></a>解法：暴力深度优先</h3><pre class=" language-c++"><code class="language-c++">class Solution {
+<h3 id="解法：暴力深度优先"><a href="#解法：暴力深度优先" class="headerlink" title="解法：暴力深度优先"></a>解法：暴力深度优先</h3><pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<string> res; // 存放排列组合的结果
     void dfs(string digits,int index)
@@ -939,12 +941,10 @@ public:
 <p>示例 1：</p>
 <pre><code>输入：flowerbed = [1,0,0,0,1], n = 1
 输出：true
-</code></pre>
-<p>示例 2：</p>
+</code></pre><p>示例 2：</p>
 <pre><code>输入：flowerbed = [1,0,0,0,1], n = 2
 输出：false
-</code></pre>
-<p>提示：</p>
+</code></pre><p>提示：</p>
 <ul>
 <li><code>1 &lt;= flowerbed.length &lt;= 2 * 104</code></li>
 <li><code>flowerbed[i] 为 0 或 1</code></li>
@@ -952,7 +952,7 @@ public:
 <li><code>0 &lt;= n &lt;= flowerbed.length</code></li>
 </ul>
 <h3 id="解法一："><a href="#解法一：" class="headerlink" title="解法一："></a>解法一：</h3><p>鄙人写的…，看看就好。虑边界情况比较多，这里count&gt;=n的原因：给定的值 可以小于 最大种植的棵数目。有个测试用例就是这个坑，怪狡猾的</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     bool canPlaceFlowers(vector<int>& flowerbed, int n) {
         int count = 0;// 还能种植的花数
@@ -983,21 +983,21 @@ public:
 <p>题目要求是否能在不打破规则的情况下插入n朵花，与直接计算不同，采用“跳格子”的解法只需遍历不到一遍数组，处理以下两种不同的情况即可：</p>
 <p>【1】当遍历到index遇到1时，说明这个位置有花，那必然从index+2的位置才有可能种花，因此当碰到1时直接跳过下一格。<br>【2】当遍历到index遇到0时，由于每次碰到1都是跳两格，因此前一格必定是0，此时只需要判断下一格是不是1即可得出index这一格能不能种花，如果能种则令n减一，然后这个位置就按照遇到1时处理，即跳两格；如果index的后一格是1，说明这个位置不能种花且之后两格也不可能种花（参照【1】），直接跳过3格。</p>
 <p>当n减为0时，说明可以种入n朵花，则可以直接退出遍历返回true；如果遍历结束n没有减到0，说明最多种入的花的数量小于n，则返回false。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">canPlaceFlowers</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> flowerbed<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> len <span class="token operator">=</span> flowerbed<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len <span class="token operator">&amp;&amp;</span> n <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>flowerbed<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            i <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> flowerbed<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">||</span> flowerbed<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            n<span class="token operator">--</span><span class="token punctuation">;</span>
-            i <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            i <span class="token operator">+=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> n <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    for (int i = 0, len = flowerbed.length; i < len && n > 0;) {
+        if (flowerbed[i] == 1) {
+            i += 2;
+        } else if (i == flowerbed.length - 1 || flowerbed[i + 1] == 0) {
+            n--;
+            i += 2;
+        } else {
+            i += 3;
+        }
+    }
+    return n <= 0;
+}
 </code></pre>
-<h2 id="9-用最少数量的箭引爆气球（中等）"><a href="#9-用最少数量的箭引爆气球（中等）" class="headerlink" title="9.用最少数量的箭引爆气球（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/">9.用最少数量的箭引爆气球</a>（中等）</h2><p>有一些球形气球贴在一堵用 XY 平面表示的墙面上。墙面上的气球记录在整数数组 points ，其中<code>points[i] = [xstart, xend]</code> 表示水平直径在<code>xstart</code>和<code> xend</code>之间的气球。你不知道气球的确切 y 坐标。</p>
+<h2 id="9-用最少数量的箭引爆气球（中等）"><a href="#9-用最少数量的箭引爆气球（中等）" class="headerlink" title="9.用最少数量的箭引爆气球（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/">9.用最少数量的箭引爆气球</a>（中等）</h2><p>有一些球形气球贴在一堵用 XY 平面表示的墙面上。墙面上的气球记录在整数数组 points ，其中<code>points[i] = [xstart, xend]</code> 表示水平直径在<code>xstart</code>和<code>xend</code>之间的气球。你不知道气球的确切 y 坐标。</p>
 <p>一支弓箭可以沿着 x 轴从不同点 完全垂直 地射出。在坐标 x 处射出一支箭，若有一个气球的直径的开始和结束坐标为 <code>xstart</code>，<code>xend</code>， 且满足  <code>xstart ≤ x ≤ xend</code>，则该气球会被 引爆 。可以射出的弓箭的数量 没有限制 。 弓箭一旦被射出之后，可以无限地前进。</p>
 <p>给你一个数组 points ，返回引爆所有气球所必须射出的 <strong>最小弓箭数</strong> 。</p>
 <p>示例 1：</p>
@@ -1006,22 +1006,19 @@ public:
 解释：气球可以用2支箭来爆破:
 - 在x = 6处射出箭，击破气球[2,8]和[1,6]。
 - 在x = 11处发射箭，击破气球[10,16]和[7,12]。
-</code></pre>
-<p>示例 2：</p>
+</code></pre><p>示例 2：</p>
 <pre><code>输入：points = [[1,2],[3,4],[5,6],[7,8]]
 输出：4
 解释：每个气球需要射出一支箭，总共需要4支箭。
-</code></pre>
-<p>示例 3：</p>
-<pre><code> 输入：points = [[1,2],[2,3],[3,4],[4,5]]
- 输出：2
- 解释：气球可以用2支箭来爆破:
- 
- - 在x = 2处发射箭，击破气球[1,2]和[2,3]。
- - 在x = 4处射出箭，击破气球[3,4]和[4,5]。
-</code></pre>
-<h3 id="解法（排序-贪心策略）："><a href="#解法（排序-贪心策略）：" class="headerlink" title="解法（排序+贪心策略）："></a>解法（排序+贪心策略）：</h3><p>这题和上面第6题套路一样，只不过第6是求多少个 重叠区间，这个其实是同样的道理，代码都不用改多少。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+</code></pre><p>示例 3：</p>
+<pre><code>  输入：points = [[1,2],[2,3],[3,4],[4,5]]
+  输出：2
+  解释：气球可以用2支箭来爆破:
+
+  - 在x = 2处发射箭，击破气球[1,2]和[2,3]。
+  - 在x = 4处射出箭，击破气球[3,4]和[4,5]。
+</code></pre><h3 id="解法（排序-贪心策略）："><a href="#解法（排序-贪心策略）：" class="headerlink" title="解法（排序+贪心策略）："></a>解法（排序+贪心策略）：</h3><p>这题和上面第6题套路一样，只不过第6是求多少个 重叠区间，这个其实是同样的道理，代码都不用改多少。</p>
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
         if(points.empty())return 0;
@@ -1048,12 +1045,12 @@ public:
 </code></pre>
 <h2 id="10-划分字母区间（中等）"><a href="#10-划分字母区间（中等）" class="headerlink" title="10.划分字母区间（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-labels/">10.划分字母区间</a>（中等）</h2><p>字符串 <code>S</code> 由小写字母组成。我们要把这个字符串划分为尽可能多的片段，同一字母最多出现在一个片段中。返回一个表示每个字符串片段的长度的列表。</p>
 <p>示例：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入：S = "ababcbacadefegdehijhklij"
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：S = "ababcbacadefegdehijhklij"
 输出：[9,7,8]
 解释：
-<span class="token code keyword">    划分结果为 "ababcbaca", "defegde", "hijhklij"。</span>
-<span class="token code keyword">    每个字母最多出现在一个片段中。</span>
-<span class="token code keyword">    像 "ababcbacadefegde", "hijhklij" 的划分是错误的，因为划分的片段数较少。</span>
+    划分结果为 "ababcbaca", "defegde", "hijhklij"。
+    每个字母最多出现在一个片段中。
+    像 "ababcbacadefegde", "hijhklij" 的划分是错误的，因为划分的片段数较少。
 </code></pre>
 <p><strong>提示：</strong></p>
 <ul>
@@ -1061,7 +1058,7 @@ public:
 <li><code>S</code>只包含小写字母 <code>'a'</code> 到 <code>'z'</code> 。</li>
 </ul>
 <h3 id="解法：-统计字符串，贪心"><a href="#解法：-统计字符串，贪心" class="headerlink" title="解法：(统计字符串，贪心)"></a>解法：(统计字符串，贪心)</h3><p>思路：先把字符串中每个字符的最后索引值找到。用贪心思想，将当前索引值以及最后索引值的一段作为最小结束下标，找到每个片段可能的最小结束下标。</p>
-<pre class=" language-c++"><code class="language-c++">class Solution {
+<pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<int> partitionLabels(string s) {
         int length = s.length();
@@ -2036,27 +2033,10 @@ $(function () {
 
 
 
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/sakura-half.js"><\/script>');
-        }
-    </script>
-
-
 <!-- 雪花特效 -->
 
 
 <!-- 鼠标星星特效 -->
-
-    <script type="text/javascript">
-        // 只在桌面版网页启用特效
-        var windowWidth = $(window).width();
-        if (windowWidth > 768) {
-            document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-        }
-    </script>
 
 
 
