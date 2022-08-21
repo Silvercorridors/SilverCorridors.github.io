@@ -4,11 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="构建工具Gradle的使用, 银色回廊">
-    <meta name="description" content="构建工具Gradle的使用构建工具的作用​	依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。
-主流构建工具：（1）Ant：编译、测试、打包；
-（2）Maven：依赖管理、发布；
-（3）Gradle：Groovy，具有更高的灵活性和可">
+    <meta name="keywords" content="leetcode03, 银色回廊">
+    <meta name="description" content="算法刷题周记03 1.买卖股票的最佳时机 II（中等）给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
+在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。你也可以">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>构建工具Gradle的使用 | 银色回廊</title>
+    <title>leetcode03 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -328,12 +326,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">构建工具Gradle的使用</h1>
+                    <h1 class="description center-align post-title">leetcode03</h1>
                 </div>
             </div>
         </div>
@@ -449,8 +447,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/gradle/">
-                                <span class="chip bg-color">gradle</span>
+                            <a href="/tags/leetcode/">
+                                <span class="chip bg-color">leetcode</span>
                             </a>
                         
                     </div>
@@ -461,8 +459,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
-                                杂七杂八
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
                             </a>
                         
                     </div>
@@ -474,7 +472,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-08-06
+                    2022-08-08
                 </div>
                 
 
@@ -483,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.4k
                 </div>
                 
 
@@ -505,325 +503,352 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="构建工具Gradle的使用"><a href="#构建工具Gradle的使用" class="headerlink" title="构建工具Gradle的使用"></a>构建工具Gradle的使用</h1><h2 id="构建工具的作用"><a href="#构建工具的作用" class="headerlink" title="构建工具的作用"></a>构建工具的作用</h2><p>​	依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。</p>
-<h2 id="主流构建工具："><a href="#主流构建工具：" class="headerlink" title="主流构建工具："></a>主流构建工具：</h2><p>（1）Ant：编译、测试、打包；</p>
-<p>（2）Maven：依赖管理、发布；</p>
-<p>（3）Gradle：Groovy，具有更高的灵活性和可扩展性。</p>
-<h2 id="Gradle是什么？"><a href="#Gradle是什么？" class="headerlink" title="Gradle是什么？"></a>Gradle是什么？</h2><p>一个开源的项目自动化构建工具，建立在Apache Ant和Apache Maven概念的基础上，并引入了基于Groovy的特定领域语言（DSL），而不再使用XML形式管理构建脚本。</p>
-<h2 id="Gradle能做什么？"><a href="#Gradle能做什么？" class="headerlink" title="Gradle能做什么？"></a>Gradle能做什么？</h2><p>进行依赖管理，自动化运行测试、打包，发布到指定的地方去。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1.确保已经安装JDK，<code>java -version</code></p>
-<p>2.从Gradle官网下载Gradle：[入口][<a href="https://gradle.org]">https://gradle.org]</a></p>
-<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><ul>
-<li>配置环境变量，<code>GRADLE_HOME</code></li>
-<li>添加到path, <code>%GRADLE_HOME%\bin</code></li>
-<li>验证是否安装成功, <code>gradle -v</code></li>
-</ul>
-<h2 id="Groovy是什么？"><a href="#Groovy是什么？" class="headerlink" title="Groovy是什么？"></a>Groovy是什么？</h2><p>Groovy是用于Java虚拟机的一种敏捷的动态语言，它是一种成熟的面向对象编程语言，既可以用于面向对象编程，又可以用作纯粹的脚本语言。使用该种语言不必编写过多的带麻，同时又具有闭包和动态语言中的其他特性。</p>
-<h2 id="Groovy与java比较"><a href="#Groovy与java比较" class="headerlink" title="Groovy与java比较"></a>Groovy与java比较</h2><ol>
-<li>Groovy完全兼容Java语法。</li>
-<li>分号是可选的。</li>
-<li>类、方法默认为public。</li>
-<li>编译器会自动为属性生成<code>get/set</code>方法</li>
-<li>属性可以用点来获取</li>
-<li>用最后一个表达式的值作为返回值；</li>
-<li>==等同于equals方法，不会有NullPointerExceptions</li>
-</ol>
-<h4 id="传统JavaBean写法"><a href="#传统JavaBean写法" class="headerlink" title="传统JavaBean写法"></a>传统JavaBean写法</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> major<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> minor<span class="token punctuation">;</span>
-
-    <span class="token function">ProjectVersion</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">,</span> <span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>major <span class="token operator">=</span> major
-        <span class="token keyword">this</span><span class="token punctuation">.</span>minor <span class="token operator">=</span> minor
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">int</span> <span class="token function">getMajor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> major
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">void</span> <span class="token function">setMajor</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>major <span class="token operator">=</span> major
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">int</span> <span class="token function">getMinor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> minor
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">void</span> <span class="token function">setMinor</span><span class="token punctuation">(</span><span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>minor <span class="token operator">=</span> minor
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+                <h1 id="算法刷题周记03"><a href="#算法刷题周记03" class="headerlink" title="算法刷题周记03"></a>算法刷题周记03</h1><h2 id="1-买卖股票的最佳时机-II（中等）"><a href="#1-买卖股票的最佳时机-II（中等）" class="headerlink" title=" 1.买卖股票的最佳时机 II（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/"> 1.买卖股票的最佳时机 II</a>（中等）</h2><p>给你一个整数数组<code> prices</code> ，其中 <code>prices[i] </code>表示某支股票第 <code>i </code>天的价格。</p>
+<p>在每一天，你可以决定是否购买和/或出售股票。你在任何时候 <strong>最多</strong> 只能持有 <strong>一股</strong> 股票。你也可以先购买，然后在 <strong>同一天</strong> 出售。</p>
+<p>返回 你能获得的 <strong>最大</strong> 利润 。</p>
+<p><strong>示例 1：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：prices = [7,1,5,3,6,4]
+输出：7
+解释：在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6 - 3 = 3 。
+总利润为 4 + 3 = 7 。
 </code></pre>
-<h4 id="Groovy写法"><a href="#Groovy写法" class="headerlink" title="Groovy写法"></a>Groovy写法</h4><pre class=" language-groovy"><code class="language-groovy"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> major<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> minor
-    <span class="token function">ProjectVersion</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">,</span> <span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token operator">.</span>major <span class="token operator">=</span> major
-        <span class="token keyword">this</span><span class="token operator">.</span>minor <span class="token operator">=</span> minor
-    <span class="token punctuation">}</span>
-    <span class="token keyword">int</span> <span class="token function">getMajor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        major
-    <span class="token punctuation">}</span>
-    <span class="token keyword">void</span> <span class="token function">setMajor</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token operator">.</span>major <span class="token operator">=</span> major
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">// 测试一下</span>
-ProjectVersion v1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">println</span><span class="token punctuation">(</span>v1<span class="token operator">.</span>minor<span class="token punctuation">)</span>
-ProjectVersion v2 <span class="token operator">=</span> null
-println v2<span class="token operator">==</span>v1
+<p><strong>示例 2：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：prices = [1,2,3,4,5]
+输出：4
+解释：在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+<span class="token code keyword">     总利润为 4 。</span>
 </code></pre>
-<h2 id="高效特性"><a href="#高效特性" class="headerlink" title="高效特性"></a>高效特性</h2><p>1.assert语句<br>2.可选类型定义，弱类型，<br>3.可选的括号<br>4.字符串（单引号，双引号，三个单引号）<br>5.集合API<br>6.闭包</p>
-<pre class=" language-groovy"><code class="language-groovy"><span class="token comment" spellcheck="true">// groovy高效特性</span>
-<span class="token comment" spellcheck="true">// 1.可选的类型定义</span>
-<span class="token keyword">def</span> version <span class="token operator">=</span> <span class="token number">1</span>
-
-<span class="token comment" spellcheck="true">// 2.任意的assert</span>
-<span class="token keyword">assert</span> version <span class="token operator">==</span> <span class="token number">2</span>
-
-<span class="token comment" spellcheck="true">// 3.括号是可选的</span>
-println version
-
-<span class="token comment" spellcheck="true">// 4. 字符串</span>
-<span class="token keyword">def</span> s1 <span class="token operator">=</span> <span class="token string">'imooc'</span>
-<span class="token keyword">def</span> s2<span class="token operator">=</span><span class="token string">"gradle version is ${version}"</span>
-<span class="token keyword">def</span> s3 <span class="token operator">=</span> <span class="token string">'''my name 
-is
- silvercorridors'''</span>
-
-println s1
-println s2
-println s3
-
-<span class="token comment" spellcheck="true">// 5.集合api</span>
-<span class="token keyword">def</span> buildTools<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'ant'</span><span class="token punctuation">,</span><span class="token string">'maven'</span><span class="token punctuation">]</span>
-buildTools <span class="token operator">&lt;&lt;</span> <span class="token string">'gradle'</span>
-<span class="token keyword">assert</span> buildTools<span class="token operator">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> ArrayList
-<span class="token keyword">assert</span> buildTools<span class="token operator">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span>
-
-<span class="token comment" spellcheck="true">// map</span>
-<span class="token keyword">def</span> buildYears <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'ant'</span><span class="token punctuation">:</span><span class="token number">2000</span><span class="token punctuation">,</span><span class="token string">'maven'</span><span class="token punctuation">:</span><span class="token number">2004</span><span class="token punctuation">]</span>
-buildYears<span class="token operator">.</span>gradle <span class="token operator">=</span> <span class="token number">2009</span>
-println buildYears<span class="token operator">.</span>ant
-println buildYears<span class="token punctuation">[</span><span class="token string">'gradle'</span><span class="token punctuation">]</span>
-println buildYears<span class="token operator">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">// 6.闭包</span>
-<span class="token keyword">def</span> c1 <span class="token operator">=</span> <span class="token punctuation">{</span>
-    v <span class="token operator">-></span> print v
-<span class="token punctuation">}</span>
-<span class="token keyword">def</span> c2 <span class="token operator">=</span> <span class="token punctuation">{</span>
-    print <span class="token string">"hello"</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">def</span> <span class="token function">method1</span><span class="token punctuation">(</span>Closure closure<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token function">closure</span><span class="token punctuation">(</span><span class="token string">'param'</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">def</span> <span class="token function">method2</span><span class="token punctuation">(</span>Closure closure<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token function">closure</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token function">method1</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">method2</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// 输出结果 paramhello</span>
+<p><strong>示例3：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：prices = [7,6,4,3,1]
+输出：0
+解释：在这种情况下, 交易无法获得正利润，所以不参与交易可以获得最大利润，最大利润为 0 。
 </code></pre>
-<h2 id="Gradle项目"><a href="#Gradle项目" class="headerlink" title="Gradle项目"></a>Gradle项目</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p><img src="/2022/08/06/gradle01/image-20220806161256744.png"></p>
-<h3 id="构建方式"><a href="#构建方式" class="headerlink" title="构建方式"></a>构建方式</h3><p>idea右侧有一个gradle窗口</p>
-<p><img src="/2022/08/06/gradle01/image-20220806163241386.png"></p>
-<pre class=" language-markdown"><code class="language-markdown">1.jar用于将文件编译为jar包；
-2.build会执行build.gradle文件，由于插件是Java，所以也会将文件编译为jar包；
-3.classes会将文件转为class文件；
-3.clean会清除操作
-</code></pre>
-<h3 id="任务依赖"><a href="#任务依赖" class="headerlink" title="任务依赖"></a>任务依赖</h3><p><strong>例子. 申明任务之间的依赖关系</strong></p>
-<p><em>build.gradle</em></p>
-<pre class=" language-groovy"><code class="language-groovy">task hello <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
-    println <span class="token string">'Hello world!'</span>
-<span class="token punctuation">}</span>
-
-task <span class="token function">intro</span><span class="token punctuation">(</span>dependsOn<span class="token punctuation">:</span> hello<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
-    println <span class="token string">"I'm Gradle"</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><strong>gradle -q intro</strong> 命令的输出</p>
-<pre class=" language-groovy"><code class="language-groovy"><span class="token operator">></span> gradle <span class="token operator">-</span>q intro
-Hello world<span class="token operator">!</span>
-I'm Gradle
-</code></pre>
-<p>intro 依赖于 hello, 所以执行 intro 的时候 hello 命令会被优先执行来作为启动 intro 任务的条件.</p>
-<p>在加入一个依赖之前, 这个依赖的任务不需要提前定义, 来看下面的例子.</p>
-<p><strong>例子. Lazy dependsOn - 其他的任务还没有存在</strong></p>
-<p><em>build.gradle</em></p>
-<pre class=" language-groovy"><code class="language-groovy">task <span class="token function">taskX</span><span class="token punctuation">(</span>dependsOn<span class="token punctuation">:</span> <span class="token string">'taskY'</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
-    println <span class="token string">'taskX'</span>
-<span class="token punctuation">}</span>
-task taskY <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
-    println <span class="token string">'taskY'</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p><strong>gradle -q taskX</strong> 命令的输出</p>
-<pre class=" language-markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span> gradle -q taskX
-taskY
-taskX
-</code></pre>
-<p>taskX 到 taskY 的依赖在 taskY 被定义之前就已经声明了。</p>
-<h3 id="动态任务"><a href="#动态任务" class="headerlink" title="动态任务"></a>动态任务</h3><p>Groovy 不仅仅被用来定义一个任务可以做什么. 举个例子, 你可以使用它来动态的创建任务.</p>
-<p><strong>例子 动态的创建一个任务</strong></p>
-<p><em>build.gradle</em></p>
-<pre><code>4.times { counter -&gt;
-    task "task$counter" &lt;&lt; {
-        println "I'm task number $counter"
+<h3 id="解法（贪心）"><a href="#解法（贪心）" class="headerlink" title="解法（贪心）"></a>解法（贪心）</h3><pre class=" language-c++"><code class="language-c++">class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() <= 1)
+        {
+            return 0;
+        }
+        int interest = 0;
+        for(int i = 1; i < prices.size();i++)
+        {
+            if(prices[i] - prices[i - 1] > 0){
+                interest += prices[i] - prices[i - 1];
+            }
+        }
+        return interest;
     }
-}
+};
 </code></pre>
-<p>这里动态的创建了 task1, task2, task3, task4</p>
-<p><strong>gradle -q task1</strong> 命令的输出</p>
-<pre><code>&gt; gradle -q task1
-I'm task number 1
+<h2 id="2-比较版本号（中等）"><a href="#2-比较版本号（中等）" class="headerlink" title="2.比较版本号（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/compare-version-numbers/">2.比较版本号</a>（中等）</h2><p>给你两个版本号 <code>version1</code> 和 <code>version2</code> ，请你比较它们。</p>
+<p>版本号由一个或多个修订号组成，各修订号由一个<code> .</code> 连接。每个修订号由 <strong>多位数字</strong> 组成，可能包含 <strong>前导零</strong> 。每个版本号至少包含一个字符。修订号从左到右编号，下标从 <code>0</code> 开始，最左边的修订号下标为 <code>0</code> ，下一个修订号下标为 <code>1</code> ，以此类推。例如，<code>2.5.33 </code>和 <code>0.1</code> 都是有效的版本号。</p>
+<p>比较版本号时，请按从左到右的顺序依次比较它们的修订号。比较修订号时，只需比较 <strong>忽略任何前导零后的整数值</strong> 。也就是说，修订号 <code>1</code> 和修订号 <code>001</code> <strong>相等</strong> 。如果版本号没有指定某个下标处的修订号，则该修订号视为<code> 0</code> 。例如，版本 <code>1.0</code> 小于版本 <code>1.1</code> ，因为它们下标为 <code>0</code> 的修订号相同，而下标为 <code>1</code> 的修订号分别为 <code>0</code> 和 <code>1</code> ，<code>0 &lt; 1 </code>。</p>
+<p>返回规则如下：</p>
+<ul>
+<li>如果 <code>version1 &gt; version2</code> 返回 <code>1</code>，</li>
+<li>如果 <code>version1 &lt; version2</code> 返回 <code>-1</code>，</li>
+<li>除此之外返回 <code>0</code>。</li>
+</ul>
+<p> <strong>示例 1：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：version1 = "1.01", version2 = "1.001"
+输出：0
+解释：忽略前导零，"01" 和 "001" 都表示相同的整数 "1"
 </code></pre>
-<h3 id="使用已经存在的任务"><a href="#使用已经存在的任务" class="headerlink" title="使用已经存在的任务"></a>使用已经存在的任务</h3><p>当任务创建之后, 它可以通过API来访问. 这个和 Ant 不一样. 举个例子, 你可以创建额外的依赖.</p>
-<p><strong>例子. 通过API访问一个任务 - 加入一个依赖</strong></p>
-<p><em>build.gradle</em></p>
-<pre><code>4.times { counter -&gt;
-    task "task$counter" &lt;&lt; {
-        println "I'm task number $counter"
-    }
-}
-task0.dependsOn task2, task3
+<p><strong>示例 2：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：version1 = "1.0", version2 = "1.0.0"
+输出：0
+解释：version1 没有指定下标为 2 的修订号，即视为 "0"
 </code></pre>
-<p><strong>gradle -q task0</strong> 命令的输出</p>
-<pre><code>&gt; gradle -q task0
-I'm task number 2
-I'm task number 3
-I'm task number 0
+<p><strong>示例 3：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：version1 = "0.1", version2 = "1.1"
+输出：-1
+解释：version1 中下标为 0 的修订号是 "0"，version2 中下标为 0 的修订号是 "1" 。0 &lt; 1，所以 version1 &lt; version2
 </code></pre>
-<p>或者你可以给一个已经存在的任务加入行为.</p>
-<p><strong>例子. 通过API访问一个任务 - 加入行为</strong></p>
-<p><em>build.gradle</em></p>
-<pre><code>task hello &lt;&lt; {
-    println 'Hello Earth'
-}
-hello.doFirst {
-    println 'Hello Venus'
-}
-hello.doLast {
-    println 'Hello Mars'
-}
-hello &lt;&lt; {
-    println 'Hello Jupiter'
-}
-</code></pre>
-<p><strong>gradle -q hello</strong> 命令的输出</p>
-<pre><code>&gt; gradle -q hello
-Hello Venus
-Hello Earth
-Hello Mars
-Hello Jupiter
-</code></pre>
-<p>doFirst 和 doLast 可以被执行许多次. 他们分别可以在任务动作列表的开始和结束加入动作. 当任务执行的时候, 在动作列表里的动作将被按顺序执行. 这里第四个行为中 &lt;&lt; 操作符是 doLast 的简单别称.</p>
-<h3 id="短标记法"><a href="#短标记法" class="headerlink" title="短标记法"></a>短标记法</h3><p>正如同你已经在之前的示例里看到, 有一个短标记 $ 可以访问一个存在的任务. 也就是说每个任务都可以作为构建脚本的属性:</p>
-<p><strong>例子. 当成构建脚本的属性来访问一个任务</strong></p>
-<p><em>build.gradle</em></p>
-<pre><code>task hello &lt;&lt; {
-    println 'Hello world!'
-}
-hello.doLast {
-    println "Greetings from the $hello.name task."
-}
-</code></pre>
-<p><strong>gradle -q hello</strong> 命令的输出</p>
-<pre><code>&gt; gradle -q hello
-Hello world!
-Greetings from the hello task.
-</code></pre>
-<p>这里的 name 是任务的默认属性, 代表当前任务的名称, 这里是 hello.</p>
-<p>这使得代码易于读取， 特别是当使用了由插件（如编译）提供的任务时尤其如此.</p>
-<h3 id="自定义任务属性"><a href="#自定义任务属性" class="headerlink" title="自定义任务属性"></a>自定义任务属性</h3><p>你可以给任务加入自定义的属性. 列如加入一个叫做 myProperty 属性, 设置一个初始值给 ext.myProperty. 然后, 该属性就可以像一个预定义的任务属性那样被读取和设置了.</p>
-<p><strong>例子. 给任务加入自定义属性</strong></p>
-<p><em>build.gradle</em></p>
-<pre><code>task myTask {
-    ext.myProperty = "myValue"
-}
-
-task printTaskProperties &lt;&lt; {
-    println myTask.myProperty
-}
-</code></pre>
-<p><strong>gradle -q printTaskProperties</strong> 命令的输出</p>
-<pre><code>&gt; gradle -q printTaskProperties
-myValue
-</code></pre>
-<p>给任务加自定义属性是没有限制的.</p>
-<h2 id="使用Gradle构建Java项目"><a href="#使用Gradle构建Java项目" class="headerlink" title="使用Gradle构建Java项目"></a>使用Gradle构建Java项目</h2><h3 id="使用Java插件"><a href="#使用Java插件" class="headerlink" title="使用Java插件"></a>使用Java插件</h3><p>大都数 Java 项目是非常相像的: 你需要编译你的 Java 源文件, 运行一些单元测试, 同时创建一个包含你类文件的 JAR. </p>
-<p>Gradle 通过使用插件解决了这个问题. 插件是 Gradle 的扩展, 它会通过某种方式配置你的项目, 典型的有加入一些预配置任务. Gradle 自带了许多插件, 你也可以很简单地编写自己的插件并和其他开发者分享它. Java 插件就是一个这样的插件. 这个插件在你的项目里加入了许多任务， 这些任务会编译和单元测试你的源文件, 并且把它们都集成一个 JAR 文件里.</p>
-<p>使用Java插件，在新版的Gradle中我们要使用Java插件可以在build.gradle下如下编写：</p>
-<pre class=" language-groovy"><code class="language-groovy">plugins <span class="token punctuation">{</span>
-    id <span class="token string">'java-library'</span>
-<span class="token punctuation">}</span>
-
-java <span class="token punctuation">{</span>
-    toolchain <span class="token punctuation">{</span>
-        languageVersion <span class="token operator">=</span> JavaLanguageVersion<span class="token operator">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+<h3 id="解法（字符串转整型）"><a href="#解法（字符串转整型）" class="headerlink" title="解法（字符串转整型）"></a>解法（字符串转整型）</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compareVersion</span><span class="token punctuation">(</span>String version1<span class="token punctuation">,</span> String version2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> v1 <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>version1<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"\\."</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>parseInt<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// Java8写法 直接将string[] 转为int[]</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> v2 <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>version2<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"\\."</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>parseInt<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> pc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 计数器</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>v1<span class="token punctuation">.</span>length <span class="token operator">></span> pc <span class="token operator">||</span> v2<span class="token punctuation">.</span>length <span class="token operator">></span> pc<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> Num1 <span class="token operator">=</span> pc <span class="token operator">&lt;</span> v1<span class="token punctuation">.</span>length <span class="token operator">?</span> v1<span class="token punctuation">[</span>pc<span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> Num2 <span class="token operator">=</span> pc <span class="token operator">&lt;</span> v2<span class="token punctuation">.</span>length <span class="token operator">?</span> v2<span class="token punctuation">[</span>pc<span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>Num1 <span class="token operator">&lt;</span> Num2<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>Num1 <span class="token operator">></span> Num2<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            pc<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-
-version <span class="token operator">=</span> <span class="token string">'1.2.1'</span>
 </code></pre>
-<p>通过应用 Java 库插件，您可以获得一大堆功能：</p>
-<ul>
-<li><em>编译src/main/java</em><code>compileJava</code>下所有 Java 源文件的task</li>
-<li><em>src/test/java</em><code>compileTestJava</code>下源文件的一个task</li>
-<li><em>从src/test/java</em><code>test</code>运行测试的task</li>
-<li>将<em>src/main/resources</em>中已编译的类和资源<code>jar</code>打包到名为<code>&lt;project&gt;-&lt;version&gt;.jar</code>的单个 JAR中的task<code>main</code></li>
-<li>为类<code>javadoc</code>生成 Javadoc 的task<code>main</code></li>
-</ul>
-<h3 id="通过-source-sets声明源文件"><a href="#通过-source-sets声明源文件" class="headerlink" title="通过 source sets声明源文件"></a>通过 source sets声明源文件</h3><p>Gradle 的 Java 支持率先引入了用于构建基于源的项目的新概念：<em>源集</em>。主要思想是源文件和资源通常按类型在逻辑上分组，例如应用程序代码、单元测试和集成测试。每个逻辑组通常都有自己的一组文件依赖项、类路径等。重要的是，形成源集的文件<em>不必位于同一目录中</em>！</p>
-<p>源集是一个强大的概念，它将编译的几个方面联系在一起：</p>
-<ul>
-<li>源文件及其所在位置</li>
-<li>编译类路径，包括任何必需的依赖项（通过 Gradle<a target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/dependency_management_terminology.html#sub:terminology_configuration">配置</a>）</li>
-<li>编译的类文件放置在哪里</li>
-</ul>
-<p>关联方式：</p>
-<p><img src="/2022/08/06/gradle01/java-sourcesets-compilation.png" alt="java源码集合编译"></p>
-<h3 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h3><p>绝大多数 Java 项目都依赖于库，因此管理项目的依赖关系是构建 Java 项目的重要部分。依赖管理是一个很大的话题，所以我们将在这里重点介绍 Java 项目的基础知识。如果您想深入了解细节，请查看<a target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/core_dependency_management.html#dependency_management_in_gradle">依赖管理简介</a>。</p>
-<p>为您的 Java 项目指定依赖项只需要三个信息：</p>
-<ul>
-<li>您需要哪个依赖项，例如名称和版本</li>
-<li>它需要什么，例如编译或运行</li>
-<li>在哪里寻找它</li>
-</ul>
-<p>前两个在<code>dependencies {}</code>块中指定，第三个在<code>repositories {}</code>块中指定。例如，要告诉 Gradle 您的项目需要 3.6.7 版的<a target="_blank" rel="noopener" href="http://hibernate.org/">Hibernate</a> Core 来编译和运行您的生产代码，并且您想从 Maven 中央存储库下载该库，您可以使用以下片段：</p>
-<p><strong>示例：声明依赖项</strong></p>
-<pre class=" language-groovy"><code class="language-groovy">repositories <span class="token punctuation">{</span>
-    <span class="token function">mavenCentral</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+<h2 id="3-根据身高重建队列（中等）"><a href="#3-根据身高重建队列（中等）" class="headerlink" title="3.根据身高重建队列（中等）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/">3.根据身高重建队列</a>（中等）</h2><p>假设有打乱顺序的一群人站成一个队列，数组 <code>people</code> 表示队列中一些人的属性（不一定按顺序）。每个 <code>people[i] = [hi, ki]</code> 表示第 <code>i</code> 个人的身高为 <code>hi</code> ，前面 正好 有 <code>ki</code> 个身高大于或等于 <code>hi</code> 的人。</p>
+<p>请你重新构造并返回输入数组 <code>people</code> 所表示的队列。返回的队列应该格式化为数组 <code>queue</code> ，其中 <code>queue[j] = [hj, kj]</code> 是队列中第 <code>j</code> 个人的属性（<code>queue[0] </code>是排在队列前面的人）。</p>
+<p><strong>示例 1：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+解释：
+编号为 0 的人身高为 5 ，没有身高更高或者相同的人排在他前面。
+编号为 1 的人身高为 7 ，没有身高更高或者相同的人排在他前面。
+编号为 2 的人身高为 5 ，有 2 个身高更高或者相同的人排在他前面，即编号为 0 和 1 的人。
+编号为 3 的人身高为 6 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
+编号为 4 的人身高为 4 ，有 4 个身高更高或者相同的人排在他前面，即编号为 0、1、2、3 的人。
+编号为 5 的人身高为 7 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。
+因此 [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] 是重新构造后的队列。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+输出：[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+</code></pre>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>思路：假设这样一个数组</p>
+<p>{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}</p>
+<p>对 h 升序排序，对k降序排序。然后插入</p>
+<p>[4,4],[5,2],[5,0],[6,1],[7,1],[7,0]</p>
+<p>[x,x,x,x,4,x]</p>
+<p>[x,x,5,x,4,x]</p>
+<p>[5,x,5,x,4,x]</p>
+<p>[5,x,5,6,4,x]</p>
+<p>[5,x,5,6,4,7]</p>
+<p>[5,7,5,6,4,7]</p>
+<p><strong>代码如下：</strong></p>
+<pre class=" language-c++"><code class="language-c++">class Solution
+{
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>> &people)
+    {
+        int len = people.size();
+        vector<int> pos; // 索引数组
+        for (int i = 0; i < len; i++)
+        {
+            pos.push_back(i);
+        }
+        sort(people.begin(), people.end(), [](vector<int> &p1, vector<int> &p2)
+             {
+            if(p1[0] == p2[0]){
+                return p1[1] > p2[1];
+            }
+            return p1[0] < p2[0]; });
+        vector<vector<int>> res(len,vector<int>(2));
+        for (int i = 0; i < len; i++)
+        {
+            int indx = pos[people[i][1]]; // 获取索引数组 下标对应的 值
+            res[indx] = people[i]; 
+            pos.erase(pos.begin() + people[i][1]);
+        }
+        return res;
+    }
+};
+</code></pre>
+<h2 id="4-串联所有单词的子串"><a href="#4-串联所有单词的子串" class="headerlink" title="4.串联所有单词的子串"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/substring-with-concatenation-of-all-words/">4.串联所有单词的子串</a></h2><p>给定一个字符串 s 和一些 <font color="red"><strong>长度相同</strong> </font>的单词 words 。找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。</p>
+<p>注意子串要与 words 中的单词完全匹配，中间不能有其他字符 ，但不需要考虑 words 中单词串联的顺序。</p>
+<p> <strong>示例 1：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：s = "barfoothefoobarman", words = ["foo","bar"]
+输出：[0,9]
+解释：
+从索引 0 和 9 开始的子串分别是 "barfoo" 和 "foobar" 。
+输出的顺序不重要, [9,0] 也是有效答案。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：s = "wordgoodgoodgoodbestword", words = ["word","good","best","word"]
+输出：[]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：s = "barfoofoobarthefoobarman", words = ["bar","foo","the"]
+输出：[6,9,12]
+</code></pre>
+<h3 id="前言：滑动窗口"><a href="#前言：滑动窗口" class="headerlink" title="前言：滑动窗口"></a>前言：滑动窗口</h3><p>这类题是属于滑动窗口的题，很有技巧性，也很经典，</p>
+<p>具体可以看看这篇文章:<a target="_blank" rel="noopener" href="https://www.51cto.com/article/689828.html">聊聊滑动窗口</a></p>
+<h3 id="解法（滑动窗口）"><a href="#解法（滑动窗口）" class="headerlink" title="解法（滑动窗口）"></a>解法（滑动窗口）</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">findSubstring</span><span class="token punctuation">(</span>String s<span class="token punctuation">,</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> words<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> res <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 存放结果</span>
+    <span class="token keyword">int</span> ls <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 字符串长度</span>
+    <span class="token keyword">int</span> m <span class="token operator">=</span> words<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 所有单词的个数</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> words<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 单词长度（都相等）</span>
+    <span class="token keyword">int</span> size <span class="token operator">=</span> m <span class="token operator">*</span> n<span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 拆分s的长度</span>
+    <span class="token comment" spellcheck="true">// 划分单词组</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 遍历长度超过了整个字符串的长度，退出循环</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> m <span class="token operator">*</span> n <span class="token operator">></span> ls<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 初始化differ，表示窗口中的单词频次和words中的单词频次之差</span>
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">></span> differ <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-dependencies <span class="token punctuation">{</span>
-    implementation <span class="token string">'org.hibernate:hibernate-core:3.6.7.Final'</span>
+        <span class="token comment" spellcheck="true">// 初始化窗口，窗口长度为 单词长度 * 单词个数, 依次计算窗口里每个切分的单词频次</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            String word <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>i <span class="token operator">+</span> j <span class="token operator">*</span> n<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token punctuation">(</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//获取窗口里面的每个单词</span>
+            <span class="token comment" spellcheck="true">// 每个单词放入differ中</span>
+            differ<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> differ<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 遍历words中的单词，与窗口里的单词比对</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>String word <span class="token operator">:</span> words<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 用words中的单词对进行匹配，如果匹配成功则differ中以word为key的value减1</span>
+            differ<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> differ<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>differ<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 如果差值为0时，则删除这个word</span>
+            <span class="token punctuation">{</span>
+                differ<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 开始滑动窗口（每次滑动一个单词：右边单词进来，左边单词就要出去）</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> start <span class="token operator">=</span> i<span class="token punctuation">;</span> start <span class="token operator">&lt;</span> ls <span class="token operator">-</span> m <span class="token operator">*</span> n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> start <span class="token operator">+=</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">!=</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 右边的单词滑进来</span>
+                String word <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>start <span class="token operator">+</span> <span class="token punctuation">(</span>m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> n<span class="token punctuation">,</span> start <span class="token operator">+</span> m <span class="token operator">*</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                differ<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> differ<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>differ<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    differ<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token comment" spellcheck="true">// 左边单词就滑出去</span>
+                word <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>start <span class="token operator">-</span> n<span class="token punctuation">,</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                differ<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> differ<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>differ<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    differ<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>differ<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                res<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>这三个元素的 Gradle 术语如下：</p>
-<blockquote>
-<p><em>Repository</em> (ex: <code>mavenCentral()</code>) — 在哪里查找您声明为依赖项的模块。</p>
-<p><em>配置</em>（例如：<code>implementation</code>）——一个命名的依赖集合，为一个特定的目标组合在一起，例如编译或运行一个模块——一种更灵活的 Maven 范围形式。</p>
-<p><em>模块坐标</em>(ex: <code>org.hibernate:hibernate-core-3.6.7.Final</code>) — 依赖项的 ID，通常格式为 ‘ <em><group></group></em> : <em><module></module></em> : <em><version></version></em> ‘（或Maven 术语中的 ‘ <em><groupid></groupid></em> : <em><artifactid></artifactid></em> : <em><version> ‘）</version></em>。</p>
-</blockquote>
-<p>就配置而言，主要感兴趣的是：</p>
+<h2 id="5-矩阵置零"><a href="#5-矩阵置零" class="headerlink" title="5.矩阵置零"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/set-matrix-zeroes/">5.矩阵置零</a></h2><p>给定一个 <code>*m* x *n*</code> 的矩阵，如果一个元素为 <strong>0</strong> ，则将其所在行和列的所有元素都设为 <strong>0</strong> 。请使用 <strong><a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95">原地</a></strong> 算法<strong>。</strong></p>
+<p><strong>示例 1：</strong></p>
+<p><img src="/2022/08/08/leetcode03/mat1.jpg"></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：matrix = [[1,1,1],[1,0,1],[1,1,1]]
+输出：[[1,0,1],[0,0,0],[1,0,1]]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><img src="/2022/08/08/leetcode03/mat2.jpg"></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+输出：[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+</code></pre>
+<h3 id="解法（两个标记变量）"><a href="#解法（两个标记变量）" class="headerlink" title="解法（两个标记变量）"></a>解法（两个标记变量）</h3><pre class=" language-c++"><code class="language-c++">class Solution
+{
+public:
+    void setZeroes(vector<vector<int>> &matrix)
+    {
+        // rowFlag,colFlag 如果为true 代表首行/列存在0
+        bool rowFlag = false;
+        for (int i = 0; i < matrix[0].size(); i++) // 遍历首行
+        {
+            if (matrix[0][i] == 0)
+            {
+                rowFlag = true;
+                break;
+            }
+        }
+        bool colFlag = false;
+        for (int i = 0; i < matrix.size(); i++) // 遍历首列
+        {
+            if (matrix[i][0] == 0)
+            {
+                colFlag = true;
+                break;
+            }
+        }
+        for (int i = 1; i < matrix.size(); i++)
+        {
+            for (int j = 1; j < matrix[0].size(); j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < matrix[0].size(); i++)
+        {
+            if (matrix[0][i] == 0)
+            { // 把对应列置为0
+                for (int j = 0; j < matrix.size(); j++)
+                {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < matrix.size(); i++)
+        {
+            if (matrix[i][0] == 0) //把对应行置为0
+            {
+                for (int j = 0; j < matrix[i].size(); j++)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if (rowFlag)
+        { // 如果首行中有元素为0，把首行都置为0
+            for (int i = 0; i < matrix[0].size(); i++)
+            {
+                matrix[0][i] = 0;
+            }
+        }
+        if (colFlag)
+        { // 如果首列中有元素为0，把首行都置为0
+            for (int i = 0; i < matrix.size(); i++)
+            {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+};
+</code></pre>
+<h2 id="6-零钱兑换-II"><a href="#6-零钱兑换-II" class="headerlink" title=" 6.零钱兑换 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change-2/"> 6.零钱兑换 II</a></h2><p>给你一个整数数组 <code>coins</code> 表示不同面额的硬币，另给一个整数 <code>amount</code> 表示总金额。</p>
+<p>请你计算并返回可以凑成总金额的硬币组合数。如果任何硬币组合都无法凑出总金额，返回 <code>0</code> 。</p>
+<p>假设每一种面额的硬币有无限个。 </p>
+<p>题目数据保证结果符合 32 位带符号整数。</p>
+<p><strong>示例 1：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：amount = 5, coins = [1, 2, 5]
+输出：4
+解释：有四种方式可以凑成总金额：
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：amount = 3, coins = [2]
+输出：0
+解释：只用面额 2 的硬币不能凑成总金额 3 。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre class=" language-markdown"><code class="language-markdown">输入：amount = 10, coins = [10] 
+输出：1
+</code></pre>
+<p><strong>提示</strong></p>
 <ul>
-<li><code>compileOnly</code>— 对于编译生产代码所必需但不应成为运行时类路径的一部分的依赖项</li>
-<li><code>implementation</code>(取代<code>compile</code>) — 用于编译和运行时</li>
-<li><code>runtimeOnly</code>（取代<code>runtime</code>）——仅在运行时使用，不用于编译</li>
-<li><code>testCompileOnly</code>— 与<code>compileOnly</code>测试相同</li>
-<li><code>testImplementation</code>— 测试等效于<code>implementation</code></li>
-<li><code>testRuntimeOnly</code>— 测试等效于<code>runtimeOnly</code></li>
+<li>1 &lt;= coins.length &lt;= 300</li>
+<li>1 &lt;= coins[i] &lt;= 5000</li>
+<li>coins 中的所有值 互不相同</li>
+<li>0 &lt;= amount &lt;= 5000</li>
 </ul>
-<p>注意，现在的版本gradle已经没有了compile配置。</p>
-<blockquote>
-<p>为什么没有<code>compile</code>配置？</p>
-<p>Java 库插件历来使用<code>compile</code>编译和运行项目生产代码所需的依赖项配置。它现在已被弃用，并且在使用时会发出警告，因为它不区分影响 Java 库项目的公共 API 的依赖项和不影响的依赖项。<a target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/building_java_projects.html#sec:building_java_libraries">您可以在构建 Java 库</a>中了解有关这种区别的重要性的更多信息。</p>
-</blockquote>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://doc.yonyoucloud.com/doc/wiki/project/GradleUserGuide-Wiki/index.html">Gradle User Guide 中文版</a></p>
-<p><a target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/userguide.html">Gradle官网用户手册</a></p>
+<h3 id="前言：背包问题"><a href="#前言：背包问题" class="headerlink" title="前言：背包问题"></a>前言：背包问题</h3><p>背包问题有很多：01背包、完全背包、多重背包、分组背包、混合背包。对于准备大厂面试的话，其实用的最多就是01背包和完全背包了。其中01背包是基础，很重要。</p>
+<p><strong>01背包：</strong>简单说就是n种物品，每种物品只能有0个或者1个。</p>
+<p><strong>完全背包：</strong>n种物品，每种物品有无限个。</p>
+<p><strong>多重背包</strong>：n种物品，每种物品的个数各不相同。</p>
+<p>有关资源可以看看这个大佬写的一篇文章：<a target="_blank" rel="noopener" href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.html">背包问题理论基础完全背包</a></p>
+<h3 id="解法（dp，背包问题）"><a href="#解法（dp，背包问题）" class="headerlink" title="解法（dp，背包问题）"></a>解法（dp，背包问题）</h3><pre class=" language-c++"><code class="language-c++">class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        vector<int> dp(amount + 1, 0);
+        dp[0] = 1;
+        for (auto coin : coins)
+        {
+            for (int i = 1; i <= amount; i++)
+            {
+                if(i < coin)continue;
+                dp[i] += dp[i - coin];
+            }
+        }
+        return dp[amount];
+    }
+};
+</code></pre>
 
                 
             </div>
@@ -850,7 +875,7 @@ dependencies <span class="token punctuation">{</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/08/06/gradle01/">https://silvercorridors.cf/2022/08/06/gradle01/</a>
+                    <a href="https://silvercorridors.cf/2022/08/08/leetcode03/">https://silvercorridors.cf/2022/08/08/leetcode03/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -888,8 +913,8 @@ dependencies <span class="token punctuation">{</span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/gradle/">
-                                    <span class="chip bg-color">gradle</span>
+                                <a href="/tags/leetcode/">
+                                    <span class="chip bg-color">leetcode</span>
                                 </a>
                             
                         </div>
@@ -1205,9 +1230,10 @@ dependencies <span class="token punctuation">{</span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/08/08/leetcode03/">
                     <div class="card-image">
@@ -1225,9 +1251,9 @@ dependencies <span class="token punctuation">{</span>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1240,6 +1266,7 @@ dependencies <span class="token punctuation">{</span>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1258,13 +1285,13 @@ dependencies <span class="token punctuation">{</span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/08/01/leetcode02/">
+                <a href="/2022/08/06/gradle01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="算法刷题周记02">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="构建工具Gradle的使用">
                         
-                        <span class="card-title">算法刷题周记02</span>
+                        <span class="card-title">构建工具Gradle的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1275,14 +1302,14 @@ dependencies <span class="token punctuation">{</span>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
+                                    杂七杂八
                                 </a>
                             
                             
@@ -1292,8 +1319,8 @@ dependencies <span class="token punctuation">{</span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tags/gradle/">
+                        <span class="chip bg-color">gradle</span>
                     </a>
                     
                 </div>
@@ -1424,6 +1451,13 @@ dependencies <span class="token punctuation">{</span>
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 </main>
