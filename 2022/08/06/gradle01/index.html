@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="构建工具Gradle的使用, 银色回廊">
-    <meta name="description" content="构建工具Gradle的使用构建工具的作用​    依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。
+    <meta name="description" content="构建工具Gradle的使用构建工具的作用​	依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。
 主流构建工具：（1）Ant：编译、测试、打包；
 （2）Maven：依赖管理、发布；
-（3）Gradle：Groovy，具有更高的灵活">
+（3）Gradle：Groovy，具有更高的灵活性和可">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -483,7 +483,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    654
+                    2.6k
                 </div>
                 
 
@@ -505,14 +505,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="构建工具Gradle的使用"><a href="#构建工具Gradle的使用" class="headerlink" title="构建工具Gradle的使用"></a>构建工具Gradle的使用</h1><h2 id="构建工具的作用"><a href="#构建工具的作用" class="headerlink" title="构建工具的作用"></a>构建工具的作用</h2><p>​    依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。</p>
+                <h1 id="构建工具Gradle的使用"><a href="#构建工具Gradle的使用" class="headerlink" title="构建工具Gradle的使用"></a>构建工具Gradle的使用</h1><h2 id="构建工具的作用"><a href="#构建工具的作用" class="headerlink" title="构建工具的作用"></a>构建工具的作用</h2><p>​	依赖管理；测试、打包、发布；机器能干的活，绝不自己动手。</p>
 <h2 id="主流构建工具："><a href="#主流构建工具：" class="headerlink" title="主流构建工具："></a>主流构建工具：</h2><p>（1）Ant：编译、测试、打包；</p>
 <p>（2）Maven：依赖管理、发布；</p>
 <p>（3）Gradle：Groovy，具有更高的灵活性和可扩展性。</p>
 <h2 id="Gradle是什么？"><a href="#Gradle是什么？" class="headerlink" title="Gradle是什么？"></a>Gradle是什么？</h2><p>一个开源的项目自动化构建工具，建立在Apache Ant和Apache Maven概念的基础上，并引入了基于Groovy的特定领域语言（DSL），而不再使用XML形式管理构建脚本。</p>
 <h2 id="Gradle能做什么？"><a href="#Gradle能做什么？" class="headerlink" title="Gradle能做什么？"></a>Gradle能做什么？</h2><p>进行依赖管理，自动化运行测试、打包，发布到指定的地方去。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1.确保已经安装JDK，<code>java -version</code></p>
-<p>2.从Gradle官网下载Gradle：[入口][<a target="_blank" rel="noopener" href="https://gradle.org">https://gradle.org</a>]</p>
+<p>2.从Gradle官网下载Gradle：[入口][<a href="https://gradle.org]">https://gradle.org]</a></p>
 <h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><ul>
 <li>配置环境变量，<code>GRADLE_HOME</code></li>
 <li>添加到path, <code>%GRADLE_HOME%\bin</code></li>
@@ -528,140 +528,140 @@
 <li>用最后一个表达式的值作为返回值；</li>
 <li>==等同于equals方法，不会有NullPointerExceptions</li>
 </ol>
-<h4 id="传统JavaBean写法"><a href="#传统JavaBean写法" class="headerlink" title="传统JavaBean写法"></a>传统JavaBean写法</h4><pre class=" language-lang-java"><code class="language-lang-java">public class ProjectVersion{
-    private int major;
-    private int minor;
+<h4 id="传统JavaBean写法"><a href="#传统JavaBean写法" class="headerlink" title="传统JavaBean写法"></a>传统JavaBean写法</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> major<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> minor<span class="token punctuation">;</span>
 
-    ProjectVersion(int major, int minor) {
-        this.major = major
-        this.minor = minor
-    }
+    <span class="token function">ProjectVersion</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">,</span> <span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>major <span class="token operator">=</span> major
+        <span class="token keyword">this</span><span class="token punctuation">.</span>minor <span class="token operator">=</span> minor
+    <span class="token punctuation">}</span>
 
-    int getMajor() {
-        return major
-    }
+    <span class="token keyword">int</span> <span class="token function">getMajor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> major
+    <span class="token punctuation">}</span>
 
-    void setMajor(int major) {
-        this.major = major
-    }
+    <span class="token keyword">void</span> <span class="token function">setMajor</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>major <span class="token operator">=</span> major
+    <span class="token punctuation">}</span>
 
-    int getMinor() {
-        return minor
-    }
+    <span class="token keyword">int</span> <span class="token function">getMinor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> minor
+    <span class="token punctuation">}</span>
 
-    void setMinor(int minor) {
-        this.minor = minor
-    }
-}
+    <span class="token keyword">void</span> <span class="token function">setMinor</span><span class="token punctuation">(</span><span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>minor <span class="token operator">=</span> minor
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<h4 id="Groovy写法"><a href="#Groovy写法" class="headerlink" title="Groovy写法"></a>Groovy写法</h4><pre class=" language-lang-groovy"><code class="language-lang-groovy">public class ProjectVersion{
-    private int major;
-    private int minor
-    ProjectVersion(int major, int minor) {
-        this.major = major
-        this.minor = minor
-    }
-    int getMajor() {
+<h4 id="Groovy写法"><a href="#Groovy写法" class="headerlink" title="Groovy写法"></a>Groovy写法</h4><pre class=" language-groovy"><code class="language-groovy"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> major<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> minor
+    <span class="token function">ProjectVersion</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">,</span> <span class="token keyword">int</span> minor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token operator">.</span>major <span class="token operator">=</span> major
+        <span class="token keyword">this</span><span class="token operator">.</span>minor <span class="token operator">=</span> minor
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> <span class="token function">getMajor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         major
-    }
-    void setMajor(int major) {
-        this.major = major
-    }
-}
-// 测试一下
-ProjectVersion v1 = new ProjectVersion(1,1);
-println(v1.minor)
-ProjectVersion v2 = null
-println v2==v1
+    <span class="token punctuation">}</span>
+    <span class="token keyword">void</span> <span class="token function">setMajor</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token operator">.</span>major <span class="token operator">=</span> major
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 测试一下</span>
+ProjectVersion v1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ProjectVersion</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">println</span><span class="token punctuation">(</span>v1<span class="token operator">.</span>minor<span class="token punctuation">)</span>
+ProjectVersion v2 <span class="token operator">=</span> null
+println v2<span class="token operator">==</span>v1
 </code></pre>
 <h2 id="高效特性"><a href="#高效特性" class="headerlink" title="高效特性"></a>高效特性</h2><p>1.assert语句<br>2.可选类型定义，弱类型，<br>3.可选的括号<br>4.字符串（单引号，双引号，三个单引号）<br>5.集合API<br>6.闭包</p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">// groovy高效特性
-// 1.可选的类型定义
-def version = 1
+<pre class=" language-groovy"><code class="language-groovy"><span class="token comment" spellcheck="true">// groovy高效特性</span>
+<span class="token comment" spellcheck="true">// 1.可选的类型定义</span>
+<span class="token keyword">def</span> version <span class="token operator">=</span> <span class="token number">1</span>
 
-// 2.任意的assert
-assert version == 2
+<span class="token comment" spellcheck="true">// 2.任意的assert</span>
+<span class="token keyword">assert</span> version <span class="token operator">==</span> <span class="token number">2</span>
 
-// 3.括号是可选的
+<span class="token comment" spellcheck="true">// 3.括号是可选的</span>
 println version
 
-// 4. 字符串
-def s1 = 'imooc'
-def s2="gradle version is ${version}"
-def s3 = '''my name 
+<span class="token comment" spellcheck="true">// 4. 字符串</span>
+<span class="token keyword">def</span> s1 <span class="token operator">=</span> <span class="token string">'imooc'</span>
+<span class="token keyword">def</span> s2<span class="token operator">=</span><span class="token string">"gradle version is ${version}"</span>
+<span class="token keyword">def</span> s3 <span class="token operator">=</span> <span class="token string">'''my name 
 is
- silvercorridors'''
+ silvercorridors'''</span>
 
 println s1
 println s2
 println s3
 
-// 5.集合api
-def buildTools=['ant','maven']
-buildTools << 'gradle'
-assert buildTools.getClass() == ArrayList
-assert buildTools.size() == 3
+<span class="token comment" spellcheck="true">// 5.集合api</span>
+<span class="token keyword">def</span> buildTools<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'ant'</span><span class="token punctuation">,</span><span class="token string">'maven'</span><span class="token punctuation">]</span>
+buildTools <span class="token operator">&lt;&lt;</span> <span class="token string">'gradle'</span>
+<span class="token keyword">assert</span> buildTools<span class="token operator">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> ArrayList
+<span class="token keyword">assert</span> buildTools<span class="token operator">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">3</span>
 
-// map
-def buildYears = ['ant':2000,'maven':2004]
-buildYears.gradle = 2009
-println buildYears.ant
-println buildYears['gradle']
-println buildYears.getClass()
+<span class="token comment" spellcheck="true">// map</span>
+<span class="token keyword">def</span> buildYears <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'ant'</span><span class="token punctuation">:</span><span class="token number">2000</span><span class="token punctuation">,</span><span class="token string">'maven'</span><span class="token punctuation">:</span><span class="token number">2004</span><span class="token punctuation">]</span>
+buildYears<span class="token operator">.</span>gradle <span class="token operator">=</span> <span class="token number">2009</span>
+println buildYears<span class="token operator">.</span>ant
+println buildYears<span class="token punctuation">[</span><span class="token string">'gradle'</span><span class="token punctuation">]</span>
+println buildYears<span class="token operator">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-// 6.闭包
-def c1 = {
-    v -> print v
-}
-def c2 = {
-    print "hello"
-}
-def method1(Closure closure){
-    closure('param')
-}
-def method2(Closure closure){
-    closure()
-}
-method1(c1);
-method2(c2);
-// 输出结果 paramhello
+<span class="token comment" spellcheck="true">// 6.闭包</span>
+<span class="token keyword">def</span> c1 <span class="token operator">=</span> <span class="token punctuation">{</span>
+    v <span class="token operator">-></span> print v
+<span class="token punctuation">}</span>
+<span class="token keyword">def</span> c2 <span class="token operator">=</span> <span class="token punctuation">{</span>
+    print <span class="token string">"hello"</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">def</span> <span class="token function">method1</span><span class="token punctuation">(</span>Closure closure<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">closure</span><span class="token punctuation">(</span><span class="token string">'param'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">def</span> <span class="token function">method2</span><span class="token punctuation">(</span>Closure closure<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">closure</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token function">method1</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">method2</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 输出结果 paramhello</span>
 </code></pre>
-<h2 id="Gradle项目"><a href="#Gradle项目" class="headerlink" title="Gradle项目"></a>Gradle项目</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p><img src="/2022/08/06/gradle01/image-20220806161256744.png" alt=""></p>
+<h2 id="Gradle项目"><a href="#Gradle项目" class="headerlink" title="Gradle项目"></a>Gradle项目</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p><img src="/2022/08/06/gradle01/image-20220806161256744.png"></p>
 <h3 id="构建方式"><a href="#构建方式" class="headerlink" title="构建方式"></a>构建方式</h3><p>idea右侧有一个gradle窗口</p>
-<p><img src="/2022/08/06/gradle01/image-20220806163241386.png" alt=""></p>
-<pre class=" language-lang-markdown"><code class="language-lang-markdown">1.jar用于将文件编译为jar包；
+<p><img src="/2022/08/06/gradle01/image-20220806163241386.png"></p>
+<pre class=" language-markdown"><code class="language-markdown">1.jar用于将文件编译为jar包；
 2.build会执行build.gradle文件，由于插件是Java，所以也会将文件编译为jar包；
 3.classes会将文件转为class文件；
 3.clean会清除操作
 </code></pre>
 <h3 id="任务依赖"><a href="#任务依赖" class="headerlink" title="任务依赖"></a>任务依赖</h3><p><strong>例子. 申明任务之间的依赖关系</strong></p>
 <p><em>build.gradle</em></p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">task hello << {
-    println 'Hello world!'
-}
+<pre class=" language-groovy"><code class="language-groovy">task hello <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
+    println <span class="token string">'Hello world!'</span>
+<span class="token punctuation">}</span>
 
-task intro(dependsOn: hello) << {
-    println "I'm Gradle"
-}
+task <span class="token function">intro</span><span class="token punctuation">(</span>dependsOn<span class="token punctuation">:</span> hello<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
+    println <span class="token string">"I'm Gradle"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><strong>gradle -q intro</strong> 命令的输出</p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">> gradle -q intro
-Hello world!
+<pre class=" language-groovy"><code class="language-groovy"><span class="token operator">></span> gradle <span class="token operator">-</span>q intro
+Hello world<span class="token operator">!</span>
 I'm Gradle
 </code></pre>
 <p>intro 依赖于 hello, 所以执行 intro 的时候 hello 命令会被优先执行来作为启动 intro 任务的条件.</p>
 <p>在加入一个依赖之前, 这个依赖的任务不需要提前定义, 来看下面的例子.</p>
 <p><strong>例子. Lazy dependsOn - 其他的任务还没有存在</strong></p>
 <p><em>build.gradle</em></p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">task taskX(dependsOn: 'taskY') << {
-    println 'taskX'
-}
-task taskY << {
-    println 'taskY'
-}
+<pre class=" language-groovy"><code class="language-groovy">task <span class="token function">taskX</span><span class="token punctuation">(</span>dependsOn<span class="token punctuation">:</span> <span class="token string">'taskY'</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
+    println <span class="token string">'taskX'</span>
+<span class="token punctuation">}</span>
+task taskY <span class="token operator">&lt;&lt;</span> <span class="token punctuation">{</span>
+    println <span class="token string">'taskY'</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><strong>gradle -q taskX</strong> 命令的输出</p>
-<pre class=" language-lang-markdown"><code class="language-lang-markdown">> gradle -q taskX
+<pre class=" language-markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span> gradle -q taskX
 taskY
 taskX
 </code></pre>
@@ -674,11 +674,13 @@ taskX
         println "I'm task number $counter"
     }
 }
-</code></pre><p>这里动态的创建了 task1, task2, task3, task4</p>
+</code></pre>
+<p>这里动态的创建了 task1, task2, task3, task4</p>
 <p><strong>gradle -q task1</strong> 命令的输出</p>
 <pre><code>&gt; gradle -q task1
 I'm task number 1
-</code></pre><h3 id="使用已经存在的任务"><a href="#使用已经存在的任务" class="headerlink" title="使用已经存在的任务"></a>使用已经存在的任务</h3><p>当任务创建之后, 它可以通过API来访问. 这个和 Ant 不一样. 举个例子, 你可以创建额外的依赖.</p>
+</code></pre>
+<h3 id="使用已经存在的任务"><a href="#使用已经存在的任务" class="headerlink" title="使用已经存在的任务"></a>使用已经存在的任务</h3><p>当任务创建之后, 它可以通过API来访问. 这个和 Ant 不一样. 举个例子, 你可以创建额外的依赖.</p>
 <p><strong>例子. 通过API访问一个任务 - 加入一个依赖</strong></p>
 <p><em>build.gradle</em></p>
 <pre><code>4.times { counter -&gt;
@@ -687,12 +689,14 @@ I'm task number 1
     }
 }
 task0.dependsOn task2, task3
-</code></pre><p><strong>gradle -q task0</strong> 命令的输出</p>
+</code></pre>
+<p><strong>gradle -q task0</strong> 命令的输出</p>
 <pre><code>&gt; gradle -q task0
 I'm task number 2
 I'm task number 3
 I'm task number 0
-</code></pre><p>或者你可以给一个已经存在的任务加入行为.</p>
+</code></pre>
+<p>或者你可以给一个已经存在的任务加入行为.</p>
 <p><strong>例子. 通过API访问一个任务 - 加入行为</strong></p>
 <p><em>build.gradle</em></p>
 <pre><code>task hello &lt;&lt; {
@@ -707,13 +711,15 @@ hello.doLast {
 hello &lt;&lt; {
     println 'Hello Jupiter'
 }
-</code></pre><p><strong>gradle -q hello</strong> 命令的输出</p>
+</code></pre>
+<p><strong>gradle -q hello</strong> 命令的输出</p>
 <pre><code>&gt; gradle -q hello
 Hello Venus
 Hello Earth
 Hello Mars
 Hello Jupiter
-</code></pre><p>doFirst 和 doLast 可以被执行许多次. 他们分别可以在任务动作列表的开始和结束加入动作. 当任务执行的时候, 在动作列表里的动作将被按顺序执行. 这里第四个行为中 &lt;&lt; 操作符是 doLast 的简单别称.</p>
+</code></pre>
+<p>doFirst 和 doLast 可以被执行许多次. 他们分别可以在任务动作列表的开始和结束加入动作. 当任务执行的时候, 在动作列表里的动作将被按顺序执行. 这里第四个行为中 &lt;&lt; 操作符是 doLast 的简单别称.</p>
 <h3 id="短标记法"><a href="#短标记法" class="headerlink" title="短标记法"></a>短标记法</h3><p>正如同你已经在之前的示例里看到, 有一个短标记 $ 可以访问一个存在的任务. 也就是说每个任务都可以作为构建脚本的属性:</p>
 <p><strong>例子. 当成构建脚本的属性来访问一个任务</strong></p>
 <p><em>build.gradle</em></p>
@@ -723,11 +729,13 @@ Hello Jupiter
 hello.doLast {
     println "Greetings from the $hello.name task."
 }
-</code></pre><p><strong>gradle -q hello</strong> 命令的输出</p>
+</code></pre>
+<p><strong>gradle -q hello</strong> 命令的输出</p>
 <pre><code>&gt; gradle -q hello
 Hello world!
 Greetings from the hello task.
-</code></pre><p>这里的 name 是任务的默认属性, 代表当前任务的名称, 这里是 hello.</p>
+</code></pre>
+<p>这里的 name 是任务的默认属性, 代表当前任务的名称, 这里是 hello.</p>
 <p>这使得代码易于读取， 特别是当使用了由插件（如编译）提供的任务时尤其如此.</p>
 <h3 id="自定义任务属性"><a href="#自定义任务属性" class="headerlink" title="自定义任务属性"></a>自定义任务属性</h3><p>你可以给任务加入自定义的属性. 列如加入一个叫做 myProperty 属性, 设置一个初始值给 ext.myProperty. 然后, 该属性就可以像一个预定义的任务属性那样被读取和设置了.</p>
 <p><strong>例子. 给任务加入自定义属性</strong></p>
@@ -739,24 +747,26 @@ Greetings from the hello task.
 task printTaskProperties &lt;&lt; {
     println myTask.myProperty
 }
-</code></pre><p><strong>gradle -q printTaskProperties</strong> 命令的输出</p>
+</code></pre>
+<p><strong>gradle -q printTaskProperties</strong> 命令的输出</p>
 <pre><code>&gt; gradle -q printTaskProperties
 myValue
-</code></pre><p>给任务加自定义属性是没有限制的.</p>
+</code></pre>
+<p>给任务加自定义属性是没有限制的.</p>
 <h2 id="使用Gradle构建Java项目"><a href="#使用Gradle构建Java项目" class="headerlink" title="使用Gradle构建Java项目"></a>使用Gradle构建Java项目</h2><h3 id="使用Java插件"><a href="#使用Java插件" class="headerlink" title="使用Java插件"></a>使用Java插件</h3><p>大都数 Java 项目是非常相像的: 你需要编译你的 Java 源文件, 运行一些单元测试, 同时创建一个包含你类文件的 JAR. </p>
 <p>Gradle 通过使用插件解决了这个问题. 插件是 Gradle 的扩展, 它会通过某种方式配置你的项目, 典型的有加入一些预配置任务. Gradle 自带了许多插件, 你也可以很简单地编写自己的插件并和其他开发者分享它. Java 插件就是一个这样的插件. 这个插件在你的项目里加入了许多任务， 这些任务会编译和单元测试你的源文件, 并且把它们都集成一个 JAR 文件里.</p>
 <p>使用Java插件，在新版的Gradle中我们要使用Java插件可以在build.gradle下如下编写：</p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">plugins {
-    id 'java-library'
-}
+<pre class=" language-groovy"><code class="language-groovy">plugins <span class="token punctuation">{</span>
+    id <span class="token string">'java-library'</span>
+<span class="token punctuation">}</span>
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
+java <span class="token punctuation">{</span>
+    toolchain <span class="token punctuation">{</span>
+        languageVersion <span class="token operator">=</span> JavaLanguageVersion<span class="token operator">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-version = '1.2.1'
+version <span class="token operator">=</span> <span class="token string">'1.2.1'</span>
 </code></pre>
 <p>通过应用 Java 库插件，您可以获得一大堆功能：</p>
 <ul>
@@ -784,13 +794,13 @@ version = '1.2.1'
 </ul>
 <p>前两个在<code>dependencies {}</code>块中指定，第三个在<code>repositories {}</code>块中指定。例如，要告诉 Gradle 您的项目需要 3.6.7 版的<a target="_blank" rel="noopener" href="http://hibernate.org/">Hibernate</a> Core 来编译和运行您的生产代码，并且您想从 Maven 中央存储库下载该库，您可以使用以下片段：</p>
 <p><strong>示例：声明依赖项</strong></p>
-<pre class=" language-lang-groovy"><code class="language-lang-groovy">repositories {
-    mavenCentral()
-}
+<pre class=" language-groovy"><code class="language-groovy">repositories <span class="token punctuation">{</span>
+    <span class="token function">mavenCentral</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-dependencies {
-    implementation 'org.hibernate:hibernate-core:3.6.7.Final'
-}
+dependencies <span class="token punctuation">{</span>
+    implementation <span class="token string">'org.hibernate:hibernate-core:3.6.7.Final'</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>这三个元素的 Gradle 术语如下：</p>
 <blockquote>

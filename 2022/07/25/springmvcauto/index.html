@@ -508,35 +508,35 @@
 <h2 id="ContentNegotiatingViewResolver"><a href="#ContentNegotiatingViewResolver" class="headerlink" title="ContentNegotiatingViewResolver"></a>ContentNegotiatingViewResolver</h2><p>首先看看ContentNegotiatingViewResolver。</p>
 <p>作用：把所有的ViewResolver组合起来</p>
 <p>通过调用initServletContext把容器中所有的ViewResolver组合起来</p>
-<pre class=" language-lang-java"><code class="language-lang-java">protected void initServletContext(ServletContext servletContext) {
-    // 获得容器中的ViewResolver放入集合
-    Collection<ViewResolver> matchingBeans = BeanFactoryUtils.beansOfTypeIncludingAncestors(this.obtainApplicationContext(), ViewResolver.class).values();
-    ViewResolver viewResolver;
-    // 如果当前viewResolvers为空
-    if (this.viewResolvers == null) {
-        // 初始化viewResolvers
-        this.viewResolvers = new ArrayList(matchingBeans.size());
-        Iterator var3 = matchingBeans.iterator();
-        // 遍历这些matchingBeans的ViewResolver并添加到viewResolvers
-        while(var3.hasNext()) {
-            viewResolver = (ViewResolver)var3.next();
-            if (this != viewResolver) {
-                this.viewResolvers.add(viewResolver);
-            }
-        }
-    } else {//不为空，如果viewResolvers没有matchingBeans的ViewResolver
-        for(int i = 0; i < this.viewResolvers.size(); ++i) {
-            viewResolver = (ViewResolver)this.viewResolvers.get(i);
-            // 会获取namg，并通过工厂来初始化这样的
-            if (!matchingBeans.contains(viewResolver)) {
-                String name = viewResolver.getClass().getName() + i;
-                this.obtainApplicationContext().getAutowireCapableBeanFactory().initializeBean(viewResolver, name);
-            }
-        }
-    }
-    AnnotationAwareOrderComparator.sort(this.viewResolvers);
-    this.cnmFactoryBean.setServletContext(servletContext);
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initServletContext</span><span class="token punctuation">(</span>ServletContext servletContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 获得容器中的ViewResolver放入集合</span>
+    Collection<span class="token operator">&lt;</span>ViewResolver<span class="token operator">></span> matchingBeans <span class="token operator">=</span> BeanFactoryUtils<span class="token punctuation">.</span><span class="token function">beansOfTypeIncludingAncestors</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">obtainApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ViewResolver<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ViewResolver viewResolver<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 如果当前viewResolvers为空</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 初始化viewResolvers</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span>matchingBeans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Iterator var3 <span class="token operator">=</span> matchingBeans<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 遍历这些matchingBeans的ViewResolver并添加到viewResolvers</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>var3<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            viewResolver <span class="token operator">=</span> <span class="token punctuation">(</span>ViewResolver<span class="token punctuation">)</span>var3<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">!=</span> viewResolver<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>viewResolver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//不为空，如果viewResolvers没有matchingBeans的ViewResolver</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            viewResolver <span class="token operator">=</span> <span class="token punctuation">(</span>ViewResolver<span class="token punctuation">)</span><span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 会获取namg，并通过工厂来初始化这样的</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>matchingBeans<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>viewResolver<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                String name <span class="token operator">=</span> viewResolver<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">obtainApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAutowireCapableBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initializeBean</span><span class="token punctuation">(</span>viewResolver<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    AnnotationAwareOrderComparator<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>viewResolvers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>cnmFactoryBean<span class="token punctuation">.</span><span class="token function">setServletContext</span><span class="token punctuation">(</span>servletContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>通过调用getCandidateViews，此函数中轮询所有的ViewResolver，来返回需要的View。</p>
 <p>最终由DispatherServlet将ModelAndView传给ViewResolver视图解析器进行解析，ViewResolver解析后返回具体View；；</p>
@@ -547,33 +547,33 @@
 <li>GenericConverter</li>
 <li>Formatter</li>
 </ul>
-<h3 id="addFormatters-gt-addBeans"><a href="#addFormatters-gt-addBeans" class="headerlink" title="addFormatters()->addBeans"></a>addFormatters()-&gt;addBeans</h3><pre class=" language-lang-java"><code class="language-lang-java">public void addFormatters(FormatterRegistry registry) {
-    ApplicationConversionService.addBeans(registry, this.beanFactory);
-}
+<h3 id="addFormatters-gt-addBeans"><a href="#addFormatters-gt-addBeans" class="headerlink" title="addFormatters()->addBeans"></a>addFormatters()-&gt;addBeans</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addFormatters</span><span class="token punctuation">(</span>FormatterRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ApplicationConversionService<span class="token punctuation">.</span><span class="token function">addBeans</span><span class="token punctuation">(</span>registry<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>beanFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-// addBeans:从工厂里面拿数据(GenericConverter\Converter\Printer\Parser)放入一个哈希Set
-public static void addBeans(FormatterRegistry registry, ListableBeanFactory beanFactory) {
-    Set<Object> beans = new LinkedHashSet();
-    beans.addAll(beanFactory.getBeansOfType(GenericConverter.class).values());
-    beans.addAll(beanFactory.getBeansOfType(Converter.class).values());
-    beans.addAll(beanFactory.getBeansOfType(Printer.class).values());
-    beans.addAll(beanFactory.getBeansOfType(Parser.class).values());
-    Iterator var3 = beans.iterator();
-    while(var3.hasNext()) {
-        Object bean = var3.next();
-        if (bean instanceof GenericConverter) {
-            registry.addConverter((GenericConverter)bean);
-        } else if (bean instanceof Converter) {
-            registry.addConverter((Converter)bean);
-        } else if (bean instanceof Formatter) {
-            registry.addFormatter((Formatter)bean);
-        } else if (bean instanceof Printer) {
-            registry.addPrinter((Printer)bean);
-        } else if (bean instanceof Parser) {
-            registry.addParser((Parser)bean);
-        }
-    }
-}
+<span class="token comment" spellcheck="true">// addBeans:从工厂里面拿数据(GenericConverter\Converter\Printer\Parser)放入一个哈希Set</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">addBeans</span><span class="token punctuation">(</span>FormatterRegistry registry<span class="token punctuation">,</span> ListableBeanFactory beanFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Set<span class="token operator">&lt;</span>Object<span class="token operator">></span> beans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    beans<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">.</span><span class="token function">getBeansOfType</span><span class="token punctuation">(</span>GenericConverter<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    beans<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">.</span><span class="token function">getBeansOfType</span><span class="token punctuation">(</span>Converter<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    beans<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">.</span><span class="token function">getBeansOfType</span><span class="token punctuation">(</span>Printer<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    beans<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">.</span><span class="token function">getBeansOfType</span><span class="token punctuation">(</span>Parser<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Iterator var3 <span class="token operator">=</span> beans<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>var3<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Object bean <span class="token operator">=</span> var3<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">GenericConverter</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            registry<span class="token punctuation">.</span><span class="token function">addConverter</span><span class="token punctuation">(</span><span class="token punctuation">(</span>GenericConverter<span class="token punctuation">)</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">Converter</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            registry<span class="token punctuation">.</span><span class="token function">addConverter</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Converter<span class="token punctuation">)</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">Formatter</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            registry<span class="token punctuation">.</span><span class="token function">addFormatter</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Formatter<span class="token punctuation">)</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">Printer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            registry<span class="token punctuation">.</span><span class="token function">addPrinter</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Printer<span class="token punctuation">)</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">Parser</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            registry<span class="token punctuation">.</span><span class="token function">addParser</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Parser<span class="token punctuation">)</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h3><p>在获取的bean中，我们先谈谈Converter，Convert是一个接口，实现了Convert的接口都要实现一个convert方法，就是放入S类型返回T类型，即做到类型转化，例如将一个 字符串/JSON -&gt;  一个类。</p>
 <pre><code>public interface Converter&lt;S, T&gt; {
@@ -588,94 +588,95 @@ public static void addBeans(FormatterRegistry registry, ListableBeanFactory bean
         };
     }
 }
-</code></pre><h3 id="GenericConverter"><a href="#GenericConverter" class="headerlink" title="GenericConverter"></a>GenericConverter</h3><p>GenericConverter也是一个接口，同样需要实现convert，其实和Converter没有实现关系。内部有一个静态内部类ConvertiblePair存放用于转换的类型。</p>
-<pre class=" language-lang-java"><code class="language-lang-java">public interface GenericConverter {
-    @Nullable
-    Set<GenericConverter.ConvertiblePair> getConvertibleTypes();
+</code></pre>
+<h3 id="GenericConverter"><a href="#GenericConverter" class="headerlink" title="GenericConverter"></a>GenericConverter</h3><p>GenericConverter也是一个接口，同样需要实现convert，其实和Converter没有实现关系。内部有一个静态内部类ConvertiblePair存放用于转换的类型。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">GenericConverter</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Nullable</span>
+    Set<span class="token operator">&lt;</span>GenericConverter<span class="token punctuation">.</span>ConvertiblePair<span class="token operator">></span> <span class="token function">getConvertibleTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    @Nullable
-    Object convert(@Nullable Object source, TypeDescriptor sourceType, TypeDescriptor targetType);
+    <span class="token annotation punctuation">@Nullable</span>
+    Object <span class="token function">convert</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> Object source<span class="token punctuation">,</span> TypeDescriptor sourceType<span class="token punctuation">,</span> TypeDescriptor targetType<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    public static final class ConvertiblePair {
-        private final Class<?> sourceType;
-        private final Class<?> targetType;
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">ConvertiblePair</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">final</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> sourceType<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">final</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> targetType<span class="token punctuation">;</span>
 
-        public ConvertiblePair(Class<?> sourceType, Class<?> targetType) {
-            Assert.notNull(sourceType, "Source type must not be null");
-            Assert.notNull(targetType, "Target type must not be null");
-            this.sourceType = sourceType;
-            this.targetType = targetType;
-        }
+        <span class="token keyword">public</span> <span class="token function">ConvertiblePair</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> sourceType<span class="token punctuation">,</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> targetType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>sourceType<span class="token punctuation">,</span> <span class="token string">"Source type must not be null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>targetType<span class="token punctuation">,</span> <span class="token string">"Target type must not be null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>sourceType <span class="token operator">=</span> sourceType<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>targetType <span class="token operator">=</span> targetType<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        public Class<?> getSourceType() {
-            return this.sourceType;
-        }
+        <span class="token keyword">public</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getSourceType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>sourceType<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        public Class<?> getTargetType() {
-            return this.targetType;
-        }
+        <span class="token keyword">public</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getTargetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>targetType<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        public boolean equals(@Nullable Object other) {
-            if (this == other) {
-                return true;
-            } else if (other != null && other.getClass() == GenericConverter.ConvertiblePair.class) {
-                GenericConverter.ConvertiblePair otherPair = (GenericConverter.ConvertiblePair)other;
-                return this.sourceType == otherPair.sourceType && this.targetType == otherPair.targetType;
-            } else {
-                return false;
-            }
-        }
+        <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">equals</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> Object other<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">==</span> other<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>other <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> other<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> GenericConverter<span class="token punctuation">.</span>ConvertiblePair<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                GenericConverter<span class="token punctuation">.</span>ConvertiblePair otherPair <span class="token operator">=</span> <span class="token punctuation">(</span>GenericConverter<span class="token punctuation">.</span>ConvertiblePair<span class="token punctuation">)</span>other<span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>sourceType <span class="token operator">==</span> otherPair<span class="token punctuation">.</span>sourceType <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>targetType <span class="token operator">==</span> otherPair<span class="token punctuation">.</span>targetType<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        public int hashCode() {
-            return this.sourceType.hashCode() * 31 + this.targetType.hashCode();
-        }
+        <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>sourceType<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">31</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>targetType<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        public String toString() {
-            return this.sourceType.getName() + " -> " + this.targetType.getName();
-        }
-    }
-}
+        <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>sourceType<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" -> "</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>targetType<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="Formatter"><a href="#Formatter" class="headerlink" title="Formatter"></a>Formatter</h3><p>Formatter主要作用是将一个类和一个字符串之间进行转换。（例如Date -&gt; String）</p>
 <p>或者从字符串parse获得实例</p>
-<pre class=" language-lang-java"><code class="language-lang-java">public interface Formatter<T> extends Printer<T>, Parser<T> {
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Formatter</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Printer</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">,</span> Parser<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="mvcConversionService"><a href="#mvcConversionService" class="headerlink" title="mvcConversionService()"></a>mvcConversionService()</h3><p>此时回过头看FormattingConversionService的mvcConversionService()，</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@Bean
-public FormattingConversionService mvcConversionService() {
-    // 从mvcProperties拿到Format
-    Format format = this.mvcProperties.getFormat();
-    // 这里用了链式调用将DateTimeFormatters进行简单的格式装配，再作为参数传入WebConversionService的构造函数中
-    WebConversionService conversionService = new WebConversionService((new DateTimeFormatters()).dateFormat(format.getDate()).timeFormat(format.getTime()).dateTimeFormat(format.getDateTime()));
-    this.addFormatters(conversionService);
-    return conversionService;
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token keyword">public</span> FormattingConversionService <span class="token function">mvcConversionService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 从mvcProperties拿到Format</span>
+    Format format <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mvcProperties<span class="token punctuation">.</span><span class="token function">getFormat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 这里用了链式调用将DateTimeFormatters进行简单的格式装配，再作为参数传入WebConversionService的构造函数中</span>
+    WebConversionService conversionService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebConversionService</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DateTimeFormatters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">dateFormat</span><span class="token punctuation">(</span>format<span class="token punctuation">.</span><span class="token function">getDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">timeFormat</span><span class="token punctuation">(</span>format<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">dateTimeFormat</span><span class="token punctuation">(</span>format<span class="token punctuation">.</span><span class="token function">getDateTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addFormatters</span><span class="token punctuation">(</span>conversionService<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> conversionService<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>WebConversionService的构造函数</p>
-<pre class=" language-lang-java"><code class="language-lang-java">public WebConversionService(DateTimeFormatters dateTimeFormatters) {
-    super(false);
-    // 配置文件中是否配置了dateTime的格式，如果有将该格式加入
-    if (dateTimeFormatters.isCustomized()) {
-        this.addFormatters(dateTimeFormatters);
-    } else {//如果没有，添加默认格式即可
-        addDefaultFormatters(this);
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token function">WebConversionService</span><span class="token punctuation">(</span>DateTimeFormatters dateTimeFormatters<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 配置文件中是否配置了dateTime的格式，如果有将该格式加入</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dateTimeFormatters<span class="token punctuation">.</span><span class="token function">isCustomized</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addFormatters</span><span class="token punctuation">(</span>dateTimeFormatters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//如果没有，添加默认格式即可</span>
+        <span class="token function">addDefaultFormatters</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h2 id="HttpMessageConverters"><a href="#HttpMessageConverters" class="headerlink" title="HttpMessageConverters"></a>HttpMessageConverters</h2><p>接口，用于把类的实例和Request\Response的 JSON 或者其他字符串之间做转换</p>
 <h2 id="MessageCodeResolver"><a href="#MessageCodeResolver" class="headerlink" title="MessageCodeResolver"></a>MessageCodeResolver</h2><p>接口，定义错误代码</p>
 <h2 id="ConfigurableWebBindingInitializer"><a href="#ConfigurableWebBindingInitializer" class="headerlink" title="ConfigurableWebBindingInitializer"></a>ConfigurableWebBindingInitializer</h2><p>类，初始化WebDataBinder</p>
 <h2 id="扩展Spring-MVC配置"><a href="#扩展Spring-MVC配置" class="headerlink" title="扩展Spring MVC配置"></a>扩展Spring MVC配置</h2><p>在<strong>原生Spring Boot AutoConfiguration还生效</strong>的前提下，取消自动配置的部分操作，自定义。</p>
 <p>例如要添加一条url映射，则可以通过自己配置一个WebMvcConfigurer并实现addViewControllers来操作，取代RequestMapping(url)这样的配置。</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@Configuration
-public class MyWebConfigurer implements WebMvcConfigurer {
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        // 添加addViewController,取代RequestMapping(url)这样的配置
-        registry.addViewController("/abc").setViewName("footer");
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyWebConfigurer</span> <span class="token keyword">implements</span> <span class="token class-name">WebMvcConfigurer</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addViewControllers</span><span class="token punctuation">(</span>ViewControllerRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 添加addViewController,取代RequestMapping(url)这样的配置</span>
+        registry<span class="token punctuation">.</span><span class="token function">addViewController</span><span class="token punctuation">(</span><span class="token string">"/abc"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setViewName</span><span class="token punctuation">(</span><span class="token string">"footer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>此时就可以通过<code>localhost:8080/abc</code>这样的方式访问到footer文件了</p>
 <p><img src="/2022/07/25/springmvcauto/image-20220725181506202.png" alt=" "></p>
@@ -688,16 +689,16 @@ public class MyWebConfigurer implements WebMvcConfigurer {
 <p><img src="/2022/07/25/springmvcauto/image-20220725194956964.png" alt=" "></p>
 <p>也就是说，这种情况就是spring只会使用你自定义的WebMvcConfigurer已经Override的方法，对于没有Override的方法，spring还是使用默认的WebMvcConfigurer中的方法。</p>
 <p>如果要想取消这种默认的WebMvcConfigurer，需要在自定义的WebMvcConfigurer中加上@EnableWebMvc。</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@EnableWebMvc
-@Configuration
-public class MyWebConfigurer implements WebMvcConfigurer {
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        // 添加addViewController,取代RequestMapping(url)这样的配置
-        registry.addViewController("/abc").setViewName("footer");
-//        WebMvcConfigurer.super.addViewControllers(registry);
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@EnableWebMvc</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyWebConfigurer</span> <span class="token keyword">implements</span> <span class="token class-name">WebMvcConfigurer</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addViewControllers</span><span class="token punctuation">(</span>ViewControllerRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 添加addViewController,取代RequestMapping(url)这样的配置</span>
+        registry<span class="token punctuation">.</span><span class="token function">addViewController</span><span class="token punctuation">(</span><span class="token string">"/abc"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setViewName</span><span class="token punctuation">(</span><span class="token string">"footer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//        WebMvcConfigurer.super.addViewControllers(registry);</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>为什么加了<code>@EnableWebMvc</code>之后，原有的WebMvcConfigurer就失效了？因为在<code>WebMvcAutoConfiguration</code>有一个注解<code>@ConditionalOnMissingBean({WebMvcConfigurationSupport.class})</code>，意思就是当spring容器中没有WebMvcConfigurationSupport这个bean时，WebMvcAutoConfiguration才会生效。</p>
 <p><img src="/2022/07/25/springmvcauto/image-20220725201218414.png" alt="WebMvcAutoConfiguration"></p>

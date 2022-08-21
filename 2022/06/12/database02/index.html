@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="数据库学习：JDBC, 银色回廊">
-    <meta name="description" content="了解JDBC概述​    JDBC（Java Data Base Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一">
+    <meta name="description" content="了解JDBC概述​	JDBC（Java Data Base Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一组用J">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,60 +506,60 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="了解JDBC"><a href="#了解JDBC" class="headerlink" title="了解JDBC"></a>了解JDBC</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​    JDBC（Java Data Base Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。<strong>JDBC是Java访问数据库的标准规范</strong>，可以为不同的<strong>关系型数据库</strong>提供统一访问，它由一组用Java语言编写的接口和类组成。</p>
-<p>​    JDBC是接口，驱动是接口的实现，没有驱动将无法完成数据库连接，从而不能操作数据库！每个数据库厂商都需要提供自己的驱动，用来连接自己公司的数据库，也就是说驱动一般都由数据库生成厂商提供。</p>
-<h2 id="一个实现的例子"><a href="#一个实现的例子" class="headerlink" title="一个实现的例子"></a>一个实现的例子</h2><pre class=" language-lang-java"><code class="language-lang-java">import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-public class JDBCDemo {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        // 1.把Driver注册到JDBC
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        // 2.获得连接
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/WORLD?serverTimezone=UTC","root","123456");
-        // 3.初始化一个Statement语句,准备好一个UPDATE的SQL，运行之
-        String sql = "UPDATE ACCOUNT SET BALANCE = 1000";
-        // 4.关闭
-        Statement stmt = conn.createStatement();
-        int count = stmt.executeUpdate(sql);
-        System.out.println(count);
-        stmt.close();
-        conn.close();
-    }
-}
+                <h1 id="了解JDBC"><a href="#了解JDBC" class="headerlink" title="了解JDBC"></a>了解JDBC</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​	JDBC（Java Data Base Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。<strong>JDBC是Java访问数据库的标准规范</strong>，可以为不同的<strong>关系型数据库</strong>提供统一访问，它由一组用Java语言编写的接口和类组成。</p>
+<p>​	JDBC是接口，驱动是接口的实现，没有驱动将无法完成数据库连接，从而不能操作数据库！每个数据库厂商都需要提供自己的驱动，用来连接自己公司的数据库，也就是说驱动一般都由数据库生成厂商提供。</p>
+<h2 id="一个实现的例子"><a href="#一个实现的例子" class="headerlink" title="一个实现的例子"></a>一个实现的例子</h2><pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>DriverManager<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>SQLException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>Statement<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JDBCDemo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> ClassNotFoundException<span class="token punctuation">,</span> SQLException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 1.把Driver注册到JDBC</span>
+        Class<span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.mysql.cj.jdbc.Driver"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 2.获得连接</span>
+        Connection conn <span class="token operator">=</span> DriverManager<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token string">"jdbc:mysql://localhost:3306/WORLD?serverTimezone=UTC"</span><span class="token punctuation">,</span><span class="token string">"root"</span><span class="token punctuation">,</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 3.初始化一个Statement语句,准备好一个UPDATE的SQL，运行之</span>
+        String sql <span class="token operator">=</span> <span class="token string">"UPDATE ACCOUNT SET BALANCE = 1000"</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 4.关闭</span>
+        Statement stmt <span class="token operator">=</span> conn<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> stmt<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stmt<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        conn<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>Class.forName是注册驱动。即使代码中没有写Class.forName也可以注册（因为mysql jdbc的jar包在导入时就配置了驱动）</p>
 <h2 id="JDBC中的对象"><a href="#JDBC中的对象" class="headerlink" title="JDBC中的对象"></a>JDBC中的对象</h2><h3 id="DriverManager：注册驱动"><a href="#DriverManager：注册驱动" class="headerlink" title="DriverManager：注册驱动"></a>DriverManager：注册驱动</h3><p>DriverManager工具类，提供注册驱动的方法 registerDriver()，方法的参数是java.sql.Driver，所以我们可以通过如下语句进行注册:</p>
-<pre class=" language-lang-java"><code class="language-lang-java">DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+<pre class=" language-java"><code class="language-java">DriverManager<span class="token punctuation">.</span><span class="token function">registerDriver</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span>Driver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>以上代码不推荐使用，存在两方面不足</p>
 <p>1.硬编码，后期不易于程序扩展和维护</p>
 <p>2.驱动被注册两次。</p>
-<pre class=" language-lang-java"><code class="language-lang-java">public class Driver extends NonRegisteringDriverimplements java.sql.Driver {
-    static {
-        try {
-   java.sql.DriverManager.registerDriver(newDriver());
-        }catch (SQLException E) {
-            thrownew RuntimeException("Can't register driver!");
-        }
-    }
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Driver</span> <span class="token keyword">extends</span> <span class="token class-name">NonRegisteringDriverimplements</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>Driver <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+   java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>DriverManager<span class="token punctuation">.</span><span class="token function">registerDriver</span><span class="token punctuation">(</span><span class="token function">newDriver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">SQLException</span> E<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            thrownew <span class="token function">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"Can't register driver!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 ……
-}
+<span class="token punctuation">}</span>
 </code></pre>
 <h3 id="Connection：获得数据库的连接"><a href="#Connection：获得数据库的连接" class="headerlink" title="Connection：获得数据库的连接"></a>Connection：获得数据库的连接</h3><p>url格式：jdbc:mysql://<code>&lt;IP&gt;:&lt;Port&gt;/&lt;Database&gt;</code>?参数(username、passoword)=值</p>
-<pre class=" language-lang-java"><code class="language-lang-java">Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/WORLD?serverTimezone=UTC","root","123456");
+<pre class=" language-java"><code class="language-java">Connection conn <span class="token operator">=</span> DriverManager<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token string">"jdbc:mysql://localhost:3306/WORLD?serverTimezone=UTC"</span><span class="token punctuation">,</span><span class="token string">"root"</span><span class="token punctuation">,</span><span class="token string">"123456"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <h3 id="Statement：获得执行SQL语句的对象"><a href="#Statement：获得执行SQL语句的对象" class="headerlink" title="Statement：获得执行SQL语句的对象"></a>Statement：获得执行SQL语句的对象</h3><p>有两种Statement</p>
-<h4 id="1-Statement-gt-createStatement"><a href="#1-Statement-gt-createStatement" class="headerlink" title="1.Statement -> createStatement"></a>1.Statement -&gt; createStatement</h4><pre class=" language-lang-java"><code class="language-lang-java">String sql = "某SQL语句";
-//获取Statement语句执行平台
-Statement stmt =con.createStatement();
+<h4 id="1-Statement-gt-createStatement"><a href="#1-Statement-gt-createStatement" class="headerlink" title="1.Statement -> createStatement"></a>1.Statement -&gt; createStatement</h4><pre class=" language-java"><code class="language-java">String sql <span class="token operator">=</span> <span class="token string">"某SQL语句"</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//获取Statement语句执行平台</span>
+Statement stmt <span class="token operator">=</span>con<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p> 常用方法：</p>
 <ul>
-<li>int executeUpdate(String sql); —执行insert update delete语句，返回的是影响的行数，说明有错</li>
-<li>ResultSet executeQuery(String sql); —执行select语句，返回的是 <strong>结果集</strong>（效果类似于游标）</li>
-<li>boolean execute(String sql); —执行select返回true 执行其他的语句 返回false.</li>
+<li>int executeUpdate(String sql); –执行insert update delete语句，返回的是影响的行数，说明有错</li>
+<li>ResultSet executeQuery(String sql); –执行select语句，返回的是 <strong>结果集</strong>（效果类似于游标）</li>
+<li>boolean execute(String sql); –执行select返回true 执行其他的语句 返回false.</li>
 </ul>
 <p>2.PreparedStatement：不需要构造SQL，更安全</p>
 <p>SQL注入风险：猜测你的SQL语句，然后再输入中添加SQL语句</p>
