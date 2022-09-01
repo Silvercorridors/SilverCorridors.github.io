@@ -505,331 +505,328 @@ SpringBootApplication注解分析例如，如果类路径中存在H2数据库Jar
             <div id="articleContent">
                 <h1 id="SpringBoot-02：源码分析——自动装配"><a href="#SpringBoot-02：源码分析——自动装配" class="headerlink" title="SpringBoot 02：源码分析——自动装配"></a>SpringBoot 02：源码分析——自动装配</h1><p>SpringBoot自动配置根据我们添加的jar依赖项自动配置SpringBoot应用程序。</p>
 <h2 id="SpringBootApplication注解分析"><a href="#SpringBootApplication注解分析" class="headerlink" title="SpringBootApplication注解分析"></a>SpringBootApplication注解分析</h2><p>例如，如果类路径中存在H2数据库Jar，而我们尚未手动配置任何与数据库相关的bean，则Spring Boot的自动配置功能会在项目中自动对其进行配置。</p>
-<p>我们可以启用自动通过使用注解 <strong>@EnableAutoConfiguration</strong> 配置功能。但是此注解不使用，因为它包装在 <strong>@SpringBootApplication</strong> 注解内。注解**<font color="green">@SpringBootApplication</font>**是三个注解的组合: <strong>@ComponentScan，@EnableAutoConfiguration，</strong>和 <strong>@SpringBootConfiguration</strong> 。但是，我们使用@SpringBootApplication批注而不是使用@EnableAutoConfiguration。</p>
+<p>我们可以启用自动通过使用注解 <strong>@EnableAutoConfiguration</strong> 配置功能。但是此注解不使用，因为它包装在 <strong>@SpringBootApplication</strong> 注解内。注解<strong><font color="green">@SpringBootApplication</font></strong>是三个注解的组合: <strong>@ComponentScan，@EnableAutoConfiguration，</strong>和 <strong>@SpringBootConfiguration</strong> 。但是，我们使用@SpringBootApplication批注而不是使用@EnableAutoConfiguration。</p>
 <p><strong>@SpringBootApplication = @ComponentScan + @EnableAutoConfiguration + @SpringBootConfiguration</strong>。</p>
 <p><img src="/2022/07/19/springboot02/image-20220719162207174.png" alt="SpringBootApplication注解分析"></p>
 <h2 id="SpringBootConfiguration"><a href="#SpringBootConfiguration" class="headerlink" title="@SpringBootConfiguration"></a>@SpringBootConfiguration</h2><p>本质就是@Configuration，<strong>Spring在纯注解模式下需要的annotation配置</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token annotation punctuation">@Configuration</span>
-<span class="token annotation punctuation">@Indexed</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">SpringBootConfiguration</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span>
-        annotation <span class="token operator">=</span> Configuration<span class="token punctuation">.</span><span class="token keyword">class</span>
-    <span class="token punctuation">)</span>
-    <span class="token keyword">boolean</span> <span class="token function">proxyBeanMethods</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Configuration
+@Indexed
+public @interface SpringBootConfiguration {
+    @AliasFor(
+        annotation = Configuration.class
+    )
+    boolean proxyBeanMethods() default true;
+}
 </code></pre>
 <h2 id="ComponentScan"><a href="#ComponentScan" class="headerlink" title="@ComponentScan"></a>@ComponentScan</h2><p>复习：Configuration+ComponentScan -&gt; Spring纯注解所需要的最基本annotation方式配置</p>
 <p><img src="/2022/07/19/springboot02/image-20220719164107098.png" alt="@ComponentScan"></p>
 <hr>
 <h2 id="难点：-EnableAutoConfiguration"><a href="#难点：-EnableAutoConfiguration" class="headerlink" title="难点：@EnableAutoConfiguration"></a><font color="red">难点：@EnableAutoConfiguration</font></h2><p>主要功能：执行自动配置。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token annotation punctuation">@Inherited</span>
-<span class="token annotation punctuation">@AutoConfigurationPackage</span>
-<span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span><span class="token punctuation">{</span>AutoConfigurationImportSelector<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">EnableAutoConfiguration</span> <span class="token punctuation">{</span>
-    String ENABLED_OVERRIDE_PROPERTY <span class="token operator">=</span> <span class="token string">"spring.boot.enableautoconfiguration"</span><span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@AutoConfigurationPackage
+@Import({AutoConfigurationImportSelector.class})
+public @interface EnableAutoConfiguration {
+    String ENABLED_OVERRIDE_PROPERTY = "spring.boot.enableautoconfiguration";
 
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">exclude</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    Class<?>[] exclude() default {};
 
-    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">excludeName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    String[] excludeName() default {};
+}
 </code></pre>
-<p>可以看到， EnableAutoConfiguration有两个重要的注解：**@AutoConfigurationPackage<strong>、</strong>@Import({AutoConfigurationImportSelector.class})**，分别有两个重要作用。</p>
-<h3 id="AutoConfigurationPackage"><a href="#AutoConfigurationPackage" class="headerlink" title="@AutoConfigurationPackage"></a>@AutoConfigurationPackage</h3><p>​	作用：把主程序所在包的所有平级类加载并且放入容器，但是不包括子包。整个过程是通过<code>@Import({Registrar.class})</code>实现完成的。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token annotation punctuation">@Inherited</span>
-<span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span><span class="token punctuation">{</span>Registrar<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">AutoConfigurationPackage</span> <span class="token punctuation">{</span>
-    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">basePackages</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<p>可以看到， EnableAutoConfiguration有两个重要的注解：<strong>@AutoConfigurationPackage</strong>、<strong>@Import({AutoConfigurationImportSelector.class})</strong>，分别有两个重要作用。</p>
+<h3 id="AutoConfigurationPackage"><a href="#AutoConfigurationPackage" class="headerlink" title="@AutoConfigurationPackage"></a>@AutoConfigurationPackage</h3><p>​    作用：把主程序所在包的所有平级类加载并且放入容器，但是不包括子包。整个过程是通过<code>@Import({Registrar.class})</code>实现完成的。</p>
+<pre class=" language-lang-java"><code class="language-lang-java">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@Import({Registrar.class})
+public @interface AutoConfigurationPackage {
+    String[] basePackages() default {};
 
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">basePackageClasses</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    Class<?>[] basePackageClasses() default {};
+}
 </code></pre>
 <p><strong>@AutoConfigurationPackage</strong>就是通过@Import({Registrar.class})这个注解将Registrar类导入实现<strong>把主程序所在包的所有平级类加载并且放入容器。</strong></p>
-<h4 id="关键：Registrar类"><a href="#关键：Registrar类" class="headerlink" title="关键：Registrar类"></a>关键：Registrar类</h4><p>​		Registrar是AutoConfigurationPackage抽象类中的一个静态内部类。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Registrar</span> <span class="token keyword">implements</span> <span class="token class-name">ImportBeanDefinitionRegistrar</span><span class="token punctuation">,</span> DeterminableImports <span class="token punctuation">{</span>
-    <span class="token function">Registrar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">registerBeanDefinitions</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">,</span> BeanDefinitionRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        AutoConfigurationPackages<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>registry<span class="token punctuation">,</span> <span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>PackageImports</span><span class="token punctuation">(</span>metadata<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPackageNames</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> Set<span class="token operator">&lt;</span>Object<span class="token operator">></span> <span class="token function">determineImports</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> Collections<span class="token punctuation">.</span><span class="token function">singleton</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>PackageImports</span><span class="token punctuation">(</span>metadata<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<h4 id="关键：Registrar类"><a href="#关键：Registrar类" class="headerlink" title="关键：Registrar类"></a>关键：Registrar类</h4><p>​        Registrar是AutoConfigurationPackage抽象类中的一个静态内部类。</p>
+<pre class=" language-lang-java"><code class="language-lang-java">static class Registrar implements ImportBeanDefinitionRegistrar, DeterminableImports {
+    Registrar() {
+    }
+    public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
+        AutoConfigurationPackages.register(registry, (String[])(new AutoConfigurationPackages.PackageImports(metadata)).getPackageNames().toArray(new String[0]));
+    }
+    public Set<Object> determineImports(AnnotationMetadata metadata) {
+        return Collections.singleton(new AutoConfigurationPackages.PackageImports(metadata));
+    }
+}
 </code></pre>
 <p>这里registerBeanDefinitions方法的作用就是把主程序所在包的所有平级类加载进容器。里面调用了AutoConfigurationPackages抽象类的register方法，传递了 <code>(String[])(new AutoConfigurationPackages.PackageImports(metadata)).getPackageNames().toArray(new String[0])</code>这样一个参数，通过<code>metadata</code>获得了获得装配类所在的包，然后调用<code>AutoConfigurationPackages.register</code>方法进行所在包的所有平级类的加载。</p>
 <p>这里metadata为：</p>
 <p><img src="/2022/07/19/springboot02/image-20220719175239754.png" alt="metadata"></p>
 <p>也就是我们SpringBootApplication配置类的全类名</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">register</span><span class="token punctuation">(</span>BeanDefinitionRegistry registry<span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> packageNames<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 如果获得的registry的BEAN有BeanDefinition，则直接从BEAN中获取BeanDefinition</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>registry<span class="token punctuation">.</span><span class="token function">containsBeanDefinition</span><span class="token punctuation">(</span>BEAN<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 配置BasePackagesBeanDefinition</span>
-        AutoConfigurationPackages<span class="token punctuation">.</span>BasePackagesBeanDefinition beanDefinition <span class="token operator">=</span> <span class="token punctuation">(</span>AutoConfigurationPackages<span class="token punctuation">.</span>BasePackagesBeanDefinition<span class="token punctuation">)</span>registry<span class="token punctuation">.</span><span class="token function">getBeanDefinition</span><span class="token punctuation">(</span>BEAN<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 给BasePackagesBeanDefinition加载BasePackages</span>
-        beanDefinition<span class="token punctuation">.</span><span class="token function">addBasePackages</span><span class="token punctuation">(</span>packageNames<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">// 否则，给registry新建一个BeanDefinition</span>
-        registry<span class="token punctuation">.</span><span class="token function">registerBeanDefinition</span><span class="token punctuation">(</span>BEAN<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>BasePackagesBeanDefinition</span><span class="token punctuation">(</span>packageNames<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public static void register(BeanDefinitionRegistry registry, String... packageNames) {
+    // 如果获得的registry的BEAN有BeanDefinition，则直接从BEAN中获取BeanDefinition
+    if (registry.containsBeanDefinition(BEAN)) {
+        // 配置BasePackagesBeanDefinition
+        AutoConfigurationPackages.BasePackagesBeanDefinition beanDefinition = (AutoConfigurationPackages.BasePackagesBeanDefinition)registry.getBeanDefinition(BEAN);
+        // 给BasePackagesBeanDefinition加载BasePackages
+        beanDefinition.addBasePackages(packageNames);
+    } else {// 否则，给registry新建一个BeanDefinition
+        registry.registerBeanDefinition(BEAN, new AutoConfigurationPackages.BasePackagesBeanDefinition(packageNames));
+    }
 
-<span class="token punctuation">}</span>
+}
 
-<span class="token comment" spellcheck="true">// 基本包定义类，用ArrayList存储包名</span>
-<span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">BasePackages</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span>String<span class="token operator">></span> packages<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">boolean</span> loggedBasePackageInfo<span class="token punctuation">;</span>
+// 基本包定义类，用ArrayList存储包名
+static final class BasePackages {
+    private final List<String> packages;
+    private boolean loggedBasePackageInfo;
 
-    <span class="token function">BasePackages</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> names<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        List<span class="token operator">&lt;</span>String<span class="token operator">></span> packages <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String<span class="token punctuation">[</span><span class="token punctuation">]</span> var3 <span class="token operator">=</span> names<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> var4 <span class="token operator">=</span> names<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    BasePackages(String... names) {
+        List<String> packages = new ArrayList();
+        String[] var3 = names;
+        int var4 = names.length;
 
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> var5 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> var5 <span class="token operator">&lt;</span> var4<span class="token punctuation">;</span> <span class="token operator">++</span>var5<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            String name <span class="token operator">=</span> var3<span class="token punctuation">[</span>var5<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">hasText</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                packages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
+        for(int var5 = 0; var5 < var4; ++var5) {
+            String name = var3[var5];
+            if (StringUtils.hasText(name)) {
+                packages.add(name);
+            }
+        }
 
-        <span class="token keyword">this</span><span class="token punctuation">.</span>packages <span class="token operator">=</span> packages<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        this.packages = packages;
+}
 
-<span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">BasePacLinkedHashSetkagesBeanDefinition</span> <span class="token keyword">extends</span> <span class="token class-name">GenericBeanDefinition</span> <span class="token punctuation">{</span>
-       <span class="token comment" spellcheck="true">// 本质就是一个LinkedHashSet</span>
-        <span class="token keyword">private</span> <span class="token keyword">final</span> Set<span class="token operator">&lt;</span>String<span class="token operator">></span> basePackages <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        
-        <span class="token function">BasePackagesBeanDefinition</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> basePackages<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setBeanClass</span><span class="token punctuation">(</span>AutoConfigurationPackages<span class="token punctuation">.</span>BasePackages<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setRole</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addBasePackages</span><span class="token punctuation">(</span>basePackages<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+static final class BasePacLinkedHashSetkagesBeanDefinition extends GenericBeanDefinition {
+       // 本质就是一个LinkedHashSet
+        private final Set<String> basePackages = new LinkedHashSet();
 
-        <span class="token keyword">public</span> Supplier<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getInstanceSupplier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>BasePackages</span><span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">toStringArray</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>basePackages<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        BasePackagesBeanDefinition(String... basePackages) {
+            this.setBeanClass(AutoConfigurationPackages.BasePackages.class);
+            this.setRole(2);
+            this.addBasePackages(basePackages);
+        }
 
-        <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">addBasePackages</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> additionalBasePackages<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>basePackages<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>additionalBasePackages<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+        public Supplier<?> getInstanceSupplier() {
+            return () -> {
+                return new AutoConfigurationPackages.BasePackages(StringUtils.toStringArray(this.basePackages));
+            };
+        }
+
+        private void addBasePackages(String[] additionalBasePackages) {
+            this.basePackages.addAll(Arrays.asList(additionalBasePackages));
+        }
+}
 </code></pre>
 <h3 id="import-AutoConfigurationImportSelector-class"><a href="#import-AutoConfigurationImportSelector-class" class="headerlink" title="@import(AutoConfigurationImportSelector.class)"></a>@import(AutoConfigurationImportSelector.class)</h3><p><code>Spring boot</code>应用中使用了注解<code>@SpringBootApplication</code>，该注解隐含地导入了<code>AutoConfigurationImportSelector</code>,如下注解依赖链所示 :</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 注解链</span>
-<span class="token annotation punctuation">@SpringBootApplication</span>
-    <span class="token operator">=</span><span class="token operator">></span> <span class="token annotation punctuation">@EnableAutoConfiguration</span>
-        <span class="token operator">=</span><span class="token operator">></span> <span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span>AutoConfigurationImportSelector<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<pre class=" language-lang-java"><code class="language-lang-java">// 注解链
+@SpringBootApplication
+    => @EnableAutoConfiguration
+        => @Import(AutoConfigurationImportSelector.class)
 </code></pre>
 <p>SpringBoot自动配置的核心就在<code>@EnableAutoConfiguration</code>注解上，这个注解通过<code>@Import(AutoConfigurationImportSelector)</code>来完成自动配置。</p>
 <p>所以说，SpringBoot自动配置的奥秘就隐藏在<code>AutoConfigurationImportSelector</code>类中。</p>
 <p>首先有以下问题：</p>
-<h4 id="1-Import注解是什么？有什么用？"><a href="#1-Import注解是什么？有什么用？" class="headerlink" title="1.@Import注解是什么？有什么用？"></a>1.<code>@Import</code>注解是什么？有什么用？</h4><p>​		@Import注解是用来导入配置类或者一些需要前置加载的类并放入容器，以下是@Imort注解类的源码</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ElementType<span class="token punctuation">.</span>TYPE<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span>RetentionPolicy<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token keyword">public</span> @<span class="token keyword">interface</span> <span class="token class-name">Import</span> <span class="token punctuation">{</span>
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h4 id="1-Import注解是什么？有什么用？"><a href="#1-Import注解是什么？有什么用？" class="headerlink" title="1.@Import注解是什么？有什么用？"></a>1.<code>@Import</code>注解是什么？有什么用？</h4><p>​        @Import注解是用来导入配置类或者一些需要前置加载的类并放入容器，以下是@Imort注解类的源码</p>
+<pre class=" language-lang-java"><code class="language-lang-java">@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Import {
+    Class<?>[] value();
+}
 </code></pre>
-<p>​		@Target表明了他能作用的范围，可以作用于类、接口、枚举类。</p>
-<p>​		属性只有一个Value，表示的是一个类对象数组，例如value={xx.class,yy.class}，表示将xx和yy交给Spring容器管理。（<strong>感觉和类加载器有点关系</strong>）</p>
+<p>​        @Target表明了他能作用的范围，可以作用于类、接口、枚举类。</p>
+<p>​        属性只有一个Value，表示的是一个类对象数组，例如value={xx.class,yy.class}，表示将xx和yy交给Spring容器管理。（<strong>感觉和类加载器有点关系</strong>）</p>
 <h4 id="2-ImportSelector接口是什么？有什么用？"><a href="#2-ImportSelector接口是什么？有什么用？" class="headerlink" title="2.ImportSelector接口是什么？有什么用？"></a>2.ImportSelector接口是什么？有什么用？</h4><p><strong>通过ImportSelector 方式导入的类</strong></p>
 <ol>
 <li><p>新建TestC.class</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestC</span> <span class="token punctuation">{</span> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fun</span><span class="token punctuation">(</span>String str<span class="token punctuation">)</span> <span class="token punctuation">{</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">printName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"类名 ："</span> <span class="token operator">+</span> Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">getClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class TestC { public void fun(String str) { System.out.println(str); }
+    public void printName() {
+        System.out.println("类名 ：" + Thread.currentThread().getStackTrace()[1].getClassName());
+    }
+}
 </code></pre>
 </li>
 </ol>
-<p>​	2.新建SelfImportSelector.class 实现ImportSelector 接口,注入TestC.class//TODO ImportSelector 相关解释</p>
-<pre class=" language-typescript"><code class="language-typescript"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SelfImportSelector</span> <span class="token keyword">implements</span> <span class="token class-name">ImportSelector</span> <span class="token punctuation">{</span>
+<p>​    2.新建SelfImportSelector.class 实现ImportSelector 接口,注入TestC.class//TODO ImportSelector 相关解释</p>
+<pre class=" language-lang-typescript"><code class="language-lang-typescript">public class SelfImportSelector implements ImportSelector {
     @Override
-    <span class="token keyword">public</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">selectImports</span><span class="token punctuation">(</span>AnnotationMetadata importingClassMetadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"com.test.importdemo.TestC"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+        return new String[]{"com.test.importdemo.TestC"};
+    }
+}
 </code></pre>
-<p>​	3.ImportConfig上面引入SelfImportSelector.class</p>
-<pre class=" language-less"><code class="language-less">@<span class="token selector">Import(</span><span class="token punctuation">{</span>SelfImportSelector<span class="token number">.</span>class<span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token atrule">@Configuration
-public class ImportConfig</span> <span class="token punctuation">{</span>
-<span class="token punctuation">}</span>
+<p>​    3.ImportConfig上面引入SelfImportSelector.class</p>
+<pre class=" language-lang-less"><code class="language-lang-less">@Import({SelfImportSelector.class})
+@Configuration
+public class ImportConfig {
+}
 </code></pre>
-<p>​	4.测试结果</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
-TestC testC<span class="token punctuation">;</span>
+<p>​    4.测试结果</p>
+<pre class=" language-lang-java"><code class="language-lang-java">@Autowired
+TestC testC;
 
-<span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">TestC</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    testC<span class="token punctuation">.</span><span class="token function">printName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+@Test
+public void TestC() {
+    testC.printName();
+}
 </code></pre>
 <p>打印：</p>
-<pre class=" language-lua"><code class="language-lua">ImportAnnotionTest <span class="token keyword">in</span> <span class="token number">7.23</span> <span class="token function">seconds</span> <span class="token punctuation">(</span>JVM running <span class="token keyword">for</span> <span class="token number">9.065</span><span class="token punctuation">)</span>
-类名 ：com<span class="token punctuation">.</span>test<span class="token punctuation">.</span>importdemo<span class="token punctuation">.</span>TestC
-<span class="token number">2020</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">16</span> <span class="token number">14</span><span class="token punctuation">:</span><span class="token number">23</span><span class="token punctuation">:</span><span class="token number">15.330</span>  INFO <span class="token number">1196</span> <span class="token comment" spellcheck="true">--- [ </span>
+<pre class=" language-lang-lua"><code class="language-lang-lua">ImportAnnotionTest in 7.23 seconds (JVM running for 9.065)
+类名 ：com.test.importdemo.TestC
+2020-08-16 14:23:15.330  INFO 1196 --- [
 </code></pre>
-<p>由此得出结论，	@Import注解是用来导入配置类需要的类，而实现了ImportSelector接口的类需要Override一个方法，返回一个需要导入配置类的 <strong>类名数组</strong>，这样，这些导入配置类需要的类 就可以 一次型通过@Import注解被导入到Spring容器中了。</p>
+<p>由此得出结论，    @Import注解是用来导入配置类需要的类，而实现了ImportSelector接口的类需要Override一个方法，返回一个需要导入配置类的 <strong>类名数组</strong>，这样，这些导入配置类需要的类 就可以 一次型通过@Import注解被导入到Spring容器中了。</p>
 <h3 id="AutoConfigurationImportSelector类"><a href="#AutoConfigurationImportSelector类" class="headerlink" title="AutoConfigurationImportSelector类"></a>AutoConfigurationImportSelector类</h3><p>了解一个类，我们首先就要先看这个类的定义：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AutoConfigurationImportSelector</span> <span class="token keyword">implements</span> <span class="token class-name">DeferredImportSelector</span><span class="token punctuation">,</span> BeanClassLoaderAware<span class="token punctuation">,</span>
-      ResourceLoaderAware<span class="token punctuation">,</span> BeanFactoryAware<span class="token punctuation">,</span> EnvironmentAware<span class="token punctuation">,</span> Ordered <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class AutoConfigurationImportSelector implements DeferredImportSelector, BeanClassLoaderAware,
+      ResourceLoaderAware, BeanFactoryAware, EnvironmentAware, Ordered {
 </code></pre>
 <p>我们可以看到它实现了<code>DeferredImportSelector</code>接口，那么接下来再来看看<code>DeferredImportSelector</code>接口的定义：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">DeferredImportSelector</span> <span class="token keyword">extends</span> <span class="token class-name">ImportSelector</span> <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public interface DeferredImportSelector extends ImportSelector {
 </code></pre>
 <p>可以看到,<code>DeferredImportSelector</code>接口又继承了<code>ImportSelector</code>接口。这样，我们就明白了，<code>AutoConfigurationImportSelector</code>类必定实现了<code>selectImports()</code>方法，这个方法应该就是SpringBoot能够实现自动配置的核心。</p>
-<h3 id="实现接口方法-selectImports"><a href="#实现接口方法-selectImports" class="headerlink" title="实现接口方法:selectImports"></a>实现接口方法:selectImports</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">selectImports</span><span class="token punctuation">(</span>AnnotationMetadata annotationMetadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 判断SpringBoot是否开启自动配置</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEnabled</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> NO_IMPORTS<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 获取需要被引入的自动配置信息</span>
-        AutoConfigurationImportSelector<span class="token punctuation">.</span>AutoConfigurationEntry autoConfigurationEntry <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getAutoConfigurationEntry</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> StringUtils<span class="token punctuation">.</span><span class="token function">toStringArray</span><span class="token punctuation">(</span>autoConfigurationEntry<span class="token punctuation">.</span><span class="token function">getConfigurations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<h3 id="实现接口方法-selectImports"><a href="#实现接口方法-selectImports" class="headerlink" title="实现接口方法:selectImports"></a>实现接口方法:selectImports</h3><pre class=" language-lang-java"><code class="language-lang-java">public String[] selectImports(AnnotationMetadata annotationMetadata) {
+    // 判断SpringBoot是否开启自动配置
+    if (!this.isEnabled(annotationMetadata)) {
+        return NO_IMPORTS;
+    } else {
+        // 获取需要被引入的自动配置信息
+        AutoConfigurationImportSelector.AutoConfigurationEntry autoConfigurationEntry = this.getAutoConfigurationEntry(annotationMetadata);
+        return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
+    }
+}
 </code></pre>
 <p>可以看到，selectImports源码没有多少。isEnabled()方法判断SpringBoot是否开启了自动配置。若开启就通过getAutoConfigurationEntry()来获取需要配置的Bean全限定名数组，否则就直接返回空数组。</p>
-<h4 id="isEnabled-：判断SpringBoot是否开启自动配置"><a href="#isEnabled-：判断SpringBoot是否开启自动配置" class="headerlink" title="isEnabled()：判断SpringBoot是否开启自动配置"></a>isEnabled()：判断SpringBoot是否开启自动配置</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">isEnabled</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> AutoConfigurationImportSelector<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 若调用该方法的类是AutoConfigurationImportSelector，那么就获取EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY的值，默认为true</span>
-      <span class="token keyword">return</span> <span class="token function">getEnvironment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span>EnableAutoConfiguration<span class="token punctuation">.</span>ENABLED_OVERRIDE_PROPERTY<span class="token punctuation">,</span> Boolean<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">}</span>
-   <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h4 id="isEnabled-：判断SpringBoot是否开启自动配置"><a href="#isEnabled-：判断SpringBoot是否开启自动配置" class="headerlink" title="isEnabled()：判断SpringBoot是否开启自动配置"></a>isEnabled()：判断SpringBoot是否开启自动配置</h4><pre class=" language-lang-java"><code class="language-lang-java">protected boolean isEnabled(AnnotationMetadata metadata) {
+   if (getClass() == AutoConfigurationImportSelector.class) {
+      // 若调用该方法的类是AutoConfigurationImportSelector，那么就获取EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY的值，默认为true
+      return getEnvironment().getProperty(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY, Boolean.class, true);
+   }
+   return true;
+}
 </code></pre>
 <p><code>EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY</code>是什么？我们看下它的定义：</p>
-<pre class=" language-java"><code class="language-java">String ENABLED_OVERRIDE_PROPERTY <span class="token operator">=</span> <span class="token string">"spring.boot.enableautoconfiguration"</span><span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">String ENABLED_OVERRIDE_PROPERTY = "spring.boot.enableautoconfiguration";
 </code></pre>
 <p>看到这里，我们可以猜到这就是在配置文件application.yml或者application.properties中的配置。因此，我们可以在配置文件中来决定SpringBoot是否开启自动配置。</p>
 <p>当我们没有配置的时候，默认就是开启自动配置的。</p>
 <h3 id="getAutoConfigurationEntry-方法：获取需要自动配置的bean信息"><a href="#getAutoConfigurationEntry-方法：获取需要自动配置的bean信息" class="headerlink" title="getAutoConfigurationEntry()方法：获取需要自动配置的bean信息"></a><font color="red">getAutoConfigurationEntry()方法：获取需要自动配置的bean信息</font></h3><p>话不多说，先上源码：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> AutoConfigurationEntry <span class="token function">getAutoConfigurationEntry</span><span class="token punctuation">(</span>AnnotationMetadata annotationMetadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token comment" spellcheck="true">// 判断是否开启自动配置</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isEnabled</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">return</span> EMPTY_ENTRY<span class="token punctuation">;</span>
-   <span class="token punctuation">}</span>
-   <span class="token comment" spellcheck="true">// 获取@EnableAutoConfiguration注解的属性</span>
-   AnnotationAttributes attributes <span class="token operator">=</span> <span class="token function">getAttributes</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 从spring.factories文件中获取配置类的全限定名数组</span>
-   List<span class="token operator">&lt;</span>String<span class="token operator">></span> configurations <span class="token operator">=</span> <span class="token function">getCandidateConfigurations</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">,</span> attributes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 去重</span>
-   configurations <span class="token operator">=</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>configurations<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 获取注解中exclude或excludeName排除的类集合</span>
-   Set<span class="token operator">&lt;</span>String<span class="token operator">></span> exclusions <span class="token operator">=</span> <span class="token function">getExclusions</span><span class="token punctuation">(</span>annotationMetadata<span class="token punctuation">,</span> attributes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 检查被排除类是否可以实例化，是否被自动配置所使用，否则抛出异常</span>
-   <span class="token function">checkExcludedClasses</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> exclusions<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 去除被排除的类</span>
-   configurations<span class="token punctuation">.</span><span class="token function">removeAll</span><span class="token punctuation">(</span>exclusions<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 使用spring.factories配置文件中配置的过滤器对自动配置类进行过滤</span>
-   configurations <span class="token operator">=</span> <span class="token function">getConfigurationClassFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>configurations<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token comment" spellcheck="true">// 抛出事件</span>
-   <span class="token function">fireAutoConfigurationImportEvents</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> exclusions<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AutoConfigurationEntry</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> exclusions<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">protected AutoConfigurationEntry getAutoConfigurationEntry(AnnotationMetadata annotationMetadata) {
+   // 判断是否开启自动配置
+   if (!isEnabled(annotationMetadata)) {
+      return EMPTY_ENTRY;
+   }
+   // 获取@EnableAutoConfiguration注解的属性
+   AnnotationAttributes attributes = getAttributes(annotationMetadata);
+   // 从spring.factories文件中获取配置类的全限定名数组
+   List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);
+   // 去重
+   configurations = removeDuplicates(configurations);
+   // 获取注解中exclude或excludeName排除的类集合
+   Set<String> exclusions = getExclusions(annotationMetadata, attributes);
+   // 检查被排除类是否可以实例化，是否被自动配置所使用，否则抛出异常
+   checkExcludedClasses(configurations, exclusions);
+   // 去除被排除的类
+   configurations.removeAll(exclusions);
+   // 使用spring.factories配置文件中配置的过滤器对自动配置类进行过滤
+   configurations = getConfigurationClassFilter().filter(configurations);
+   // 抛出事件
+   fireAutoConfigurationImportEvents(configurations, exclusions);
+   return new AutoConfigurationEntry(configurations, exclusions);
+}
 </code></pre>
 <p>在这里，我们只需要知道这个<code>getAutoConfigurationEntry()</code>方法是用来获取需要自动配置的bean信息，以及里面每个方法做了什么，有个大概的印象就可以了。</p>
 <p>下面会对每个方法作更近一步的讲解。</p>
-<h3 id="getAttributes-：获取-EnableAutoConfiguration注解属性"><a href="#getAttributes-：获取-EnableAutoConfiguration注解属性" class="headerlink" title="getAttributes()：获取@EnableAutoConfiguration注解属性"></a>getAttributes()：获取@EnableAutoConfiguration注解属性</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> AnnotationAttributes <span class="token function">getAttributes</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   String name <span class="token operator">=</span> <span class="token function">getAnnotationClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   AnnotationAttributes attributes <span class="token operator">=</span> AnnotationAttributes<span class="token punctuation">.</span><span class="token function">fromMap</span><span class="token punctuation">(</span>metadata<span class="token punctuation">.</span><span class="token function">getAnnotationAttributes</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>attributes<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token string">"No auto-configuration attributes found. Is "</span> <span class="token operator">+</span> metadata<span class="token punctuation">.</span><span class="token function">getClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-         <span class="token operator">+</span> <span class="token string">" annotated with "</span> <span class="token operator">+</span> ClassUtils<span class="token punctuation">.</span><span class="token function">getShortName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">return</span> attributes<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h3 id="getAttributes-：获取-EnableAutoConfiguration注解属性"><a href="#getAttributes-：获取-EnableAutoConfiguration注解属性" class="headerlink" title="getAttributes()：获取@EnableAutoConfiguration注解属性"></a>getAttributes()：获取@EnableAutoConfiguration注解属性</h3><pre class=" language-lang-java"><code class="language-lang-java">protected AnnotationAttributes getAttributes(AnnotationMetadata metadata) {
+   String name = getAnnotationClass().getName();
+   AnnotationAttributes attributes = AnnotationAttributes.fromMap(metadata.getAnnotationAttributes(name, true));
+   Assert.notNull(attributes, () -> "No auto-configuration attributes found. Is " + metadata.getClassName()
+         + " annotated with " + ClassUtils.getShortName(name) + "?");
+   return attributes;
+}
 </code></pre>
 <p><img src="/2022/07/19/springboot02/image-20220719222804596.png" alt="getAttributes调用栈"></p>
 <p>这里我们可以看到，这个方法就是获取<code>@EnableAutoConfiguration</code>注解的属性。</p>
-<h3 id="getCandidateConfigurations-：从spring-factories文件获取需要配置的bean"><a href="#getCandidateConfigurations-：从spring-factories文件获取需要配置的bean" class="headerlink" title="getCandidateConfigurations()：从spring.factories文件获取需要配置的bean"></a><font color="skyblue">getCandidateConfigurations()：从spring.factories文件获取需要配置的bean</font></h3><pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> List<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">getCandidateConfigurations</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">,</span> AnnotationAttributes attributes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//获取需要配置的bean全限定名列表。</span>
-    List<span class="token operator">&lt;</span>String<span class="token operator">></span> configurations <span class="token operator">=</span> 
-        <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span>SpringFactoriesLoader<span class="token punctuation">.</span><span class="token function">loadFactoryNames</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getSpringFactoriesLoaderFactoryClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getBeanClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ImportCandidates<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>AutoConfiguration<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getBeanClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>configurations<span class="token operator">:</span><span class="token operator">:</span>add<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Assert<span class="token punctuation">.</span><span class="token function">notEmpty</span><span class="token punctuation">(</span>configurations<span class="token punctuation">,</span> <span class="token string">"No auto configuration classes found in META-INF/spring.factories nor in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports. If you are using a custom packaging, make sure that file is correct."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> configurations<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h3 id="getCandidateConfigurations-：从spring-factories文件获取需要配置的bean"><a href="#getCandidateConfigurations-：从spring-factories文件获取需要配置的bean" class="headerlink" title="getCandidateConfigurations()：从spring.factories文件获取需要配置的bean"></a><font color="skyblue">getCandidateConfigurations()：从spring.factories文件获取需要配置的bean</font></h3><pre class=" language-lang-java"><code class="language-lang-java">protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+    //获取需要配置的bean全限定名列表。
+    List<String> configurations = 
+        new ArrayList(SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader()));
+    ImportCandidates.load(AutoConfiguration.class, this.getBeanClassLoader()).forEach(configurations::add);
+    Assert.notEmpty(configurations, "No auto configuration classes found in META-INF/spring.factories nor in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports. If you are using a custom packaging, make sure that file is correct.");
+    return configurations;
+}
 </code></pre>
 <p><code>getCandidateConfigurations()</code>方法通过<code>SpringFactoriesLoader</code>的<code>loadFactoryNames()</code>方法从所有的<strong>spring.factories</strong>文件中获取<strong>需要配置的bean全限定名列表</strong>。</p>
 <h4 id="getSpringFactoriesLoaderFactoryClass"><a href="#getSpringFactoriesLoaderFactoryClass" class="headerlink" title="getSpringFactoriesLoaderFactoryClass"></a>getSpringFactoriesLoaderFactoryClass</h4><p>这里我们看到，AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass 被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getSpringFactoriesLoaderFactoryClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> EnableAutoConfiguration<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">protected Class<?> getSpringFactoriesLoaderFactoryClass() {
+    return EnableAutoConfiguration.class;
+}
 </code></pre>
 <p>也就是说，<code>loadFactoryNames()</code>方法获取的也是<code>EnableAutoConfiguration</code>这个注解类下的属性。</p>
-<br>
-
+<p><br></p>
 <p>然后说说SpringFactoriesLoader这个类</p>
 <h4 id="SpringFactoriesLoader"><a href="#SpringFactoriesLoader" class="headerlink" title="SpringFactoriesLoader"></a>SpringFactoriesLoader</h4><p><code>SpringFactoriesLoader</code>会扫描所有jar包类路径下的META-INF/spring.factories文件（写死的），并获取指定接口的配置。</p>
 <p><img src="/2022/07/19/springboot02/image-20220719231151077.png" alt="SpringFactoriesLoader"></p>
 <p>当调用返回值类型为<code>Map&lt;String,List&lt;String&gt;&gt;</code>类型的loadFactories时，内部调用loadSpringFactories，访问本包(org.springframework.boot.autoconfigure)下的META-INF文件夹中的spring.factories。</p>
 <p><img src="/2022/07/19/springboot02/image-20220719232100356.png" alt="loadFactories"></p>
-<br>
-
-<br>
-
+<p><br></p>
+<p><br></p>
 <p>然后聊聊spring.factories文件，先看看AutoConfigurationImportSelector在什么位置？</p>
 <p>AutoConfigurationImportSelector类存在于org.springframework.boot.autoconfigure这个包下，这个包下存储了大量自动化配置类，SpringBoot所有的自动化工作都是在这个包下作用的。</p>
 <p><img src="/2022/07/19/springboot02/image-20220719182551241.png" alt="org.springframework.boot.autoconfigure"></p>
 <p>这些自动化的配置类怎么被加载进容器呢？答案就在META-INF包下的<code>spring.factories</code>与<code>spring-autoconfigure-metadata.properties</code>。spring.factories文件本质上与properties文件相似，其中包含一组或多组键值对。其中，key的取值是接口的全限定名，value的取值是接口实现类的全限定名。一个接口可以设置多个实现类，不同实现类之间使用<code>,</code>隔开。例如：</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><span class="token punctuation">=</span><span class="token attr-value">\
+<pre class=" language-lang-properties"><code class="language-lang-properties">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\
-org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
 </code></pre>
 <p>然而在2.71版本，我并没有在spring.factories文件找到EnableAutoConfiguration，而是找到一些相关的配置，有 <strong>过滤掉不符合条件注解配置类的过滤器</strong> 的包名 等等，可能是因为版本更新对代码进行了修改，这里不多作文章。</p>
 <p><img src="/2022/07/19/springboot02/image-20220719183042898.png" alt="META-INF包下的spring.factories"></p>
 <p><img src="/2022/07/19/springboot02/image-20220719184301912.png" alt="spring-autoconfigure-metadata.properties"></p>
-<h3 id="removeDuplicates-：去重"><a href="#removeDuplicates-：去重" class="headerlink" title="removeDuplicates()：去重"></a>removeDuplicates()：去重</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token operator">&lt;</span>T<span class="token operator">></span> List<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>T<span class="token operator">></span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LinkedHashSet</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h3 id="removeDuplicates-：去重"><a href="#removeDuplicates-：去重" class="headerlink" title="removeDuplicates()：去重"></a>removeDuplicates()：去重</h3><pre class=" language-lang-java"><code class="language-lang-java">protected final <T> List<T> removeDuplicates(List<T> list) {
+   return new ArrayList<>(new LinkedHashSet<>(list));
+}
 </code></pre>
 <p>我们知道<code>SpringFactoriesLoader</code>的<code>loadFactoryNames()</code>方法会从所有jar包类路径下的META-INF/spring.factories读取配置。就是说会从不同的spring.factories文件中读取配置，那么就有可能会出现配置了相同的类，这里就是对这些数据进行去重。</p>
-<h3 id="getExclusions-：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合"><a href="#getExclusions-：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合" class="headerlink" title="getExclusions()：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合"></a>getExclusions()：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">protected</span> Set<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">getExclusions</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">,</span> AnnotationAttributes attributes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   Set<span class="token operator">&lt;</span>String<span class="token operator">></span> excluded <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedHashSet</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   excluded<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span><span class="token function">asList</span><span class="token punctuation">(</span>attributes<span class="token punctuation">,</span> <span class="token string">"exclude"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   excluded<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>attributes<span class="token punctuation">.</span><span class="token function">getStringArray</span><span class="token punctuation">(</span><span class="token string">"excludeName"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   excluded<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span><span class="token function">getExcludeAutoConfigurationsProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">return</span> excluded<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h3 id="getExclusions-：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合"><a href="#getExclusions-：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合" class="headerlink" title="getExclusions()：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合"></a>getExclusions()：获取注解的exclude和excludeName属性配置的需要排除的类全限定名集合</h3><pre class=" language-lang-java"><code class="language-lang-java">protected Set<String> getExclusions(AnnotationMetadata metadata, AnnotationAttributes attributes) {
+   Set<String> excluded = new LinkedHashSet<>();
+   excluded.addAll(asList(attributes, "exclude"));
+   excluded.addAll(Arrays.asList(attributes.getStringArray("excludeName")));
+   excluded.addAll(getExcludeAutoConfigurationsProperty());
+   return excluded;
+}
 </code></pre>
 <p><code>getExclusions</code>方法就是将上面<code>getAttributes()</code>方法获取到<code>@EnableAutoConfiguration</code>注解的exclude和excludeName属性的值加入到excluded集合中。</p>
-<h3 id="checkExcludedClasses-：检查排除类"><a href="#checkExcludedClasses-：检查排除类" class="headerlink" title="checkExcludedClasses()：检查排除类"></a>checkExcludedClasses()：检查排除类</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">checkExcludedClasses</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>String<span class="token operator">></span> configurations<span class="token punctuation">,</span> Set<span class="token operator">&lt;</span>String<span class="token operator">></span> exclusions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   List<span class="token operator">&lt;</span>String<span class="token operator">></span> invalidExcludes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>exclusions<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token keyword">for</span> <span class="token punctuation">(</span>String exclusion <span class="token operator">:</span> exclusions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 判断该类是否可以实例化并且自动配置类列表是否包含该类</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>ClassUtils<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span>exclusion<span class="token punctuation">,</span> <span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>configurations<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>exclusion<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-         invalidExcludes<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>exclusion<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-   <span class="token punctuation">}</span>
-   <span class="token comment" spellcheck="true">// 无效排除列表若不为空，抛出异常</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>invalidExcludes<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token function">handleInvalidExcludes</span><span class="token punctuation">(</span>invalidExcludes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<h3 id="checkExcludedClasses-：检查排除类"><a href="#checkExcludedClasses-：检查排除类" class="headerlink" title="checkExcludedClasses()：检查排除类"></a>checkExcludedClasses()：检查排除类</h3><pre class=" language-lang-java"><code class="language-lang-java">private void checkExcludedClasses(List<String> configurations, Set<String> exclusions) {
+   List<String> invalidExcludes = new ArrayList<>(exclusions.size());
+   for (String exclusion : exclusions) {
+      // 判断该类是否可以实例化并且自动配置类列表是否包含该类
+      if (ClassUtils.isPresent(exclusion, getClass().getClassLoader()) && !configurations.contains(exclusion)) {
+         invalidExcludes.add(exclusion);
+      }
+   }
+   // 无效排除列表若不为空，抛出异常
+   if (!invalidExcludes.isEmpty()) {
+      handleInvalidExcludes(invalidExcludes);
+   }
+}
 </code></pre>
 <p>检查被排除的类是否可以实例化以及自动配置类列表是否包含该类。如果存在无效排除类，那么就抛出异常。</p>
-<h3 id="getConfigurationClassFilter-：获取配置类过滤器"><a href="#getConfigurationClassFilter-：获取配置类过滤器" class="headerlink" title="getConfigurationClassFilter()：获取配置类过滤器"></a>getConfigurationClassFilter()：获取配置类过滤器</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> ConfigurationClassFilter <span class="token function">getConfigurationClassFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>configurationClassFilter <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 获取AutoConfigurationImportFilter过滤器列表</span>
-      List<span class="token operator">&lt;</span>AutoConfigurationImportFilter<span class="token operator">></span> filters <span class="token operator">=</span> <span class="token function">getAutoConfigurationImportFilters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">for</span> <span class="token punctuation">(</span>AutoConfigurationImportFilter filter <span class="token operator">:</span> filters<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-         <span class="token function">invokeAwareMethods</span><span class="token punctuation">(</span>filter<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>configurationClassFilter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConfigurationClassFilter</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>beanClassLoader<span class="token punctuation">,</span> filters<span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">}</span>
-   <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>configurationClassFilter<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h3 id="getConfigurationClassFilter-：获取配置类过滤器"><a href="#getConfigurationClassFilter-：获取配置类过滤器" class="headerlink" title="getConfigurationClassFilter()：获取配置类过滤器"></a>getConfigurationClassFilter()：获取配置类过滤器</h3><pre class=" language-lang-java"><code class="language-lang-java">private ConfigurationClassFilter getConfigurationClassFilter() {
+   if (this.configurationClassFilter == null) {
+      // 获取AutoConfigurationImportFilter过滤器列表
+      List<AutoConfigurationImportFilter> filters = getAutoConfigurationImportFilters();
+      for (AutoConfigurationImportFilter filter : filters) {
+         invokeAwareMethods(filter);
+      }
+      this.configurationClassFilter = new ConfigurationClassFilter(this.beanClassLoader, filters);
+   }
+   return this.configurationClassFilter;
+}
 </code></pre>
 <p><code>getConfigurationClassFilter()</code>方法通过<code>getAutoConfigurationImportFilters()</code>方法获取到spring.factories文件中<code>AutoConfigurationImportFilter</code>接口的配置，然后将其封装到<code>ConfigurationClassFilter</code>对象中。</p>
 <h3 id="AutoConfigurationImportSelector总结"><a href="#AutoConfigurationImportSelector总结" class="headerlink" title="AutoConfigurationImportSelector总结"></a>AutoConfigurationImportSelector总结</h3><p>AutoConfigurationImportSelector类是通过@EnableAutoConfiguration注解引入的，主要作用就是<strong>将所有SpringBoot要引入的自动配置类加载并放入容器之中，这些类的名称都是xxxAutoConfiguration，并且他们的全名都是配置在META-INF/spring.factories配置文件中的EnableAutoConfiguration（<font color="red">新版本有所不同</font>）</strong>，除了这些还有一个强大的功能就是过滤掉不符合条件注解配置类。</p>
@@ -838,22 +835,16 @@ org.springframework.boot.autoconfigure.aop.AopAutoConfiguration</span>
 <p>每一个xxxAutoConfiguration类都有@Configuration 注解，表明这个类是参与Spring配置的。</p>
 <p>每一个xxxAutoConfiguration类都有@EnableConfigurationProperties((xxxProperties.class)) annotation，xxxProperties类就是用于存储自动配置信息的类</p>
 <p><code>AutoConfigurationImportSelector</code>类是<code>ImportSelector</code>的实现类，实现了<code>selectImports()</code>方法。<code>selectImports()</code>方法又调用<code>getAutoConfigurationEntry()</code>方法从spring.factories文件中读取配置类的全限定名列表，并进行过滤，最终得到需要自动配置的类全限定名列表。</p>
-<br>
-
+<p><br></p>
 <h2 id="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"><a href="#问题：为什么有了ComponentScan，还需要AutoConfigurationPackage" class="headerlink" title="问题：为什么有了ComponentScan，还需要AutoConfigurationPackage"></a>问题：为什么有了ComponentScan，还需要AutoConfigurationPackage</h2><p>AutoConfigurationPackage处理的是主程序所在包平级的所有类，ComponentScan（缺省写法，不写value或者basePackages，就是当前主程序所在包）处理的是主程序所在包的平级和子包的所有类。</p>
 <p>AutoConfigurationPackage运行在先，ComponentScan运行在后</p>
 <p>AutoConfigurationPackage不运行的话，ComponentScan无法运行（AutoConfigurationPackage为ComponentScan做了一系列初始化工作）</p>
 <h2 id="SpringBoot自动配置原理总结"><a href="#SpringBoot自动配置原理总结" class="headerlink" title="SpringBoot自动配置原理总结"></a>SpringBoot自动配置原理总结</h2><p>这里我们看到，AutoConfigurationImportSelector的getSpringFactoriesLoaderFactoryClass 被写死返回本包(org.springframework.boot.autoconfigure)下的<strong>EnableAutoConfiguration.class</strong>。</p>
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
 <p><br><br><br><br><br></p>
 <p>体会：初看源码的感觉就像掉进了秦始皇的陵墓一样，令人惊叹的同时又令人充满着困惑，真的是佩服能够书写这种史诗级代码的程序员，这头发掉的值！~</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7035528380753641508">SpringBoot自动配置之AutoConfigurationImportSelector - SpringBoot自动配置(二)</a></p>

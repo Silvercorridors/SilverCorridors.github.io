@@ -506,45 +506,45 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="线程池（Thread-Pool）"><a href="#线程池（Thread-Pool）" class="headerlink" title="线程池（Thread Pool）"></a>线程池（Thread Pool）</h1><p>线程池（Thread Pool）是一种基于池化思想管理线程的工具。线程过多会带来额外的开销，其中包括创建<strong>销毁线程的开销、调度线程的开销</strong>等等，同时也降低了计算机的整体性能。线程池维护多个线程，等待监督管理者分配可并发执行的任务。这种做法，一方面避免了处理任务时创建销毁线程开销的代价，另一方面避免了线程数量膨胀导致的过分调度问题，保证了对内核的充分利用。	</p>
+                <h1 id="线程池（Thread-Pool）"><a href="#线程池（Thread-Pool）" class="headerlink" title="线程池（Thread Pool）"></a>线程池（Thread Pool）</h1><p>线程池（Thread Pool）是一种基于池化思想管理线程的工具。线程过多会带来额外的开销，其中包括创建<strong>销毁线程的开销、调度线程的开销</strong>等等，同时也降低了计算机的整体性能。线程池维护多个线程，等待监督管理者分配可并发执行的任务。这种做法，一方面避免了处理任务时创建销毁线程开销的代价，另一方面避免了线程数量膨胀导致的过分调度问题，保证了对内核的充分利用。    </p>
 <h2 id="一、Java中常用的四种线程池"><a href="#一、Java中常用的四种线程池" class="headerlink" title="一、Java中常用的四种线程池"></a>一、Java中常用的四种线程池</h2><p>在Java中使用线程池，可以用ThreadPoolExecutor的构造函数直接创建出线程池实例。不过，在Executors类中，为我们提供了常用线程池的创建方法。接下来我们就来了解常用的四种：<strong>newFixedThreadPool</strong>、<strong>newCachedThreadPool</strong>、<strong>newScheduledThreadPool</strong>、<strong>newSingleThreadExecutor</strong></p>
 <h3 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h3><p>创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。创建方法：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">int</span> nThreads<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>nThreads<span class="token punctuation">,</span> nThreads<span class="token punctuation">,</span>
-                                      0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-                                      <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public static ExecutorService newFixedThreadPool(int nThreads) {
+        return new ThreadPoolExecutor(nThreads, nThreads,
+                                      0L, TimeUnit.MILLISECONDS,
+                                      new LinkedBlockingQueue<Runnable>());
+}
 </code></pre>
-<p>从构造方法可以看出，它创建了一个固定大小的线程池，每次提交一个任务就创建一个线程，直到线程达到线程池的最大值<code>nThreads</code>。线程池的大小一旦达到最大值后，再有新的任务提交时则放入**<a target="_blank" rel="noopener" href="https://blog.csdn.net/u022812849/article/details/114698692">无界阻塞队列</a>**中，等到有线程空闲时，再从队列中取出任务继续执行。<br>如何使用<code>newFixedThreadPool</code>？示例代码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> test<span class="token punctuation">;</span>  
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>ExecutorService<span class="token punctuation">;</span>  
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>Executors<span class="token punctuation">;</span>  
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolExecutorTest</span> <span class="token punctuation">{</span>  
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        ExecutorService fixedThreadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-          <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">12</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-               <span class="token keyword">final</span> <span class="token keyword">int</span> index <span class="token operator">=</span> i<span class="token punctuation">;</span>  
-               fixedThreadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                     <span class="token keyword">try</span> <span class="token punctuation">{</span>  
-                          System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                          Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                     <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                          e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                     <span class="token punctuation">}</span>	  
-                <span class="token punctuation">}</span>  
-               <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-          <span class="token punctuation">}</span>  
-     <span class="token punctuation">}</span>  
-<span class="token punctuation">}</span>  
+<p>从构造方法可以看出，它创建了一个固定大小的线程池，每次提交一个任务就创建一个线程，直到线程达到线程池的最大值<code>nThreads</code>。线程池的大小一旦达到最大值后，再有新的任务提交时则放入<strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/u022812849/article/details/114698692">无界阻塞队列</a></strong>中，等到有线程空闲时，再从队列中取出任务继续执行。<br>如何使用<code>newFixedThreadPool</code>？示例代码如下：</p>
+<pre class=" language-lang-java"><code class="language-lang-java">package test;  
+import java.util.concurrent.ExecutorService;  
+import java.util.concurrent.Executors;  
+public class ThreadPoolExecutorTest {  
+    public static void main(String[] args) {  
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);  
+          for (int i = 0; i < 12; i++) {  
+               final int index = i;  
+               fixedThreadPool.execute(new Runnable() {  
+                public void run() {  
+                     try {  
+                          System.out.println(index);  
+                          Thread.sleep(3000);  
+                     } catch (InterruptedException e) {  
+                          e.printStackTrace();  
+                     }      
+                }  
+               });
+          }  
+     }  
+}
 </code></pre>
 <p>线程池大小为3，每个任务输出index后sleep 3秒，所以每三秒打印3个数字。<br>定长线程池的大小最好根据系统资源进行设置。如Runtime.getRuntime().availableProcessors()</p>
 <h3 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h3><p>看一下这种线程池的创建方法：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">,</span>
-                                      60L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">,</span>
-                                      <span class="token keyword">new</span> <span class="token class-name">SynchronousQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public static ExecutorService newCachedThreadPool() {
+        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                      60L, TimeUnit.SECONDS,
+                                      new SynchronousQueue<Runnable>());
+    }
 </code></pre>
 <p>从构造方法可以看出，它创建了一个可缓存的线程池。当有新的任务提交时，有空闲线程则直接处理任务，没有空闲线程则创建新的线程处理任务，队列中不储存任务。线程池不对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。如果线程空闲时间超过了60秒就会被回收。</p>
 <h3 id="使用线程池可以带来一系列好处："><a href="#使用线程池可以带来一系列好处：" class="headerlink" title="使用线程池可以带来一系列好处："></a>使用线程池可以带来一系列好处：</h3><ul>
@@ -553,104 +553,104 @@
 <li><strong>提高线程的可管理性</strong>：线程是稀缺资源，如果无限制创建，不仅会消耗系统资源，还会因为线程的不合理分布导致资源调度失衡，降低系统的稳定性。使用线程池可以进行统一的分配、调优和监控。</li>
 <li><strong>提供更多更强大的功能</strong>：线程池具备可拓展性，允许开发人员向其中增加更多的功能。比如延时定时线程池ScheduledThreadPoolExecutor，就允许任务延期执行或定期执行。</li>
 </ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OneMoreStudy</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ExecutorService cachedThreadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">final</span> <span class="token keyword">int</span> index <span class="token operator">=</span> i<span class="token punctuation">;</span>
-            cachedThreadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token annotation punctuation">@Override</span>
-                    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                        SimpleDateFormat sdf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"HH:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"运行时间: "</span> <span class="token operator">+</span> sdf<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        cachedThreadPool<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class OneMoreStudy {
+    public static void main(String[] args) {
+        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            final int index = i;
+            cachedThreadPool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                        System.out.println("运行时间: " + sdf.format(new Date()) + " " + index);
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        cachedThreadPool.shutdown();
+    }
+}
 </code></pre>
 <p>因为这种线程有新的任务提交，就会创建新的线程（线程池中没有空闲线程时），不需要等待，所以提交的5个任务的运行时间是一样的，运行结果如下：</p>
-<pre class=" language-java"><code class="language-java">运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">45</span><span class="token operator">:</span><span class="token number">18</span> <span class="token number">2</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">45</span><span class="token operator">:</span><span class="token number">18</span> <span class="token number">1</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">45</span><span class="token operator">:</span><span class="token number">18</span> <span class="token number">3</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">45</span><span class="token operator">:</span><span class="token number">18</span> <span class="token number">4</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">45</span><span class="token operator">:</span><span class="token number">18</span> <span class="token number">0</span>
+<pre class=" language-lang-java"><code class="language-lang-java">运行时间: 08:45:18 2
+运行时间: 08:45:18 1
+运行时间: 08:45:18 3
+运行时间: 08:45:18 4
+运行时间: 08:45:18 0
 </code></pre>
 <h3 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h3><p>创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。看一下这种线程池的创建方法：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FinalizableDelegatedExecutorService</span>
-            <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
-                                    0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-                                    <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public static ExecutorService newSingleThreadExecutor() {
+        return new FinalizableDelegatedExecutorService
+            (new ThreadPoolExecutor(1, 1,
+                                    0L, TimeUnit.MILLISECONDS,
+                                    new LinkedBlockingQueue<Runnable>()));
+}
 </code></pre>
 <p>从构造方法可以看出，它创建了一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序执行。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OneMoreStudy</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ExecutorService singleThreadExecutor <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> <span class="token keyword">int</span> index <span class="token operator">=</span> i<span class="token punctuation">;</span>
-        singleThreadExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token annotation punctuation">@Override</span>
-                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                        SimpleDateFormat sdf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"HH:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"运行时间: "</span> <span class="token operator">+</span> sdf<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        singleThreadExecutor<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class OneMoreStudy {
+    public static void main(String[] args) {
+        ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+        for (int i = 0; i < 5; i++) {
+        final int index = i;
+        singleThreadExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                        System.out.println("运行时间: " + sdf.format(new Date()) + " " + index);
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }});
+        }
+        singleThreadExecutor.shutdown();
+    }
+}
 </code></pre>
 <p>因为该线程池类似于单线程执行，所以先执行完前一个任务后，再顺序执行下一个任务，<br>运行结果如下：</p>
-<pre class=" language-java"><code class="language-java">运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">54</span><span class="token operator">:</span><span class="token number">17</span> <span class="token number">0</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">54</span><span class="token operator">:</span><span class="token number">19</span> <span class="token number">1</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">54</span><span class="token operator">:</span><span class="token number">21</span> <span class="token number">2</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">54</span><span class="token operator">:</span><span class="token number">23</span> <span class="token number">3</span>
-运行时间<span class="token operator">:</span> <span class="token number">08</span><span class="token operator">:</span><span class="token number">54</span><span class="token operator">:</span><span class="token number">25</span> <span class="token number">4</span>
+<pre class=" language-lang-java"><code class="language-lang-java">运行时间: 08:54:17 0
+运行时间: 08:54:19 1
+运行时间: 08:54:21 2
+运行时间: 08:54:23 3
+运行时间: 08:54:25 4
 </code></pre>
 <p>既然类似于单线程执行，那么这种线程池还有存在的必要吗？这里的单线程执行指的是线程池内部，从线程池外的角度看，主线程在提交任务到线程池时并没有阻塞，仍然是异步的。</p>
 <h3 id="newScheduledThreadPool"><a href="#newScheduledThreadPool" class="headerlink" title="newScheduledThreadPool"></a>newScheduledThreadPool</h3><p>这个方法创建了一个固定大小的线程池，支持定时及周期性任务执行。<br>首先看一下定时执行的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OneMoreStudy</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">final</span> SimpleDateFormat sdf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"HH:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ScheduledExecutorService scheduledThreadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newScheduledThreadPool</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"提交时间: "</span> <span class="token operator">+</span> sdf<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        scheduledThreadPool<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token annotation punctuation">@Override</span>
-                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"运行时间: "</span> <span class="token operator">+</span> sdf<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        scheduledThreadPool<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class OneMoreStudy {
+    public static void main(String[] args) {
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);
+        System.out.println("提交时间: " + sdf.format(new Date()));
+        scheduledThreadPool.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("运行时间: " + sdf.format(new Date()));
+                }
+            }, 3, TimeUnit.SECONDS);
+        scheduledThreadPool.shutdown();
+    }
+}
 </code></pre>
 <p>使用该线程池的<code>schedule</code>方法，延迟3秒钟后执行任务，运行结果如下：</p>
-<pre class=" language-java"><code class="language-java">提交时间<span class="token operator">:</span> <span class="token number">09</span><span class="token operator">:</span><span class="token number">11</span><span class="token operator">:</span><span class="token number">39</span>
-运行时间<span class="token operator">:</span> <span class="token number">09</span><span class="token operator">:</span><span class="token number">11</span><span class="token operator">:</span><span class="token number">42</span>
+<pre class=" language-lang-java"><code class="language-lang-java">提交时间: 09:11:39
+运行时间: 09:11:42
 </code></pre>
 <p>定期执行示例代码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolExecutorTest</span> <span class="token punctuation">{</span>  
-<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-    ScheduledExecutorService scheduledThreadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newScheduledThreadPool</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-    scheduledThreadPool<span class="token punctuation">.</span><span class="token function">scheduleAtFixedRate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-           <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"delay 1 seconds, and excute every 3 seconds"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-           <span class="token punctuation">}</span>  
-      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>  
- <span class="token punctuation">}</span>  
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class ThreadPoolExecutorTest {  
+public static void main(String[] args) {  
+    ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);  
+    scheduledThreadPool.scheduleAtFixedRate(new Runnable() {  
+           public void run() {  
+        System.out.println("delay 1 seconds, and excute every 3 seconds");  
+           }  
+      }, 1, 3, TimeUnit.SECONDS);  
+ }  
+}
 </code></pre>
 <p>表示延迟1秒后每3秒执行一次。</p>
 <h2 id="二、线程池总体设计"><a href="#二、线程池总体设计" class="headerlink" title="二、线程池总体设计"></a>二、线程池总体设计</h2><p>Java中的线程池核心实现类是ThreadPoolExecutor。我们首先来看一下ThreadPoolExecutor的UML类图，了解下ThreadPoolExecutor的继承关系。</p>
