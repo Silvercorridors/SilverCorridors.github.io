@@ -507,7 +507,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="触发器（Trigger）"><a href="#触发器（Trigger）" class="headerlink" title="触发器（Trigger）"></a>触发器（Trigger）</h1><p>触发器 (Trigger) 是一个存储过程（stored Procedure），在适当条件下被调用的过程，有点类似于回调函数与生命周期函数(在某个时刻会自动执行的函数)。触发器是mysql5新增的功能，通常在进行增删改操作后会做一些触发操作。</p>
-<h2 id="创建触发器的语法"><a href="#创建触发器的语法" class="headerlink" title="创建触发器的语法"></a>创建触发器的语法</h2><pre class=" language-lang-mysql"><code class="language-lang-mysql">CREATE
+<h2 id="创建触发器的语法"><a href="#创建触发器的语法" class="headerlink" title="创建触发器的语法"></a>创建触发器的语法</h2><pre class=" language-mysql"><code class="language-mysql">CREATE
     [DEFINER = { user | CURRENT_USER }]
 TRIGGER trigger_name
 trigger_time trigger_event
@@ -534,7 +534,7 @@ trigger_order: { FOLLOWS | PRECEDES } other_trigger_name
 <p>CREATE TRIGGER 触发器名 BEFORE|AFTER 触发事件 ON 表名 FOR EACH ROW 执行语句;</p>
 </blockquote>
 <p>例1：创建了一个名为trig1的触发器，一旦在work表中有插入动作，就会自动往time表里插入当前时间</p>
-<pre class=" language-lang-mysql"><code class="language-lang-mysql">mysql> CREATE TRIGGER trig1 AFTER INSERT
+<pre class=" language-mysql"><code class="language-mysql">mysql> CREATE TRIGGER trig1 AFTER INSERT
     -> ON `work` FOR EACH ROW
     -> INSERT INTO time VALUES(NOW());
 </code></pre>
@@ -546,7 +546,7 @@ trigger_order: { FOLLOWS | PRECEDES } other_trigger_name
 <p>END;</p>
 </blockquote>
 <p>例2：定义一个触发器，一旦有满足条件的删除操作，就会执行BEGIN和END中的语句</p>
-<pre class=" language-lang-mysql"><code class="language-lang-mysql">mysql> DELIMITER ||
+<pre class=" language-mysql"><code class="language-mysql">mysql> DELIMITER ||
 mysql> CREATE TRIGGER trig2 BEFORE DELETE
     -> ON `work` FOR EACH ROW
     -> BEGIN
@@ -562,10 +562,10 @@ mysql> DELIMITER ;
 <li>在DELETE型触发器中，OLD用来表示将要或已经被删除的原数据；</li>
 </ol>
 <p>使用方法：</p>
-<pre class=" language-lang-mysql"><code class="language-lang-mysql">NEW.columnName （columnName为相应数据表某一列名）
+<pre class=" language-mysql"><code class="language-mysql">NEW.columnName （columnName为相应数据表某一列名）
 </code></pre>
 <p>另外，OLD是只读的，而NEW则可以在触发器中使用 SET 赋值，这样不会再次触发触发器，造成循环调用（如每插入一个学生前，都在其学号前加“2013”）。</p>
-<pre class=" language-lang-mysql"><code class="language-lang-mysql">mysql> CREATE TABLE account (acct_num INT, amount DECIMAL(10,2));
+<pre class=" language-mysql"><code class="language-mysql">mysql> CREATE TABLE account (acct_num INT, amount DECIMAL(10,2));
 mysql> INSERT INTO account VALUES(137,14.98),(141,1937.50),(97,-100.00);
 
 mysql> delimiter $$
@@ -612,7 +612,8 @@ mysql> select * from account;
 <p>结果，显示所有触发器的详细信息；同时，该方法可以查询制定触发器的详细信息。</p>
 <pre><code>mysql&gt; select * from information_schema.triggers 
     -&gt; where trigger_name='upd_check'\G;
-</code></pre><p>Tips：</p>
+</code></pre>
+<p>Tips：</p>
 <p>　　<strong>所有触发器信息都存储在information_schema数据库下的triggers表中</strong>，可以使用SELECT语句查询，如果触发器信息过多，最好通过TRIGGER_NAME字段指定查询。</p>
 <p>三、删除触发器</p>
 <blockquote>
@@ -621,7 +622,7 @@ mysql> select * from account;
 <p>删除触发器之后最好使用上面的方法查看一遍；同时，也可以使用database.trig来指定某个数据库中的触发器。</p>
 <p>下面由一个实例来完成今天的学习。</p>
 <h2 id="例子：股票涨跌幅"><a href="#例子：股票涨跌幅" class="headerlink" title="例子：股票涨跌幅"></a>例子：股票涨跌幅</h2><p>我们以股票为例，股票由日期、当天尾盘价格、成交量组成，首先创一个table。</p>
-<pre class=" language-lang-mysql"><code class="language-lang-mysql"># 1.例子：股票收盘价,计算每天相对的涨跌
+<pre class=" language-mysql"><code class="language-mysql"># 1.例子：股票收盘价,计算每天相对的涨跌
 # 计算规则：(今天的收盘价-前一天的收盘价)/前一天的收盘价 × 100% = ((今天收盘价/前一天收盘价) - 1 ) × 100%
 USE WORLD;
 DROP TABLE IF EXISTS STOCK_DAILY;
@@ -635,7 +636,7 @@ CREATE TABLE STOCK_DAILY(
 -- 把生成的INCREASINGRATE写入表中
 ALTER TABLE STOCK_DAILY ADD INCREASINGRATE DECIMAL(10,2);
 </code></pre>
-<h3 id="利用Trigger使得数据被insert时自动计算涨跌幅"><a href="#利用Trigger使得数据被insert时自动计算涨跌幅" class="headerlink" title="利用Trigger使得数据被insert时自动计算涨跌幅"></a>利用Trigger使得数据被insert时自动计算涨跌幅</h3><pre class=" language-lang-mysql"><code class="language-lang-mysql"># 1. INSERT 时自动计算并填写INCREASINGRATE
+<h3 id="利用Trigger使得数据被insert时自动计算涨跌幅"><a href="#利用Trigger使得数据被insert时自动计算涨跌幅" class="headerlink" title="利用Trigger使得数据被insert时自动计算涨跌幅"></a>利用Trigger使得数据被insert时自动计算涨跌幅</h3><pre class=" language-mysql"><code class="language-mysql"># 1. INSERT 时自动计算并填写INCREASINGRATE
 DROP TRIGGER IF EXISTS UPDATE_INCREASINGRATE_TGR;
 # 创建一个触发器
 CREATE TRIGGER UPDATE_INCREASINGRATE_TGR
@@ -647,7 +648,7 @@ BEGIN
     SELECT CLOSE_PRICE FROM stock_daily WHERE DATE = NEW.DATE - 1 INTO PRE_CLOSE_PRICE; 
     # 避免排他锁不用insert
     SET NEW.INCREASINGRATE = (NEW.CLOSE_PRICE/PRE_CLOSE_PRICE - 1) * 100.0;
-
+    
 END;
 
 INSERT INTO STOCK_DAILY
@@ -664,7 +665,7 @@ VALUES
 <p><img src="/2022/06/19/database01/image-20220629234004915.png" alt="image-20220629234004915"></p>
 <p>要注意的是，<strong>在增删改的时候，当前的数据记录，不可以在被Triger增删改</strong>。</p>
 <p><img src="/image-20220629234650170.png" alt="image-20220629234650170"></p>
-<h3 id="Trigger如何取消正在运行的增删改操作"><a href="#Trigger如何取消正在运行的增删改操作" class="headerlink" title="Trigger如何取消正在运行的增删改操作"></a>Trigger如何取消正在运行的增删改操作</h3><pre class=" language-lang-mysql"><code class="language-lang-mysql">DROP TRIGGER IF EXISTS UPDATE_INCREASINGRATE_TGR;
+<h3 id="Trigger如何取消正在运行的增删改操作"><a href="#Trigger如何取消正在运行的增删改操作" class="headerlink" title="Trigger如何取消正在运行的增删改操作"></a>Trigger如何取消正在运行的增删改操作</h3><pre class=" language-mysql"><code class="language-mysql">DROP TRIGGER IF EXISTS UPDATE_INCREASINGRATE_TGR;
 # 创建一个触发器
 CREATE TRIGGER UPDATE_INCREASINGRATE_TGR
 AFTER INSERT ON STOCK_DAILY # 在对表进行插入操作时
@@ -1152,12 +1153,12 @@ VALUES
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
                     <a href="/tags/MySQL/">
                         <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
                     </a>
                     
                 </div>

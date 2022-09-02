@@ -480,7 +480,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.7k
                 </div>
                 
 
@@ -506,70 +506,70 @@
 <p><strong>WebJars是将web前端资源（js，css等）打成jar包文件</strong>，然后借助Maven工具，以jar包形式对web前端资源进行统一依赖管理，保证这些Web资源版本唯一性。WebJars的jar包部署在Maven中央仓库上。</p>
 <h3 id="自动配置的原理"><a href="#自动配置的原理" class="headerlink" title="自动配置的原理"></a>自动配置的原理</h3><p>在WebMvcAutoConfiguration类下的<code>addResourceHandlers</code>方法会将 web 对应url为 /webjars/** 的静态资源自动映射 =&gt; classpath:/META-INF/resources/webjars</p>
 <p>addResourceHandlers.代码如下:</p>
-<pre class=" language-lang-java"><code class="language-lang-java">public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    // 如果spring.resources.addMappings 为false,则不进行处理
-    if (!this.resourceProperties.isAddMappings()) {
-        logger.debug("Default resource handling disabled");
-        return;
-    }
-    // 获得缓存时间,默认没配置
-    Integer cachePeriod = this.resourceProperties.getCachePeriod();
-    if (!registry.hasMappingForPattern("/webjars/**")) {
-        // 如果ResourceHandlerRegistry中不包含/webjars/**的路径映射,
-        // 则添加 /webjars/** --> classpath:/META-INF/resources/webjars/ 的映射规则
-        customizeResourceHandlerRegistration(
-                registry.addResourceHandler("/webjars/**")
-                        .addResourceLocations(
-                                "classpath:/META-INF/resources/webjars/")
-                .setCachePeriod(cachePeriod));
-    }
-    // 获得静态资源的映射路径,默认为 /**
-    String staticPathPattern = this.mvcProperties.getStaticPathPattern();
-    if (!registry.hasMappingForPattern(staticPathPattern)) {
-        // 如果ResourceHandlerRegistry中不包含静态资源的映射路径,
-        // 则添加 staticPathPattern --> classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/, classpath:/public/ 的映射规则
-        customizeResourceHandlerRegistration(
-                registry.addResourceHandler(staticPathPattern)
-                        .addResourceLocations(
-                                this.resourceProperties.getStaticLocations())
-                .setCachePeriod(cachePeriod));
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addResourceHandlers</span><span class="token punctuation">(</span>ResourceHandlerRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 如果spring.resources.addMappings 为false,则不进行处理</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>resourceProperties<span class="token punctuation">.</span><span class="token function">isAddMappings</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"Default resource handling disabled"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 获得缓存时间,默认没配置</span>
+    Integer cachePeriod <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>resourceProperties<span class="token punctuation">.</span><span class="token function">getCachePeriod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>registry<span class="token punctuation">.</span><span class="token function">hasMappingForPattern</span><span class="token punctuation">(</span><span class="token string">"/webjars/**"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 如果ResourceHandlerRegistry中不包含/webjars/**的路径映射,</span>
+        <span class="token comment" spellcheck="true">// 则添加 /webjars/** --> classpath:/META-INF/resources/webjars/ 的映射规则</span>
+        <span class="token function">customizeResourceHandlerRegistration</span><span class="token punctuation">(</span>
+                registry<span class="token punctuation">.</span><span class="token function">addResourceHandler</span><span class="token punctuation">(</span><span class="token string">"/webjars/**"</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">addResourceLocations</span><span class="token punctuation">(</span>
+                                <span class="token string">"classpath:/META-INF/resources/webjars/"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setCachePeriod</span><span class="token punctuation">(</span>cachePeriod<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 获得静态资源的映射路径,默认为 /**</span>
+    String staticPathPattern <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mvcProperties<span class="token punctuation">.</span><span class="token function">getStaticPathPattern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>registry<span class="token punctuation">.</span><span class="token function">hasMappingForPattern</span><span class="token punctuation">(</span>staticPathPattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 如果ResourceHandlerRegistry中不包含静态资源的映射路径,</span>
+        <span class="token comment" spellcheck="true">// 则添加 staticPathPattern --> classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/, classpath:/public/ 的映射规则</span>
+        <span class="token function">customizeResourceHandlerRegistration</span><span class="token punctuation">(</span>
+                registry<span class="token punctuation">.</span><span class="token function">addResourceHandler</span><span class="token punctuation">(</span>staticPathPattern<span class="token punctuation">)</span>
+                        <span class="token punctuation">.</span><span class="token function">addResourceLocations</span><span class="token punctuation">(</span>
+                                <span class="token keyword">this</span><span class="token punctuation">.</span>resourceProperties<span class="token punctuation">.</span><span class="token function">getStaticLocations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setCachePeriod</span><span class="token punctuation">(</span>cachePeriod<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <ol>
 <li>如果spring.resources.addMappings 为false,则不进行处理.否则进入第2步</li>
 <li>获得缓存时间,可通过spring.resources.cachePeriod 配置.</li>
-<li>如果ResourceHandlerRegistry中不包含/webjars/<strong> 的路径映射,则添加 /webjars/</strong> –&gt; classpath:/META-INF/resources/webjars/ 的映射规则</li>
+<li>如果ResourceHandlerRegistry中不包含/webjars/** 的路径映射,则添加 /webjars/** –&gt; classpath:/META-INF/resources/webjars/ 的映射规则</li>
 <li>如果通过spring.mvc.staticPathPattern 配置的静态资源的映射路径在ResourceHandlerRegistry不存在,则添加 配置映射路径 –&gt;classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/, classpath:/public/ 的映射规则</li>
 </ol>
 <h3 id="欢迎页映射"><a href="#欢迎页映射" class="headerlink" title="欢迎页映射"></a>欢迎页映射</h3><p>在WebMvcAutoConfiguration类下，welcomePageHandlerMapping.代码如下:</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@Bean
-public WelcomePageHandlerMapping welcomePageHandlerMapping(ApplicationContext applicationContext, FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider) {
-    WelcomePageHandlerMapping welcomePageHandlerMapping = new WelcomePageHandlerMapping(new TemplateAvailabilityProviders(applicationContext), applicationContext, this.getWelcomePage(), this.mvcProperties.getStaticPathPattern());
-    welcomePageHandlerMapping.setInterceptors(this.getInterceptors(mvcConversionService, mvcResourceUrlProvider));
-    welcomePageHandlerMapping.setCorsConfigurations(this.getCorsConfigurations());
-    return welcomePageHandlerMapping;
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token keyword">public</span> WelcomePageHandlerMapping <span class="token function">welcomePageHandlerMapping</span><span class="token punctuation">(</span>ApplicationContext applicationContext<span class="token punctuation">,</span> FormattingConversionService mvcConversionService<span class="token punctuation">,</span> ResourceUrlProvider mvcResourceUrlProvider<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    WelcomePageHandlerMapping welcomePageHandlerMapping <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WelcomePageHandlerMapping</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TemplateAvailabilityProviders</span><span class="token punctuation">(</span>applicationContext<span class="token punctuation">)</span><span class="token punctuation">,</span> applicationContext<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getWelcomePage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mvcProperties<span class="token punctuation">.</span><span class="token function">getStaticPathPattern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    welcomePageHandlerMapping<span class="token punctuation">.</span><span class="token function">setInterceptors</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getInterceptors</span><span class="token punctuation">(</span>mvcConversionService<span class="token punctuation">,</span> mvcResourceUrlProvider<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    welcomePageHandlerMapping<span class="token punctuation">.</span><span class="token function">setCorsConfigurations</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getCorsConfigurations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> welcomePageHandlerMapping<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>getWelcomePage()</p>
-<pre class=" language-lang-java"><code class="language-lang-java">private Resource getWelcomePage() {
-    String[] var1 = this.resourceProperties.getStaticLocations();
-    int var2 = var1.length;
-    // 从StaticLoaction，按照顺序查找index
-    for(int var3 = 0; var3 < var2; ++var3) {
-        String location = var1[var3];
-        Resource indexHtml = this.getIndexHtml(location);
-        if (indexHtml != null) {
-            return indexHtml;
-        }
-    }
-    ServletContext servletContext = this.getServletContext();
-    if (servletContext != null) {
-        return this.getIndexHtml((Resource)(new ServletContextResource(servletContext, "/")));
-    } else {
-        return null;
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Resource <span class="token function">getWelcomePage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String<span class="token punctuation">[</span><span class="token punctuation">]</span> var1 <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>resourceProperties<span class="token punctuation">.</span><span class="token function">getStaticLocations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> var2 <span class="token operator">=</span> var1<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 从StaticLoaction，按照顺序查找index</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> var3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> var3 <span class="token operator">&lt;</span> var2<span class="token punctuation">;</span> <span class="token operator">++</span>var3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        String location <span class="token operator">=</span> var1<span class="token punctuation">[</span>var3<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Resource indexHtml <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getIndexHtml</span><span class="token punctuation">(</span>location<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>indexHtml <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> indexHtml<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    ServletContext servletContext <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>servletContext <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getIndexHtml</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Resource<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletContextResource</span><span class="token punctuation">(</span>servletContext<span class="token punctuation">,</span> <span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>默认拦截路径为/**, 首页为在如下路径下查找:</p>
 <ul>
@@ -579,114 +579,117 @@ public WelcomePageHandlerMapping welcomePageHandlerMapping(ApplicationContext ap
 <li>classpath:/public/index.html</li>
 </ul>
 <h3 id="哪些配置可以自定义"><a href="#哪些配置可以自定义" class="headerlink" title="哪些配置可以自定义"></a>哪些配置可以自定义</h3><p>static-location:自定义静态资源文件夹位置</p>
-<pre class=" language-lang-properties"><code class="language-lang-properties">spring.web.resources.static-locations=classpath:/abcd/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.web.resources.static-locations</span><span class="token punctuation">=</span><span class="token attr-value">classpath:/abcd/, classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/</span>
 </code></pre>
 <p>static-path-pattern: 映射位置</p>
-<pre class=" language-lang-properties"><code class="language-lang-properties">spring.mvc.static-path-pattern=/aaa/**
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.mvc.static-path-pattern</span><span class="token punctuation">=</span><span class="token attr-value">/aaa/**</span>
 </code></pre>
 <p>但是这样欢迎页就无法实现了，解决办法如下（添加页面跳转）</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@Controller
-public class MyController {
-    @RequestMapping("/")
-    public String welcomePage(){
-        return "forward:/aaa/index.html";
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyController</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">welcomePage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"forward:/aaa/index.html"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h2 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a><strong>模板引擎</strong></h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。</p>
 <p>模板引擎的实现方式有很多，最简单的是“置换型”模板引擎，这类模板引擎只是将指定模板内容（字符串）中的特定标记（子字符串）替换一下便生成了最终需要的业务数据（比如网页）。</p>
 <p>置换型模板引擎实现简单，但其效率低下，无法满足高负载的应用需求（比如有海量访问的网站），因此还出现了“解释型”模板引擎和“编译型”模板引擎等。</p>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>模板的诞生是为了将显示与数据分离，其本质是将模板文件和数据通过模板引擎生成最终的HTML代码（如图）</p>
-<p><img src="/2022/07/22/springboot05/image1(24" alt="模板引擎">.png)</p>
+<p><img src="/2022/07/22/springboot05/image1(24).png" alt="模板引擎"></p>
 <p>模板引擎的基本机理就是替换（转换），将指定的标签转换为需要的业务数据；将指定的伪语句按照某种流程来变换输出。</p>
 <h3 id="Thymeleaf"><a href="#Thymeleaf" class="headerlink" title="Thymeleaf"></a>Thymeleaf</h3><p>　　简单说， Thymeleaf 是一个跟 Velocity、FreeMarker 类似的模板引擎，它可以完全替代 JSP 。</p>
 <p>启用Thymeleaf，只需要在 <code>&lt;html&gt;</code>加上这个</p>
-<pre class=" language-lang-html"><code class="language-lang-html"><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">xmlns:</span>th</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.thymeleaf.org<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 </code></pre>
-<h4 id="修改-添加标签属性"><a href="#修改-添加标签属性" class="headerlink" title="修改/添加标签属性"></a>修改/添加标签属性</h4><p>模板文件</p>
-<pre class=" language-lang-html"><code class="language-lang-html"><!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        h2{
-            color:red;
-        }
-        .green-div{
-            color: green;
-        }
-        .box-border{
-            border: 3px solid black;
-        }
-    </style>
-</head>
-<body>
-    <div th:text="${msg}">原来的内容</div>
-    <h2>1. th:text,th:utext</h2>
-    <!-- th:text: 不转义字符，HTML标记被当作字符串处理 -->
-    <div th:text="${msg1}"></div>
-    <!-- th:utext: 转义字符，HTML标记被当作标记处理 -->
-    <!-- 修改属性 th:attr，但是不能修改class属性 -->
-    <div th:utext="${msg1}"></div>
-    <!-- th:attrappend 在class后面添加属性，需要添加空格-->   
-    <div id="div1" class="green-div" th:attrappend="class=${' ' + boxBorder}" th:id="${divId}">AAA</div>
-    <!-- th:attrprepend 在class前面添加属性-->   
-    <div id="div2" class="green-div" th:attrprepend="class=${ boxBorder+' '}" th:id="${divId}">BBB</div>
-    <!-- th:attrappend简写方式--> 
-    <div id="div3" class="green-div" th:classappend="${' '+ boxBorder}" th:id="${divId}">CCC</div>
-    <input type="button" value="按钮" th:value="${btnName}"/>
-    <h2>2.   th:attrprepend</h2>
-
-</body>
-</html>
+<h4 id="修改-x2F-添加标签属性"><a href="#修改-x2F-添加标签属性" class="headerlink" title="修改/添加标签属性"></a>修改/添加标签属性</h4><p>模板文件</p>
+<pre class=" language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">xmlns:</span>th</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.thymeleaf.org<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style language-css">
+        <span class="token selector">h2</span><span class="token punctuation">{</span>
+            <span class="token property">color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token selector"><span class="token class">.green-div</span></span><span class="token punctuation">{</span>
+            <span class="token property">color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token selector"><span class="token class">.box-border</span></span><span class="token punctuation">{</span>
+            <span class="token property">border</span><span class="token punctuation">:</span> <span class="token number">3</span>px solid black<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">th:</span>text</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${msg}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>原来的内容<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>1. th:text,th:utext<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- th:text: 不转义字符，HTML标记被当作字符串处理 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">th:</span>text</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${msg1}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- th:utext: 转义字符，HTML标记被当作标记处理 --></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 修改属性 th:attr，但是不能修改class属性 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">th:</span>utext</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${msg1}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- th:attrappend 在class后面添加属性，需要添加空格--></span>   
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>div1<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>green-div<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>attrappend</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>class<span class="token punctuation">=</span>${<span class="token punctuation">'</span> <span class="token punctuation">'</span> + boxBorder}<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${divId}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>AAA<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- th:attrprepend 在class前面添加属性--></span>   
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>div2<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>green-div<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>attrprepend</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>class<span class="token punctuation">=</span>${ boxBorder+<span class="token punctuation">'</span> <span class="token punctuation">'</span>}<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${divId}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>BBB<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- th:attrappend简写方式--></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>div3<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>green-div<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>classappend</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${<span class="token punctuation">'</span> <span class="token punctuation">'</span>+ boxBorder}<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${divId}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>CCC<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>按钮<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${btnName}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>2.   th:attrprepend<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+ 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>在Controller中添加/修改变量属性</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping("/th1")
-public String th1(Map<String,Object>map){
-    map.put("msg","<h1>Hello,World!</h1>");
-    map.put("msg1","<h1>Hello,World!</h1>");
-    map.put("divId","divArgs1");
-    map.put("boxBorder","box-border");
-    map.put("btnName","修改后的按钮");
-    return "th1";
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/th1"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">th1</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Object<span class="token operator">></span>map<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"msg"</span><span class="token punctuation">,</span><span class="token string">"&lt;h1>Hello,World!&lt;/h1>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"msg1"</span><span class="token punctuation">,</span><span class="token string">"&lt;h1>Hello,World!&lt;/h1>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"divId"</span><span class="token punctuation">,</span><span class="token string">"divArgs1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"boxBorder"</span><span class="token punctuation">,</span><span class="token string">"box-border"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"btnName"</span><span class="token punctuation">,</span><span class="token string">"修改后的按钮"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"th1"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h4 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h4><p>th:if</p>
-<pre class=" language-lang-html"><code class="language-lang-html"><!--
+<pre class=" language-html"><code class="language-html"><span class="token comment" spellcheck="true">&lt;!--
         map.put("trueVariable",true);
         map.put("falseVariable",false);
--->
-<div class="background-green" th:if="${trueVariable}">111</div>
-<div class="background-green" th:if="${falseVariable}">222</div>
+--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${trueVariable}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>111<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${falseVariable}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>222<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 </code></pre>
-<pre class=" language-lang-html"><code class="language-lang-html"><!--
+<pre class=" language-html"><code class="language-html"><span class="token comment" spellcheck="true">&lt;!--
            map.put("zeroNumber",0);
         map.put("s1","false");
         map.put("s2","off");
         map.put("s3","no");
         map.put("nullObject",null);
--->
-<!--有哪些情况下 th:if被当作false-->
-<div class="background-green" th:if="${zeroNumber}">333</div>
-<div class="background-green" th:if="${s1}">444</div>
-<div class="background-green" th:if="${s2}">555</div>
-<div class="background-green" th:if="${s3}">666</div>
-<div class="background-green" th:if="${nullObject}">777</div>
-<!--th:unless = th:if not-->
-<div class="background-green" th:unless="${falseVariable}">888888</div>
-<!--th:switch-->
-<div th:switch="${level}">
-    <p th:case="1">Level 1</p>
-    <p th:case="2">Level 2</p>
-    <p th:case="3">Level 3</p>
-    <p th:case="*">Other Levels</p>
-</div>
+--></span>
+<span class="token comment" spellcheck="true">&lt;!--有哪些情况下 th:if被当作false--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${zeroNumber}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>333<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${s1}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>444<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${s2}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>555<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${s3}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>666<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${nullObject}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>777<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!--th:unless = th:if not--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>background-green<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">th:</span>unless</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${falseVariable}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>888888<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!--th:switch--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">th:</span>switch</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${level}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>case</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Level 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>case</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Level 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>case</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Level 3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name"><span class="token namespace">th:</span>case</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>*<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Other Levels<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 </code></pre>
 <h4 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h4><p>对于信息页面，数据格式是一样时，页面通常都是循环迭代它们，写过 JSP 的 JSTL 的就知道，JSTL 有一个 <code>&lt;c:foreach&gt;</code>，同理 Thymeleaf 也有一个 th:each。作用都是一样的，都是用于遍历数组、List、Set、Map 等数据。</p>
 <p>```html</p>
-<p><br><!--后台控制器输出数据：model.addAttribute("userList", User.getUsers());--><br><!--public static List<User> getUsers()，即数据格式为常见的：List<User>--></p>
-<p><br><br><br><br><br><br><br><br><table border="1">    <thead>
+
+<!--后台控制器输出数据：model.addAttribute("userList", User.getUsers());-->
+<!--public static List<User> getUsers()，即数据格式为常见的：List<User>-->
+<table border="1">
+    <thead>
     <tr>
         <th>工号</th>
         <th>姓名</th>
@@ -694,9 +697,15 @@ public String th1(Map<String,Object>map){
         <th>是否已婚</th>
         <th>工资</th>
     </tr>
-    </thead>    <tbody>    <!-- 遍历集合，如果被遍历的变量 userList 为 null 或者不存在，则不会进行遍历，也不报错-->    <tr th:each="user : ${userList}">        <!-- 将用户的主键 uId 存在在 name 属性中-->        <td th:text="${user.uId}" th:name="${user.uId}"></td>
-        <td th:text="${user.uName}"></td>        <!-- 使用dates对象格式化日期--></tr></tbody></table>        &lt;td th:text=”$</p>
-
+    </thead>
+    <tbody>
+    <!-- 遍历集合，如果被遍历的变量 userList 为 null 或者不存在，则不会进行遍历，也不报错-->
+    <tr th:each="user : ${userList}">
+        <!-- 将用户的主键 uId 存在在 name 属性中-->
+        <td th:text="${user.uId}" th:name="${user.uId}"></td>
+        <td th:text="${user.uName}"></td>
+        <!-- 使用dates对象格式化日期-->
+        </tr></tbody></table>
                 
             </div>
             <hr/>

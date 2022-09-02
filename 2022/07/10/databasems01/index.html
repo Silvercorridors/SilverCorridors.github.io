@@ -552,7 +552,7 @@
 <li><strong>事务隔离级别为</strong>：<strong>可重复读时</strong>，写数据会锁住整张表。</li>
 <li><strong>事务隔离级别为</strong>：<strong>串行化时</strong>，读写数据都会锁住整张表。</li>
 </ul>
-<h2 id="3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？"><a href="#3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？" class="headerlink" title="3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？"></a>3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？</h2><pre class=" language-lang-SQL"><code class="language-lang-SQL">SELECT DISTINCT
+<h2 id="3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？"><a href="#3-查询语句不同元素（where、jion、limit、group-by、having等等）执行先后顺序？" class="headerlink" title="3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？"></a>3. 查询语句不同元素（where、jion、limit、group by、having等等）执行先后顺序？</h2><pre class=" language-SQL"><code class="language-SQL">SELECT DISTINCT
     列名
 FROM
     表名1
@@ -573,20 +573,22 @@ LIMIT 分页限定
 <h2 id="4-什么是临时表，临时表什么时候删除？"><a href="#4-什么是临时表，临时表什么时候删除？" class="headerlink" title="4. 什么是临时表，临时表什么时候删除？"></a>4. <strong>什么是临时表，临时表什么时候删除？</strong></h2><p>MySQL 临时表在我们需要保存一些临时数据时是非常有用的。</p>
 <p>临时表只在当前连接可见，当关闭连接时，Mysql会自动删除表并释放所有空间；当然，也可以手动删除临时表。</p>
 <p>例如：</p>
-<pre class=" language-lang-sql"><code class="language-lang-sql">CREATE TEMPORARY TABLE tmp_table (
-       NAME VARCHAR (10) NOT NULL,
-       time date NOT NULL
-);
-select * from tmp_table;
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TEMPORARY</span> <span class="token keyword">TABLE</span> tmp_table <span class="token punctuation">(</span>
+       NAME <span class="token keyword">VARCHAR</span> <span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+       time <span class="token keyword">date</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tmp_table<span class="token punctuation">;</span>
 </code></pre>
 <p>需要手动删除时：</p>
-<pre class=" language-lang-sql"><code class="language-lang-sql">DROP TEMPORARY TABLE IF EXISTS temp_tb;
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TEMPORARY</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> temp_tb<span class="token punctuation">;</span>
 </code></pre>
 <h2 id="5-关系型数据库的-B-Tree索引和Hash索引的区别？"><a href="#5-关系型数据库的-B-Tree索引和Hash索引的区别？" class="headerlink" title="5. 关系型数据库的 B+Tree索引和Hash索引的区别？"></a>5. <strong>关系型数据库的 B+Tree索引和Hash索引的区别？</strong></h2><ul>
-<li>Hash索引结构：是通过Key和哈希函数，计算哈希值并把哈希值最为存储的数组下标。</li>
-<li>B+树索引结构：是M叉平衡查找树，以及串起所有叶子节点的链表</li>
+<li><p>Hash索引结构：是通过Key和哈希函数，计算哈希值并把哈希值最为存储的数组下标。</p>
+</li>
+<li><p>B+树索引结构：是M叉平衡查找树，以及串起所有叶子节点的链表</p>
+<p><strong>Hash索引相比于B+Tree索引的缺点：</strong></p>
+</li>
 </ul>
-<p>  <strong>Hash索引相比于B+Tree索引的缺点：</strong></p>
 <p>（1）<strong>查询方面：</strong>Hash索引仅仅能满足”=”,”IN”和”&lt;=&gt;”查询，不能使用范围查询，因为经过相应的Hash算法处理之后的Hash值的大小关系，并不能保证和Hash运算前完全一样；</p>
 <p>（2）<strong>排序方面：</strong>Hash索引无法被用来避免数据的排序操作，因为Hash值的大小关系并不一定和Hash运算前的键值完全一样；</p>
 <p>（3）<strong>索引方面：</strong>Hash索引不能利用部分索引键查询，对于组合索引，Hash索引在计算Hash值的时候是组合索引键合并后再一起计算Hash值，而不是单独计算Hash值，所以通过组合索引的前面一个或几个索引键进行查询的时候，Hash索引也无法被利用；</p>
@@ -628,22 +630,22 @@ select * from tmp_table;
 </ol>
 <h2 id="9-简述什么是数据库的三范式"><a href="#9-简述什么是数据库的三范式" class="headerlink" title="9. 简述什么是数据库的三范式?"></a>9. 简述什么是数据库的三范式?</h2><p>第一范式：每一个列都是不可分割的原始数据项。第一范式解决的是如何把数据放到一张二维表里。（<strong>最基本要求</strong>）</p>
 <p>第二范式：在第一范式的基础上，<strong>不存在部分函数依赖</strong>，即所有的非主属性都完全的依赖主属性。第二范式解决的问题：部分的，数据冗余，删除错误，插入困难</p>
-<p>​    函数依赖：A -&gt; B，对两列中的任意记录，通过属性A的值可以确定属性B的值，我们说B依赖于A；A也可以是一组属性，同理</p>
-<p>​    完全函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且B不依赖于任何A的子集，我们说B完全依赖于A。</p>
-<p>​    部分函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且存在B依赖于A的某个子集，我们说B部分依赖于A。</p>
+<p>​	函数依赖：A -&gt; B，对两列中的任意记录，通过属性A的值可以确定属性B的值，我们说B依赖于A；A也可以是一组属性，同理</p>
+<p>​	完全函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且B不依赖于任何A的子集，我们说B完全依赖于A。</p>
+<p>​	部分函数依赖：A -&gt; B，A是一组属性，如果B依赖于A，且存在B依赖于A的某个子集，我们说B部分依赖于A。</p>
 <p>第三范式：在第二范式的基础上，<font color="skyblue"><strong>非主属性</strong></font><strong>不存在传递依赖</strong>。第三范式解决的问题：数据冗余，删除错误，插入困难</p>
-<p>​    传递函数依赖，A -&gt; B， B -&gt; C，即C完全依赖于B，B完全依赖于A，我们说C传递依赖于A。</p>
+<p>​	传递函数依赖，A -&gt; B， B -&gt; C，即C完全依赖于B，B完全依赖于A，我们说C传递依赖于A。</p>
 <p>BC范式：在第二范式的基础上，<strong>所有的属性都不存在传递依赖</strong></p>
 <h2 id="10-什么是-内连接、外连接、交叉连接、笛卡尔积等？"><a href="#10-什么是-内连接、外连接、交叉连接、笛卡尔积等？" class="headerlink" title="10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？"></a>10. 什么是 内连接、外连接、交叉连接、笛卡尔积等？</h2><p>SQL中两张表，左表和右表</p>
 <p>内连接，只有同时满足连接条件的左表记录和右表记录才能连接成为新的记录。</p>
 <p>外链接，分为左外链接和右外连接</p>
-<p>​    左连接，左表中的全部记录和右表中满足连接条件的记录能够根据条件连接成为新的记录，如果某些左表中记录找不到符合条件的右表记录，则对应列写NULL。</p>
-<p>​    右连接，左表中满足连接条件的记录和右表中的全部记录能够根据条件连接成为新的记录，如果某些右表中记录找不到符合条件的左表记录，则对应列写NULL。</p>
+<p>​	左连接，左表中的全部记录和右表中满足连接条件的记录能够根据条件连接成为新的记录，如果某些左表中记录找不到符合条件的右表记录，则对应列写NULL。</p>
+<p>​	右连接，左表中满足连接条件的记录和右表中的全部记录能够根据条件连接成为新的记录，如果某些右表中记录找不到符合条件的左表记录，则对应列写NULL。</p>
 <p>交叉连接：没有连接条件，左表和右表中的记录排列组合连接成为新的记录，这种连接的结果也成为笛卡尔积。也就是说内连接是在交叉连接的基础上根据连接条件对笛卡尔积的结果进行了过滤。</p>
 <h2 id="11-varchar和char的区别？"><a href="#11-varchar和char的区别？" class="headerlink" title="11. varchar和char的区别？"></a>11. varchar和char的区别？</h2><p>char：</p>
-<p>​    char类型是固定长度类型，例如char(20)是一个长度为20<strong>字节</strong>的空间。如果放入的字符串长度不足20字节，尾部会用空格填满，然后在查询时会自动删除后边结尾的空格。所以<strong>char类型是不能存储结尾有空格的字符串的</strong>。</p>
+<p>​	char类型是固定长度类型，例如char(20)是一个长度为20<strong>字节</strong>的空间。如果放入的字符串长度不足20字节，尾部会用空格填满，然后在查询时会自动删除后边结尾的空格。所以<strong>char类型是不能存储结尾有空格的字符串的</strong>。</p>
 <p>varchar：</p>
-<p>​    varchar类型是可变长度类型，例如varchar(20)是指最长可以放20个<strong><font color="gold">字符</font></strong>的空间，而不考虑字符的字符集，以及具体字符占用的字节数。事实上，varchar类型在最后还保存了一个字符串字符长度的值。</p>
+<p>​	varchar类型是可变长度类型，例如varchar(20)是指最长可以放20个**<font color="gold">字符</font>**的空间，而不考虑字符的字符集，以及具体字符占用的字节数。事实上，varchar类型在最后还保存了一个字符串字符长度的值。</p>
 
                 
             </div>
