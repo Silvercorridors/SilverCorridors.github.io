@@ -4,10 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis的持久化方式, 银色回廊">
-    <meta name="description" content="Redis的持久化方式众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。
+    <meta name="keywords" content="Redis的持久化, 银色回廊">
+    <meta name="description" content="Redis的持久化众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。
 
-为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从">
+为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从内存">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis的持久化方式 | 银色回廊</title>
+    <title>Redis的持久化 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -327,12 +327,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis的持久化方式</h1>
+                    <h1 class="description center-align post-title">Redis的持久化</h1>
                 </div>
             </div>
         </div>
@@ -504,7 +504,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis的持久化方式"><a href="#Redis的持久化方式" class="headerlink" title="Redis的持久化方式"></a>Redis的持久化方式</h1><p>众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。</p>
+                <h1 id="Redis的持久化"><a href="#Redis的持久化" class="headerlink" title="Redis的持久化"></a>Redis的持久化</h1><p>众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。</p>
 <p><img src="/2022/09/02/redis-rdb/java5-1566526018-16620499527383.jpeg"></p>
 <p>为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从内存中保存到硬盘当中，使数据可以持久化保存。</p>
 <p>redis持久化有两种方式：<strong>RDB</strong> &amp; <strong>AOF</strong>。一个是快照的方式，一个是类似日志追加的方式。</p>
@@ -734,7 +734,10 @@ $ redis<span class="token operator">-</span>check<span class="token operator">-<
 <li>如果redis当前最新的AOF和RDB文件出现了丢失/损坏，那么可以尝试基于该机器上当前的某个最新的RDB数据副本进行数据恢复</li>
 </ul>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>其实，如果只是单纯把Redis作为缓存服务器，那么可以完全不用考虑持久化，但是，在如今的大多数服务器架构中，Redis的单单只是扮演一个缓存服务器的角色，还可以作为数据库，保存我们的业务数据，此时，我们则需要好好了解有关Redis持久化策略的区别与选择。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><h3 id="10分钟彻底理解Redis的持久化机制：RDB和AOF"><a href="#10分钟彻底理解Redis的持久化机制：RDB和AOF" class="headerlink" title="10分钟彻底理解Redis的持久化机制：RDB和AOF"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/javazhiyin/p/11425060.html">10分钟彻底理解Redis的持久化机制：RDB和AOF</a></h3><h3 id="Redis持久化机制：RDB和AOF"><a href="#Redis持久化机制：RDB和AOF" class="headerlink" title="Redis持久化机制：RDB和AOF"></a><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903939339452430">Redis持久化机制：RDB和AOF</a></h3><h3 id="redis官方文档"><a href="#redis官方文档" class="headerlink" title="redis官方文档"></a><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/persistence/">redis官方文档</a></h3>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/javazhiyin/p/11425060.html">10分钟彻底理解Redis的持久化机制：RDB和AOF</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903939339452430">Redis持久化机制：RDB和AOF</a></p>
+<p><a target="_blank" rel="noopener" href="https://redis.io/docs/manual/persistence/">redis官方文档</a></p>
+
                 
             </div>
             <hr/>
@@ -1124,9 +1127,9 @@ $ redis<span class="token operator">-</span>check<span class="token operator">-<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Redis的持久化方式">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Redis的持久化">
                         
-                        <span class="card-title">Redis的持久化方式</span>
+                        <span class="card-title">Redis的持久化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1170,13 +1173,13 @@ $ redis<span class="token operator">-</span>check<span class="token operator">-<
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/08/08/leetcode03/">
+                <a href="/2022/09/02/redis-rep/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="算法刷题周记03">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis 主从复制">
                         
-                        <span class="card-title">算法刷题周记03</span>
+                        <span class="card-title">Redis 主从复制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1187,14 +1190,14 @@ $ redis<span class="token operator">-</span>check<span class="token operator">-<
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -1204,8 +1207,8 @@ $ redis<span class="token operator">-</span>check<span class="token operator">-<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
+                    <a href="/tags/redis/">
+                        <span class="chip bg-color">redis</span>
                     </a>
                     
                 </div>
