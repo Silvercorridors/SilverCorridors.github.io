@@ -522,8 +522,9 @@
 <p>Java引入了虚拟机（JVM），即在机器和编译程序之间加入了一层抽象的虚拟的机器。</p>
 <p>在不同的操作系统上，其实有不同的虚拟机，但是他们都提供给编译程序一个的共同的接口。编译程序只需要面向虚拟机，生成虚拟机能够理解的代码，然后由解释器来将虚拟机代码转换为特定系统的机器码执行。这种<strong>供虚拟机理解的代码叫做字节码</strong>（Java中是扩展名为.class的文件），它不面向任何特定的处理器，只面向虚拟机。</p>
 <p>Java源程序经过编译器编译后变成字节码，字节码由虚拟机解释执行，虚拟机将每一条要执行的字节码送给解释器，解释器将其翻译成特定机器上的机器码，然后在特定的机器上运行，这就是上面提到的Java的特点的编译与解释并存。 </p>
-<p>![Java程序运行过程](Java 程序运行过程.png)</p>
-<p><font color="red"><strong>Java源代码—-&gt;编译器—-&gt;jvm可执行的Java字节码(即虚拟指令)—-&gt;jvm—-&gt;jvm中解释器—–&gt;机器可执行的二进制机器码—-&gt;程序运行。</strong></font></p>
+<p><img src="/2022/06/25/javasems01/Java 程序运行过程.png" alt="Java程序运行过程"></p>
+<font color="red">**Java源代码----&gt;编译器----&gt;jvm可执行的Java字节码(即虚拟指令)----&gt;jvm----&gt;jvm中解释器-----&gt;机器可执行的二进制机器码----&gt;程序运行。**</font>
+
 <p>我们需要格外注意的是 .class-&gt;机器码 这一步。在这一步 JVM 类加载器首先加载字节码文件，然后通过解释器逐行解释执行，这种方式的执行速度会相对比较慢。而且，有些方法和代码块是经常需要被调用的(也就是所谓的热点代码)，所以后面引进了 JIT 编译器，而 JIT 属于运行时编译。</p>
 <p>JIT：Just In Time，虚拟机的一种优化手段，<strong>如果某个方法或者代码块频繁的被调用，虚拟机会把这段代码标记为“热点代码”</strong>，并将这段字节码一次性的编译为机器码，以提高运行效率。Java中的JIT是HotSpot。这也解释了我们为什么经常会说 Java 是编译与解释共存的语言。</p>
 <blockquote>
@@ -533,11 +534,11 @@
 <p> Java语言通过字节码的方式，在一定程度上解决了传统解释型语言<strong>执行效率低</strong>的问题，同时又保留了解释型语言可移植的特点。所以Java程序运行时比较高效，而且，由于字节码并不专对一种特定的机器，因此，Java程序无须重新编译便可在多种不同的计算机上运行。</p>
 <h2 id="4-什么是JDK-什么是JRE？"><a href="#4-什么是JDK-什么是JRE？" class="headerlink" title="4. 什么是JDK? 什么是JRE？"></a>4. 什么是JDK? 什么是JRE？</h2><p>  JDK: 顾名思义它是给开发者提供的开发工具箱,是给程序开发者用的。它除了包括完整的JRE（Java Runtime Environment），Java运行环境，还包含了其他供开发者使用的工具包。</p>
 <p>​        JDK中包括：</p>
-<pre class=" language-markdown"><code class="language-markdown"><span class="token list punctuation">1.</span> javac：编译器
-<span class="token list punctuation">2.</span> java：运行工具
-<span class="token list punctuation">3.</span> jar：打包工具
-<span class="token list punctuation">4.</span> javadoc：文档生成器
-<span class="token list punctuation">5.</span> jdb debugger：调试工具
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">1. javac：编译器
+2. java：运行工具
+3. jar：打包工具
+4. javadoc：文档生成器
+5. jdb debugger：调试工具
 </code></pre>
 <p>  JRE:普通用户而只需要安装JRE（Java Runtime Environment）来 来运行Java程序。而程序开发者必须安装JDK来编译、调试程序。</p>
 <h2 id="5-Java环境变量PATH和CLASSPATH"><a href="#5-Java环境变量PATH和CLASSPATH" class="headerlink" title="5. Java环境变量PATH和CLASSPATH"></a>5. Java环境变量PATH和CLASSPATH</h2><p><strong>PATH环境变量</strong>：</p>
@@ -557,55 +558,55 @@
 </ol>
 <p><img src="/2022/06/25/javasems01/86735519.jpg" alt="java 编程思想第四版：2.2.2 节"></p>
 <h2 id="7-Java语言采用何种编码方案？有何特点？"><a href="#7-Java语言采用何种编码方案？有何特点？" class="headerlink" title="7. Java语言采用何种编码方案？有何特点？"></a>7. Java语言采用何种编码方案？有何特点？</h2><p>  Java语言采用Unicode编码标准，每个字符占两个字节</p>
-<p>​		这里说的编码是Java代码运行时在内存中的编码，不是*.java在文件中的编码。</p>
+<p>​        这里说的编码是Java代码运行时在内存中的编码，不是*.java在文件中的编码。</p>
 <h2 id="8-构造器Constructor是否可被override"><a href="#8-构造器Constructor是否可被override" class="headerlink" title="8. 构造器Constructor是否可被override"></a><font color="red">8. 构造器Constructor是否可被override</font></h2><p>  在讲继承的时候我们就知道父类的私有属性和构造方法并不能被继承，所以Constructor也就不能被override（子类覆盖父类的同名方法）,但是可以overload（方法相同，但是参数不同）,所以你可以看到一个类中有多个构造函数的情况。</p>
 <p><strong>override和overload的区别：</strong></p>
 <p>override：发生在父子类中，方法名、参数列表必须相同，返回值小于等于父类，抛出的异常小于等于父类，访问修饰符大于等于父类；如果父类方法访问修饰符为private则子类中就不是重写。</p>
 <p>overload：发生在同一个类中，方法名必须相同，参数类型不同、个数不同、顺序不同，方法返回值和访问修饰符可以不同，发生在编译时。</p>
 <h2 id="9-java-面向对象编程三大特性"><a href="#9-java-面向对象编程三大特性" class="headerlink" title="*9. java 面向对象编程三大特性"></a><font color="red">*9. java 面向对象编程三大特性</font></h2><p><strong>封装</strong>：对象的属性或者方法，可以隐藏起来，禁止被外部访问</p>
-<pre class=" language-markdown"><code class="language-markdown"><span class="token code keyword">    9. 封装：访问权限 protected friendly(什么都不写，default)</span>
-<span class="token code keyword">                 当前类   派生类   同一个package里的类    不同package里的类</span>
-<span class="token code keyword">        public    Yes     Yes            Yes              Yes</span>
-<span class="token code keyword">        protected Yes     Yes            Yes               No</span>
-<span class="token code keyword">        (default) Yes  看是否同一个package Yes               No</span>
-<span class="token code keyword">        private   Yes     No             No                No</span>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">    9. 封装：访问权限 protected friendly(什么都不写，default)
+                 当前类   派生类   同一个package里的类    不同package里的类
+        public    Yes     Yes            Yes              Yes
+        protected Yes     Yes            Yes               No
+        (default) Yes  看是否同一个package Yes               No
+        private   Yes     No             No                No
 </code></pre>
 <p><strong>继承</strong>：派生类可以使用基类的属性和方法（一般方法，构造方法），也可以定义自己的属性和方法</p>
 <p><strong>多态</strong>：动态绑定，决定调用基类的方法还是派生类的方法，由实例事实上是哪个类的实例来决定，而不是由引用的类型决定。</p>
-<h2 id="10-java中equals方法的用法以及-x3D-x3D-的用法"><a href="#10-java中equals方法的用法以及-x3D-x3D-的用法" class="headerlink" title="10. java中equals方法的用法以及==的用法"></a>10. java中equals方法的用法以及==的用法</h2><p>“==”比较两个变量本身的值，即两个对象在内存中的首地址。</p>
+<h2 id="10-java中equals方法的用法以及-的用法"><a href="#10-java中equals方法的用法以及-的用法" class="headerlink" title="10. java中equals方法的用法以及==的用法"></a>10. java中equals方法的用法以及==的用法</h2><p>“==”比较两个变量本身的值，即两个对象在内存中的首地址。</p>
 <p>“equals()”比较字符串中所包含的内容是否相同。</p>
 <p>主要适用于String，原始类型的包装类</p>
-<pre class=" language-java"><code class="language-java">String s1<span class="token punctuation">,</span>s2<span class="token punctuation">,</span>s3 <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">,</span> s4 <span class="token operator">=</span><span class="token string">"abc"</span> <span class="token punctuation">;</span>
-s1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">String s1,s2,s3 = "abc", s4 ="abc" ;
+s1 = new String("abc");
+s2 = new String("abc");
 </code></pre>
 <p>s1 == s2: false</p>
 <p>s1.equals(s2): true</p>
 <p>s3 == s4: true</p>
 <p>s3.equals(s4): true</p>
-<pre class=" language-java"><code class="language-java">String s1 <span class="token operator">=</span> <span class="token string">"123"</span><span class="token punctuation">;</span> 
-String s2 <span class="token operator">=</span> <span class="token string">"123"</span><span class="token punctuation">;</span> 
-String s3 <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span> 
-String s4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-String s5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-String s6 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<pre class=" language-lang-java"><code class="language-lang-java">String s1 = "123"; 
+String s2 = "123"; 
+String s3 = "abc"; 
+String s4 = new String("123"); 
+String s5 = new String("123"); 
+String s6 = new String("abc"); 
 
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s2<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（1）true </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（2）true </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s3<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（3）flase </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（4）flase </span>
+System.out.println(s1 == s2);//（1）true 
+System.out.println(s1.equals(s2));//（2）true 
+System.out.println(s1 == s3);//（3）flase 
+System.out.println(s1.equals(s3));//（4）flase 
 
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s4 <span class="token operator">==</span> s5<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（5）flase </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s4<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s5<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（6）true </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s4 <span class="token operator">==</span> s6<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（7）flase </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s4<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s6<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（8）flase </span>
+System.out.println(s4 == s5);//（5）flase 
+System.out.println(s4.equals(s5));//（6）true 
+System.out.println(s4 == s6);//（7）flase 
+System.out.println(s4.equals(s6));//（8）flase 
 
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s4<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（9）false </span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s4<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//（10）true </span>
+System.out.println(s1 == s4);//（9）false 
+System.out.println(s1.equals(s4));//（10）true
 </code></pre>
 <p>特例：如果某些类没有override equals方法，那么他们使用Object.equals，这个方法也是比较地址的。</p>
-<pre class=" language-java"><code class="language-java">StringBuffer s5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-StringBuffer s6 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">StringBuffer s5 = new StringBuffer("a");
+StringBuffer s6 = new StringBuffer("a");
 </code></pre>
 <p>s5 == s6: false</p>
 <p>s5.equals(s6): false</p>
@@ -619,21 +620,21 @@ StringBuffer s6 <span class="token operator">=</span> <span class="token keyword
 <h2 id="12-自动装箱与拆箱"><a href="#12-自动装箱与拆箱" class="headerlink" title="12. 自动装箱与拆箱"></a>12. 自动装箱与拆箱</h2><p><strong>装箱</strong>：将基本类型用它们对应的引用类型包装起来；</p>
 <p><strong>拆箱</strong>：将包装类型转换为基本数据类型；  </p>
 <p>Java使用自动装箱和拆箱机制，节省了常用数值的内存开销和创建对象的开销，提高了效率，由编译器来完成，编译器会在编译期根据语法决定是否进行装箱和拆箱动作。</p>
-<h2 id="13-说出这段代码的运行结果："><a href="#13-说出这段代码的运行结果：" class="headerlink" title="13. 说出这段代码的运行结果："></a>13. 说出这段代码的运行结果：</h2><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">aClass</span> <span class="token punctuation">{</span>
- 
-        <span class="token keyword">void</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-        	<span class="token keyword">static</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
-            
-        	i<span class="token operator">++</span><span class="token punctuation">;</span>  
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 分别打印输出1</span>
-        <span class="token punctuation">}</span>  
-      
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String args<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-            aClass obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">aClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            obj<span class="token punctuation">.</span><span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            obj<span class="token punctuation">.</span><span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token punctuation">}</span> 
-<span class="token punctuation">}</span>
+<h2 id="13-说出这段代码的运行结果："><a href="#13-说出这段代码的运行结果：" class="headerlink" title="13. 说出这段代码的运行结果："></a>13. 说出这段代码的运行结果：</h2><pre class=" language-lang-java"><code class="language-lang-java">public class aClass {
+
+        void fun() {  
+            static int i = 0;  
+
+            i++;  
+            System.out.println(i);// 分别打印输出1
+        }  
+
+        public static void main(String args[]) {  
+            aClass obj = new aClass();  
+            obj.fun();  
+            obj.fun();  
+        } 
+}
 </code></pre>
 <p>报错：注意，虽然C\C++这样写是对的，java中static不可以修饰局部变量。</p>
 <h2 id="14-在一个静态方法内调用一个非静态成员为什么是非法的？"><a href="#14-在一个静态方法内调用一个非静态成员为什么是非法的？" class="headerlink" title="14. 在一个静态方法内调用一个非静态成员为什么是非法的？"></a>14. 在一个静态方法内调用一个非静态成员为什么是非法的？</h2><p>  由于静态方法可以不通过对象进行调用，因此在静态方法里，不能调用其他非静态变量，也不可以访问非静态变量成员。</p>

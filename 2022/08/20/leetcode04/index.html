@@ -515,8 +515,7 @@
   ["0","0","0","0","0"]
 ]
 输出：1
-</code></pre>
-<p><strong>示例 2：</strong></p>
+</code></pre><p><strong>示例 2：</strong></p>
 <pre><code>输入：grid = [
   ["1","1","0","0","0"],
   ["1","1","0","0","0"],
@@ -524,8 +523,7 @@
   ["0","0","0","1","1"]
 ]
 输出：3
-</code></pre>
-<h3 id="解法（DFS）"><a href="#解法（DFS）" class="headerlink" title="解法（DFS）"></a>解法（DFS）</h3><pre class=" language-c++"><code class="language-c++">class Solution
+</code></pre><h3 id="解法（DFS）"><a href="#解法（DFS）" class="headerlink" title="解法（DFS）"></a>解法（DFS）</h3><pre class=" language-lang-c++"><code class="language-lang-c++">class Solution
 {
 public:
     bool inArea(vector<vector<char>> &grid, int r, int c)
@@ -572,15 +570,15 @@ public:
 <p>返回一个大小为 <em><code>n</code></em> 的数组，其中 <code>ans[i]</code> 表示第 <code>i</code> 个节点的子树中与节点 <code>i</code> 标签相同的节点数。</p>
 <p>树 <code>T</code> 中的子树是由 <code>T</code> 中的某个节点及其所有后代节点组成的树。</p>
 <p><strong>示例 1：</strong></p>
-<p><img src="/2022/08/20/leetcode04/q3e1.jpg"></p>
-<pre class=" language-markdown"><code class="language-markdown">输入：n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], labels = "abaedcd"
+<p><img src="/2022/08/20/leetcode04/q3e1.jpg" alt=""></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], labels = "abaedcd"
 输出：[2,1,1,1,1,1,1]
 解释：节点 0 的标签为 'a' ，以 'a' 为根节点的子树中，节点 2 的标签也是 'a' ，因此答案为 2 。注意树中的每个节点都是这棵子树的一部分。
 节点 1 的标签为 'b' ，节点 1 的子树包含节点 1、4 和 5，但是节点 4、5 的标签与节点 1 不同，故而答案为 1（即，该节点本身）。
 </code></pre>
 <p><strong>示例 2：</strong></p>
-<p><img src="/2022/08/20/leetcode04/q3e2.jpg"></p>
-<pre class=" language-markdown"><code class="language-markdown">输入：n = 4, edges = [[0,1],[1,2],[0,3]], labels = "bbbb"
+<p><img src="/2022/08/20/leetcode04/q3e2.jpg" alt=""></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：n = 4, edges = [[0,1],[1,2],[0,3]], labels = "bbbb"
 输出：[4,2,1,1]
 解释：节点 2 的子树中只有节点 2 ，所以答案为 1 。
 节点 3 的子树中只有节点 3 ，所以答案为 1 。
@@ -588,8 +586,8 @@ public:
 节点 0 的子树中包含节点 0、1、2 和 3，标签都是 'b'，因此答案为 4 。
 </code></pre>
 <p><strong>示例 3：</strong></p>
-<p><img src="/2022/08/20/leetcode04/q3e3.jpg"></p>
-<pre class=" language-markdown"><code class="language-markdown">输入：n = 5, edges = [[0,1],[0,2],[1,3],[0,4]], labels = "aabab"
+<p><img src="/2022/08/20/leetcode04/q3e3.jpg" alt=""></p>
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：n = 5, edges = [[0,1],[0,2],[1,3],[0,4]], labels = "aabab"
 输出：[3,2,1,1,1]
 </code></pre>
 <p><strong>提示：</strong></p>
@@ -602,73 +600,73 @@ public:
 <li>labels.length == n</li>
 <li>labels 仅由小写英文字母组成</li>
 </ul>
-<h3 id="解法（深度优先遍历）"><a href="#解法（深度优先遍历）" class="headerlink" title="解法（深度优先遍历）"></a>解法（深度优先遍历）</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
-    String labels<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> adjacentNode<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//邻接表,存放每个节点的父节点与所有子节点</span>
-    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> counts<span class="token punctuation">;</span>
+<h3 id="解法（深度优先遍历）"><a href="#解法（深度优先遍历）" class="headerlink" title="解法（深度优先遍历）"></a>解法（深度优先遍历）</h3><pre class=" language-lang-java"><code class="language-lang-java">class Solution {
+    String labels;
+    private List<Integer>[] adjacentNode;//邻接表,存放每个节点的父节点与所有子节点
+    int[][] counts;
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      *
      * @param n 节点数
      * @param edges 所有边
      * @param labels 所有结点对应的标签值
      * @return
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">countSubTrees</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> edges<span class="token punctuation">,</span> String labels<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>labels <span class="token operator">=</span> labels<span class="token punctuation">;</span>
-        adjacentNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            adjacentNode<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> edge <span class="token operator">:</span> edges<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">//  父节点      /    子结点</span>
-            <span class="token keyword">int</span> node0 <span class="token operator">=</span> edge<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>node1 <span class="token operator">=</span> edge<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            adjacentNode<span class="token punctuation">[</span>node0<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>node1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            adjacentNode<span class="token punctuation">[</span>node1<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>node0<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        counts <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 记录标签值(26个字母)</span>
-        <span class="token function">postOrder</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 从根节点开始后续遍历</span>
-        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">char</span> c <span class="token operator">=</span> labels<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> counts<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+     */
+    public int[] countSubTrees(int n, int[][] edges, String labels) {
+        this.labels = labels;
+        adjacentNode = new List[n];
+        for (int i = 0; i < n; i++) {
+            adjacentNode[i] = new ArrayList<Integer>();
+        }
+        for (int[] edge : edges) {
+            //  父节点      /    子结点
+            int node0 = edge[0],node1 = edge[1];
+            adjacentNode[node0].add(node1);
+            adjacentNode[node1].add(node0);
+        }
+        counts = new int[n][26];// 记录标签值(26个字母)
+        postOrder(0,-1);// 从根节点开始后续遍历
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            char c = labels.charAt(i);
+            ans[i] = counts[i][c - 'a'];
+        }
+        return ans;
+    }
 
-    <span class="token comment" spellcheck="true">/**
+    /**
      *
      * @param node 当前节点
      * @param parent 父节点
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postOrder</span><span class="token punctuation">(</span><span class="token keyword">int</span> node<span class="token punctuation">,</span><span class="token keyword">int</span> parent<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">char</span> c <span class="token operator">=</span> labels<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> adjacent <span class="token operator">=</span> adjacentNode<span class="token punctuation">[</span>node<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>Integer next <span class="token operator">:</span> adjacent<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 对于每个节点的邻接点</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>next <span class="token operator">==</span> parent<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                <span class="token keyword">continue</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token function">postOrder</span><span class="token punctuation">(</span>next<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">// 给每个节点记录标签值 本身+其子节点的标签值</span>
-            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                counts<span class="token punctuation">[</span>node<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> counts<span class="token punctuation">[</span>next<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//子结点的标签值</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        counts<span class="token punctuation">[</span>node<span class="token punctuation">]</span><span class="token punctuation">[</span>c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 本身结点的值</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+     */
+    public void postOrder(int node,int parent){
+        char c = labels.charAt(node);
+        List<Integer> adjacent = adjacentNode[node];
+        for (Integer next : adjacent) { // 对于每个节点的邻接点
+            if (next == parent){
+                continue;
+            }
+            postOrder(next,node);
+            // 给每个节点记录标签值 本身+其子节点的标签值
+            for (int i = 0; i < 26; i++) {
+                counts[node][i] += counts[next][i];//子结点的标签值
+            }
+        }
+        counts[node][c - 'a']++;// 本身结点的值
+    }
+}
 </code></pre>
 <h2 id="两数之和II-输入有序数组（题号：167）"><a href="#两数之和II-输入有序数组（题号：167）" class="headerlink" title="两数之和II - 输入有序数组（题号：167）"></a>两数之和II - 输入有序数组（题号：167）</h2><p>给你一个下标从 <strong>1</strong> 开始的整数数组 <code>numbers</code> ，该数组已按 <strong>非递减顺序排列</strong> ，请你从数组中找出满足相加之和等于目标数 <code>target</code> 的两个数。如果设这两个数分别是 <code>numbers[index1]</code> 和 <code>numbers[index2]</code> ，则 <code>1 &lt;= index1 &lt; index2 &lt;= numbers.length</code> 。</p>
 <p>以长度为 2 的整数数组 <code>[index1, index2]</code> 的形式返回这两个整数的下标 <code>index1</code> 和 <code>index2</code>。</p>
 <p>你可以假设每个输入 <strong>只对应唯一的答案</strong> ，而且你 <strong>不可以</strong> 重复使用相同的元素。</p>
 <p>你所设计的解决方案必须只使用常量级的额外空间。</p>
 <p><strong>示例 1：</strong></p>
-<pre class=" language-markdown"><code class="language-markdown">输入：numbers = [2,7,11,15], target = 9
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：numbers = [2,7,11,15], target = 9
 输出：[1,2]
 解释：2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。
 </code></pre>
 <p><strong>示例 2：</strong></p>
-<pre class=" language-markdown"><code class="language-markdown">输入：numbers = [2,3,4], target = 6
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入：numbers = [2,3,4], target = 6
 输出：[1,3]
 解释：2 与 4 之和等于目标数 6 。因此 index1 = 1, index2 = 3 。返回 [1, 3] 。
 </code></pre>
@@ -676,8 +674,7 @@ public:
 <pre><code>输入：numbers = [-1,0], target = -1
 输出：[1,2]
 解释：-1 与 0 之和等于目标数 -1 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。
-</code></pre>
-<p>提示：</p>
+</code></pre><p>提示：</p>
 <ul>
 <li>2 &lt;= numbers.length &lt;= 3 * 104</li>
 <li>-1000 &lt;= numbers[i] &lt;= 1000</li>
@@ -685,7 +682,7 @@ public:
 <li>-1000 &lt;= target &lt;= 1000</li>
 <li>仅存在一个有效答案</li>
 </ul>
-<h3 id="解法-二分"><a href="#解法-二分" class="headerlink" title="解法(二分)"></a>解法(二分)</h3><pre class=" language-c++"><code class="language-c++">class Solution {
+<h3 id="解法-二分"><a href="#解法-二分" class="headerlink" title="解法(二分)"></a>解法(二分)</h3><pre class=" language-lang-c++"><code class="language-lang-c++">class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
         int len = numbers.size();
@@ -707,69 +704,69 @@ public:
     }
 };
 </code></pre>
-<h2 id="翻转对（题号：493）"><a href="#翻转对（题号：493）" class="headerlink" title="翻转对（题号：493）"></a>翻转对（题号：493）</h2><p>给定一个数组 <code>nums</code> ，如果 <code>i &lt; j</code> 且 <code>nums[i] &gt; 2*nums[j]</code> 我们就将 <code>(i, j)</code> 称作一个***重要翻转对***。</p>
+<h2 id="翻转对（题号：493）"><a href="#翻转对（题号：493）" class="headerlink" title="翻转对（题号：493）"></a>翻转对（题号：493）</h2><p>给定一个数组 <code>nums</code> ，如果 <code>i &lt; j</code> 且 <code>nums[i] &gt; 2*nums[j]</code> 我们就将 <code>(i, j)</code> 称作一个<strong><em>重要翻转对\</em></strong>。</p>
 <p>你需要返回给定数组中的重要翻转对的数量。</p>
 <p>示例1：</p>
-<pre class=" language-markdown"><code class="language-markdown">输入: [1,3,2,3,1]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: [1,3,2,3,1]
 输出: 2
 </code></pre>
 <p><strong>示例 2:</strong></p>
-<pre class=" language-markdown"><code class="language-markdown">输入: [2,4,3,5,1]
+<pre class=" language-lang-markdown"><code class="language-lang-markdown">输入: [2,4,3,5,1]
 输出: 3
 </code></pre>
-<h3 id="解法-归并排序"><a href="#解法-归并排序" class="headerlink" title="解法(归并排序)"></a>解法(归并排序)</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">reversePairsRecursive</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">==</span> right<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-            <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> n1 <span class="token operator">=</span> <span class="token function">reversePairsRecursive</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span>left<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> n2 <span class="token operator">=</span> <span class="token function">reversePairsRecursive</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span>mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> ret <span class="token operator">=</span> n1 <span class="token operator">+</span> n2<span class="token punctuation">;</span>
+<h3 id="解法-归并排序"><a href="#解法-归并排序" class="headerlink" title="解法(归并排序)"></a>解法(归并排序)</h3><pre class=" language-lang-java"><code class="language-lang-java">class Solution {
+    public int reversePairsRecursive(int[] nums, int left, int right){
+        if (left == right){
+            return 0;
+        }else{
+            int mid = (left + right) / 2;
+            int n1 = reversePairsRecursive(nums,left,mid);
+            int n2 = reversePairsRecursive(nums,mid + 1, right);
+            int ret = n1 + n2;
 
-            <span class="token comment" spellcheck="true">// 统计下标对的数量</span>
-            <span class="token keyword">int</span> i <span class="token operator">=</span> left<span class="token punctuation">;</span>
-            <span class="token keyword">int</span> j <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> mid<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;=</span> right <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-                <span class="token punctuation">{</span>
-                    j<span class="token operator">++</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-                ret <span class="token operator">+=</span> j <span class="token operator">-</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-                i<span class="token operator">++</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token comment" spellcheck="true">// 合并两个数组</span>
-            <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sort <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>right <span class="token operator">-</span> left <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> p1 <span class="token operator">=</span> left<span class="token punctuation">,</span>p2 <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token keyword">int</span> p <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span>p1 <span class="token operator">&lt;=</span> mid <span class="token operator">||</span> p2 <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>p1 <span class="token operator">></span> mid<span class="token punctuation">)</span>
-                <span class="token punctuation">{</span>
-                    sort<span class="token punctuation">[</span>p<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>p2<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>p2 <span class="token operator">></span> right<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                    sort<span class="token punctuation">[</span>p<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>p1<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>p1<span class="token punctuation">]</span> <span class="token operator">&lt;</span> nums<span class="token punctuation">[</span>p2<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                        sort<span class="token punctuation">[</span>p<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>p1<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-                        sort<span class="token punctuation">[</span>p<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>p2<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;</span> sort<span class="token punctuation">.</span>length<span class="token punctuation">;</span> k<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                nums<span class="token punctuation">[</span>left <span class="token operator">+</span> k<span class="token punctuation">]</span> <span class="token operator">=</span> sort<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+            // 统计下标对的数量
+            int i = left;
+            int j = mid + 1;
+            while (i <= mid)
+            {
+                while (j <= right && (long) nums[i] > 2 * (long)nums[j])
+                {
+                    j++;
+                }
+                ret += j - mid - 1;
+                i++;
+            }
+            // 合并两个数组
+            int[] sort = new int[right - left + 1];
+            int p1 = left,p2 = mid + 1;
+            int p = 0;
+            while (p1 <= mid || p2 <= right)
+            {
+                if (p1 > mid)
+                {
+                    sort[p++] = nums[p2++];
+                }else if(p2 > right){
+                    sort[p++] = nums[p1++];
+                }else {
+                    if (nums[p1] < nums[p2]){
+                        sort[p++] = nums[p1++];
+                    }else{
+                        sort[p++] = nums[p2++];
+                    }
+                }
+            }
+            for (int k = 0; k < sort.length; k++) {
+                nums[left + k] = sort[k];
+            }
+            return ret;
+        }
+    }
 
-    <span class="token keyword">int</span> <span class="token function">reversePairs</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token function">reversePairsRecursive</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    int reversePairs(int[] nums){
+        if (nums.length == 0)return 0;
+        return reversePairsRecursive(nums,0,nums.length - 1);
+    }
+}
 </code></pre>
 
                 
@@ -1156,13 +1153,13 @@ public:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/02/redis-rdb/">
+                <a href="/2022/09/02/redis02-rep/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Redis的持久化">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis 主从复制">
                         
-                        <span class="card-title">Redis的持久化</span>
+                        <span class="card-title">Redis 主从复制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

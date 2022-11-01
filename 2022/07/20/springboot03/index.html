@@ -482,7 +482,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    778
+                    583
                 </div>
                 
 
@@ -509,139 +509,139 @@
 <p>2.通过maven把自定义starter引入</p>
 <p>3.通过ApplicationContext容器使用</p>
 <h2 id="建立自定义starter的package"><a href="#建立自定义starter的package" class="headerlink" title="建立自定义starter的package"></a>建立自定义starter的package</h2><p>通过空maven新建一个starter模块，编写pom.xml文件</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 产出是jar包  --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>packaging</span><span class="token punctuation">></span></span>jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>packaging</span><span class="token punctuation">></span></span>
-<span class="token comment" spellcheck="true">&lt;!-- name;description --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>MySpringBootStarter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>description</span><span class="token punctuation">></span></span>Starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>description</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml"><!-- 产出是jar包  -->
+<packaging>jar</packaging>
+<!-- name;description -->
+<name>MySpringBootStarter</name>
+<description>Starter</description>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project.build.sourceEncoding</span><span class="token punctuation">></span></span>UTF-8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>project.build.sourceEncoding</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project.reporting.outputEncoding</span><span class="token punctuation">></span></span>UTF-8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>project.reporting.outputEncoding</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>java.version</span><span class="token punctuation">></span></span>11<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>java.version</span><span class="token punctuation">></span></span>
-    <span class="token comment" spellcheck="true">&lt;!--target 和 source是必须要设定的，并且需要和java.version一致,否则会有编译错误--></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>maven.compiler.source</span><span class="token punctuation">></span></span>${java.version}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>maven.compiler.source</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>maven.compiler.target</span><span class="token punctuation">></span></span>${java.version}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>maven.compiler.target</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <!--target 和 source是必须要设定的，并且需要和java.version一致,否则会有编译错误-->
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+</properties>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
-    <span class="token comment" spellcheck="true">&lt;!--如果需要一个有starter的项目，有三个jar包是必须要引入的--></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-autoconfigure<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-autoconfigure-processor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.7.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>compile<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<dependencies>
+    <!--如果需要一个有starter的项目，有三个jar包是必须要引入的-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot</artifactId>
+        <version>2.7.1</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-autoconfigure</artifactId>
+        <version>2.7.1</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-autoconfigure-processor</artifactId>
+        <version>2.7.1</version>
+        <scope>compile</scope>
+    </dependency>
+</dependencies>
 </code></pre>
 <p>建立三个类</p>
 <p>xxxProperties 配置类</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"myservice"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyServiceProperties</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 如果application.yaml中没有配置，需要自动配置缺省值</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MSG<span class="token operator">=</span><span class="token string">"aaaa"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> String msg <span class="token operator">=</span> MSG<span class="token punctuation">;</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@ConfigurationProperties(prefix = "myservice")
+public class MyServiceProperties {
+    // 如果application.yaml中没有配置，需要自动配置缺省值
+    private static final String MSG="aaaa";
+    private String msg = MSG;
 
-    <span class="token keyword">public</span> String <span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> msg<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    public String getMsg() {
+        return msg;
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMsg</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>msg <span class="token operator">=</span> msg<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+}
 </code></pre>
 <p>xxxAutoConfiguration <strong>自动装配类</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
-<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token punctuation">{</span>MyServiceProperties<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span><span class="token punctuation">{</span>MyService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"myservice"</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">"msg"</span><span class="token punctuation">,</span> matchIfMissing <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyServiceAutoConfiguration</span> <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Configuration
+@EnableConfigurationProperties({MyServiceProperties.class})
+@ConditionalOnClass({MyService.class})
+@ConditionalOnProperty(prefix = "myservice", value = "msg", matchIfMissing = true)
+public class MyServiceAutoConfiguration {
 
-    <span class="token comment" spellcheck="true">// 自动注入MyServiceProperties</span>
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> MyServiceProperties myServiceProperties<span class="token punctuation">;</span>
+    // 自动注入MyServiceProperties
+    @Autowired
+    private MyServiceProperties myServiceProperties;
 
-    <span class="token comment" spellcheck="true">// 初始化MyService，并且放入容器</span>
-    <span class="token annotation punctuation">@Bean</span>
-    <span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span>MyService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> MyService <span class="token function">myService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        MyService myService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 从Properties文件中注入msg</span>
-        myService<span class="token punctuation">.</span><span class="token function">setMsg</span><span class="token punctuation">(</span>myServiceProperties<span class="token punctuation">.</span><span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> myService<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    // 初始化MyService，并且放入容器
+    @Bean
+    @ConditionalOnClass(MyService.class)
+    public MyService myService(){
+        MyService myService = new MyService();
+        // 从Properties文件中注入msg
+        myService.setMsg(myServiceProperties.getMsg());
+        return myService;
+    }
 
-<span class="token punctuation">}</span>
+}
 </code></pre>
 <p>xxx     service类</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyService</span> <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">public class MyService {
 
-    <span class="token keyword">private</span> String msg<span class="token punctuation">;</span>
+    private String msg;
 
-    <span class="token keyword">public</span> String <span class="token function">getMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> msg<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    public String getMsg() {
+        return msg;
+    }
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMsg</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>msg <span class="token operator">=</span> msg<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
-    <span class="token keyword">public</span> String <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">"Hello! "</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>msg<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    public String doSomething(){
+        return "Hello! " + this.msg;
+    }
 
-<span class="token punctuation">}</span>
+}
 </code></pre>
 <p>在resources文件夹下新建一个META-INF文件夹，新建spring.factories</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><span class="token punctuation">=</span><span class="token attr-value">\
-cn.silvercorridors.MyServiceAutoConfiguration</span>
+<pre class=" language-lang-properties"><code class="language-lang-properties">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.silvercorridors.MyServiceAutoConfiguration
 </code></pre>
 <p>打包(package)</p>
 <p>安装到本地仓库(install)</p>
 <p>到这里，一个自动装配的架子就初步搭好了</p>
 <h2 id="在springboot中实现自动装配"><a href="#在springboot中实现自动装配" class="headerlink" title="在springboot中实现自动装配"></a>在springboot中实现自动装配</h2><p>在springboot项目中pom.xml引入刚才创建的自定义starter</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>cn.silvercorridors<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>MySpringBootStarter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0-SNAPSHOT<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml"><dependency>
+    <groupId>cn.silvercorridors</groupId>
+    <artifactId>MySpringBootStarter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 </code></pre>
 <p>yaml配置文件添加配置信息（不设定则为默认值：aaaa）</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">Myservice</span><span class="token punctuation">:</span>
-  <span class="token key atrule">msg</span><span class="token punctuation">:</span> abcd
+<pre class=" language-lang-yaml"><code class="language-lang-yaml">Myservice:
+  msg: abcd
 </code></pre>
 <p>在Controller中调用</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyController</span> <span class="token punctuation">{</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@Controller
+public class MyController {
 
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> MyService myService<span class="token punctuation">;</span>
+    @Autowired
+    private MyService myService;
 
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/r1"</span><span class="token punctuation">)</span>
-    <span class="token annotation punctuation">@ResponseBody</span>
-    <span class="token keyword">public</span> String <span class="token function">r1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">return</span> myService<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    @RequestMapping("/r1")
+    @ResponseBody
+    public String r1(){
+        return myService.doSomething();
+    }
+}
 </code></pre>
 <p>运行结果：实现自动配置</p>
 <p><img src="/2022/07/20/springboot03/image-20220722010237653.png" alt="自定义AutoConfiguration运行结果"></p>
 <h2 id="查询自动装配初始化信息"><a href="#查询自动装配初始化信息" class="headerlink" title="查询自动装配初始化信息"></a>查询自动装配初始化信息</h2><p>如果我们想要知道，AutoConfiguration在初始化时自动装配了哪些属性，可以通过如下操作来查看。</p>
 <p>配置文件中</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">debugger</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<pre class=" language-lang-yaml"><code class="language-lang-yaml">debugger: true
 </code></pre>
 <p>此时，再一次运行springboot启动类，会多出如下debug信息：</p>
 <p><img src="/2022/07/20/springboot03/image-20220722011257470.png" alt="Positive matches"></p>

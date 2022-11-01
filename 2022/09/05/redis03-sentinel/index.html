@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis 主从复制, 银色回廊">
-    <meta name="description" content="Redis 主从复制Redis高可用的方案包括持久化、主从复制（及读写分离）、哨兵和集群。其中持久化侧重解决的是Redis数据的单机备份问题（从内存到硬盘的备份）；而主从复制则侧重解决数据的多机热备。此外，主从复制还可以实现负载均衡和故障恢">
+    <meta name="keywords" content="Redis 哨兵(sentinel), 银色回廊">
+    <meta name="description" content="Redis 哨兵(sentinel)在之前传统的主从复制模式(master,slave /  repliacation)模式中，当master故障时，需要手动修改配置文件指定新的 master，过程非常繁琐。根据历史的进程，就必然会有一个东">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis 主从复制 | 银色回廊</title>
+    <title>Redis 哨兵(sentinel) | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -325,12 +325,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis 主从复制</h1>
+                    <h1 class="description center-align post-title">Redis 哨兵(sentinel)</h1>
                 </div>
             </div>
         </div>
@@ -471,7 +471,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-02
+                    2022-09-05
                 </div>
                 
 
@@ -480,7 +480,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.3k
+                    3.9k
                 </div>
                 
 
@@ -502,205 +502,185 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis-主从复制"><a href="#Redis-主从复制" class="headerlink" title="Redis 主从复制"></a>Redis 主从复制</h1><p>Redis高可用的方案包括持久化、主从复制（及读写分离）、哨兵和集群。其中持久化侧重解决的是Redis数据的单机备份问题（从内存到硬盘的备份）；而主从复制则侧重解决<strong>数据的多机热备</strong>。此外，主从复制还可以实现<strong>负载均衡和故障恢复</strong>。</p>
-<h2 id="单机备份的问题"><a href="#单机备份的问题" class="headerlink" title="单机备份的问题"></a>单机备份的问题</h2><h3 id="1-机器故障"><a href="#1-机器故障" class="headerlink" title="1. 机器故障"></a>1. 机器故障</h3><p>如果发生机器故障，例如磁盘损坏，主板损坏等，未能在短时间内修复好，客户端将无法连接redis。</p>
-<p>当然如果仅仅是redis节点挂掉了，可以进行问题排查然后重启，姑且不考虑这段时间对外服务的可用性，那还是可以接受的。</p>
-<p>而发生机器故障，基本是无济于事。<code>除非把redis迁移到另一台机器上，并且还要考虑数据同步的问题。</code></p>
-<h3 id="2-容量瓶颈"><a href="#2-容量瓶颈" class="headerlink" title="2. 容量瓶颈"></a>2. 容量瓶颈</h3><p>假如一台机器是16G内存，redis使用了12G内存，而其他应用还需要使用内存，假设我们总共需要60G内存要如何去做呢，<code>是否有必要购买64G内存的机器？</code></p>
-<h3 id="3-QPS瓶颈"><a href="#3-QPS瓶颈" class="headerlink" title="3. QPS瓶颈"></a>3. QPS瓶颈</h3><p>redis官方数据显示可以达到10w的QPS，如果业务需要100w的QPS怎么去做呢？</p>
-<p>关于<code>容量瓶颈和QPS瓶颈是redis分布式需要解决的问题，而机器故障就是高可用的问题了</code></p>
-<p>因此，要解决以上这些，解决办法就是将原来集中式数据库的数据分别存储到其他多个网络节点上。也成为主从复制。</p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>​		主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。</p>
-<p>​		默认情况下，每台Redis服务器都是主节点；且一个主节点可以有多个从节点(或没有从节点)，但一个从节点只能有一个主节点。</p>
-<p><strong>主从复制的作用</strong>主要包括：</p>
-<ul>
-<li><strong>数据冗余</strong>：主从复制实现了数据的热备份，是持久化之外的一种数据冗余方式。</li>
-<li><strong>故障恢复</strong>：当主节点出现问题时，可以由从节点提供服务，实现快速的故障恢复；实际上是一种服务的冗余。</li>
-<li><strong>负载均衡</strong>：在主从复制的基础上，配合读写分离，可以由主节点提供写服务，由从节点提供读服务（即写Redis数据时应用连接主节点，读Redis数据时应用连接从节点），分担服务器负载；尤其是在写少读多的场景下，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量。</li>
-<li><strong>高可用基石</strong>：除了上述作用以外，主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+                <h1 id="Redis-哨兵-sentinel"><a href="#Redis-哨兵-sentinel" class="headerlink" title="Redis 哨兵(sentinel)"></a>Redis 哨兵(sentinel)</h1><p>在之前传统的主从复制模式(master,slave /  repliacation)模式中，当master故障时，需要手动修改配置文件指定新的 master，过程非常繁琐。根据历史的进程，就必然会有一个东西来代替这种复杂的配置过程，于是，在Redis 2.8 版本之后就正式产生了redis sentinel ，sentinel 是 Redis 官方提供的高可用方案，可以不需人工干预自动切换新的master。</p>
+<p><strong>sentinel</strong> 通常翻译成哨兵，就是放哨的，这里它就是用来监控主从节点的健康情况。客户端连接redis主从的时候，先连接 sentinel，sentinel会告诉客户端主redis的地址是多少，然后客户端连接上redis并进行后续的操作。当主节点挂掉的时候，客户端就得不到连接了因而报错了，客户端重新向sentinel询问主master的地址，然后客户端得到了新选举出来的主redis，然后又可以愉快的操作了。</p>
+<h2 id="sentinel-基本功能清单"><a href="#sentinel-基本功能清单" class="headerlink" title="sentinel 基本功能清单"></a>sentinel 基本功能清单</h2><ul>
+<li><p>故障发现</p>
+</li>
+<li><p>故障自动转移</p>
+</li>
+<li>配置中心</li>
+<li>客户端通知</li>
 </ul>
-<h3 id="一主一从"><a href="#一主一从" class="headerlink" title="一主一从"></a>一主一从</h3><p>如图所示左边是Master节点，右边是slave节点，即主节点和从节点。<code>从节点也是可以对外提供服务的，主节点是有数据的，从节点可以通过复制操作将主节点的数据同步过来，并且随着主节点数据不断写入，从节点数据也会做同步的更新。</code></p>
-<p>整体起到的就是数据备份的效果。</p>
-<p><img src="/328504853_1597378104993_1735AFD4AEA3F9E49E183F747F4A7ECB.png" alt="img"></p>
-<h3 id="一主多从"><a href="#一主多从" class="headerlink" title="一主多从"></a>一主多从</h3><p><img src="/328504853_1597378105406_1735AFD4AEA3F9E49E183F747F4A7ECB.png" alt="img"></p>
-<p>主从库之间采用的是<strong>读写分离</strong>的方式。</p>
+<h2 id="运行-Sentinel"><a href="#运行-Sentinel" class="headerlink" title="运行 Sentinel"></a>运行 Sentinel</h2><p>运行sentinel有两种方式：</p>
 <ul>
-<li>读操作：主库、从库都可以接收；</li>
-<li>写操作：首先到主库执行，然后，主库将写操作同步给从库。</li>
-</ul>
-<p><img src="/2022/09/02/redis-rep/db-redis-copy-1.png"></p>
-<h2 id="主从复制的使用"><a href="#主从复制的使用" class="headerlink" title="主从复制的使用"></a>主从复制的使用</h2><h3 id="第一种方式：使用slaveof命令"><a href="#第一种方式：使用slaveof命令" class="headerlink" title="第一种方式：使用slaveof命令"></a>第一种方式：使用slaveof命令</h3><p>如图，想让6380节点成为6379的从节点，只需要执行 slaveof 命令即可，此复制命令是异步进行的，redis会自动进行后续数据复制的操作。<br><strong>注</strong>：<mark>一般生产环境不允许主从节点都在一台机器上，因为没有任何的价值。</mark></p>
-<p><img src="/2022/09/02/redis-rep/328504853_1597378105748_1735AFD4AEA3F9E49E183F747F4A7ECB.png"></p>
-<p>如果6380节点不希望成为6379的从节点，可以执行 <strong>slave of no one</strong> 命令，取消后6380节点的数据不会被清除，只是说后续6379节点新写入的数据不会再同步到该节点了。</p>
-<p><img src="/2022/09/02/redis-rep/328504853_1597378106100_1735AFD4AEA3F9E49E183F747F4A7ECB.png"></p>
-<p><strong>注意</strong>：<mark>如果取消复制后想slave一个新的主节点，新的主节点在同步给slave节点数据时，会先将从节点的数据全部清除</mark></p>
-<h3 id="第二种方式：修改配置"><a href="#第二种方式：修改配置" class="headerlink" title="第二种方式：修改配置"></a>第二种方式：修改配置</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 配置主节点的IP和端口号</span>
-slaveof <span class="token punctuation">[</span>masterip<span class="token punctuation">]</span> <span class="token punctuation">[</span>masterport<span class="token punctuation">]</span>
- <span class="token comment" spellcheck="true"># 从节点只做读的操作，保证主从数据的一致性</span>
-slave-read-only <span class="token function">yes</span> 
+<li><p>第一种</p>
+<pre class=" language-lang-shell"><code class="language-lang-shell">redis-sentinel /path/to/sentinel.conf
 </code></pre>
-<h3 id="实例：主从配置"><a href="#实例：主从配置" class="headerlink" title="实例：主从配置"></a>实例：主从配置</h3><p>1.启动两个节点</p>
-<p>方便起见，实验所使用的主从节点是在一台机器上的不同Redis实例，其中主节点监听6379端口，从节点监听6380端口；从节点监听的端口号可以在配置文件中修改：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011219164-269585034.png"></p>
-<p>启动后可以看到：</p>
-<p><img src="/1174710-20180628011229205-1259881734.png" alt="img"></p>
-<p>两个Redis节点启动后（分别称为6379节点和6380节点），默认都是主节点。</p>
-<p>2.建立复制</p>
-<p>此时在6380节点执行slaveof命令，使之变为从节点：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011236215-1776355426.png"></p>
-<p>验证效果</p>
-<p>（1）首先在从节点查询一个不存在的key：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011248863-775666084.png"></p>
-<p>（2）然后在主节点中增加这个key：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011255637-1820178900.png"></p>
-<p>（3）此时在从节点中再次查询这个key，会发现主节点的操作已经同步至从节点：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011302404-417931505.png"></p>
-<p>（4）然后在主节点删除这个key：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011309069-1397319420.png"></p>
-<p>（5）此时在从节点中再次查询这个key，会发现主节点的操作已经同步至从节点：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011318424-343599365.png"></p>
-<h2 id="主从配置的实现原理"><a href="#主从配置的实现原理" class="headerlink" title="主从配置的实现原理"></a>主从配置的实现原理</h2><p>主从复制过程大体可以分为3个阶段：连接建立阶段（即准备阶段）、数据同步阶段、命令传播阶段；下面分别进行介绍。</p>
-<p>在从节点执行 slaveof 命令后，复制过程便开始运作，下面图示大概可以看到，<br>从图中可以看出复制过程大致分为6个过程</p>
-<p><img src="/2022/09/02/redis-rep/v2-23352a607011dd20a5812856dd06f77f_r.jpg"></p>
-<p>主从配置之后的日志记录也可以看出这个流程:</p>
-<h3 id="1-保存主节点（master）信息"><a href="#1-保存主节点（master）信息" class="headerlink" title="1.保存主节点（master）信息"></a>1.保存主节点（master）信息</h3><p>从节点服务器内部维护了两个字段，即<strong>masterhost</strong>和<strong>masterport</strong>字段，用于存储主节点的<strong>ip</strong>和<strong>port</strong>信息。</p>
-<p>需要注意的是，<strong>slaveof</strong>是异步命令，从节点完成主节点<strong>ip</strong>和<strong>port</strong>的保存后，向发送<strong>slaveof</strong>命令的客户端直接返回<strong>OK</strong>，实际的复制操作在这之后才开始进行。</p>
-<p>这个过程中，可以看到从节点打印日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011353199-43354413.png"></p>
-<h3 id="2-建立socket连接"><a href="#2-建立socket连接" class="headerlink" title="2.建立socket连接"></a>2.建立socket连接</h3><p>从节点每秒1次调用复制定时函数**replicationCron()**，如果发现了有主节点可以连接，便会根据主节点的ip和port，创建socket连接。</p>
-<p>如果从节点无法建立连接，定时任务会无限重试直到连接成功或者执行 slaveof no one 取消复制。</p>
-<p>如果连接成功，则：</p>
-<ul>
-<li>从节点：为该socket建立一个专门处理复制工作的文件事件处理器，负责后续的复制工作，如接收RDB文件、接收命令传播等。</li>
-<li>主节点：接收到从节点的socket连接后（即accept之后），为该socket创建相应的客户端状态，<strong>并将从节点看做是连接到主节点的一个客户端，后面的步骤会以从节点向主节点发送命令请求的形式来进行。</strong></li>
+</li>
+<li><p>第二种</p>
+<pre class=" language-lang-shell"><code class="language-lang-shell">redis-server /path/to/sentinel.conf --sentinel
+</code></pre>
+</li>
 </ul>
-<p>这个过程中，从节点打印日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011400533-833761023.png"></p>
-<h3 id="3-发送ping命令"><a href="#3-发送ping命令" class="headerlink" title="3.发送ping命令"></a>3.发送ping命令</h3><p>从节点成为主节点的客户端之后，发送ping命令进行首次请求，目的是：检查socket连接是否可用，以及主节点当前是否能够处理请求。</p>
-<p>从节点发送ping命令后，可能出现3种情况：</p>
-<p>（1）返回pong：说明socket连接正常，且主节点当前可以处理请求，复制过程继续。</p>
-<p>（2）超时：一定时间后从节点仍未收到主节点的回复，说明socket连接不可用，则从节点断开socket连接，并重连。</p>
-<p><img src="/2022/09/02/redis-rep/v2-75da77a3392853443284ff324c7ec2ea_720w.jpg"></p>
-<p>（3）返回pong以外的结果：如果主节点返回其他结果，如正在处理超时运行的脚本，说明主节点当前无法处理命令，则从节点断开socket连接，并重连。</p>
-<p><img src="/2022/09/02/redis-rep/v2-3f9719b59dde4faf6f1346cfa1476fe3_720w.jpg"></p>
-<p>在主节点返回pong情况下，从节点打印日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011408822-1702643515.png"></p>
-<h3 id="4-权限验证"><a href="#4-权限验证" class="headerlink" title="4.权限验证"></a>4.权限验证</h3><p>如果从节点中设置了masterauth选项，则从节点需要向主节点进行身份验证；没有设置该选项，则不需要验证。从节点进行身份验证是通过向主节点发送auth命令进行的，auth命令的参数即为配置文件中的masterauth的值。</p>
-<p>如果主节点设置密码的状态，与从节点masterauth的状态一致（一致是指都存在，且密码相同，或者都不存在），则身份验证通过，复制过程继续；如果不一致，则从节点断开socket连接，并重连。</p>
-<h3 id="5-同步数据集"><a href="#5-同步数据集" class="headerlink" title="5.同步数据集"></a>5.同步数据集</h3><p>主从复制连接正常通信后，对于首次建立复制的场景，主节点会把持有的数据全部发送给从节点，这部分操作是耗时最长的步骤。具体执行的方式是：从节点向主节点发送psync命令（Redis2.8以前是sync命令），开始同步。</p>
-<p>在数据同步阶段之前，从节点是主节点的客户端，主节点不是从节点的客户端；而到了这一阶段及以后，主从节点互为客户端。原因在于：<strong>在此之前，主节点只需要响应从节点的请求即可，不需要主动发请求，而在数据同步阶段和后面的命令传播阶段，主节点需要主动向从节点发送请求（如推送缓冲区中的写命令），才能完成复制。</strong></p>
-<h3 id="6-命令持续复制"><a href="#6-命令持续复制" class="headerlink" title="6.命令持续复制"></a>6.命令持续复制</h3><p>当主节点把当前的数据同步给从节点后，便完成了复制的建立流程。接下来主节点会持续地把写命令发送给从节点，保证主从数据一致性。</p>
-<p>在命令传播阶段，除了发送写命令，主从节点还维持着<strong>心跳机制</strong>：PING和REPLCONF ACK。由于心跳机制的原理涉及部分复制，因此将在介绍了部分复制的相关内容后单独介绍该心跳机制。</p>
-<p>repl-disable-tcp-nodelay no：该配置作用于命令传播阶段，控制主节点是否禁止与从节点的TCP_NODELAY；默认no，即不禁止TCP_NODELAY。当设置为yes时，TCP会对包进行合并从而减少带宽，但是发送的频率会降低，从节点数据延迟增加，一致性变差；具体发送频率与Linux内核的配置有关，默认配置为40ms。当设置为no时，TCP会立马将主节点的数据发送给从节点，带宽增加但延迟变小。</p>
-<p>一般来说，只有当应用对Redis数据不一致的容忍度较高，且主从节点之间网络状况不好时，才会设置为yes；多数情况使用默认值no。</p>
-<h2 id="数据同步：全量复制与部分复制"><a href="#数据同步：全量复制与部分复制" class="headerlink" title="数据同步：全量复制与部分复制"></a>数据同步：全量复制与部分复制</h2><blockquote>
-<p>注意：在2.8版本之前只有全量复制，而2.8版本后有全量和增量复制：</p>
+<p>以上两种方式，都必须指定一个sentinel的配置文件sentinel.conf，如果不指定，将无法启动sentinel。sentinel默认监听26379端口，所以运行前必须确定该端口没有被别的进程占用。</p>
+<h2 id="sentinel安装与配置"><a href="#sentinel安装与配置" class="headerlink" title="sentinel安装与配置"></a>sentinel安装与配置</h2><p>1.配置开启主从节点</p>
+<p>2.配置开启sentinel来监控主节点</p>
+<p>Redis源码包中包含了一个sentinel.conf文件作为sentinel的配置文件，配置文件自带了关于各个配置项的解释。典型的配置项如下所示：</p>
+<pre class=" language-lang-bash"><code class="language-lang-bash">sentinel monitor mymaster 127.0.0.1 6379 2 
+sentinel down-after-milliseconds mymaster 60000 
+sentinel failover-timeout mymaster 180000
+sentinel parallel-syncs mymaster 1
+
+sentinel monitor resque 192.168.1.3 6380 4
+sentinel down-after-milliseconds resque 10000
+sentinel failover-timeout resque 180000
+sentinel parallel-syncs resque 5
+</code></pre>
+<p><strong>接下来我们将一行一行地解释上面的配置项</strong>：</p>
+<pre><code>sentinel monitor mymaster 127.0.0.1 6379 2
+</code></pre><p>这一行代表sentinel监控的master的名字叫做<strong>mymaster</strong>,地址为<strong>127.0.0.1:6379</strong>，行尾最后的一个<strong>2</strong>代表什么意思呢？我们知道，网络是不可靠的，有时候一个sentinel会因为网络堵塞而误以为一个master redis已经死掉了，当sentinel集群式，解决这个问题的方法就变得很简单，只需要多个sentinel互相沟通来确认某个master是否真的死了，这个<strong>2</strong>代表，当集群中有2个sentinel认为master死了时，才能真正认为该master已经不可用了。（sentinel集群中各个sentinel也有互相通信，通过gossip协议）。</p>
+<p>除了第一行配置，我们发现剩下的配置都有一个统一的格式:</p>
+<pre><code>sentinel &lt;option_name&gt; &lt;master_name&gt; &lt;option_value&gt;
+</code></pre><p>接下来我们根据上面格式中的<strong>option_name</strong>一个一个来解释这些配置项：</p>
+<ul>
+<li><p><strong>down-after-milliseconds</strong><br>sentinel会向master发送心跳<strong><em>PING\</em></strong>来确认master是否存活，如果master在<strong>“一定时间范围”</strong>内不回应PONG或者是回复了一个错误消息，那么这个sentinel会<strong>主观地</strong>(单方面地)认为这个master已经不可用了(主观下线，subjectively down, 也简称为SDOWN)。而这个down-after-milliseconds就是用来指定这个<strong>“一定时间范围”</strong>的，单位是毫秒。</p>
+<blockquote>
+<p>不过需要注意的是，这个时候sentinel并不会马上进行failover主备切换，这个sentinel还需要参考sentinel集群中其他sentinel的意见，如果超过某个数量的sentinel也<strong>主观地</strong>认为该master死了，那么这个master就会被<strong>客观地</strong>(注意哦，这次不是主观，是客观，与刚才的subjectively down相对，这次是客观下线，objectively down，简称为ODOWN)认为已经死了。需要一起做出决定的sentinel数量在上一条配置中进行配置。</p>
 </blockquote>
-<ul>
-<li><code>全量（同步）复制</code>：用于初次复制或其他无法进行部分复制的情况，将主节点中的所有数据都发送给从节点，是一个非常重型的操作。</li>
-<li><code>部分（同步）复制</code>：用于网络中断等情况后的复制，只将中断期间主节点执行的写命令发送给从节点，与全量复制相比更加高效。需要注意的是，如果网络中断时间过长，导致主节点没有能够完整地保存中断期间执行的写命令，则无法进行部分复制，仍使用全量复制。</li>
+</li>
+<li><p><strong>parallel-syncs</strong><br>在发生failover主备切换时，这个选项指定了最多可以有多少个slave同时对新的master进行同步，这个数字越小，完成failover所需的时间就越长，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为 1 来保证每次只有一个slave处于不能处理命令请求的状态。</p>
+</li>
 </ul>
-<h3 id="1-全量复制"><a href="#1-全量复制" class="headerlink" title="1. 全量复制"></a>1. 全量复制</h3><p>Redis通过psync命令进行全量复制的过程如下：</p>
-<p><img src="/2022/09/02/redis-rep/image-20220902152334595.png"></p>
-<p>（1）从节点判断无法进行部分复制，向主节点发送全量复制的请求；或从节点发送部分复制的请求，但主节点判断无法进行部分复制；具体判断过程需要在讲述了部分复制原理后再介绍。</p>
-<p>（2）主节点收到全量复制的命令后，执行<code>bgsave</code>，在后台生成RDB文件，并使用一个缓冲区（称为复制缓冲区）记录从现在开始执行的所有写命令。</p>
-<p>（3）主节点的bgsave执行完成后，将RDB文件发送给从节点；<strong>从节点首先清除自己的旧数据，然后载入接收的RDB文件</strong>，将数据库状态更新至主节点执行bgsave时的数据库状态。这是因为从库在通过 replicaof 命令开始和主库同步前，可能保存了其他数据。为了避免之前数据的影响，从库需要先把当前数据库清空。在主库将数据同步给从库的过程中，主库不会被阻塞，仍然可以正常接收请求。</p>
-<p>（4）但是，这些请求中的写操作并没有记录到刚刚生成的 RDB 文件中。为了保证主从库的数据一致性，主库会在内存中用专门的 replication buffer，记录 RDB 文件生成后收到的所有写操作。主节点将前述复制缓冲区中的所有写命令发送给从节点，从节点执行这些写命令，将数据库状态更新至主节点的最新状态</p>
-<p>（5）如果从节点开启了AOF，则会触发<code>bgrewriteaof</code>的执行，从而保证AOF文件更新至主节点的最新状态</p>
-<p>主节点的打印日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011456793-1960688528.png"></p>
-<p>从节点打印日志如下图所示：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011502796-1951938935.png"></p>
-<p>其中，有几点需要注意：从节点接收了来自主节点的89260个字节的数据；从节点在载入主节点的数据之前要先将老数据清除；从节点在同步完数据后，调用了bgrewriteaof。</p>
-<p>通过全量复制的过程可以看出，全量复制是非常重型的操作：</p>
-<p>（1）主节点通过bgsave命令fork子进程进行RDB持久化，该过程是非常消耗CPU、内存(页表复制)、硬盘IO的；</p>
-<p>（2）主节点通过网络将RDB文件发送给从节点，对主从节点的带宽都会带来很大的消耗</p>
-<p>（3）从节点清空老数据、载入新RDB文件的过程是阻塞的，无法响应客户端的命令；如果从节点执行bgrewriteaof，也会带来额外的消耗</p>
-<h3 id="2-部分复制"><a href="#2-部分复制" class="headerlink" title="2. 部分复制"></a>2. 部分复制</h3><p>由于全量复制在主节点数据量较大时效率太低，因此Redis2.8开始提供部分复制，用于处理网络中断时的数据同步。</p>
-<p><img src="/2022/09/02/redis-rep/image-20220902154426809.png"></p>
-<p>部分复制的实现，依赖于三个重要的概念：</p>
-<h4 id="复制偏移量-offset"><a href="#复制偏移量-offset" class="headerlink" title="复制偏移量(offset)"></a>复制偏移量(offset)</h4><p>主节点和从节点分别维护一个复制偏移量（offset），代表的是<strong>主节点向从节点传递的字节数。主节点每次向从节点传播N个字节数据时，主节点的offset增加N；从节点每次收到主节点传来的N个字节数据时，从节点的offset增加N。</strong></p>
-<p>offset用于判断主从节点的数据库状态是否一致：如果二者offset相同，则一致；如果offset不同，则不一致，此时可以根据两个offset找出从节点缺少的那部分数据。</p>
-<h4 id="复制积压缓冲区（repl-backlog-buffer）"><a href="#复制积压缓冲区（repl-backlog-buffer）" class="headerlink" title="复制积压缓冲区（repl_backlog_buffer）"></a>复制积压缓冲区（repl_backlog_buffer）</h4><p>复制积压缓冲区是由主节点维护的、固定长度的、先进先出(FIFO)队列，默认大小1MB；当主节点开始有从节点时创建，其作用是<strong>备份主节点最近发送给从节点的数据</strong>。注意，无论主节点有一个还是多个从节点，都只需要一个复制积压缓冲区。</p>
-<p>在命令传播阶段，主节点除了将写命令发送给从节点，还会发送一份给复制积压缓冲区，作为写命令的备份；除了存储写命令，复制积压缓冲区中还存储了其中的每个字节对应的复制偏移量（offset）。由于复制积压缓冲区定长且是先进先出，所以它保存的是主节点最近执行的写命令；时间较早的写命令会被挤出缓冲区。</p>
-<p><strong>由于该缓冲区长度固定且有限，因此可以备份的写命令也有限，当主从节点offset的差距过大超过缓冲区长度时，将无法执行部分复制，只能执行全量复制。</strong>反过来说，为了提高网络中断时部分复制执行的概率，可以根据需要增大复制积压缓冲区的大小(通过配置repl-backlog-size)；如果网络中断的平均时间是60s，而主节点平均每秒产生的写命令(特定协议格式)所占的字节数为100KB，则复制积压缓冲区的平均需求为6MB，保险起见，可以设置为12MB，来保证绝大多数断线情况都可以使用部分复制。</p>
-<p><font color="red">从节点将offset发送给主节点后，主节点根据offset和缓冲区大小决定能否执行部分复制：</font></p>
+<p>其他配置项在sentinel.conf中都有很详细的解释。<br>所有的配置都可以在运行时用命令<code>SENTINEL SET command</code>动态修改。</p>
+<h2 id="故障转移failover—Sentinel的“仲裁会”"><a href="#故障转移failover—Sentinel的“仲裁会”" class="headerlink" title="故障转移failover—Sentinel的“仲裁会”"></a>故障转移failover—Sentinel的“仲裁会”</h2><p>前面我们谈到，当一个master被sentinel集群监控时，需要为它指定一个参数，这个参数指定了当需要判决master为不可用，并且进行failover时，所需要的sentinel数量，本文中我们暂时称这个参数为<strong>票数</strong>。</p>
+<p>不过，当failover主备切换真正被触发后，failover并不会马上进行，还需要sentinel中的<strong>大多数</strong>sentinel授权后才可以进行failover。<br>当ODOWN时，failover被触发。failover一旦被触发，尝试去进行failover的sentinel会去获得“大多数”sentinel的授权（如果票数比大多数还要大的时候，则询问更多的sentinel)</p>
+<p>这个区别看起来很微妙，但是很容易理解和使用。例如，集群中有5个sentinel，票数被设置为2，当2个sentinel认为一个master已经不可用了以后，将会触发failover，但是，进行failover的那个sentinel必须先获得至少3个sentinel的授权才可以实行failover。</p>
+<p>如果票数被设置为5，要达到ODOWN状态，必须所有5个sentinel都主观认为master为不可用，要进行failover，那么得获得所有5个sentinel的授权。</p>
+<p>基本原理如图：</p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220905230426479.png" alt=""></p>
+<h2 id="配置版本号"><a href="#配置版本号" class="headerlink" title="配置版本号"></a>配置版本号</h2><p>为什么要先获得<strong>大多数</strong>sentinel的认可时才能真正去执行failover呢？</p>
+<p>当一个sentinel被授权后，它将会”拿走”宕掉的master的一份最新配置版本号，当failover执行结束以后，这个版本号将会被用于最新的配置。因为<strong>大多数</strong>sentinel都已经知道该版本号已经被要执行failover的sentinel拿走了，所以其他的sentinel都不能再去使用这个版本号。这意味着，每次failover都会附带有一个独一无二的版本号。</p>
+<p>而且，sentinel集群都遵守一个规则：如果sentinel A推荐sentinel B去执行failover，A会等待一段时间后，自行再次去对同一个master执行failover，这个等待的时间是通过<code>failover-timeout</code>配置项去配置的。从这个规则可以看出，sentinel集群中的sentinel不会在同一时刻并发去failover同一个master，第一个进行failover的sentinel如果失败了，另外一个将会在一定时间内进行重新进行failover，以此类推。</p>
+<p>redis sentinel保证了活跃性：如果<strong>大多数</strong>sentinel能够互相通信，最终将会有一个被授权去进行failover.<br>redis sentinel也保证了安全性：每个试图去failover同一个master的sentinel都会得到一个独一无二的版本号。</p>
+<h2 id="领导者选举"><a href="#领导者选举" class="headerlink" title="领导者选举"></a>领导者选举</h2><p>一个redis服务被判断为客观下线时，多个监视该服务的sentinel协商，选举一个领头sentinel，对该redis服务进行故障转移操作。<strong>选举领导者sentinel</strong></p>
+<p><strong>遵循以下规则：</strong><br>1）所有的sentinel都有公平被选举成领头的资格。<br>2）所有的sentinel都有且只有一次将某个sentinel选举成领头的机会（在一轮选举中），一旦选举某个sentinel为领头，不能更改。<br>3）sentinel设置领头sentinel是先到先得，一旦当前sentinel设置了领头sentinel，以后要求设置sentinel为领头请求都会被拒绝。<br>4）每个发现服务客观下线的sentinel，都会要求其他sentinel将自己设置成领头。<br>5）当一个sentinel（源sentinel）向另一个sentinel（目sentinel）发送is-master-down-by-addr ip port current_epoch runid命令的时候，runid参数不是*，而是sentinel运行id，就表示源sentinel要求目标sentinel选举其为领头。<br>6）源sentinel会检查目标sentinel对其要求设置成领头的回复，如果回复的leader_runid和leader_epoch为源sentinel，表示目标sentinel同意将源sentinel设置成领头。<br>7）如果某个sentinel被半数以上的sentinel设置成领头，那么该sentinel既为领头。<br>8）如果在限定时间内，没有选举出领头sentinel，暂定一段时间，再选举。</p>
+<p><strong>为什么要选领导者？</strong><br>简单来说，就是因为只能有一个sentinel节点去完成故障转移。<br>sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线判定，二是进行领导者选举。<br><strong>选举过程：</strong><br>1）每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。<br>2）收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。<br>3）如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者<br>4）如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。</p>
+<h2 id="自动发现机制"><a href="#自动发现机制" class="headerlink" title="自动发现机制"></a>自动发现机制</h2><p><img src="/2022/09/05/redis03-sentinel/380271-20181108161019953-1764260447.png" alt=""></p>
+<h2 id="sentinel中的三个定时任务"><a href="#sentinel中的三个定时任务" class="headerlink" title="sentinel中的三个定时任务"></a>sentinel中的三个定时任务</h2><p>1.每10秒每个sentinel对master和slave执行info</p>
 <ul>
-<li>如果offset偏移量之后的数据，仍然都在复制积压缓冲区里，则执行部分复制；</li>
-<li>如果offset偏移量之后的数据已不在复制积压缓冲区中（数据已被挤出覆盖），则执行全量复制。</li>
+<li>发现slave，记录slave节点信息</li>
+<li>确认主从关系</li>
 </ul>
-<h4 id="服务器运行ID-runid"><a href="#服务器运行ID-runid" class="headerlink" title="服务器运行ID(runid)"></a>服务器运行ID(runid)</h4><p>每个Redis节点(无论主从)，在启动时都会自动生成一个随机ID(每次启动都不一样)，由40个随机的十六进制字符组成；runid用来唯一识别一个Redis节点。通过info Server命令，可以查看节点的runid：</p>
-<p><img src="/1174710-20180628011537662-712436367.png" alt="img"></p>
-<p>主从节点初次复制时，主节点将自己的<code>runid</code>发送给从节点，从节点将这个<code>runid</code>保存起来；当断线重连时，从节点会将这个<code>runid</code>发送给主节点；主节点根据<code>runid</code>判断能否进行部分复制：</p>
+<p>2.每2秒每个sentinel通过master节点的channel交换信息(pub/sub)</p>
 <ul>
-<li>如果从节点保存的<code>runid</code>与主节点现在的<code>runid</code>相同，说明主从节点之前同步过，主节点会继续尝试使用部分复制(到底能不能部分复制还要看offset和复制积压缓冲区的情况)；</li>
-<li>如果从节点保存的<code>runid</code>与主节点现在的<code>runid</code>不同，说明从节点在断线前同步的Redis节点并不是当前的主节点，只能进行全量复制。</li>
+<li><p>通过 <code>__sentinel__:hello</code> 频道交互</p>
+</li>
+<li><p>交互对节点的”看法“和自身信息</p>
+</li>
 </ul>
-<h3 id="psync命令的执行"><a href="#psync命令的执行" class="headerlink" title="psync命令的执行"></a>psync命令的执行</h3><p>在了解了复制偏移量、复制积压缓冲区、节点运行id之后，本节将介绍psync命令的参数和返回值，从而说明psync命令执行过程中，主从节点是如何确定使用全量复制还是部分复制的。</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011547892-692403928.png"></p>
-<p>（1）首先，从节点根据当前状态，决定如何调用psync命令：</p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220908234731379.png" alt=""></p>
+<p>3.每1秒每个sentinel对其他sentinel和redis执行ping</p>
 <ul>
-<li>如果从节点之前未执行过slaveof或最近执行了slaveof no one，则从节点发送命令为<code>psync ? -1</code>，向主节点请求全量复制；</li>
-<li>如果从节点之前执行了slaveof，则发送命令为<code>psync &lt;runid&gt; &lt;offset&gt;</code>，其中<code>runid</code>为上次复制的主节点的<code>runid</code>，<code>offset</code>为上次复制截止时从节点保存的复制偏移量。</li>
+<li>心跳检测，失败判定依据</li>
 </ul>
-<p>（2）主节点根据收到的<code>psync</code>命令，及当前服务器状态，决定执行全量复制还是部分复制：</p>
-<ul>
-<li>如果主节点版本低于Redis2.8，则返回<code>-ERR</code>回复，此时从节点重新发送sync命令执行全量复制；</li>
-<li>如果主节点版本够新，且<code>runid</code>与从节点发送的<code>runid</code>相同，且从节点发送的<code>offset</code>之后的数据在复制积压缓冲区中都存在，则回复<code>+CONTINUE</code>，表示将进行部分复制，从节点等待主节点发送其缺少的数据即可；</li>
-<li>如果主节点版本够新，但是<code>runid</code>与从节点发送的<code>runid</code>不同，或从节点发送的<code>offset</code>之后的数据已不在复制积压缓冲区中(在队列中被挤出了)，则回复<code>+FULLRESYNC &lt;runid&gt; &lt;offset&gt;</code>，表示要进行全量复制，其中<code>runid</code>表示主节点当前的<code>runid</code>，<code>offset</code>表示主节点当前的<code>offset</code>，从节点保存这两个值，以备使用。</li>
-</ul>
-<h3 id="部分复制演示"><a href="#部分复制演示" class="headerlink" title="部分复制演示"></a>部分复制演示</h3><p><strong>网络中断</strong></p>
-<p>网络中断一段时间后，主节点和从节点都会发现失去了与对方的连接（关于主从节点对超时的判断机制，后面会有说明）；此后，从节点便开始执行对主节点的重连，由于此时网络还没有恢复，重连失败，从节点会一直尝试重连。</p>
-<p>主节点日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011609348-1802555230.png"></p>
-<p>从节点日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011615849-621207089.png"></p>
-<p><strong>网络恢复</strong></p>
-<p>网络恢复后，从节点连接主节点成功，并请求进行部分复制，主节点接收请求后，二者进行部分复制以同步数据。</p>
-<p>主节点日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011623772-1032753515.png"></p>
-<p>从节点日志如下：</p>
-<p><img src="/2022/09/02/redis-rep/1174710-20180628011630326-1569443208.png"></p>
-<h2 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h2><h3 id="为什么主从全量复制使用RDB而不使用AOF？"><a href="#为什么主从全量复制使用RDB而不使用AOF？" class="headerlink" title="为什么主从全量复制使用RDB而不使用AOF？"></a>为什么主从全量复制使用RDB而不使用AOF？</h3><p>1、RDB文件内容是经过压缩的二进制数据（不同数据类型数据做了针对性优化），文件很小。而AOF文件记录的是每一次写操作的命令，写操作越多文件会变得很大，其中还包括很多对同一个key的多次冗余操作。在主从全量数据同步时，传输RDB文件可以尽量降低对主库机器网络带宽的消耗，从库在加载RDB文件时，一是文件小，读取整个文件的速度会很快，二是因为RDB文件存储的都是二进制数据，从库直接按照RDB协议解析还原数据即可，速度会非常快，而AOF需要依次重放每个写命令，这个过程会经历冗长的处理逻辑，恢复速度相比RDB会慢得多，所以使用RDB进行主从全量复制的成本最低。</p>
-<p>2、假设要使用AOF做全量复制，意味着必须打开AOF功能，打开AOF就要选择文件刷盘的策略，选择不当会严重影响Redis性能。而RDB只有在需要定时备份和主从全量复制数据时才会触发生成一次快照。而在很多丢失数据不敏感的业务场景，其实是不需要开启AOF的。</p>
-<h3 id="为什么还会有从库的从库的设计？"><a href="#为什么还会有从库的从库的设计？" class="headerlink" title="为什么还会有从库的从库的设计？"></a>为什么还会有从库的从库的设计？</h3><p>通过分析主从库间第一次数据同步的过程，你可以看到，一次全量复制中，对于主库来说，需要完成两个耗时的操作：<strong>生成 RDB 文件和传输 RDB 文件</strong>。</p>
-<p>如果从库数量很多，而且都要和主库进行全量复制的话，就会导致主库忙于 fork 子进程生成 RDB 文件，进行数据全量复制。fork 这个操作会阻塞主线程处理正常请求，从而导致主库响应应用程序的请求速度变慢。此外，传输 RDB 文件也会占用主库的网络带宽，同样会给主库的资源使用带来压力。那么，有没有好的解决方法可以分担主库压力呢？</p>
-<p>其实是有的，这就是“主 - 从 - 从”模式。</p>
-<p>在刚才介绍的主从库模式中，所有的从库都是和主库连接，所有的全量复制也都是和主库进行的。现在，我们可以通过“主 - 从 - 从”模式<strong>将主库生成 RDB 和传输 RDB 的压力，以级联的方式分散到从库上</strong>。</p>
-<p>简单来说，我们在部署主从集群的时候，可以手动选择一个从库（比如选择内存资源配置较高的从库），用于级联其他的从库。然后，我们可以再选择一些从库（例如三分之一的从库），在这些从库上执行如下命令，让它们和刚才所选的从库，建立起主从关系。</p>
-<pre class=" language-markdown"><code class="language-markdown">replicaof 所选从库的IP 6379
+<p><img src="/2022/09/05/redis03-sentinel/image-20220908234748441.png" alt=""></p>
+<h2 id="使用Java客户端连接redis-sentinel"><a href="#使用Java客户端连接redis-sentinel" class="headerlink" title="使用Java客户端连接redis sentinel"></a>使用Java客户端连接redis sentinel</h2><pre class=" language-lang-java"><code class="language-lang-java">package com;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisSentinelPool;
+
+public class JRedisSentinelTest {
+    public static void main(String[] args) {
+        //服务IP
+        String ip = "172.168.x.y";
+        Set sentinels = new HashSet();
+        //Sentine端口
+        sentinels.add(new HostAndPort(ip, 26379).toString());
+        sentinels.add(new HostAndPort(ip, 26380).toString());
+        JedisSentinelPool sentinelPool = new JedisSentinelPool("master1", sentinels);
+        System.out.println("Current master: " + sentinelPool.getCurrentHostMaster().toString());
+        Jedis master = sentinelPool.getResource();
+        master.set("username","liangzhichao");
+        sentinelPool.returnResource(master);
+        Jedis master2 = sentinelPool.getResource();
+        String value = master2.get("username");
+        System.out.println("username: " + value);
+        master2.close();
+        sentinelPool.destroy();
+    }
+}
 </code></pre>
-<p>这样一来，这些从库就会知道，在进行同步时，不用再和主库进行交互了，只要和级联的从库进行写操作同步就行了，这就可以减轻主库上的压力，如下图所示：</p>
-<p><img src="/2022/09/02/redis-rep/db-redis-copy-4.jpg"></p>
-<p>通过“主 - 从 - 从”模式分担主库压力的方式。那么，一旦主从库完成了全量复制，它们之间就会一直维护一个网络连接，主库会通过这个连接将后续陆续收到的命令操作再同步给从库，这个过程也称为基于长连接的命令传播，可以避免频繁建立连接的开销。</p>
-<h3 id="读写分离及其中的问题"><a href="#读写分离及其中的问题" class="headerlink" title="读写分离及其中的问题"></a>读写分离及其中的问题</h3><p>在主从复制基础上实现的读写分离，可以实现Redis的读负载均衡：由主节点提供写服务，由一个或多个从节点提供读服务（多个从节点既可以提高数据冗余程度，也可以最大化读负载能力）；在读负载较大的应用场景下，可以大大提高Redis服务器的并发量。下面介绍在使用Redis读写分离时，需要注意的问题。</p>
+<h2 id="如何选举”合适的“slave节点"><a href="#如何选举”合适的“slave节点" class="headerlink" title="如何选举”合适的“slave节点"></a>如何选举”合适的“slave节点</h2><p>当一个sentinel准备好了要进行failover，并且收到了其他sentinel的授权，那么就需要选举出一个合适的slave来做为新的master。</p>
+<p>slave的选举主要会评估slave的以下几个方面：</p>
 <ul>
-<li><strong>延迟与不一致问题</strong></li>
+<li>与master断开连接的次数</li>
+<li>Slave的优先级</li>
+<li>数据复制的下标(用来评估slave当前拥有多少master的数据)</li>
+<li>进程ID</li>
 </ul>
-<p>前面已经讲到，由于主从复制的命令传播是异步的，延迟与数据的不一致不可避免。如果应用对数据不一致的接受程度程度较低，可能的优化措施包括：优化主从节点之间的网络环境（如在同机房部署）；监控主从节点延迟（通过offset）判断，如果从节点延迟过大，通知应用不再通过该从节点读取数据；使用集群同时扩展写负载和读负载等。</p>
-<p>在命令传播阶段以外的其他情况下，从节点的数据不一致可能更加严重，例如连接在数据同步阶段，或从节点失去与主节点的连接时等。从节点的slave-serve-stale-data参数便与此有关：它控制这种情况下从节点的表现；如果为yes（默认值），则从节点仍能够响应客户端的命令，如果为no，则从节点只能响应info、slaveof等少数命令。该参数的设置与应用对数据一致性的要求有关；如果对数据一致性要求很高，则应设置为no。</p>
-<ul>
-<li><strong>数据过期问题</strong></li>
+<p>如果一个slave与master失去联系超过10次，并且每次都超过了配置的最大失联时间(<code>down-after-milliseconds option</code>)，并且，如果sentinel在进行failover时发现slave失联，那么这个slave就会被sentinel认为不适合用来做新master的。</p>
+<p>更严格的定义是，如果一个slave持续断开连接的时间超过</p>
+<pre class=" language-lang-livecodeserver"><code class="language-lang-livecodeserver">(down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state
+</code></pre>
+<p>就会被认为失去选举资格。<br>符合上述条件的slave才会被列入master候选人列表，并根据以下顺序来进行排序：</p>
+<ol>
+<li>sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。</li>
+<li>如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。</li>
+<li>如果优先级和下标都相同，就选择进程ID较小的那个。</li>
+</ol>
+<p>一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。</p>
+<p>如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。</p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220906231235163.png" alt=""></p>
+<h2 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>客户端可以向一个sentinel发送订阅某个频道的事件的命令，当有特定的事件发生时，sentinel会通知所有订阅的客户端。需要注意的是客户端只能订阅，不能发布。</p>
+<p>订阅频道的名字与事件的名字一致。例如，频道名为<strong>sdown</strong> 将会发布所有与SDOWN相关的消息给订阅者。</p>
+<p>如果想要订阅所有消息，只需简单地使用<code>PSUBSCRIBE *</code></p>
+<p>以下是所有你可以收到的消息的消息格式，如果你订阅了所有消息的话。第一个单词是频道的名字，其它是数据的格式。</p>
+<p>注意：以下的instance details的格式是：</p>
+<p><code>&lt;instance-type&gt; &lt;name&gt; &lt;ip&gt; &lt;port&gt; @ &lt;master-name&gt; &lt;master-ip&gt; &lt;master-port&gt;</code></p>
+<p>如果这个redis实例是一个master，那么@之后的消息就不会显示。</p>
+<pre class=" language-lang-haskell"><code class="language-lang-haskell">    +reset-master <instance details> -- 当master被重置时.
+    +slave <instance details> -- 当检测到一个slave并添加进slave列表时.
+    +failover-state-reconf-slaves <instance details> -- Failover状态变为reconf-slaves状态时
+    +failover-detected <instance details> -- 当failover发生时
+    +slave-reconf-sent <instance details> -- sentinel发送SLAVEOF命令把它重新配置时
+    +slave-reconf-inprog <instance details> -- slave被重新配置为另外一个master的slave，但数据复制还未发生时。
+    +slave-reconf-done <instance details> -- slave被重新配置为另外一个master的slave并且数据复制已经与master同步时。
+    -dup-sentinel <instance details> -- 删除指定master上的冗余sentinel时 (当一个sentinel重新启动时，可能会发生这个事件).
+    +sentinel <instance details> -- 当master增加了一个sentinel时。
+    +sdown <instance details> -- 进入SDOWN状态时;
+    -sdown <instance details> -- 离开SDOWN状态时。
+    +odown <instance details> -- 进入ODOWN状态时。
+    -odown <instance details> -- 离开ODOWN状态时。
+    +new-epoch <instance details> -- 当前配置版本被更新时。
+    +try-failover <instance details> -- 达到failover条件，正等待其他sentinel的选举。
+    +elected-leader <instance details> -- 被选举为去执行failover的时候。
+    +failover-state-select-slave <instance details> -- 开始要选择一个slave当选新master时。
+    no-good-slave <instance details> -- 没有合适的slave来担当新master
+    selected-slave <instance details> -- 找到了一个适合的slave来担当新master
+    failover-state-send-slaveof-noone <instance details> -- 当把选择为新master的slave的身份进行切换的时候。
+    failover-end-for-timeout <instance details> -- failover由于超时而失败时。
+    failover-end <instance details> -- failover成功完成时。
+    switch-master <master name> <oldip> <oldport> <newip> <newport> -- 当master的地址发生变化时。通常这是客户端最感兴趣的消息了。
+    +tilt -- 进入Tilt模式。
+    -tilt -- 退出Tilt模式。
+</code></pre>
+<h2 id="TILT-模式"><a href="#TILT-模式" class="headerlink" title="TILT 模式"></a>TILT 模式</h2><p>redis sentinel非常依赖系统时间，例如它会使用系统时间来判断一个PING回复用了多久的时间。<br>然而，假如系统时间被修改了，或者是系统十分繁忙，或者是进程堵塞了，sentinel可能会出现运行不正常的情况。<br>当系统的稳定性下降时，TILT模式是sentinel可以进入的一种的保护模式。当进入TILT模式时，sentinel会继续监控工作，但是它不会有任何其他动作，它也不会去回应<code>is-master-down-by-addr</code>这样的命令了，因为它在TILT模式下，检测失效节点的能力已经变得让人不可信任了。<br>如果系统恢复正常，持续30秒钟，sentinel就会退出TITL模式。</p>
+<h2 id="总结性知识点"><a href="#总结性知识点" class="headerlink" title="总结性知识点"></a>总结性知识点</h2><ul>
+<li>尽可能在不同物理机上部署Redis Sentinel所有节点。</li>
+<li>Redis Sentinel中的Sentinel节点数应该为大于等于3且最好为奇数。</li>
+<li>Redis Sentinel中的数据节点与普通数据节点没有区别。</li>
+<li>客户端初始化时连接的是Sentinel节点集合，不在是具体的Redis节点，但Sentinel知识配置中心，不是代理。</li>
+<li>Redis Sentinel通过三个定时任务实现了Sentinel节点对于主节点、从节点、其余节点的监控。</li>
+<li>Redis Sentinel在对节点做失败判定时分为主观下线和客观下线。</li>
+<li>Redis Sentinel实现读写分离高可用可以依赖Sentinel节点的消息通知，获取Redis数据节点的状态变化。</li>
 </ul>
-<p>在单机版Redis中，存在两种删除策略：</p>
-<ul>
-<li><code>惰性删除</code>：服务器不会主动删除数据，只有当客户端查询某个数据时，服务器判断该数据是否过期，如果过期则删除。</li>
-<li><code>定期删除</code>：服务器执行定时任务删除过期数据，但是考虑到内存和CPU的折中（删除会释放内存，但是频繁的删除操作对CPU不友好），该删除的频率和执行时间都受到了限制。</li>
-</ul>
-<p>在主从复制场景下，为了主从节点的数据一致性，从节点不会主动删除数据，而是由主节点控制从节点中过期数据的删除。由于主节点的惰性删除和定期删除策略，都不能保证主节点及时对过期数据执行删除操作，因此，当客户端通过Redis从节点读取数据时，很容易读取到已经过期的数据。</p>
-<p>Redis 3.2中，从节点在读取数据时，增加了对数据是否过期的判断：如果该数据已过期，则不返回给客户端；将Redis升级到3.2可以解决数据过期问题。</p>
-<ul>
-<li><strong>故障切换问题</strong></li>
-</ul>
-<p>在没有使用哨兵的读写分离场景下，应用针对读和写分别连接不同的Redis节点；当主节点或从节点出现问题而发生更改时，需要及时修改应用程序读写Redis数据的连接；连接的切换可以手动进行，或者自己写监控程序进行切换，但前者响应慢、容易出错，后者实现复杂，成本都不算低。</p>
-<ul>
-<li><strong>总结</strong></li>
-</ul>
-<p>在使用读写分离之前，可以考虑其他方法增加Redis的读负载能力：如尽量优化主节点（减少慢查询、减少持久化等其他情况带来的阻塞等）提高负载能力；使用Redis集群同时提高读负载能力和写负载能力等。如果使用读写分离，可以使用哨兵，使主从节点的故障切换尽可能自动化，并减少对应用程序的侵入。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kismetv/p/9236731.html">深入学习Redis（3）：主从复制</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.nowcoder.net/n/7aac883430354649840fc995e8a5278d?from=nowcoder_improve">Redis的复制原理以及优化</a></p>
-<p><a target="_blank" rel="noopener" href="https://pdai.tech/md/db/nosql-redis/db-redis-x-copy.html">Redis进阶 - 高可用：主从复制详解</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/192978053">Redis主从复制以及主从复制原理</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/aklaus/2446654?abTest=51cto"><strong>redis sentinel</strong></a></p>
+<p><strong><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002680804">Redis Sentinel机制与用法</a></strong></p>
 
                 
             </div>
@@ -727,7 +707,7 @@ slave-read-only <span class="token function">yes</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/09/02/redis-rep/">https://silvercorridors.cf/2022/09/02/redis-rep/</a>
+                    <a href="https://silvercorridors.cf/2022/09/05/redis03-sentinel/">https://silvercorridors.cf/2022/09/05/redis03-sentinel/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1086,13 +1066,13 @@ slave-read-only <span class="token function">yes</span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/05/redis-sentinel/">
+                <a href="/2022/09/19/kafka01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Redis 哨兵(sentinel)">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Kafka相关知识点">
                         
-                        <span class="card-title">Redis 哨兵(sentinel)</span>
+                        <span class="card-title">Kafka相关知识点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1103,16 +1083,12 @@ slave-read-only <span class="token function">yes</span>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            银色回廊
                             
                         </span>
                     </div>
@@ -1120,8 +1096,8 @@ slave-read-only <span class="token function">yes</span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/kafka/">
+                        <span class="chip bg-color">kafka</span>
                     </a>
                     
                 </div>
@@ -1135,7 +1111,7 @@ slave-read-only <span class="token function">yes</span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/02/redis-rdb/">
+                <a href="/2022/09/02/redis01-rdb/">
                     <div class="card-image">
                         
                         

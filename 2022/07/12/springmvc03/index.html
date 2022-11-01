@@ -518,28 +518,28 @@
 <p>400：Bad Request</p>
 <h4 id="4-无状态"><a href="#4-无状态" class="headerlink" title="4.无状态"></a>4.无状态</h4><p>状态信息存储在客户端,服务器端无状态,即在没有数据变化的情况下,相同的请求会获得相同的返回数据。和函数式编程类似：一个函数的返回只跟它的输入有关，这个函数没有它的内部状态。</p>
 <p><strong>注意：无状态的之所以被强调，就是因为它有两大好处：<font color="red">1.方便分布式/负载均衡。2.方便扩展，特别是在微服务上</font></strong></p>
-<h2 id="校正请求参数名-RequestParam（掌握）"><a href="#校正请求参数名-RequestParam（掌握）" class="headerlink" title="校正请求参数名@RequestParam（掌握）"></a>校正请求参数名@RequestParam（掌握）</h2><p>所谓校正请求参数名，是指若请求 URL 所携带的参数名称与处理方法中指定的参数名不相同时，则需在处理方法参数前，添加一个注解**@RequestParam(“请求参数名”)**，指定请求 URL 所携带参数的名称。该注解是对处理器方法参数进行修饰的。value 属性指定请求参数的名称。</p>
+<h2 id="校正请求参数名-RequestParam（掌握）"><a href="#校正请求参数名-RequestParam（掌握）" class="headerlink" title="校正请求参数名@RequestParam（掌握）"></a>校正请求参数名@RequestParam（掌握）</h2><p>所谓校正请求参数名，是指若请求 URL 所携带的参数名称与处理方法中指定的参数名不相同时，则需在处理方法参数前，添加一个注解<strong>@RequestParam(“请求参数名”)</strong>，指定请求 URL 所携带参数的名称。该注解是对处理器方法参数进行修饰的。value 属性指定请求参数的名称。</p>
 <p><img src="/image-20220712144223669.png" alt="image-20220712144223669"></p>
 <p>项目：receiveParameters-params。在 receiveParameters-property 基础上修改。</p>
 <h2 id="PathVariable"><a href="#PathVariable" class="headerlink" title="@PathVariable"></a>@PathVariable</h2><p>带占位符的 URL 是 Spring3.0 新增的功能,该功能在SpringMVC 向 REST 目标挺进发展过程中具有里程碑的意义。</p>
 <p>通过 @PathVariable 可以将 URL 中占位符参数绑定到控制器处理方法的入参中:URL 中的 {xxx} 占位符可以通过 @PathVariable(“xxx”) 绑定到操作方法的入参中。例如：</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/user/{id}"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> String <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"sid"</span><span class="token punctuation">)</span>String id<span class="token punctuation">,</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"a"</span><span class="token punctuation">)</span>String a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"getUser()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"id = "</span> <span class="token operator">+</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a = "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping("/user/{id}")
+public String getUser(@PathVariable(name = "sid")String id,@PathVariable(name = "a")String a) {
+    System.out.println("getUser()");
+    System.out.println("id = " + id);
+    System.out.println("a = " + a);
+    return "HelloWorld";
+}
 </code></pre>
 <h2 id="关于如何发送PUT和DELETE请求"><a href="#关于如何发送PUT和DELETE请求" class="headerlink" title="关于如何发送PUT和DELETE请求"></a>关于如何发送PUT和DELETE请求</h2><p>如果是一个html网页的form，它的合法选项只有“<code>GET</code>|<code>POST</code>”，除非用了AJAX库或者框架。</p>
 <p>PUT请求</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"/user/{sid}/{a}"</span><span class="token punctuation">,</span>method <span class="token operator">=</span> RequestMethod<span class="token punctuation">.</span>PUT<span class="token punctuation">)</span>
-<span class="token keyword">public</span> String <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"sid"</span><span class="token punctuation">)</span>String id<span class="token punctuation">,</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"a"</span><span class="token punctuation">)</span>String a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"getUser()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"id = "</span> <span class="token operator">+</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a = "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping(value = "/user/{sid}/{a}",method = RequestMethod.PUT)
+public String getUser(@PathVariable(name = "sid")String id,@PathVariable(name = "a")String a) {
+    System.out.println("getUser()");
+    System.out.println("id = " + id);
+    System.out.println("a = " + a);
+    return "HelloWorld";
+}
 </code></pre>
 <p>但是我们在POSTMAN发送了请求之后，会发现报错:</p>
 <p><code>JSP 只允许 GET、POST 或 HEAD。Jasper 还允许 OPTIONS</code></p>
@@ -547,86 +547,86 @@
 <p>所以当你要用RESTful返回数据时，应该在Controller类中添加一个注解<code>@RestController</code>，而不是原来的<code>@Controller</code></p>
 <p>如果是HTML页面的form发送请求，form无法发送PUT和DELETE，但是服务器端就是按照PUT实现的，需要Filter将POST改成PUT</p>
 <p>配置Filter</p>
-<pre class=" language-xml"><code class="language-xml">  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>hiddenHttpMethodFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-class</span><span class="token punctuation">></span></span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-class</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-mapping</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>hiddenHttpMethodFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>dispatcherServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-mapping</span><span class="token punctuation">></span></span>
+<pre class=" language-lang-xml"><code class="language-lang-xml">  <filter>
+    <filter-name>hiddenHttpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>hiddenHttpMethodFilter</filter-name>
+    <servlet-name>dispatcherServlet</servlet-name>
+  </filter-mapping>
 </code></pre>
 <p>POSTMAN模拟只能发送POST请求的情况，需要在请求体中添加_method,会将POST转成PUT</p>
 <p><img src="/2022/07/12/springmvc03/image-20220712154347603.png" alt="1"></p>
-<h2 id="利用-RequestHeader根据不同浏览器返回不同的View"><a href="#利用-RequestHeader根据不同浏览器返回不同的View" class="headerlink" title="利用@RequestHeader根据不同浏览器返回不同的View"></a>利用@RequestHeader根据不同浏览器返回不同的View</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// /param/test10</span>
-<span class="token comment" spellcheck="true">//  User-Agent：获取请求头</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test10"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> String <span class="token function">test10</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestHeader</span><span class="token punctuation">(</span><span class="token string">"User-Agent"</span><span class="token punctuation">)</span> String header<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test10()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>header<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 当请求头含有Chrome时</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>header<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"Chrome"</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Chrome"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"HelloWorldForChrome"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>header<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"Firefox"</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Firefox"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"HelloWorldForFireFox"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h2 id="利用-RequestHeader根据不同浏览器返回不同的View"><a href="#利用-RequestHeader根据不同浏览器返回不同的View" class="headerlink" title="利用@RequestHeader根据不同浏览器返回不同的View"></a>利用@RequestHeader根据不同浏览器返回不同的View</h2><pre class=" language-lang-java"><code class="language-lang-java">// /param/test10
+//  User-Agent：获取请求头
+@RequestMapping("/test10")
+public String test10(@RequestHeader("User-Agent") String header) {
+    System.out.println("test10()");
+    System.out.println(header);
+    // 当请求头含有Chrome时
+    if (header.indexOf("Chrome") != -1){
+        System.out.println("Chrome");
+        return "HelloWorldForChrome";
+    }else if (header.indexOf("Firefox") != -1){
+        System.out.println("Firefox");
+        return "HelloWorldForFireFox";
+    }
+    return "HelloWorld";
+}
 </code></pre>
-<h2 id="利用-CookieValue获取Cookie"><a href="#利用-CookieValue获取Cookie" class="headerlink" title="利用@CookieValue获取Cookie"></a>利用@CookieValue获取Cookie</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// /param/test11</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test11"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> String <span class="token function">test11</span><span class="token punctuation">(</span><span class="token annotation punctuation">@CookieValue</span><span class="token punctuation">(</span><span class="token string">"JSESSIONID"</span><span class="token punctuation">)</span> String cookie<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test11()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="利用-CookieValue获取Cookie"><a href="#利用-CookieValue获取Cookie" class="headerlink" title="利用@CookieValue获取Cookie"></a>利用@CookieValue获取Cookie</h2><pre class=" language-lang-java"><code class="language-lang-java">// /param/test11
+@RequestMapping("/test11")
+public String test11(@CookieValue("JSESSIONID") String cookie) {
+    System.out.println("test11()");
+    System.out.println(cookie);
 
-    <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    return "HelloWorld";
+}
 </code></pre>
-<h2 id="ModelAttribute设置请求参数的默认值"><a href="#ModelAttribute设置请求参数的默认值" class="headerlink" title="@ModelAttribute设置请求参数的默认值"></a>@ModelAttribute设置请求参数的默认值</h2><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@ModelAttribute</span><span class="token punctuation">(</span><span class="token string">"p1"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> Pabc1 <span class="token function">initPabc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"inintPabc() is called"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Pabc1 pabc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Pabc1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pabc<span class="token punctuation">.</span><span class="token function">setA</span><span class="token punctuation">(</span><span class="token string">"default"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pabc<span class="token punctuation">.</span><span class="token function">setB</span><span class="token punctuation">(</span><span class="token string">"default"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pabc<span class="token punctuation">.</span><span class="token function">setC</span><span class="token punctuation">(</span><span class="token string">"default"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> pabc<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test5"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> String <span class="token function">test5</span><span class="token punctuation">(</span><span class="token annotation punctuation">@ModelAttribute</span><span class="token punctuation">(</span><span class="token string">"p1"</span><span class="token punctuation">)</span> Pabc1 pabc<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">// 自动组装</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test5()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>pabc<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<h2 id="ModelAttribute设置请求参数的默认值"><a href="#ModelAttribute设置请求参数的默认值" class="headerlink" title="@ModelAttribute设置请求参数的默认值"></a>@ModelAttribute设置请求参数的默认值</h2><pre class=" language-lang-java"><code class="language-lang-java">@ModelAttribute("p1")
+public Pabc1 initPabc(){
+    System.out.println("inintPabc() is called");
+    Pabc1 pabc = new Pabc1();
+    pabc.setA("default");
+    pabc.setB("default");
+    pabc.setC("default");
+    return pabc;
+}
+@RequestMapping("/test5")
+public String test5(@ModelAttribute("p1") Pabc1 pabc) {// 自动组装
+    System.out.println("test5()");
+    System.out.println(pabc);
+    return "HelloWorld";
+}
 </code></pre>
-<h2 id="利用-SessionAttributes在不同Servlet传递数据（跨request）"><a href="#利用-SessionAttributes在不同Servlet传递数据（跨request）" class="headerlink" title="利用@SessionAttributes在不同Servlet传递数据（跨request）"></a>利用@SessionAttributes在不同Servlet传递数据（跨request）</h2><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//SessionAttributes将p1同时也会放到sessionScope中去</span>
-<span class="token annotation punctuation">@Controller</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/param"</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@SessionAttributes</span><span class="token punctuation">(</span><span class="token string">"p1"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Parameters</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test12"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">test12</span><span class="token punctuation">(</span>Model model<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test12()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 添加Session数据缺省会同步到request </span>
-        model<span class="token punctuation">.</span><span class="token function">addAttribute</span><span class="token punctuation">(</span><span class="token string">"p1"</span><span class="token punctuation">,</span><span class="token string">"myValue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test13"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">test13</span><span class="token punctuation">(</span>ModelMap map<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test13()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 从Session拿数据</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">(</span>String<span class="token punctuation">)</span>map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"p1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test14"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">test14</span><span class="token punctuation">(</span>SessionStatus status<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test14()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 清理掉Session数据</span>
-        status<span class="token punctuation">.</span><span class="token function">setComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token string">"HelloWorld"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<h2 id="利用-SessionAttributes在不同Servlet传递数据（跨request）"><a href="#利用-SessionAttributes在不同Servlet传递数据（跨request）" class="headerlink" title="利用@SessionAttributes在不同Servlet传递数据（跨request）"></a>利用@SessionAttributes在不同Servlet传递数据（跨request）</h2><pre class=" language-lang-java"><code class="language-lang-java">//SessionAttributes将p1同时也会放到sessionScope中去
+@Controller
+@RequestMapping("/param")
+@SessionAttributes("p1")
+public class Parameters {
+    @RequestMapping("/test12")
+    public String test12(Model model) {
+        System.out.println("test12()");
+        // 添加Session数据缺省会同步到request 
+        model.addAttribute("p1","myValue");
+        return "HelloWorld";
+    }
+    @RequestMapping("/test13")
+    public String test13(ModelMap map) {
+        System.out.println("test13()");
+        // 从Session拿数据
+        System.out.println((String)map.get("p1"));
+        return "HelloWorld";
+    }
+    @RequestMapping("/test14")
+    public String test14(SessionStatus status) {
+        System.out.println("test14()");
+        // 清理掉Session数据
+        status.setComplete();
+        return "HelloWorld";
+    }
+}
 </code></pre>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/restful-architecture.html">RESTful 架构详解</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/206165.htm">基于@PathVariable注解的用法说明</a></p>

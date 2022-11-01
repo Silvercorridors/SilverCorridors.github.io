@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis 哨兵(sentinel), 银色回廊">
-    <meta name="description" content="Redis 哨兵(sentinel)在之前传统的主从复制模式(master,slave /  repliacation)模式中，当master故障时，需要手动修改配置文件指定新的 master，过程非常繁琐。根据历史的进程，就必然会有一个东">
+    <meta name="keywords" content="Redis cluster01：初识, 银色回廊">
+    <meta name="description" content="Redis 集群(cluster)Redis 集群是一个提供在多个Redis间节点间共享数据的程序集。
+Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis 哨兵(sentinel) | 银色回廊</title>
+    <title>Redis cluster01：初识 | 银色回廊</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -325,12 +326,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis 哨兵(sentinel)</h1>
+                    <h1 class="description center-align post-title">Redis cluster01：初识</h1>
                 </div>
             </div>
         </div>
@@ -471,7 +472,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-05
+                    2022-10-11
                 </div>
                 
 
@@ -480,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4k
+                    2.8k
                 </div>
                 
 
@@ -502,189 +503,144 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Redis-哨兵-sentinel"><a href="#Redis-哨兵-sentinel" class="headerlink" title="Redis 哨兵(sentinel)"></a>Redis 哨兵(sentinel)</h1><p>在之前传统的主从复制模式(master,slave /  repliacation)模式中，当master故障时，需要手动修改配置文件指定新的 master，过程非常繁琐。根据历史的进程，就必然会有一个东西来代替这种复杂的配置过程，于是，在Redis 2.8 版本之后就正式产生了redis sentinel ，sentinel 是 Redis 官方提供的高可用方案，可以不需人工干预自动切换新的master。</p>
-<p><strong>sentinel</strong> 通常翻译成哨兵，就是放哨的，这里它就是用来监控主从节点的健康情况。客户端连接redis主从的时候，先连接 sentinel，sentinel会告诉客户端主redis的地址是多少，然后客户端连接上redis并进行后续的操作。当主节点挂掉的时候，客户端就得不到连接了因而报错了，客户端重新向sentinel询问主master的地址，然后客户端得到了新选举出来的主redis，然后又可以愉快的操作了。</p>
-<h2 id="sentinel-基本功能清单"><a href="#sentinel-基本功能清单" class="headerlink" title="sentinel 基本功能清单"></a>sentinel 基本功能清单</h2><ul>
-<li><p>故障发现</p>
-</li>
-<li><p>故障自动转移</p>
-</li>
-<li><p>配置中心</p>
-</li>
-<li><p>客户端通知</p>
-</li>
-</ul>
-<h2 id="运行-Sentinel"><a href="#运行-Sentinel" class="headerlink" title="运行 Sentinel"></a>运行 Sentinel</h2><p>运行sentinel有两种方式：</p>
+                <h1 id="Redis-集群-cluster"><a href="#Redis-集群-cluster" class="headerlink" title="Redis 集群(cluster)"></a>Redis 集群(cluster)</h1><p>Redis 集群是一个提供在<strong>多个Redis间节点间共享数据</strong>的程序集。</p>
+<p>Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.</p>
+<p>Redis 集群通过分区来提供<strong>一定程度的可用性</strong>,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:</p>
 <ul>
-<li><p>第一种</p>
-<pre class=" language-shell"><code class="language-shell">redis-sentinel /path/to/sentinel.conf
-</code></pre>
-</li>
-<li><p>第二种</p>
-<pre class=" language-shell"><code class="language-shell">redis-server /path/to/sentinel.conf --sentinel
-</code></pre>
-</li>
+<li>自动分割数据到不同的节点上。</li>
+<li>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</li>
 </ul>
-<p>以上两种方式，都必须指定一个sentinel的配置文件sentinel.conf，如果不指定，将无法启动sentinel。sentinel默认监听26379端口，所以运行前必须确定该端口没有被别的进程占用。</p>
-<h2 id="sentinel安装与配置"><a href="#sentinel安装与配置" class="headerlink" title="sentinel安装与配置"></a>sentinel安装与配置</h2><p>1.配置开启主从节点</p>
-<p>2.配置开启sentinel来监控主节点</p>
-<p>Redis源码包中包含了一个sentinel.conf文件作为sentinel的配置文件，配置文件自带了关于各个配置项的解释。典型的配置项如下所示：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2 
-sentinel down-after-milliseconds mymaster 60000 
-sentinel failover-timeout mymaster 180000
-sentinel parallel-syncs mymaster 1
-
-sentinel monitor resque 192.168.1.3 6380 4
-sentinel down-after-milliseconds resque 10000
-sentinel failover-timeout resque 180000
-sentinel parallel-syncs resque 5
-</code></pre>
-<p><strong>接下来我们将一行一行地解释上面的配置项</strong>：</p>
-<pre><code>sentinel monitor mymaster 127.0.0.1 6379 2
-</code></pre>
-<p>这一行代表sentinel监控的master的名字叫做<strong>mymaster</strong>,地址为<strong>127.0.0.1:6379</strong>，行尾最后的一个<strong>2</strong>代表什么意思呢？我们知道，网络是不可靠的，有时候一个sentinel会因为网络堵塞而误以为一个master redis已经死掉了，当sentinel集群式，解决这个问题的方法就变得很简单，只需要多个sentinel互相沟通来确认某个master是否真的死了，这个<strong>2</strong>代表，当集群中有2个sentinel认为master死了时，才能真正认为该master已经不可用了。（sentinel集群中各个sentinel也有互相通信，通过gossip协议）。</p>
-<p>除了第一行配置，我们发现剩下的配置都有一个统一的格式:</p>
-<pre><code>sentinel &lt;option_name&gt; &lt;master_name&gt; &lt;option_value&gt;
-</code></pre>
-<p>接下来我们根据上面格式中的<strong>option_name</strong>一个一个来解释这些配置项：</p>
+<h2 id="数据分布概论"><a href="#数据分布概论" class="headerlink" title="数据分布概论"></a>数据分布概论</h2><p>先上一个图直观理解一下数据分区</p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018174517497.png" alt=""></p>
+<p>分区规则包括：<strong>顺序分布</strong>和<strong>哈希分布</strong></p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018175200340.png" alt=""></p>
+<p>两种分布方式：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">分布方式</th>
+<th style="text-align:center">特点</th>
+<th style="text-align:center">典型产品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">哈希分布</td>
+<td style="text-align:center">数据分散度高<br>键值分布业务无关<br>无法顺序访问<br>支持批量操作</td>
+<td style="text-align:center">一致性哈希Memcache<br>redis Cluster<br>其他缓存产品</td>
+</tr>
+<tr>
+<td style="text-align:center">顺序分布</td>
+<td style="text-align:center">数据分散度易倾斜<br>键值业务相关<br>可顺序访问<br>支持批量操作</td>
+<td style="text-align:center">BigTable<br>HBase</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>下面主要介绍一些<strong>hash分区</strong>的具体规则:</p>
+<h3 id="Hash分区"><a href="#Hash分区" class="headerlink" title="Hash分区"></a>Hash分区</h3><h4 id="节点取余分区"><a href="#节点取余分区" class="headerlink" title="节点取余分区"></a>节点取余分区</h4><p>按照 <strong>数据节点数mod分区数</strong> 进行分区操作：</p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018180848477.png" alt=""></p>
+<p>缺点：数据迁移时不容易操作，迁移量比较大，可通过多倍扩容降低迁移量。</p>
+<h4 id="一致性分布哈希算法"><a href="#一致性分布哈希算法" class="headerlink" title="一致性分布哈希算法"></a>一致性分布哈希算法</h4><p>具体设计：</p>
+<p><strong>1.环形hash空间</strong></p>
+<p>按照常用的<strong>hash算法</strong>来将<strong>对应的key</strong>哈希到一个具有<script type="math/tex">2^{32}</script>次方个节点的空间中，即<script type="math/tex">0 \sim  (2^{32})-1</script>的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。(节点的个数可以自定义，整个hash环我们可以用TreeMap来实现，因为treeMap是排序的，我们刚好可以利用上)</p>
+<p><img src="/v2-0a21bff27b5f037748292aa338965d65_720w.jpeg" alt="img"></p>
+<p><strong>2.映射服务器节点</strong></p>
+<p>将各个服务器使用Hash进行一个哈希，具体可以选择服务器的ip或唯一主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置。假设我们将四台服务器使用ip地址哈希后在环空间的位置如下：</p>
+<p><img src="/2022/10/11/redis04-cluster/v2-252cc4ed5bbb07e5e1e3b27c5eda0d23_720w.jpeg" alt=""></p>
+<p><strong>3.映射数据</strong></p>
+<p>现在我们将<code>objectA、objectB、objectC、objectD</code>四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上,然后从数据所在位置<strong>沿环顺时针</strong>“行走”，第一台遇到的服务器就是其应该定位到的服务器。</p>
+<p><img src="/2022/10/11/redis04-cluster/v2-0fb33fe30c7a05eee2abe3784a42f98a_720w-16660901196037.webp" alt="img"></p>
+<p><strong>4.扩容服务器的删除与添加</strong></p>
+<p><strong>删除：</strong>如果此时NodeC宕机了，此时Object A、B、D不会受到影响，只有Object C会重新分配到Node D上面去，而其他数据对象不会发生变化</p>
+<p><strong>添加：</strong>如果在环境中新增一台服务器Node X，通过hash算法将Node X映射到环中，通过按顺时针迁移的规则，那么Object C被迁移到了Node X中，其它对象还保持这原有的存储位置。通过对节点的添加和删除的分析，一致性哈希算法在保持了单调性的同时，还是数据的迁移达到了最小，这样的算法对分布式集群来说是非常合适的，避免了大量数据迁移，减小了服务器的的压力。</p>
+<p><img src="/2022/10/11/redis04-cluster/v2-bf7daae4aa145478dd55fc339ee57ec7_720w.webp" alt="img"></p>
+<p><strong>这种方式相比节点取余最大的好处在于加入和删除节点只影响哈希环中相邻的节点，对其他节点无影响</strong>。</p>
+<p><strong>但一致性哈希分区存在问题：</strong></p>
+<p>1.当服务器节点比较少的时候，会出现一个问题，就是此时必然造成大量数据集中到一个节点上面，极少数数据集中到另外的节点上面。</p>
+<p><img src="/2022/10/11/redis04-cluster/v2-0ce62cf40bcc5f980cafe285dafe0633_720w.jpeg" alt=""></p>
+<p>为了解决这种数据倾斜问题，一致性哈希算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以<strong>先确定每个物理节点关联的虚拟节点数量，然后在ip或者主机名后面增加编号。例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点：</strong></p>
+<p><img src="/2022/10/11/redis04-cluster/v2-5d9cdea01cb4b44162aa41980345e8ac_720w.jpeg" alt="img"></p>
+<p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。每个物理节点关联的虚拟节点数量就根据具体的生产环境情况在确定。</p>
+<p>2.因为redis是一个高速的存储服务器 , 即使使用一致性hash在扩容的时候还是会导致一个节点的部分时间不可用</p>
+<p>所以采用虚拟节点要增加或者减少服务器的时候就可以可以将原来的虚拟节点变成一个真的节点, 将原来由这个虚拟节点映射过来的数据直接复制到新节点上, 就省去了rehash的操作</p>
+<h4 id="虚拟槽分区（redis-cluster使用）"><a href="#虚拟槽分区（redis-cluster使用）" class="headerlink" title="虚拟槽分区（redis cluster使用）"></a>虚拟槽分区（redis cluster使用）</h4><ul>
+<li>正因为一致性哈希分区的这些缺点，一些分布式系统（redis cluster）采用虚拟槽对一致性哈希进行改造</li>
+<li><strong>其实本质上虚拟槽中的槽就是大量的虚拟节点的抽象化, 将原来的虚拟节点变成一个槽, redis内置是有16383个槽也就是有16383个虚拟节点</strong></li>
+<li>虚拟槽分区巧妙地使用了哈希空间，<strong>使用分散度良好的哈希函数把所有数据映射到一个固定范围的整数集合中，整数定义为槽（slot）</strong>。这个范围 一般远远大于节点数，比如Redis Cluster槽范围是0~16383</li>
+<li><strong>如下图所示</strong>：当前集群有5个节点，每个节点平均大约负责3276个槽</li>
+</ul>
+<p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
 <ul>
-<li><p><strong>down-after-milliseconds</strong><br>sentinel会向master发送心跳<em><strong>PING*<strong>来确认master是否存活，如果master在</strong>“一定时间范围”</strong>内不回应PONG或者是回复了一个错误消息，那么这个sentinel会</em><em>主观地</em>*(单方面地)认为这个master已经不可用了(主观下线，subjectively down, 也简称为SDOWN)。而这个down-after-milliseconds就是用来指定这个<strong>“一定时间范围”</strong>的，单位是毫秒。</p>
-<blockquote>
-<p>不过需要注意的是，这个时候sentinel并不会马上进行failover主备切换，这个sentinel还需要参考sentinel集群中其他sentinel的意见，如果超过某个数量的sentinel也<strong>主观地</strong>认为该master死了，那么这个master就会被<strong>客观地</strong>(注意哦，这次不是主观，是客观，与刚才的subjectively down相对，这次是客观下线，objectively down，简称为ODOWN)认为已经死了。需要一起做出决定的sentinel数量在上一条配置中进行配置。</p>
-</blockquote>
-</li>
-<li><p><strong>parallel-syncs</strong><br>在发生failover主备切换时，这个选项指定了最多可以有多少个slave同时对新的master进行同步，这个数字越小，完成failover所需的时间就越长，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为 1 来保证每次只有一个slave处于不能处理命令请求的状态。</p>
-</li>
+<li>由于<strong>采用高质量的哈希算法，每个槽所映射的数据通常比较均匀，将数据平均划分到5个节点进行数据分区, 所以redis使用的就是虚拟槽分区</strong></li>
+<li>采用虚拟槽分区，所有的键根据哈希函数映射到0~16383整数槽内，计算公式：<strong>slot=CRC16（key）&amp;16383</strong>。每一个节点负责维护一部分槽以及槽所映射的键值数据，如下图所示</li>
 </ul>
-<p>其他配置项在sentinel.conf中都有很详细的解释。<br>所有的配置都可以在运行时用命令<code>SENTINEL SET command</code>动态修改。</p>
-<h2 id="故障转移failover—Sentinel的“仲裁会”"><a href="#故障转移failover—Sentinel的“仲裁会”" class="headerlink" title="故障转移failover—Sentinel的“仲裁会”"></a>故障转移failover—Sentinel的“仲裁会”</h2><p>前面我们谈到，当一个master被sentinel集群监控时，需要为它指定一个参数，这个参数指定了当需要判决master为不可用，并且进行failover时，所需要的sentinel数量，本文中我们暂时称这个参数为<strong>票数</strong>。</p>
-<p>不过，当failover主备切换真正被触发后，failover并不会马上进行，还需要sentinel中的<strong>大多数</strong>sentinel授权后才可以进行failover。<br>当ODOWN时，failover被触发。failover一旦被触发，尝试去进行failover的sentinel会去获得“大多数”sentinel的授权（如果票数比大多数还要大的时候，则询问更多的sentinel)</p>
-<p>这个区别看起来很微妙，但是很容易理解和使用。例如，集群中有5个sentinel，票数被设置为2，当2个sentinel认为一个master已经不可用了以后，将会触发failover，但是，进行failover的那个sentinel必须先获得至少3个sentinel的授权才可以实行failover。</p>
-<p>如果票数被设置为5，要达到ODOWN状态，必须所有5个sentinel都主观认为master为不可用，要进行failover，那么得获得所有5个sentinel的授权。</p>
-<p>基本原理如图：</p>
-<p><img src="/2022/09/05/redis-sentinel/image-20220905230426479.png"></p>
-<h2 id="配置版本号"><a href="#配置版本号" class="headerlink" title="配置版本号"></a>配置版本号</h2><p>为什么要先获得<strong>大多数</strong>sentinel的认可时才能真正去执行failover呢？</p>
-<p>当一个sentinel被授权后，它将会”拿走”宕掉的master的一份最新配置版本号，当failover执行结束以后，这个版本号将会被用于最新的配置。因为<strong>大多数</strong>sentinel都已经知道该版本号已经被要执行failover的sentinel拿走了，所以其他的sentinel都不能再去使用这个版本号。这意味着，每次failover都会附带有一个独一无二的版本号。</p>
-<p>而且，sentinel集群都遵守一个规则：如果sentinel A推荐sentinel B去执行failover，A会等待一段时间后，自行再次去对同一个master执行failover，这个等待的时间是通过<code>failover-timeout</code>配置项去配置的。从这个规则可以看出，sentinel集群中的sentinel不会在同一时刻并发去failover同一个master，第一个进行failover的sentinel如果失败了，另外一个将会在一定时间内进行重新进行failover，以此类推。</p>
-<p>redis sentinel保证了活跃性：如果<strong>大多数</strong>sentinel能够互相通信，最终将会有一个被授权去进行failover.<br>redis sentinel也保证了安全性：每个试图去failover同一个master的sentinel都会得到一个独一无二的版本号。</p>
-<h2 id="领导者选举"><a href="#领导者选举" class="headerlink" title="领导者选举"></a>领导者选举</h2><p>一个redis服务被判断为客观下线时，多个监视该服务的sentinel协商，选举一个领头sentinel，对该redis服务进行故障转移操作。<strong>选举领导者sentinel</strong></p>
-<p><strong>遵循以下规则：</strong><br>1）所有的sentinel都有公平被选举成领头的资格。<br>2）所有的sentinel都有且只有一次将某个sentinel选举成领头的机会（在一轮选举中），一旦选举某个sentinel为领头，不能更改。<br>3）sentinel设置领头sentinel是先到先得，一旦当前sentinel设置了领头sentinel，以后要求设置sentinel为领头请求都会被拒绝。<br>4）每个发现服务客观下线的sentinel，都会要求其他sentinel将自己设置成领头。<br>5）当一个sentinel（源sentinel）向另一个sentinel（目sentinel）发送is-master-down-by-addr ip port current_epoch runid命令的时候，runid参数不是*，而是sentinel运行id，就表示源sentinel要求目标sentinel选举其为领头。<br>6）源sentinel会检查目标sentinel对其要求设置成领头的回复，如果回复的leader_runid和leader_epoch为源sentinel，表示目标sentinel同意将源sentinel设置成领头。<br>7）如果某个sentinel被半数以上的sentinel设置成领头，那么该sentinel既为领头。<br>8）如果在限定时间内，没有选举出领头sentinel，暂定一段时间，再选举。</p>
-<p><strong>为什么要选领导者？</strong><br>简单来说，就是因为只能有一个sentinel节点去完成故障转移。<br>sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线判定，二是进行领导者选举。<br><strong>选举过程：</strong><br>1）每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。<br>2）收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。<br>3）如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者<br>4）如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。</p>
-<h2 id="自动发现机制"><a href="#自动发现机制" class="headerlink" title="自动发现机制"></a>自动发现机制</h2><p><img src="/2022/09/05/redis-sentinel/380271-20181108161019953-1764260447.png"></p>
-<h2 id="sentinel中的三个定时任务"><a href="#sentinel中的三个定时任务" class="headerlink" title="sentinel中的三个定时任务"></a>sentinel中的三个定时任务</h2><p>1.每10秒每个sentinel对master和slave执行info</p>
+<p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166610698378618.png" alt=""></p>
+<p><strong>Redis虚拟槽分区的特点：</strong></p>
+<p>​    1.<strong>解耦数据和节点之间直接关系</strong>, 一致性hash计算方式是<strong>key &amp; 节点个数</strong>, 映射的结果和节点个数有关系, 但是使用hash槽计算方式是 <strong>CRC16(key) % 槽的个数</strong>, 所以就解耦了数据和节点的关系。</p>
+<p>​    2.使用哈希槽的好处就在于可以<strong>方便的添加或移除节点</strong>。</p>
 <ul>
-<li>发现slave，记录slave节点信息</li>
-<li>确认主从关系</li>
+<li><strong>当需要增加节点时，只需要把其他节点的某些哈希槽挪到新节点就可以了</strong>；</li>
+<li><strong>当需要移除节点时，只需要把移除节点上的哈希槽挪到其他节点就行了</strong>；</li>
+<li><strong>在这一点上，我们以后新增或移除节点的时候不用先停掉所有的 redis 服务甚至不用停到任何一个节点的服务。对应槽的采用直接复制数据过去显然比rehash快很多。</strong></li>
 </ul>
-<p>2.每2秒每个sentinel通过master节点的channel交换信息(pub/sub)</p>
+<p>​    3.节点自身维护槽的映射关系, 不需要客户端和代理服务器进行维护处理</p>
+<h2 id="Redis-集群模式"><a href="#Redis-集群模式" class="headerlink" title="Redis 集群模式"></a>Redis 集群模式</h2><p>1.主从模式，单台服务器即可，无高可用，为1主2从方式</p>
+<p>主节点可读写，从节点只读，数据会从主节点同步至从节点</p>
+<p>2.cluster模式 3.0以上版本支持</p>
+<h2 id="分布式特性"><a href="#分布式特性" class="headerlink" title="分布式特性"></a>分布式特性</h2><p>分布式特性：服务端每个节点<strong>相互通信</strong>，且每个节点<strong>负责读写</strong>。</p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221019004022484.png" alt=""></p>
+<h2 id="redis-cluster架构"><a href="#redis-cluster架构" class="headerlink" title="redis cluster架构"></a>redis cluster架构</h2><p>Redis Cluster 基本架构：Redis Cluster 中有多个主节点，每个主节点都负责进行数据读写操作，并且每个节点之间会进行通信。</p>
+<p>redis cluster是一个去中心化的集群，每个节点都会跟其他节点保持连接，每个节点之间会互相通信。以下是一些基本概念。</p>
 <ul>
-<li><p>通过 <code>__sentinel__:hello</code> 频道交互</p>
-</li>
-<li><p>交互对节点的”看法“和自身信息</p>
-</li>
+<li>节点：基本节点，完成读写数据</li>
+<li>meet：完成每个节点相互通信的操作</li>
+<li>指派槽：给启动的节点指派槽。当节点收到访问请求时，会根据key来判断要访问的数据是否在槽内。</li>
+<li>复制：每个主节点都有一个从节点。节点之间相互交互。</li>
 </ul>
-<p><img src="/2022/09/05/redis-sentinel/image-20220908234731379.png"></p>
-<p>3.每1秒每个sentinel对其他sentinel和redis执行ping</p>
-<ul>
-<li>心跳检测，失败判定依据</li>
-</ul>
-<p><img src="/2022/09/05/redis-sentinel/image-20220908234748441.png"></p>
-<h2 id="使用Java客户端连接redis-sentinel"><a href="#使用Java客户端连接redis-sentinel" class="headerlink" title="使用Java客户端连接redis sentinel"></a>使用Java客户端连接redis sentinel</h2><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">;</span>
- 
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashSet<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Set<span class="token punctuation">;</span>
- 
-<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>HostAndPort<span class="token punctuation">;</span>
-<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>Jedis<span class="token punctuation">;</span>
-<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>JedisSentinelPool<span class="token punctuation">;</span>
- 
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JRedisSentinelTest</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//服务IP</span>
-        String ip <span class="token operator">=</span> <span class="token string">"172.168.x.y"</span><span class="token punctuation">;</span>
-        Set sentinels <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">//Sentine端口</span>
-        sentinels<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HostAndPort</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">26379</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        sentinels<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HostAndPort</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">26380</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        JedisSentinelPool sentinelPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JedisSentinelPool</span><span class="token punctuation">(</span><span class="token string">"master1"</span><span class="token punctuation">,</span> sentinels<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Current master: "</span> <span class="token operator">+</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getCurrentHostMaster</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Jedis master <span class="token operator">=</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        master<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">,</span><span class="token string">"liangzhichao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        sentinelPool<span class="token punctuation">.</span><span class="token function">returnResource</span><span class="token punctuation">(</span>master<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Jedis master2 <span class="token operator">=</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String value <span class="token operator">=</span> master2<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"username: "</span> <span class="token operator">+</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        master2<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        sentinelPool<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<p>要保证高可用，每个主节点都至少有一个从节点，当主节点故障，Cluster 会按照规则实现主备的高可用性，对于节点来说，有一个配置项：cluster-enabled，即是否以集群模式启动。</p>
+<h2 id="Redis-Cluster-部署"><a href="#Redis-Cluster-部署" class="headerlink" title="Redis Cluster 部署"></a>Redis Cluster 部署</h2><h3 id="方式一：原生命令"><a href="#方式一：原生命令" class="headerlink" title="方式一：原生命令"></a>方式一：原生命令</h3><p>1.配置开启节点</p>
+<p>2.meet</p>
+<p>3.指派槽</p>
+<p>4.主从</p>
+<p><strong>Redis cluster 节点主要配置</strong></p>
+<pre class=" language-lang-bash"><code class="language-lang-bash">cluster-enabled yes # 表示当前节点为cluster节点
+cluster-node-timeout 15000 # 故障转移时间，节点超时时间，主观下线时间
+cluster-config-file "nodes-${port}.conf" # 集群配置文件(节点配置)
+cluster-require-full-coverage yes # 是否需要集群内所有节点都可以提供服务
 </code></pre>
-<h2 id="如何选举”合适的“slave节点"><a href="#如何选举”合适的“slave节点" class="headerlink" title="如何选举”合适的“slave节点"></a>如何选举”合适的“slave节点</h2><p>当一个sentinel准备好了要进行failover，并且收到了其他sentinel的授权，那么就需要选举出一个合适的slave来做为新的master。</p>
-<p>slave的选举主要会评估slave的以下几个方面：</p>
-<ul>
-<li>与master断开连接的次数</li>
-<li>Slave的优先级</li>
-<li>数据复制的下标(用来评估slave当前拥有多少master的数据)</li>
-<li>进程ID</li>
-</ul>
-<p>如果一个slave与master失去联系超过10次，并且每次都超过了配置的最大失联时间(<code>down-after-milliseconds option</code>)，并且，如果sentinel在进行failover时发现slave失联，那么这个slave就会被sentinel认为不适合用来做新master的。</p>
-<p>更严格的定义是，如果一个slave持续断开连接的时间超过</p>
-<pre class=" language-livecodeserver"><code class="language-livecodeserver">(down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state
+<p><strong>开启节点</strong></p>
+<pre class=" language-lang-bash"><code class="language-lang-bash">redis-server redis-7000.conf # 开启端口7000的节点
+redis-server redis-7001.conf # 开启端口7001的节点
+redis-server redis-7002.conf # 开启端口7002的节点
+redis-server redis-7003.conf # 开启端口7003的节点
+redis-server redis-7004.conf # 开启端口7004的节点
+redis-server redis-7005.conf # 开启端口7005的节点
 </code></pre>
-<p>就会被认为失去选举资格。<br>符合上述条件的slave才会被列入master候选人列表，并根据以下顺序来进行排序：</p>
-<ol>
-<li>sentinel首先会根据slaves的优先级来进行排序，优先级越小排名越靠前（？）。</li>
-<li>如果优先级相同，则查看复制的下标，哪个从master接收的复制数据多，哪个就靠前。</li>
-<li>如果优先级和下标都相同，就选择进程ID较小的那个。</li>
-</ol>
-<p>一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。</p>
-<p>如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。</p>
-<p><img src="/2022/09/05/redis-sentinel/image-20220906231235163.png"></p>
-<h2 id="发布-x2F-订阅"><a href="#发布-x2F-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>客户端可以向一个sentinel发送订阅某个频道的事件的命令，当有特定的事件发生时，sentinel会通知所有订阅的客户端。需要注意的是客户端只能订阅，不能发布。</p>
-<p>订阅频道的名字与事件的名字一致。例如，频道名为<strong>sdown</strong> 将会发布所有与SDOWN相关的消息给订阅者。</p>
-<p>如果想要订阅所有消息，只需简单地使用<code>PSUBSCRIBE *</code></p>
-<p>以下是所有你可以收到的消息的消息格式，如果你订阅了所有消息的话。第一个单词是频道的名字，其它是数据的格式。</p>
-<p>注意：以下的instance details的格式是：</p>
-<p><code>&lt;instance-type&gt; &lt;name&gt; &lt;ip&gt; &lt;port&gt; @ &lt;master-name&gt; &lt;master-ip&gt; &lt;master-port&gt;</code></p>
-<p>如果这个redis实例是一个master，那么@之后的消息就不会显示。</p>
-<pre class=" language-haskell"><code class="language-haskell">    <span class="token operator">+</span><span class="token hvariable">reset</span><span class="token operator">-</span><span class="token hvariable">master</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master被重置时.</span>
-    <span class="token operator">+</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当检测到一个slave并添加进slave列表时.</span>
-    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">slaves</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- Failover状态变为reconf-slaves状态时</span>
-    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">detected</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当failover发生时</span>
-    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">sent</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- sentinel发送SLAVEOF命令把它重新配置时</span>
-    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">inprog</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- slave被重新配置为另外一个master的slave，但数据复制还未发生时。</span>
-    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">done</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- slave被重新配置为另外一个master的slave并且数据复制已经与master同步时。</span>
-    <span class="token operator">-</span><span class="token hvariable">dup</span><span class="token operator">-</span><span class="token hvariable">sentinel</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 删除指定master上的冗余sentinel时 (当一个sentinel重新启动时，可能会发生这个事件).</span>
-    <span class="token operator">+</span><span class="token hvariable">sentinel</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master增加了一个sentinel时。</span>
-    <span class="token operator">+</span><span class="token hvariable">sdown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 进入SDOWN状态时;</span>
-    <span class="token operator">-</span><span class="token hvariable">sdown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 离开SDOWN状态时。</span>
-    <span class="token operator">+</span><span class="token hvariable">odown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 进入ODOWN状态时。</span>
-    <span class="token operator">-</span><span class="token hvariable">odown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 离开ODOWN状态时。</span>
-    <span class="token operator">+</span><span class="token hvariable">new</span><span class="token operator">-</span><span class="token hvariable">epoch</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当前配置版本被更新时。</span>
-    <span class="token operator">+</span><span class="token hvariable">try</span><span class="token operator">-</span><span class="token hvariable">failover</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 达到failover条件，正等待其他sentinel的选举。</span>
-    <span class="token operator">+</span><span class="token hvariable">elected</span><span class="token operator">-</span><span class="token hvariable">leader</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 被选举为去执行failover的时候。</span>
-    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">select</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 开始要选择一个slave当选新master时。</span>
-    <span class="token hvariable">no</span><span class="token operator">-</span><span class="token hvariable">good</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 没有合适的slave来担当新master</span>
-    <span class="token hvariable">selected</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 找到了一个适合的slave来担当新master</span>
-    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">send</span><span class="token operator">-</span><span class="token hvariable">slaveof</span><span class="token operator">-</span><span class="token hvariable">noone</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当把选择为新master的slave的身份进行切换的时候。</span>
-    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">end</span><span class="token operator">-</span><span class="token hvariable">for</span><span class="token operator">-</span><span class="token hvariable">timeout</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- failover由于超时而失败时。</span>
-    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">end</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- failover成功完成时。</span>
-    <span class="token hvariable">switch</span><span class="token operator">-</span><span class="token hvariable">master</span> <span class="token operator">&lt;</span><span class="token hvariable">master</span> <span class="token hvariable">name</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">oldip</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">oldport</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">newip</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">newport</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master的地址发生变化时。通常这是客户端最感兴趣的消息了。</span>
-    <span class="token operator">+</span><span class="token hvariable">tilt</span> <span class="token comment" spellcheck="true">-- 进入Tilt模式。</span>
-    <span class="token operator">-</span><span class="token hvariable">tilt</span> <span class="token comment" spellcheck="true">-- 退出Tilt模式。</span>
+<p><strong>meet实现节点之间的相互通信</strong></p>
+<pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001
+redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7002
+redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7003
+redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004
+redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005
 </code></pre>
-<h2 id="TILT-模式"><a href="#TILT-模式" class="headerlink" title="TILT 模式"></a>TILT 模式</h2><p>redis sentinel非常依赖系统时间，例如它会使用系统时间来判断一个PING回复用了多久的时间。<br>然而，假如系统时间被修改了，或者是系统十分繁忙，或者是进程堵塞了，sentinel可能会出现运行不正常的情况。<br>当系统的稳定性下降时，TILT模式是sentinel可以进入的一种的保护模式。当进入TILT模式时，sentinel会继续监控工作，但是它不会有任何其他动作，它也不会去回应<code>is-master-down-by-addr</code>这样的命令了，因为它在TILT模式下，检测失效节点的能力已经变得让人不可信任了。<br>如果系统恢复正常，持续30秒钟，sentinel就会退出TITL模式。</p>
-<h2 id="总结性知识点"><a href="#总结性知识点" class="headerlink" title="总结性知识点"></a>总结性知识点</h2><ul>
-<li>尽可能在不同物理机上部署Redis Sentinel所有节点。</li>
-<li>Redis Sentinel中的Sentinel节点数应该为大于等于3且最好为奇数。</li>
-<li>Redis Sentinel中的数据节点与普通数据节点没有区别。</li>
-<li>客户端初始化时连接的是Sentinel节点集合，不在是具体的Redis节点，但Sentinel知识配置中心，不是代理。</li>
-<li>Redis Sentinel通过三个定时任务实现了Sentinel节点对于主节点、从节点、其余节点的监控。</li>
-<li>Redis Sentinel在对节点做失败判定时分为主观下线和客观下线。</li>
-<li>Redis Sentinel实现读写分离高可用可以依赖Sentinel节点的消息通知，获取Redis数据节点的状态变化。</li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/aklaus/2446654?abTest=51cto"><strong>redis sentinel</strong></a></p>
-<p><strong><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002680804">Redis Sentinel机制与用法</a></strong></p>
+<p>此时，所有节点彼此之间都可以相互感知</p>
+<p><strong>分配槽</strong>（0~16383）</p>
+<pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster addslots [0...5461] # 这里最好用shell实现
+redis-cli -h 127.0.0.1 -p 7001 cluster addslots [5462...10922]
+redis-cli -h 127.0.0.1 -p 7002 cluster addslots [10923...16383]
+</code></pre>
+<p><strong>设置主从</strong>（一主一从）</p>
+<pre class=" language-lang-bash"><code class="language-lang-bash"># 主 7000 从 7003
+redis-cli -h 127.0.0.1 -p 7003 cluster replicate ${node-id-7000}
+# 主 7001 从 7004
+redis-cli -h 127.0.0.1 -p 7004 cluster replicate ${node-id-7001}
+# 主 7002 从 7005
+redis-cli -h 127.0.0.1 -p 7005 cluster replicate ${node-id-7002}
+</code></pre>
+<h3 id="方式二：Ruby环境"><a href="#方式二：Ruby环境" class="headerlink" title="方式二：Ruby环境"></a>方式二：Ruby环境</h3><p>下载ruby环境，参考网上教程</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/98030096">一致性Hash算法详解</a></p>
 
                 
             </div>
@@ -711,7 +667,7 @@ sentinel parallel-syncs resque 5
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://silvercorridors.cf/2022/09/05/redis-sentinel/">https://silvercorridors.cf/2022/09/05/redis-sentinel/</a>
+                    <a href="https://silvercorridors.cf/2022/10/11/redis04-cluster/">https://silvercorridors.cf/2022/10/11/redis04-cluster/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1071,13 +1027,13 @@ sentinel parallel-syncs resque 5
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/09/05/redis-sentinel/">
+                <a href="/2022/10/11/redis04-cluster/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Redis 哨兵(sentinel)">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Redis cluster01：初识">
                         
-                        <span class="card-title">Redis 哨兵(sentinel)</span>
+                        <span class="card-title">Redis cluster01：初识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1088,7 +1044,7 @@ sentinel parallel-syncs resque 5
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-11
                             </span>
                         <span class="publish-author">
                             
@@ -1121,13 +1077,13 @@ sentinel parallel-syncs resque 5
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/09/02/redis-rep/">
+                <a href="/2022/09/19/kafka01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis 主从复制">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Kafka相关知识点">
                         
-                        <span class="card-title">Redis 主从复制</span>
+                        <span class="card-title">Kafka相关知识点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1138,16 +1094,12 @@ sentinel parallel-syncs resque 5
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            银色回廊
                             
                         </span>
                     </div>
@@ -1155,8 +1107,8 @@ sentinel parallel-syncs resque 5
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/kafka/">
+                        <span class="chip bg-color">kafka</span>
                     </a>
                     
                 </div>
