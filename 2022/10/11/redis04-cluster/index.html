@@ -511,44 +511,40 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
 <li>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</li>
 </ul>
 <h2 id="数据分布概论"><a href="#数据分布概论" class="headerlink" title="数据分布概论"></a>数据分布概论</h2><p>先上一个图直观理解一下数据分区</p>
-<p><img src="/2022/10/11/redis04-cluster/image-20221018174517497.png" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018174517497.png"></p>
 <p>分区规则包括：<strong>顺序分布</strong>和<strong>哈希分布</strong></p>
-<p><img src="/2022/10/11/redis04-cluster/image-20221018175200340.png" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018175200340.png"></p>
 <p>两种分布方式：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">分布方式</th>
-<th style="text-align:center">特点</th>
-<th style="text-align:center">典型产品</th>
+<th align="center">分布方式</th>
+<th align="center">特点</th>
+<th align="center">典型产品</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">哈希分布</td>
-<td style="text-align:center">数据分散度高<br>键值分布业务无关<br>无法顺序访问<br>支持批量操作</td>
-<td style="text-align:center">一致性哈希Memcache<br>redis Cluster<br>其他缓存产品</td>
+<tbody><tr>
+<td align="center">哈希分布</td>
+<td align="center">数据分散度高<br>键值分布业务无关<br>无法顺序访问<br>支持批量操作</td>
+<td align="center">一致性哈希Memcache<br>redis Cluster<br>其他缓存产品</td>
 </tr>
 <tr>
-<td style="text-align:center">顺序分布</td>
-<td style="text-align:center">数据分散度易倾斜<br>键值业务相关<br>可顺序访问<br>支持批量操作</td>
-<td style="text-align:center">BigTable<br>HBase</td>
+<td align="center">顺序分布</td>
+<td align="center">数据分散度易倾斜<br>键值业务相关<br>可顺序访问<br>支持批量操作</td>
+<td align="center">BigTable<br>HBase</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>下面主要介绍一些<strong>hash分区</strong>的具体规则:</p>
 <h3 id="Hash分区"><a href="#Hash分区" class="headerlink" title="Hash分区"></a>Hash分区</h3><h4 id="节点取余分区"><a href="#节点取余分区" class="headerlink" title="节点取余分区"></a>节点取余分区</h4><p>按照 <strong>数据节点数mod分区数</strong> 进行分区操作：</p>
-<p><img src="/2022/10/11/redis04-cluster/image-20221018180848477.png" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221018180848477.png"></p>
 <p>缺点：数据迁移时不容易操作，迁移量比较大，可通过多倍扩容降低迁移量。</p>
 <h4 id="一致性分布哈希算法"><a href="#一致性分布哈希算法" class="headerlink" title="一致性分布哈希算法"></a>一致性分布哈希算法</h4><p>具体设计：</p>
 <p><strong>1.环形hash空间</strong></p>
-<p>按照常用的<strong>hash算法</strong>来将<strong>对应的key</strong>哈希到一个具有<script type="math/tex">2^{32}</script>次方个节点的空间中，即<script type="math/tex">0 \sim  (2^{32})-1</script>的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。(节点的个数可以自定义，整个hash环我们可以用TreeMap来实现，因为treeMap是排序的，我们刚好可以利用上)</p>
+<p>按照常用的<strong>hash算法</strong>来将<strong>对应的key</strong>哈希到一个具有$$2^{32}$$次方个节点的空间中，即$$ 0 \sim  (2^{32})-1$$的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。(节点的个数可以自定义，整个hash环我们可以用TreeMap来实现，因为treeMap是排序的，我们刚好可以利用上)</p>
 <p><img src="/v2-0a21bff27b5f037748292aa338965d65_720w.jpeg" alt="img"></p>
 <p><strong>2.映射服务器节点</strong></p>
 <p>将各个服务器使用Hash进行一个哈希，具体可以选择服务器的ip或唯一主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置。假设我们将四台服务器使用ip地址哈希后在环空间的位置如下：</p>
-<p><img src="/2022/10/11/redis04-cluster/v2-252cc4ed5bbb07e5e1e3b27c5eda0d23_720w.jpeg" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/v2-252cc4ed5bbb07e5e1e3b27c5eda0d23_720w.jpeg"></p>
 <p><strong>3.映射数据</strong></p>
 <p>现在我们将<code>objectA、objectB、objectC、objectD</code>四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上,然后从数据所在位置<strong>沿环顺时针</strong>“行走”，第一台遇到的服务器就是其应该定位到的服务器。</p>
 <p><img src="/2022/10/11/redis04-cluster/v2-0fb33fe30c7a05eee2abe3784a42f98a_720w-16660901196037.webp" alt="img"></p>
@@ -559,7 +555,7 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
 <p><strong>这种方式相比节点取余最大的好处在于加入和删除节点只影响哈希环中相邻的节点，对其他节点无影响</strong>。</p>
 <p><strong>但一致性哈希分区存在问题：</strong></p>
 <p>1.当服务器节点比较少的时候，会出现一个问题，就是此时必然造成大量数据集中到一个节点上面，极少数数据集中到另外的节点上面。</p>
-<p><img src="/2022/10/11/redis04-cluster/v2-0ce62cf40bcc5f980cafe285dafe0633_720w.jpeg" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/v2-0ce62cf40bcc5f980cafe285dafe0633_720w.jpeg"></p>
 <p>为了解决这种数据倾斜问题，一致性哈希算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以<strong>先确定每个物理节点关联的虚拟节点数量，然后在ip或者主机名后面增加编号。例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点：</strong></p>
 <p><img src="/2022/10/11/redis04-cluster/v2-5d9cdea01cb4b44162aa41980345e8ac_720w.jpeg" alt="img"></p>
 <p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。每个物理节点关联的虚拟节点数量就根据具体的生产环境情况在确定。</p>
@@ -576,21 +572,21 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
 <li>由于<strong>采用高质量的哈希算法，每个槽所映射的数据通常比较均匀，将数据平均划分到5个节点进行数据分区, 所以redis使用的就是虚拟槽分区</strong></li>
 <li>采用虚拟槽分区，所有的键根据哈希函数映射到0~16383整数槽内，计算公式：<strong>slot=CRC16（key）&amp;16383</strong>。每一个节点负责维护一部分槽以及槽所映射的键值数据，如下图所示</li>
 </ul>
-<p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166610698378618.png" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166610698378618.png"></p>
 <p><strong>Redis虚拟槽分区的特点：</strong></p>
-<p>​    1.<strong>解耦数据和节点之间直接关系</strong>, 一致性hash计算方式是<strong>key &amp; 节点个数</strong>, 映射的结果和节点个数有关系, 但是使用hash槽计算方式是 <strong>CRC16(key) % 槽的个数</strong>, 所以就解耦了数据和节点的关系。</p>
-<p>​    2.使用哈希槽的好处就在于可以<strong>方便的添加或移除节点</strong>。</p>
+<p>​	1.<strong>解耦数据和节点之间直接关系</strong>, 一致性hash计算方式是<strong>key &amp; 节点个数</strong>, 映射的结果和节点个数有关系, 但是使用hash槽计算方式是 <strong>CRC16(key) % 槽的个数</strong>, 所以就解耦了数据和节点的关系。</p>
+<p>​	2.使用哈希槽的好处就在于可以<strong>方便的添加或移除节点</strong>。</p>
 <ul>
 <li><strong>当需要增加节点时，只需要把其他节点的某些哈希槽挪到新节点就可以了</strong>；</li>
 <li><strong>当需要移除节点时，只需要把移除节点上的哈希槽挪到其他节点就行了</strong>；</li>
 <li><strong>在这一点上，我们以后新增或移除节点的时候不用先停掉所有的 redis 服务甚至不用停到任何一个节点的服务。对应槽的采用直接复制数据过去显然比rehash快很多。</strong></li>
 </ul>
-<p>​    3.节点自身维护槽的映射关系, 不需要客户端和代理服务器进行维护处理</p>
+<p>​	3.节点自身维护槽的映射关系, 不需要客户端和代理服务器进行维护处理</p>
 <h2 id="Redis-集群模式"><a href="#Redis-集群模式" class="headerlink" title="Redis 集群模式"></a>Redis 集群模式</h2><p>1.主从模式，单台服务器即可，无高可用，为1主2从方式</p>
 <p>主节点可读写，从节点只读，数据会从主节点同步至从节点</p>
 <p>2.cluster模式 3.0以上版本支持</p>
 <h2 id="分布式特性"><a href="#分布式特性" class="headerlink" title="分布式特性"></a>分布式特性</h2><p>分布式特性：服务端每个节点<strong>相互通信</strong>，且每个节点<strong>负责读写</strong>。</p>
-<p><img src="/2022/10/11/redis04-cluster/image-20221019004022484.png" alt=""></p>
+<p><img src="/2022/10/11/redis04-cluster/image-20221019004022484.png"></p>
 <h2 id="redis-cluster架构"><a href="#redis-cluster架构" class="headerlink" title="redis cluster架构"></a>redis cluster架构</h2><p>Redis Cluster 基本架构：Redis Cluster 中有多个主节点，每个主节点都负责进行数据读写操作，并且每个节点之间会进行通信。</p>
 <p>redis cluster是一个去中心化的集群，每个节点都会跟其他节点保持连接，每个节点之间会互相通信。以下是一些基本概念。</p>
 <ul>
@@ -605,21 +601,21 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
 <p>3.指派槽</p>
 <p>4.主从</p>
 <p><strong>Redis cluster 节点主要配置</strong></p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">cluster-enabled yes # 表示当前节点为cluster节点
-cluster-node-timeout 15000 # 故障转移时间，节点超时时间，主观下线时间
-cluster-config-file "nodes-${port}.conf" # 集群配置文件(节点配置)
-cluster-require-full-coverage yes # 是否需要集群内所有节点都可以提供服务
+<pre class=" language-bash"><code class="language-bash">cluster-enabled <span class="token function">yes</span> <span class="token comment" spellcheck="true"># 表示当前节点为cluster节点</span>
+cluster-node-timeout 15000 <span class="token comment" spellcheck="true"># 故障转移时间，节点超时时间，主观下线时间</span>
+cluster-config-file <span class="token string">"nodes-<span class="token variable">${port}</span>.conf"</span> <span class="token comment" spellcheck="true"># 集群配置文件(节点配置)</span>
+cluster-require-full-coverage <span class="token function">yes</span> <span class="token comment" spellcheck="true"># 是否需要集群内所有节点都可以提供服务</span>
 </code></pre>
 <p><strong>开启节点</strong></p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">redis-server redis-7000.conf # 开启端口7000的节点
-redis-server redis-7001.conf # 开启端口7001的节点
-redis-server redis-7002.conf # 开启端口7002的节点
-redis-server redis-7003.conf # 开启端口7003的节点
-redis-server redis-7004.conf # 开启端口7004的节点
-redis-server redis-7005.conf # 开启端口7005的节点
+<pre class=" language-bash"><code class="language-bash">redis-server redis-7000.conf <span class="token comment" spellcheck="true"># 开启端口7000的节点</span>
+redis-server redis-7001.conf <span class="token comment" spellcheck="true"># 开启端口7001的节点</span>
+redis-server redis-7002.conf <span class="token comment" spellcheck="true"># 开启端口7002的节点</span>
+redis-server redis-7003.conf <span class="token comment" spellcheck="true"># 开启端口7003的节点</span>
+redis-server redis-7004.conf <span class="token comment" spellcheck="true"># 开启端口7004的节点</span>
+redis-server redis-7005.conf <span class="token comment" spellcheck="true"># 开启端口7005的节点</span>
 </code></pre>
 <p><strong>meet实现节点之间的相互通信</strong></p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001
+<pre class=" language-bash"><code class="language-bash">redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001
 redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7002
 redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7003
 redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004
@@ -627,17 +623,17 @@ redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005
 </code></pre>
 <p>此时，所有节点彼此之间都可以相互感知</p>
 <p><strong>分配槽</strong>（0~16383）</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster addslots [0...5461] # 这里最好用shell实现
-redis-cli -h 127.0.0.1 -p 7001 cluster addslots [5462...10922]
-redis-cli -h 127.0.0.1 -p 7002 cluster addslots [10923...16383]
+<pre class=" language-bash"><code class="language-bash">redis-cli -h 127.0.0.1 -p 7000 cluster addslots <span class="token punctuation">[</span>0<span class="token punctuation">..</span>.5461<span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 这里最好用shell实现</span>
+redis-cli -h 127.0.0.1 -p 7001 cluster addslots <span class="token punctuation">[</span>5462<span class="token punctuation">..</span>.10922<span class="token punctuation">]</span>
+redis-cli -h 127.0.0.1 -p 7002 cluster addslots <span class="token punctuation">[</span>10923<span class="token punctuation">..</span>.16383<span class="token punctuation">]</span>
 </code></pre>
 <p><strong>设置主从</strong>（一主一从）</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 主 7000 从 7003
-redis-cli -h 127.0.0.1 -p 7003 cluster replicate ${node-id-7000}
-# 主 7001 从 7004
-redis-cli -h 127.0.0.1 -p 7004 cluster replicate ${node-id-7001}
-# 主 7002 从 7005
-redis-cli -h 127.0.0.1 -p 7005 cluster replicate ${node-id-7002}
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 主 7000 从 7003</span>
+redis-cli -h 127.0.0.1 -p 7003 cluster replicate <span class="token variable">${node-id-7000}</span>
+<span class="token comment" spellcheck="true"># 主 7001 从 7004</span>
+redis-cli -h 127.0.0.1 -p 7004 cluster replicate <span class="token variable">${node-id-7001}</span>
+<span class="token comment" spellcheck="true"># 主 7002 从 7005</span>
+redis-cli -h 127.0.0.1 -p 7005 cluster replicate <span class="token variable">${node-id-7002}</span>
 </code></pre>
 <h3 id="方式二：Ruby环境"><a href="#方式二：Ruby环境" class="headerlink" title="方式二：Ruby环境"></a><del>方式二：Ruby环境</del></h3><p><del>下载ruby环境，参考网上教程</del></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/98030096">一致性Hash算法详解</a></p>

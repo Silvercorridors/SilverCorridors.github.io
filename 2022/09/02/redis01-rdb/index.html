@@ -482,7 +482,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
+                    3k
                 </div>
                 
 
@@ -505,17 +505,17 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Redis的持久化"><a href="#Redis的持久化" class="headerlink" title="Redis的持久化"></a>Redis的持久化</h1><p>众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。</p>
-<p><img src="/2022/09/02/redis01-rdb/java5-1566526018-16620499527383.jpeg" alt=""></p>
+<p><img src="/2022/09/02/redis01-rdb/java5-1566526018-16620499527383.jpeg"></p>
 <p>为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从内存中保存到硬盘当中，使数据可以持久化保存。</p>
 <p>redis持久化有两种方式：<strong>RDB</strong> &amp; <strong>AOF</strong>。一个是快照的方式，一个是类似日志追加的方式。</p>
 <h2 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h2><p>RDB是一种<strong>快照存储</strong>持久化方式，会生成RDB文件，该文件是一个<strong>压缩</strong>过的<strong>二进制文件</strong>，具体就是将Redis某一时刻的内存数据保存到硬盘的文件当中，默认保存的文件名为dump.rdb，而在Redis服务器启动时，会重新加载dump.rdb文件的数据到内存当中恢复数据。</p>
-<pre class=" language-lang-properties"><code class="language-lang-properties"># 设置 dump 的文件名
-dbfilename dump.rdb
+<pre class=" language-properties"><code class="language-properties"><span class="token comment" spellcheck="true"># 设置 dump 的文件名</span>
+<span class="token attr-name">dbfilename</span> <span class="token attr-value">dump.rdb</span>
 
-# 工作目录
-# 例如上面的 dbfilename 只指定了文件名，
-# 但是它会写入到这个目录下。这个配置项一定是个目录，而不能是文件名。
-dir ./
+<span class="token comment" spellcheck="true"># 工作目录</span>
+<span class="token comment" spellcheck="true"># 例如上面的 dbfilename 只指定了文件名，</span>
+<span class="token comment" spellcheck="true"># 但是它会写入到这个目录下。这个配置项一定是个目录，而不能是文件名。</span>
+<span class="token attr-name">dir</span> <span class="token attr-value">./</span>
 </code></pre>
 <h3 id="触发快照的时机"><a href="#触发快照的时机" class="headerlink" title="触发快照的时机"></a>触发快照的时机</h3><ul>
 <li>执行<code>save</code>和<code>bgsave</code>命令</li>
@@ -525,12 +525,12 @@ dir ./
 <li>执行<code>shutdown</code>命令关闭Redis时，会执行<code>save</code>命令</li>
 </ul>
 <h3 id="开启RDB持久化方式"><a href="#开启RDB持久化方式" class="headerlink" title="开启RDB持久化方式"></a>开启RDB持久化方式</h3><h4 id="save命令"><a href="#save命令" class="headerlink" title="save命令"></a>save命令</h4><p>以同步的方式进行持久化方式</p>
-<pre class=" language-lang-markdown"><code class="language-lang-markdown">> save
+<pre class=" language-markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span> save
 </code></pre>
 <p>在进行持久化此期间，使用<code>save</code>命令会阻塞Redis服务器进程，服务器进程在RDB文件创建完成之前是不能处理任何的命令请求</p>
 <p><img src="/java4-1566526019.jpeg" alt="save命令持久化"></p>
 <h4 id="bgsave"><a href="#bgsave" class="headerlink" title="bgsave"></a>bgsave</h4><p>与save命令不同，bgsave命令是一个异步操作。</p>
-<pre class=" language-lang-markdown"><code class="language-lang-markdown">> bgsave
+<pre class=" language-markdown"><code class="language-markdown"><span class="token blockquote punctuation">></span><span class="token entity" title="&nbsp;">&amp;nbsp;</span>bgsave
 </code></pre>
 <p><code>basave</code>命令会<code>fork</code>一个子进程，然后该子进程会负责创建RDB文件，而服务器进程会继续处理命令请求</p>
 <blockquote>
@@ -540,87 +540,83 @@ dir ./
 <blockquote>
 <p><code>fork</code>一个子进程，子进程会把数据集先写入临时文件，写入成功之后，再替换之前的RDB文件，用二进制压缩存储，这样可以保证RDB文件始终存储的是完整的持久化内容</p>
 </blockquote>
-<h4 id="save与bgsave对比"><a href="#save与bgsave对比" class="headerlink" title="save与bgsave对比"></a>save与bgsave对比</h4><div class="table-container">
-<table>
+<h4 id="save与bgsave对比"><a href="#save与bgsave对比" class="headerlink" title="save与bgsave对比"></a>save与bgsave对比</h4><table>
 <thead>
 <tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">save</th>
-<th style="text-align:center">bgsave</th>
+<th align="center">命令</th>
+<th align="center">save</th>
+<th align="center">bgsave</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">IO类型</td>
-<td style="text-align:center">同步</td>
-<td style="text-align:center">异步</td>
+<tbody><tr>
+<td align="center">IO类型</td>
+<td align="center">同步</td>
+<td align="center">异步</td>
 </tr>
 <tr>
-<td style="text-align:center">是否阻塞</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是(阻塞发生在fork)</td>
+<td align="center">是否阻塞</td>
+<td align="center">是</td>
+<td align="center">是(阻塞发生在fork)</td>
 </tr>
 <tr>
-<td style="text-align:center">复杂度</td>
-<td style="text-align:center">O(n)</td>
-<td style="text-align:center">O(n)</td>
+<td align="center">复杂度</td>
+<td align="center">O(n)</td>
+<td align="center">O(n)</td>
 </tr>
 <tr>
-<td style="text-align:center">优点</td>
-<td style="text-align:center">不会额外消耗内存</td>
-<td style="text-align:center">不阻塞客户端命令</td>
+<td align="center">优点</td>
+<td align="center">不会额外消耗内存</td>
+<td align="center">不阻塞客户端命令</td>
 </tr>
 <tr>
-<td style="text-align:center">缺点</td>
-<td style="text-align:center">阻塞客户端命令</td>
-<td style="text-align:center">需要fork，消耗内存</td>
+<td align="center">缺点</td>
+<td align="center">阻塞客户端命令</td>
+<td align="center">需要fork，消耗内存</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h4 id="配置自动触发"><a href="#配置自动触发" class="headerlink" title="配置自动触发"></a>配置自动触发</h4><p>除了通过客户端发送命令外，还有一种方式，就是在Redis配置文件(redis.conf)中的save指定到达触发RDB持久化的条件就开启数据同步。</p>
 <p>在redis.conf中配置如下选项</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 900s内至少达到一条写命令
-save 900 1
-# 300s内至少达至10条写命令
-save 300 10
-# 60s内至少达到10000条写命令
-save 60 10000
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#&amp;nbsp;900s内至少达到一条写命令</span>
+save<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>900<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>1
+<span class="token comment" spellcheck="true">#&amp;nbsp;300s内至少达至10条写命令</span>
+save<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>300<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>10
+<span class="token comment" spellcheck="true">#&amp;nbsp;60s内至少达到10000条写命令</span>
+save<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>60<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>10000
 </code></pre>
 <p>之后在启动服务器时加载配置文件。</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 启动服务器加载配置文件
-redis-server redis.conf
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#&amp;nbsp;启动服务器加载配置文件</span>
+redis-server<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>redis.conf
 </code></pre>
 <p>这种通过服务器配置文件触发RDB的方式，与bgsave命令类似，达到触发条件时，会forks一个子进程进行数据同步，不过最好不要通过这方式来触发RDB持久化，<strong>因为设置触发的时间太短，则容易频繁写入rdb文件，影响服务器性能，时间设置太长则会造成数据丢失</strong>。</p>
-<h3 id="更多配置"><a href="#更多配置" class="headerlink" title="更多配置"></a>更多配置</h3><pre class=" language-lang-bash"><code class="language-lang-bash"># 是否压缩rdb文件
-rdbcompression yes
+<h3 id="更多配置"><a href="#更多配置" class="headerlink" title="更多配置"></a>更多配置</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 是否压缩rdb文件</span>
+rdbcompression <span class="token function">yes</span>
 
-# rdb文件的名称
+<span class="token comment" spellcheck="true"># rdb文件的名称</span>
 dbfilename redis-6379.rdb
 
-# rdb文件保存目录
-dir ~/redis/
+<span class="token comment" spellcheck="true"># rdb文件保存目录</span>
+<span class="token function">dir</span> ~/redis/
 </code></pre>
 <h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><p>除了RDB持久化，Redis还提供了AOF（Append Only File）持久化功能，AOF持久化<strong>会把被执行的写命令写到AOF文件的末尾，记录数据的变化</strong>。默认情况下，Redis是没有开启AOF持久化的，开启后，每执行一条更改Redis数据的命令，都会把该命令追加到AOF文件中，这是会降低Redis的性能，但大部分情况下这个影响是能够接受的，另外使用较快的硬盘可以提高AOF的性能。</p>
 <p><img src="/2022/09/02/redis01-rdb/java9-1566526020.jpeg" alt="AOF方式"></p>
 <h3 id="开启AOF持久化方式"><a href="#开启AOF持久化方式" class="headerlink" title="开启AOF持久化方式"></a><strong>开启AOF持久化方式</strong></h3><p>Redis默认不开启AOF持久化方式，我们可以在配置文件中开启并进行更加详细的配置，如下面的redis.conf文件：</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 开启aof机制
-appendonly yes
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#&amp;nbsp;开启aof机制</span>
+appendonly<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token function">yes</span>
 
-# aof文件名
-appendfilename "appendonly.aof"
+<span class="token comment" spellcheck="true">#&amp;nbsp;aof文件名</span>
+appendfilename<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token string">"appendonly.aof"</span>
 
-# 同步写入策略
-# always 表示每个写操作都保存到aof文件中，这种策略很安全，但是每个写请注都有IO操作，所以也很慢。
-# everysec (默认策略)每秒写入一次aof文件，因此，最多可能会丢失1s的数据。
-# no  由系统决定什么时候写入aof文件
-appendfsync always
+<span class="token comment" spellcheck="true">#&amp;nbsp;同步写入策略</span>
+<span class="token comment" spellcheck="true"># always 表示每个写操作都保存到aof文件中，这种策略很安全，但是每个写请注都有IO操作，所以也很慢。</span>
+<span class="token comment" spellcheck="true"># everysec (默认策略)每秒写入一次aof文件，因此，最多可能会丢失1s的数据。</span>
+<span class="token comment" spellcheck="true"># no  由系统决定什么时候写入aof文件</span>
+appendfsync<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>always
 
-# 默认不重写aof文件
-no-appendfsync-on-rewrite no
+<span class="token comment" spellcheck="true">#&amp;nbsp;默认不重写aof文件</span>
+no-appendfsync-on-rewrite<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>no
 
-# 保存目录
-dir ~/redis/
+<span class="token comment" spellcheck="true">#&amp;nbsp;保存目录</span>
+<span class="token function">dir</span><span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>~/redis/
 </code></pre>
 <p>关于AOF的同步策略是涉及到操作系统的<code>write</code>函数和<code>fsync</code>函数的，在《Redis设计与实现》中是这样说明的。</p>
 <blockquote>
@@ -628,44 +624,40 @@ dir ~/redis/
 <p>这样的操作虽然提高了效率，但也为数据写入带来了安全问题：如果计算机停机，内存缓冲区中的数据会丢失。为此，系统提供了<code>fsync</code>、<code>fdatasync</code>同步函数，可以强制操作系统立刻将缓冲区中的数据写入到硬盘里，从而确保写入数据的安全性。</p>
 </blockquote>
 <p>从上面的介绍我们知道，我们写入的数据，操作系统并不一定会马上同步到磁盘，所以Redis才提供了<code>appendfsync</code>的选项配置。当该选项时为<code>always</code>时，数据安全性是最高的，但是会对磁盘进行大量的写入，Redis处理命令的速度会受到磁盘性能的限制；<code>appendfsync everysec</code>选项则兼顾了数据安全和写入性能，以每秒一次的频率同步AOF文件，即便出现系统崩溃，最多只会丢失一秒内产生的数据；如果是<code>appendfsync no</code>选项，Redis不会对AOF文件执行同步操作，而是有操作系统决定何时同步，不会对Redis的性能带来影响，但假如系统崩溃，可能会丢失不定数量的数据。</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">always</th>
-<th style="text-align:center">everysec</th>
-<th style="text-align:center">no</th>
+<th align="center">命令</th>
+<th align="center">always</th>
+<th align="center">everysec</th>
+<th align="center">no</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">优点</td>
-<td style="text-align:center">不丢失数据</td>
-<td style="text-align:center">每秒1次fsync</td>
-<td style="text-align:center">不用管</td>
+<tbody><tr>
+<td align="center">优点</td>
+<td align="center">不丢失数据</td>
+<td align="center">每秒1次fsync</td>
+<td align="center">不用管</td>
 </tr>
 <tr>
-<td style="text-align:center">缺点</td>
-<td style="text-align:center">IO开销大</td>
-<td style="text-align:center">丢1秒数据</td>
-<td style="text-align:center">不可控</td>
+<td align="center">缺点</td>
+<td align="center">IO开销大</td>
+<td align="center">丢1秒数据</td>
+<td align="center">不可控</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h3 id="AOF文件重写"><a href="#AOF文件重写" class="headerlink" title="AOF文件重写"></a>AOF文件重写</h3><p>AOF将客户端的每一个写操作都追加到aof文件末尾，比如对一个key多次执行incr命令，这时候，aof保存每一次命令到aof文件中，aof文件会变得非常大。</p>
-<pre class=" language-lang-dart"><code class="language-lang-dart">incr num 1
-incr num 2
-incr num 3
-incr num 4
-incr num 5
-incr num 6
-...
-incr num 100000
+<pre class=" language-dart"><code class="language-dart">incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">1</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">2</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">3</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">4</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">5</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">6</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+incr<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>num<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span><span class="token number">100000</span>
 </code></pre>
 <p>aof文件太大，加载aof文件恢复数据时，就会非常慢，为了解决这个问题，Redis支持aof文件重写，通过重写aof，可以生成一个恢复当前数据的最少命令集（简单来说，就是减少AOF文件的冗余操作，精简AOF文件的体积），比如上面的例子中那么多条命令，可以重写为：</p>
-<pre class=" language-lang-sql"><code class="language-lang-sql">set num 100000
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">set</span> num <span class="token number">100000</span>
 </code></pre>
 <p>值得注意的是：</p>
 <ul>
@@ -673,12 +665,12 @@ incr num 100000
 <li>aof文件是一个二进制文件，并不是像上面的例子一样，直接保存每个命令，而使用Redis自己的格式，上面只是方便演示。</li>
 </ul>
 <h3 id="两种重写方式"><a href="#两种重写方式" class="headerlink" title="两种重写方式"></a>两种重写方式</h3><p>通过在redis.conf配置文件中的选项no-appendfsync-on-rewrite可以设置是否开启重写，这种方式会在每次fsync时都重写，影响服务器性以，因此默认值为no，不推荐使用。</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 默认不重写aof文件
-no-appendfsync-on-rewrite no
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#&amp;nbsp;默认不重写aof文件</span>
+no-appendfsync-on-rewrite<span class="token operator">&amp;</span>nbsp<span class="token punctuation">;</span>no
 </code></pre>
 <h4 id="手动触发"><a href="#手动触发" class="headerlink" title="手动触发"></a>手动触发</h4><p>客户端向服务器发送bgrewriteaof命令，也可以让服务器进行AOF重写。</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 让服务器异步重写追加aof文件命令
-> bgrewriteaof
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 让服务器异步重写追加aof文件命令</span>
+<span class="token operator">></span> bgrewriteaof
 </code></pre>
 <p>AOF重写方式也是异步操作，即如果要写入aof文件，则Redis主进程会forks一个子进程来处理，如下所示：</p>
 <p><img src="/2022/09/02/redis01-rdb/16d1a887a85881e3tplv-t2oaga2asx-zoom-in-crop-mark3024000.webp" alt="执行流程"></p>
@@ -688,55 +680,51 @@ no-appendfsync-on-rewrite no
 <li>当子进程完成重写之后，会给父进程一个信号，然后父进程会把AOF重写缓冲区的内容写进新的AOF临时文件中，再对新的AOF文件改名完成替换，这样可以保证新的AOF文件与当前数据库数据的一致性</li>
 </ul>
 <h4 id="自动触发"><a href="#自动触发" class="headerlink" title="自动触发"></a>自动触发</h4><p>自动触发会根据<code>auto-aof-rewrite-percentage</code>和<code>auto-aof-rewrite-min-size 64mb</code>配置来自动执行<code>bgrewriteaof</code>命令</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash"># 表示当AOF文件的体积大于64MB，且AOF文件的体积比上一次重写后的体积大了一倍（100%）时，会执行`bgrewriteaof`命令
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 表示当AOF文件的体积大于64MB，且AOF文件的体积比上一次重写后的体积大了一倍（100%）时，会执行`bgrewriteaof`命令</span>
 auto-aof-rewrite-percentage 100
 auto-aof-rewrite-min-size 64mb
 </code></pre>
 <h3 id="AOF文件损坏"><a href="#AOF文件损坏" class="headerlink" title="AOF文件损坏"></a>AOF文件损坏</h3><p>在写入aof日志文件时，如果Redis服务器宕机，则aof日志文件文件会出格式错误，在重启Redis服务器时，Redis服务器会拒绝载入这个aof文件，可以通过以下步骤修复aof并恢复数据。</p>
 <p>1、备份现在aof文件，以防万一。</p>
 <p>2、使用redis-check-aof命令修复aof文件，该命令格式如下：</p>
-<pre class=" language-lang-php"><code class="language-lang-php"># 修复aof日志文件
-$ redis-check-aof -fix file.aof
+<pre class=" language-php"><code class="language-php"><span class="token shell-comment comment"># 修复aof日志文件</span>
+$ redis<span class="token operator">-</span>check<span class="token operator">-</span>aof <span class="token operator">-</span>fix file<span class="token punctuation">.</span>aof
 </code></pre>
 <p>3、重启Redis服务器，加载已经修复的aof文件，恢复数据。</p>
-<h2 id="RDB-与-AOF-对比"><a href="#RDB-与-AOF-对比" class="headerlink" title="RDB 与 AOF 对比"></a>RDB 与 AOF 对比</h2><div class="table-container">
-<table>
+<h2 id="RDB-与-AOF-对比"><a href="#RDB-与-AOF-对比" class="headerlink" title="RDB 与 AOF 对比"></a>RDB 与 AOF 对比</h2><table>
 <thead>
 <tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">RDB</th>
-<th style="text-align:center">AOF</th>
+<th align="center">命令</th>
+<th align="center">RDB</th>
+<th align="center">AOF</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">启动优先级</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">高</td>
+<tbody><tr>
+<td align="center">启动优先级</td>
+<td align="center">低</td>
+<td align="center">高</td>
 </tr>
 <tr>
-<td style="text-align:center">体积</td>
-<td style="text-align:center">小</td>
-<td style="text-align:center">大</td>
+<td align="center">体积</td>
+<td align="center">小</td>
+<td align="center">大</td>
 </tr>
 <tr>
-<td style="text-align:center">恢复速度</td>
-<td style="text-align:center">快</td>
-<td style="text-align:center">慢</td>
+<td align="center">恢复速度</td>
+<td align="center">快</td>
+<td align="center">慢</td>
 </tr>
 <tr>
-<td style="text-align:center">数据安全性</td>
-<td style="text-align:center">会丢失数据</td>
-<td style="text-align:center">策略决定</td>
+<td align="center">数据安全性</td>
+<td align="center">会丢失数据</td>
+<td align="center">策略决定</td>
 </tr>
 <tr>
-<td style="text-align:center">轻重量级</td>
-<td style="text-align:center">重</td>
-<td style="text-align:center">轻</td>
+<td align="center">轻重量级</td>
+<td align="center">重</td>
+<td align="center">轻</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>当RDB与AOF两种方式都开启时，Redis会优先使用AOF日志来恢复数据，因为AOF保存的文件比RDB文件更完整。</p>
 <h2 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h2><p>Redis4.0开始支持RDB和AOF的混合持久化（可以通过配置项 <code>aof-use-rdb-preamble</code> 开启）</p>
 <ul>

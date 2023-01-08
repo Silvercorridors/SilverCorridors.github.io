@@ -508,11 +508,11 @@ Redis集群采用P2P的 Gossip（流言）协议， Gossip协议工作原理就�
 <li>在分布式存储中需要<strong>提供维护节点元数据信息的机制，所谓元数据是指：节点负责哪些数据，是否出现故障等状态信息</strong></li>
 <li>Redis集群采用P2P的 Gossip（流言）协议， Gossip协议工作原理就是节点彼此不断通信交换信息，一段时间后所有的节 点都会知道集群完整的信息，这种方式类似流言传播，如下图所示：</li>
 </ul>
-<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png"></p>
 <h2 id="集群伸缩"><a href="#集群伸缩" class="headerlink" title="集群伸缩"></a>集群伸缩</h2><h3 id="伸缩原理"><a href="#伸缩原理" class="headerlink" title="伸缩原理"></a>伸缩原理</h3><p>​       Redis集群提供了灵活的节点扩容和收缩方案。 在不影响集群对外服务的情况下， 可以为集群添加节点进行扩容也可以下线部分节点进行缩容， 如下图所示：</p>
-<p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184.webp" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184.webp"></p>
 <p>​      从上图看出， Redis集群可以实现对节点的灵活上下线控制。 其中原理可抽象为<strong>槽和对应数据在不同节点之间灵活移动</strong>。 首先来看我们之前搭建的集群槽和数据与节点的对应关系， 如下图所示：</p>
-<p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184-16673182238317.webp" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184-16673182238317.webp"></p>
 <p>​       三个主节点分别维护自己负责的槽和对应的数据， 如果希望加入1个节点实现<strong>集群扩容</strong>时， 需要通过相关命令把一部分槽和数据迁移给新节点， 如下图所示：<img src="/resize,m_fixed,w_1184-166731824884610.webp" alt="Redis集群--Cluster--集群伸缩--过程/原理_redis_03"></p>
 <p> 图中每个节点把一部分槽和数据迁移到新的节点6385， 每个节点负责的槽和数据相比之前变少了从而达到了集群扩容的目的。 这里我们故意忽略了槽和数据在节点之间迁移的细节， 目的是想让读者重点关注在上层槽和节点分配上来， 理解集群的水平伸缩的上层原理： 集群伸缩=槽和数据在节点之间的移动， 下面将介绍集群扩容和收缩的细节。</p>
 <h3 id="扩容集群"><a href="#扩容集群" class="headerlink" title="扩容集群"></a>扩容集群</h3><p>扩容是分布式存储最常见的需求，Redis集群扩容操作可分为如下步骤：</p>
@@ -522,45 +522,45 @@ Redis集群采用P2P的 Gossip（流言）协议， Gossip协议工作原理就�
 <li>迁移槽和数据</li>
 </ol>
 <p>以下来具体演示：</p>
-<h4 id="准备新节点"><a href="#准备新节点" class="headerlink" title="准备新节点"></a>准备新节点</h4><pre class=" language-lang-markdown"><code class="language-lang-markdown">新节点要求：
-    集群模式
-    配置和其他节点统一
-    启动后是孤儿节点
+<h4 id="准备新节点"><a href="#准备新节点" class="headerlink" title="准备新节点"></a>准备新节点</h4><pre class=" language-markdown"><code class="language-markdown">新节点要求：
+<span class="token code keyword">    集群模式</span>
+<span class="token code keyword">    配置和其他节点统一</span>
+<span class="token code keyword">    启动后是孤儿节点</span>
 </code></pre>
 <p>具体命令：</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">redis-server conf/redis-6385.conf
+<pre class=" language-bash"><code class="language-bash">redis-server conf/redis-6385.conf
 redis-server conf/redis-6386.conf
 </code></pre>
 <p>此时集群状态</p>
-<p><img src="/2022/11/01/redis05-cluster02/image-20221102000435398.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/image-20221102000435398.png"></p>
 <h4 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h4><p>新节点依然采用cluster meet命令加入到现有集群中。在集群内任意节点执行cluster meet命令让6385和6386节点加入进来</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -p 6379 cluster meet 127.0.0.1 6385
+<pre class=" language-bash"><code class="language-bash">redis-cli -p 6379 cluster meet 127.0.0.1 6385
 redis-cli -p 6379 cluster meet 127.0.0.1 6386
 </code></pre>
-<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731919573013.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731919573013.png"></p>
 <ul>
 <li>集群内新旧节点<strong>经过一段时间的ping/pong消息通信之后</strong>，所有节点会发现新节点并将它们的状态保存到本地</li>
 </ul>
 <h4 id="迁移槽和数据"><a href="#迁移槽和数据" class="headerlink" title="迁移槽和数据"></a>迁移槽和数据</h4><p><strong>槽是Redis集群管理数据的基本单位，首先需要为新节点制定槽的迁移计划，确定原有节点的哪些槽需要迁移到新节点。迁移计划需要确保每个节点负责相似数量的槽，从而保证各节点的数据均匀</strong>。计划图如下：</p>
-<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731928527316.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731928527316.png"></p>
 <p>数据迁移过程是逐个槽进行的</p>
-<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731933198419.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731933198419.png"></p>
 <p>具体流程图：</p>
-<p><img src="/2022/11/01/redis05-cluster02/image-20221102003015624.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/image-20221102003015624.png"></p>
 <p>伪代码（通过pipeline来传递数据）：</p>
 <p><img src="/2022/11/01/redis05-cluster02/image-20221102003138822.png" alt="image-20221102003138822"></p>
 <p>或者使用 redis-trib.rb 中的reshard完成槽的分配</p>
 <h3 id="缩容集群"><a href="#缩容集群" class="headerlink" title="缩容集群"></a>缩容集群</h3><p>流程说明：<br>1）首先需要确定下线节点是否有负责的槽，如果是，需要把槽迁移到其他节点，保证节点下线后整个集群槽节点映射的完整性<br>2）当下线节点不再负责槽或者本身是从节点时，就可以通知集群内其他节点忘记下线节点，<strong>当所有的节点忘记该节点后可以正常关闭</strong></p>
-<p>流程图如下：<img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166732190877522.png" alt=""></p>
+<p>流程图如下：<img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166732190877522.png"></p>
 <h4 id="下线槽"><a href="#下线槽" class="headerlink" title="下线槽"></a><strong>下线槽</strong></h4><p>迁移命令同样可以使用redis-trib的reshard命令</p>
-<p><img src="/2022/11/01/redis05-cluster02/image-20221102010017215.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/image-20221102010017215.png"></p>
 <h4 id="忘记槽"><a href="#忘记槽" class="headerlink" title="忘记槽"></a>忘记槽</h4><p>命令：</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">cluster forget {downNodeId}
+<pre class=" language-bash"><code class="language-bash">cluster forget <span class="token punctuation">{</span>downNodeId<span class="token punctuation">}</span>
 </code></pre>
-<p><img src="/2022/11/01/redis05-cluster02/image-20221102010038849.png" alt=""></p>
+<p><img src="/2022/11/01/redis05-cluster02/image-20221102010038849.png"></p>
 <p>注意：对于主从节点，要先下线从节点再下线主节点</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Shangxingya/article/details/111575571">Redis~集群(分布理论、一致性哈希分区、虚拟槽分区、节点握手、集群通信、集群伸缩、请求路由、故障转移、集群维护)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/knifeedge/5135892"><strong>Redis集群—Cluster—集群伸缩—过程/原理</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/knifeedge/5135892"><strong>Redis集群–Cluster–集群伸缩–过程/原理</strong></a></p>
 
                 
             </div>

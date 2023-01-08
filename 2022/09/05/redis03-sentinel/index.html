@@ -480,7 +480,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.9k
+                    4k
                 </div>
                 
 
@@ -509,17 +509,19 @@
 </li>
 <li><p>故障自动转移</p>
 </li>
-<li>配置中心</li>
-<li>客户端通知</li>
+<li><p>配置中心</p>
+</li>
+<li><p>客户端通知</p>
+</li>
 </ul>
 <h2 id="运行-Sentinel"><a href="#运行-Sentinel" class="headerlink" title="运行 Sentinel"></a>运行 Sentinel</h2><p>运行sentinel有两种方式：</p>
 <ul>
 <li><p>第一种</p>
-<pre class=" language-lang-shell"><code class="language-lang-shell">redis-sentinel /path/to/sentinel.conf
+<pre class=" language-shell"><code class="language-shell">redis-sentinel /path/to/sentinel.conf
 </code></pre>
 </li>
 <li><p>第二种</p>
-<pre class=" language-lang-shell"><code class="language-lang-shell">redis-server /path/to/sentinel.conf --sentinel
+<pre class=" language-shell"><code class="language-shell">redis-server /path/to/sentinel.conf --sentinel
 </code></pre>
 </li>
 </ul>
@@ -527,7 +529,7 @@
 <h2 id="sentinel安装与配置"><a href="#sentinel安装与配置" class="headerlink" title="sentinel安装与配置"></a>sentinel安装与配置</h2><p>1.配置开启主从节点</p>
 <p>2.配置开启sentinel来监控主节点</p>
 <p>Redis源码包中包含了一个sentinel.conf文件作为sentinel的配置文件，配置文件自带了关于各个配置项的解释。典型的配置项如下所示：</p>
-<pre class=" language-lang-bash"><code class="language-lang-bash">sentinel monitor mymaster 127.0.0.1 6379 2 
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2 
 sentinel down-after-milliseconds mymaster 60000 
 sentinel failover-timeout mymaster 180000
 sentinel parallel-syncs mymaster 1
@@ -539,12 +541,14 @@ sentinel parallel-syncs resque 5
 </code></pre>
 <p><strong>接下来我们将一行一行地解释上面的配置项</strong>：</p>
 <pre><code>sentinel monitor mymaster 127.0.0.1 6379 2
-</code></pre><p>这一行代表sentinel监控的master的名字叫做<strong>mymaster</strong>,地址为<strong>127.0.0.1:6379</strong>，行尾最后的一个<strong>2</strong>代表什么意思呢？我们知道，网络是不可靠的，有时候一个sentinel会因为网络堵塞而误以为一个master redis已经死掉了，当sentinel集群式，解决这个问题的方法就变得很简单，只需要多个sentinel互相沟通来确认某个master是否真的死了，这个<strong>2</strong>代表，当集群中有2个sentinel认为master死了时，才能真正认为该master已经不可用了。（sentinel集群中各个sentinel也有互相通信，通过gossip协议）。</p>
+</code></pre>
+<p>这一行代表sentinel监控的master的名字叫做<strong>mymaster</strong>,地址为<strong>127.0.0.1:6379</strong>，行尾最后的一个<strong>2</strong>代表什么意思呢？我们知道，网络是不可靠的，有时候一个sentinel会因为网络堵塞而误以为一个master redis已经死掉了，当sentinel集群式，解决这个问题的方法就变得很简单，只需要多个sentinel互相沟通来确认某个master是否真的死了，这个<strong>2</strong>代表，当集群中有2个sentinel认为master死了时，才能真正认为该master已经不可用了。（sentinel集群中各个sentinel也有互相通信，通过gossip协议）。</p>
 <p>除了第一行配置，我们发现剩下的配置都有一个统一的格式:</p>
 <pre><code>sentinel &lt;option_name&gt; &lt;master_name&gt; &lt;option_value&gt;
-</code></pre><p>接下来我们根据上面格式中的<strong>option_name</strong>一个一个来解释这些配置项：</p>
+</code></pre>
+<p>接下来我们根据上面格式中的<strong>option_name</strong>一个一个来解释这些配置项：</p>
 <ul>
-<li><p><strong>down-after-milliseconds</strong><br>sentinel会向master发送心跳<strong><em>PING\</em></strong>来确认master是否存活，如果master在<strong>“一定时间范围”</strong>内不回应PONG或者是回复了一个错误消息，那么这个sentinel会<strong>主观地</strong>(单方面地)认为这个master已经不可用了(主观下线，subjectively down, 也简称为SDOWN)。而这个down-after-milliseconds就是用来指定这个<strong>“一定时间范围”</strong>的，单位是毫秒。</p>
+<li><p><strong>down-after-milliseconds</strong><br>sentinel会向master发送心跳<em><strong>PING*<strong>来确认master是否存活，如果master在</strong>“一定时间范围”</strong>内不回应PONG或者是回复了一个错误消息，那么这个sentinel会</em><em>主观地</em>*(单方面地)认为这个master已经不可用了(主观下线，subjectively down, 也简称为SDOWN)。而这个down-after-milliseconds就是用来指定这个<strong>“一定时间范围”</strong>的，单位是毫秒。</p>
 <blockquote>
 <p>不过需要注意的是，这个时候sentinel并不会马上进行failover主备切换，这个sentinel还需要参考sentinel集群中其他sentinel的意见，如果超过某个数量的sentinel也<strong>主观地</strong>认为该master死了，那么这个master就会被<strong>客观地</strong>(注意哦，这次不是主观，是客观，与刚才的subjectively down相对，这次是客观下线，objectively down，简称为ODOWN)认为已经死了。需要一起做出决定的sentinel数量在上一条配置中进行配置。</p>
 </blockquote>
@@ -558,7 +562,7 @@ sentinel parallel-syncs resque 5
 <p>这个区别看起来很微妙，但是很容易理解和使用。例如，集群中有5个sentinel，票数被设置为2，当2个sentinel认为一个master已经不可用了以后，将会触发failover，但是，进行failover的那个sentinel必须先获得至少3个sentinel的授权才可以实行failover。</p>
 <p>如果票数被设置为5，要达到ODOWN状态，必须所有5个sentinel都主观认为master为不可用，要进行failover，那么得获得所有5个sentinel的授权。</p>
 <p>基本原理如图：</p>
-<p><img src="/2022/09/05/redis03-sentinel/image-20220905230426479.png" alt=""></p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220905230426479.png"></p>
 <h2 id="配置版本号"><a href="#配置版本号" class="headerlink" title="配置版本号"></a>配置版本号</h2><p>为什么要先获得<strong>大多数</strong>sentinel的认可时才能真正去执行failover呢？</p>
 <p>当一个sentinel被授权后，它将会”拿走”宕掉的master的一份最新配置版本号，当failover执行结束以后，这个版本号将会被用于最新的配置。因为<strong>大多数</strong>sentinel都已经知道该版本号已经被要执行failover的sentinel拿走了，所以其他的sentinel都不能再去使用这个版本号。这意味着，每次failover都会附带有一个独一无二的版本号。</p>
 <p>而且，sentinel集群都遵守一个规则：如果sentinel A推荐sentinel B去执行failover，A会等待一段时间后，自行再次去对同一个master执行failover，这个等待的时间是通过<code>failover-timeout</code>配置项去配置的。从这个规则可以看出，sentinel集群中的sentinel不会在同一时刻并发去failover同一个master，第一个进行failover的sentinel如果失败了，另外一个将会在一定时间内进行重新进行failover，以此类推。</p>
@@ -566,7 +570,7 @@ sentinel parallel-syncs resque 5
 <h2 id="领导者选举"><a href="#领导者选举" class="headerlink" title="领导者选举"></a>领导者选举</h2><p>一个redis服务被判断为客观下线时，多个监视该服务的sentinel协商，选举一个领头sentinel，对该redis服务进行故障转移操作。<strong>选举领导者sentinel</strong></p>
 <p><strong>遵循以下规则：</strong><br>1）所有的sentinel都有公平被选举成领头的资格。<br>2）所有的sentinel都有且只有一次将某个sentinel选举成领头的机会（在一轮选举中），一旦选举某个sentinel为领头，不能更改。<br>3）sentinel设置领头sentinel是先到先得，一旦当前sentinel设置了领头sentinel，以后要求设置sentinel为领头请求都会被拒绝。<br>4）每个发现服务客观下线的sentinel，都会要求其他sentinel将自己设置成领头。<br>5）当一个sentinel（源sentinel）向另一个sentinel（目sentinel）发送is-master-down-by-addr ip port current_epoch runid命令的时候，runid参数不是*，而是sentinel运行id，就表示源sentinel要求目标sentinel选举其为领头。<br>6）源sentinel会检查目标sentinel对其要求设置成领头的回复，如果回复的leader_runid和leader_epoch为源sentinel，表示目标sentinel同意将源sentinel设置成领头。<br>7）如果某个sentinel被半数以上的sentinel设置成领头，那么该sentinel既为领头。<br>8）如果在限定时间内，没有选举出领头sentinel，暂定一段时间，再选举。</p>
 <p><strong>为什么要选领导者？</strong><br>简单来说，就是因为只能有一个sentinel节点去完成故障转移。<br>sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线判定，二是进行领导者选举。<br><strong>选举过程：</strong><br>1）每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。<br>2）收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。<br>3）如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者<br>4）如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。</p>
-<h2 id="自动发现机制"><a href="#自动发现机制" class="headerlink" title="自动发现机制"></a>自动发现机制</h2><p><img src="/2022/09/05/redis03-sentinel/380271-20181108161019953-1764260447.png" alt=""></p>
+<h2 id="自动发现机制"><a href="#自动发现机制" class="headerlink" title="自动发现机制"></a>自动发现机制</h2><p><img src="/2022/09/05/redis03-sentinel/380271-20181108161019953-1764260447.png"></p>
 <h2 id="sentinel中的三个定时任务"><a href="#sentinel中的三个定时任务" class="headerlink" title="sentinel中的三个定时任务"></a>sentinel中的三个定时任务</h2><p>1.每10秒每个sentinel对master和slave执行info</p>
 <ul>
 <li>发现slave，记录slave节点信息</li>
@@ -579,41 +583,41 @@ sentinel parallel-syncs resque 5
 <li><p>交互对节点的”看法“和自身信息</p>
 </li>
 </ul>
-<p><img src="/2022/09/05/redis03-sentinel/image-20220908234731379.png" alt=""></p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220908234731379.png"></p>
 <p>3.每1秒每个sentinel对其他sentinel和redis执行ping</p>
 <ul>
 <li>心跳检测，失败判定依据</li>
 </ul>
-<p><img src="/2022/09/05/redis03-sentinel/image-20220908234748441.png" alt=""></p>
-<h2 id="使用Java客户端连接redis-sentinel"><a href="#使用Java客户端连接redis-sentinel" class="headerlink" title="使用Java客户端连接redis sentinel"></a>使用Java客户端连接redis sentinel</h2><pre class=" language-lang-java"><code class="language-lang-java">package com;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisSentinelPool;
-
-public class JRedisSentinelTest {
-    public static void main(String[] args) {
-        //服务IP
-        String ip = "172.168.x.y";
-        Set sentinels = new HashSet();
-        //Sentine端口
-        sentinels.add(new HostAndPort(ip, 26379).toString());
-        sentinels.add(new HostAndPort(ip, 26380).toString());
-        JedisSentinelPool sentinelPool = new JedisSentinelPool("master1", sentinels);
-        System.out.println("Current master: " + sentinelPool.getCurrentHostMaster().toString());
-        Jedis master = sentinelPool.getResource();
-        master.set("username","liangzhichao");
-        sentinelPool.returnResource(master);
-        Jedis master2 = sentinelPool.getResource();
-        String value = master2.get("username");
-        System.out.println("username: " + value);
-        master2.close();
-        sentinelPool.destroy();
-    }
-}
+<p><img src="/2022/09/05/redis03-sentinel/image-20220908234748441.png"></p>
+<h2 id="使用Java客户端连接redis-sentinel"><a href="#使用Java客户端连接redis-sentinel" class="headerlink" title="使用Java客户端连接redis sentinel"></a>使用Java客户端连接redis sentinel</h2><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">;</span>
+ 
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashSet<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Set<span class="token punctuation">;</span>
+ 
+<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>HostAndPort<span class="token punctuation">;</span>
+<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>Jedis<span class="token punctuation">;</span>
+<span class="token keyword">import</span> redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span>JedisSentinelPool<span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JRedisSentinelTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//服务IP</span>
+        String ip <span class="token operator">=</span> <span class="token string">"172.168.x.y"</span><span class="token punctuation">;</span>
+        Set sentinels <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//Sentine端口</span>
+        sentinels<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HostAndPort</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">26379</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sentinels<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HostAndPort</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">26380</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        JedisSentinelPool sentinelPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JedisSentinelPool</span><span class="token punctuation">(</span><span class="token string">"master1"</span><span class="token punctuation">,</span> sentinels<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Current master: "</span> <span class="token operator">+</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getCurrentHostMaster</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Jedis master <span class="token operator">=</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        master<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">,</span><span class="token string">"liangzhichao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sentinelPool<span class="token punctuation">.</span><span class="token function">returnResource</span><span class="token punctuation">(</span>master<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Jedis master2 <span class="token operator">=</span> sentinelPool<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String value <span class="token operator">=</span> master2<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"username: "</span> <span class="token operator">+</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        master2<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sentinelPool<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h2 id="如何选举”合适的“slave节点"><a href="#如何选举”合适的“slave节点" class="headerlink" title="如何选举”合适的“slave节点"></a>如何选举”合适的“slave节点</h2><p>当一个sentinel准备好了要进行failover，并且收到了其他sentinel的授权，那么就需要选举出一个合适的slave来做为新的master。</p>
 <p>slave的选举主要会评估slave的以下几个方面：</p>
@@ -625,7 +629,7 @@ public class JRedisSentinelTest {
 </ul>
 <p>如果一个slave与master失去联系超过10次，并且每次都超过了配置的最大失联时间(<code>down-after-milliseconds option</code>)，并且，如果sentinel在进行failover时发现slave失联，那么这个slave就会被sentinel认为不适合用来做新master的。</p>
 <p>更严格的定义是，如果一个slave持续断开连接的时间超过</p>
-<pre class=" language-lang-livecodeserver"><code class="language-lang-livecodeserver">(down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state
+<pre class=" language-livecodeserver"><code class="language-livecodeserver">(down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state
 </code></pre>
 <p>就会被认为失去选举资格。<br>符合上述条件的slave才会被列入master候选人列表，并根据以下顺序来进行排序：</p>
 <ol>
@@ -635,39 +639,39 @@ public class JRedisSentinelTest {
 </ol>
 <p>一个redis无论是master还是slave，都必须在配置中指定一个slave优先级。要注意到master也是有可能通过failover变成slave的。</p>
 <p>如果一个redis的slave优先级配置为0，那么它将永远不会被选为master。但是它依然会从master哪里复制数据。</p>
-<p><img src="/2022/09/05/redis03-sentinel/image-20220906231235163.png" alt=""></p>
-<h2 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>客户端可以向一个sentinel发送订阅某个频道的事件的命令，当有特定的事件发生时，sentinel会通知所有订阅的客户端。需要注意的是客户端只能订阅，不能发布。</p>
+<p><img src="/2022/09/05/redis03-sentinel/image-20220906231235163.png"></p>
+<h2 id="发布-x2F-订阅"><a href="#发布-x2F-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>客户端可以向一个sentinel发送订阅某个频道的事件的命令，当有特定的事件发生时，sentinel会通知所有订阅的客户端。需要注意的是客户端只能订阅，不能发布。</p>
 <p>订阅频道的名字与事件的名字一致。例如，频道名为<strong>sdown</strong> 将会发布所有与SDOWN相关的消息给订阅者。</p>
 <p>如果想要订阅所有消息，只需简单地使用<code>PSUBSCRIBE *</code></p>
 <p>以下是所有你可以收到的消息的消息格式，如果你订阅了所有消息的话。第一个单词是频道的名字，其它是数据的格式。</p>
 <p>注意：以下的instance details的格式是：</p>
 <p><code>&lt;instance-type&gt; &lt;name&gt; &lt;ip&gt; &lt;port&gt; @ &lt;master-name&gt; &lt;master-ip&gt; &lt;master-port&gt;</code></p>
 <p>如果这个redis实例是一个master，那么@之后的消息就不会显示。</p>
-<pre class=" language-lang-haskell"><code class="language-lang-haskell">    +reset-master <instance details> -- 当master被重置时.
-    +slave <instance details> -- 当检测到一个slave并添加进slave列表时.
-    +failover-state-reconf-slaves <instance details> -- Failover状态变为reconf-slaves状态时
-    +failover-detected <instance details> -- 当failover发生时
-    +slave-reconf-sent <instance details> -- sentinel发送SLAVEOF命令把它重新配置时
-    +slave-reconf-inprog <instance details> -- slave被重新配置为另外一个master的slave，但数据复制还未发生时。
-    +slave-reconf-done <instance details> -- slave被重新配置为另外一个master的slave并且数据复制已经与master同步时。
-    -dup-sentinel <instance details> -- 删除指定master上的冗余sentinel时 (当一个sentinel重新启动时，可能会发生这个事件).
-    +sentinel <instance details> -- 当master增加了一个sentinel时。
-    +sdown <instance details> -- 进入SDOWN状态时;
-    -sdown <instance details> -- 离开SDOWN状态时。
-    +odown <instance details> -- 进入ODOWN状态时。
-    -odown <instance details> -- 离开ODOWN状态时。
-    +new-epoch <instance details> -- 当前配置版本被更新时。
-    +try-failover <instance details> -- 达到failover条件，正等待其他sentinel的选举。
-    +elected-leader <instance details> -- 被选举为去执行failover的时候。
-    +failover-state-select-slave <instance details> -- 开始要选择一个slave当选新master时。
-    no-good-slave <instance details> -- 没有合适的slave来担当新master
-    selected-slave <instance details> -- 找到了一个适合的slave来担当新master
-    failover-state-send-slaveof-noone <instance details> -- 当把选择为新master的slave的身份进行切换的时候。
-    failover-end-for-timeout <instance details> -- failover由于超时而失败时。
-    failover-end <instance details> -- failover成功完成时。
-    switch-master <master name> <oldip> <oldport> <newip> <newport> -- 当master的地址发生变化时。通常这是客户端最感兴趣的消息了。
-    +tilt -- 进入Tilt模式。
-    -tilt -- 退出Tilt模式。
+<pre class=" language-haskell"><code class="language-haskell">    <span class="token operator">+</span><span class="token hvariable">reset</span><span class="token operator">-</span><span class="token hvariable">master</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master被重置时.</span>
+    <span class="token operator">+</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当检测到一个slave并添加进slave列表时.</span>
+    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">slaves</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- Failover状态变为reconf-slaves状态时</span>
+    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">detected</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当failover发生时</span>
+    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">sent</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- sentinel发送SLAVEOF命令把它重新配置时</span>
+    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">inprog</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- slave被重新配置为另外一个master的slave，但数据复制还未发生时。</span>
+    <span class="token operator">+</span><span class="token hvariable">slave</span><span class="token operator">-</span><span class="token hvariable">reconf</span><span class="token operator">-</span><span class="token hvariable">done</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- slave被重新配置为另外一个master的slave并且数据复制已经与master同步时。</span>
+    <span class="token operator">-</span><span class="token hvariable">dup</span><span class="token operator">-</span><span class="token hvariable">sentinel</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 删除指定master上的冗余sentinel时 (当一个sentinel重新启动时，可能会发生这个事件).</span>
+    <span class="token operator">+</span><span class="token hvariable">sentinel</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master增加了一个sentinel时。</span>
+    <span class="token operator">+</span><span class="token hvariable">sdown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 进入SDOWN状态时;</span>
+    <span class="token operator">-</span><span class="token hvariable">sdown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 离开SDOWN状态时。</span>
+    <span class="token operator">+</span><span class="token hvariable">odown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 进入ODOWN状态时。</span>
+    <span class="token operator">-</span><span class="token hvariable">odown</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 离开ODOWN状态时。</span>
+    <span class="token operator">+</span><span class="token hvariable">new</span><span class="token operator">-</span><span class="token hvariable">epoch</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当前配置版本被更新时。</span>
+    <span class="token operator">+</span><span class="token hvariable">try</span><span class="token operator">-</span><span class="token hvariable">failover</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 达到failover条件，正等待其他sentinel的选举。</span>
+    <span class="token operator">+</span><span class="token hvariable">elected</span><span class="token operator">-</span><span class="token hvariable">leader</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 被选举为去执行failover的时候。</span>
+    <span class="token operator">+</span><span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">select</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 开始要选择一个slave当选新master时。</span>
+    <span class="token hvariable">no</span><span class="token operator">-</span><span class="token hvariable">good</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 没有合适的slave来担当新master</span>
+    <span class="token hvariable">selected</span><span class="token operator">-</span><span class="token hvariable">slave</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 找到了一个适合的slave来担当新master</span>
+    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">state</span><span class="token operator">-</span><span class="token hvariable">send</span><span class="token operator">-</span><span class="token hvariable">slaveof</span><span class="token operator">-</span><span class="token hvariable">noone</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当把选择为新master的slave的身份进行切换的时候。</span>
+    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">end</span><span class="token operator">-</span><span class="token hvariable">for</span><span class="token operator">-</span><span class="token hvariable">timeout</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- failover由于超时而失败时。</span>
+    <span class="token hvariable">failover</span><span class="token operator">-</span><span class="token hvariable">end</span> <span class="token operator">&lt;</span><span class="token keyword">instance</span> <span class="token hvariable">details</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- failover成功完成时。</span>
+    <span class="token hvariable">switch</span><span class="token operator">-</span><span class="token hvariable">master</span> <span class="token operator">&lt;</span><span class="token hvariable">master</span> <span class="token hvariable">name</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">oldip</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">oldport</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">newip</span><span class="token operator">></span> <span class="token operator">&lt;</span><span class="token hvariable">newport</span><span class="token operator">></span> <span class="token comment" spellcheck="true">-- 当master的地址发生变化时。通常这是客户端最感兴趣的消息了。</span>
+    <span class="token operator">+</span><span class="token hvariable">tilt</span> <span class="token comment" spellcheck="true">-- 进入Tilt模式。</span>
+    <span class="token operator">-</span><span class="token hvariable">tilt</span> <span class="token comment" spellcheck="true">-- 退出Tilt模式。</span>
 </code></pre>
 <h2 id="TILT-模式"><a href="#TILT-模式" class="headerlink" title="TILT 模式"></a>TILT 模式</h2><p>redis sentinel非常依赖系统时间，例如它会使用系统时间来判断一个PING回复用了多久的时间。<br>然而，假如系统时间被修改了，或者是系统十分繁忙，或者是进程堵塞了，sentinel可能会出现运行不正常的情况。<br>当系统的稳定性下降时，TILT模式是sentinel可以进入的一种的保护模式。当进入TILT模式时，sentinel会继续监控工作，但是它不会有任何其他动作，它也不会去回应<code>is-master-down-by-addr</code>这样的命令了，因为它在TILT模式下，检测失效节点的能力已经变得让人不可信任了。<br>如果系统恢复正常，持续30秒钟，sentinel就会退出TITL模式。</p>
 <h2 id="总结性知识点"><a href="#总结性知识点" class="headerlink" title="总结性知识点"></a>总结性知识点</h2><ul>

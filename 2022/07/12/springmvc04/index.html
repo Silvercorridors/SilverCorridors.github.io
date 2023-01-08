@@ -6,9 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Spring MVC 04：数据的发送, 银色回廊">
     <meta name="description" content="Spring MVC 04：数据的发送显示图片在进行Spring MVC的配置时，通常我们会配置一个dispatcher servlet用于处理对应的URL。配置如下：
-
-    SpringMVC
-    org.springframew">
+&amp;lt;servlet&gt;
+    &amp;lt;servlet-name&gt;S">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -483,7 +482,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    2.6k
                 </div>
                 
 
@@ -506,30 +505,30 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Spring-MVC-04：数据的发送"><a href="#Spring-MVC-04：数据的发送" class="headerlink" title="Spring MVC 04：数据的发送"></a>Spring MVC 04：数据的发送</h1><h2 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h2><p>在进行Spring MVC的配置时，通常我们会配置一个dispatcher servlet用于处理对应的URL。配置如下：</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><servlet>
-    <servlet-name>SpringMVC</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-mvc.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-</servlet>
-<servlet-mapping>
-    <servlet-name>SpringMVC</servlet-name>
-    <url-pattern>/</url-pattern>
-</servlet-mapping>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>SpringMVC<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>org.springframework.web.servlet.DispatcherServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>init-param</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-name</span><span class="token punctuation">></span></span>contextConfigLocation<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-value</span><span class="token punctuation">></span></span>classpath:spring-mvc.xml<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-value</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>init-param</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>load-on-startup</span><span class="token punctuation">></span></span>1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>load-on-startup</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>SpringMVC<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>        
 </code></pre>
 <p>只拦截.do请求配置如下：</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><servlet-mapping>  
-<servlet-name>springMVC</servlet-name>  
-<url-pattern>*.do</url-pattern>  
-</servlet-mapping>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>springMVC<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>*.do<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span> 
 </code></pre>
 <p>当你在一个jsp写好<code>&lt;img&gt;</code>后，是无法直接显示的，因为MVC会默认劫持。</p>
 <p><img src="/2022/07/12/springmvc04/image-20220712214638856.png" alt="MVC默认劫持未配置的资源"></p>
 <p>index.jsp</p>
-<pre class=" language-lang-jsp"><code class="language-lang-jsp"><html>
+<pre class=" language-jsp"><code class="language-jsp"><html>
 <body>
 <h2>Hello World!</h2>
 <a href="/SpringMVCDemo01_war_exploded/param/test11">To Test11</a>
@@ -540,7 +539,7 @@
 <p>这表示名字为 SpringMVC 的servlet会处理一切的url对应的请求，那么我们怎么让servlet来处理项目中的静态资源呢？这里有两种方法。</p>
 <p><strong>第一种方法(推荐使用)：</strong>需要在SpringMVC的配置文件中配置resource。</p>
 <p>SpringMVC.xml</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><beans xmlns = "http://www.springframework.org/schema/beans"
+<pre class=" language-xml"><code class="language-xml">&lt;beans xmlns = "http://www.springframework.org/schema/beans"
        xmlns:context = "http://www.springframework.org/schema/context"
        xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc = "http://www.springframework.org/schema/mvc"
@@ -552,168 +551,168 @@
    http://www.springframework.org/schema/context/spring-context-3.0.xsd
    http://www.springframework.org/schema/mvc
    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-<!--    <bean name="/hello" class="cn.silverCorridors.HelloWorldController"></bean>-->
-    <!--扫描包-->
-    <context:component-scan base-package="cn.silverCorridors"></context:component-scan>
+<span class="token comment" spellcheck="true">&lt;!--    &lt;bean name="/hello" class="cn.silverCorridors.HelloWorldController">&lt;/bean>--></span>
+    <span class="token comment" spellcheck="true">&lt;!--扫描包--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>component-scan</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">context:</span>component-scan</span><span class="token punctuation">></span></span>
+    
+    <span class="token comment" spellcheck="true">&lt;!-- 配置视图解析器 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.web.servlet.view.InternalResourceViewResolver<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 配置视图 前缀：prefix  后缀：suffix--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>prefix<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/Jsp/<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>suffix<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.jsp<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 
-    <!-- 配置视图解析器 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 配置视图 前缀：prefix  后缀：suffix-->
-        <property name="prefix" value="/Jsp/"></property>
-        <property name="suffix" value=".jsp"></property>
-    </bean>
-
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters">
-            <set>
-                <bean class="cn.silverCorridors.SpringToDateConverter"></bean>
-            </set>
-        </property>
-    </bean>
-    <!--    通知给MVC配置了conversion-->
-    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
-    <!--mapping: URL 中的路径    location: 实际存储的路径  -->
-    <mvc:resources mapping="/img/**/" location="/img/"></mvc:resources>
-</beans>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>conversionService<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.context.support.ConversionServiceFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>converters<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cn.silverCorridors.SpringToDateConverter<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--    通知给MVC配置了conversion--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>annotation-driven</span> <span class="token attr-name">conversion-service</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>conversionService<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>annotation-driven</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--mapping: URL 中的路径    location: 实际存储的路径  --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>resources</span> <span class="token attr-name">mapping</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/img/**/<span class="token punctuation">"</span></span> <span class="token attr-name">location</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/img/<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>resources</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>这样图片就显示成功</p>
 <p><img src="/2022/07/12/springmvc04/image-20220712214101849.png" alt="显示图片"></p>
 <p>　<br></p>
 <p><strong>第二种方法：</strong> 另外使用一个servlet来处理静态资源。若我们的资源放置在webapps文件夹下的resources文件夹中，那么我们可以用名字为default的servlet来处理静态资源。因此我们还需要在上述配置的基础上加上以下配置：</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><servlet-mapping>  
-<servlet-name>default</servlet-name>  
-<url-pattern>resources/*</url-pattern>  
-</servlet-mapping>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>default<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>resources/*<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>  
 </code></pre>
 <p>这表示default的servlet会处理url中为resources/*的对应的请求。这样，当你把你的image，css已经其他文件放在resources文件中时，spring就可以找到它啦。</p>
 <h2 id="AJAX访问-VS-URL访问"><a href="#AJAX访问-VS-URL访问" class="headerlink" title="AJAX访问 VS URL访问"></a>AJAX访问 VS URL访问</h2><p>普通的URL访问：通过URL访问网站返回一个HTML网页。</p>
 <p>AJAX访问：发送一个请求，返回一个内容（不一定是页面，还有可能是JSON数据），很多时候，发过去的Request含有JSON，Response发送回来的也是JSON，并且整个过程不会刷新浏览器。</p>
 <p>AJAX 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。AJAX 不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。</p>
-<pre class=" language-lang-java"><code class="language-lang-java">// AJAX vs URL 访问 不刷新
-// Request：Header,JSON -> Class(Pabc1)
-// Response： Class -> JSON
-// /param/test9
-// POST Body : 用于接收JSON
-@RequestMapping("/test7")
-public @ResponseBody Pabc1 test7(@RequestBody Pabc1 pabc1) {
-    System.out.println("test7()");
-    System.out.println("pabc= " + pabc1);
-    pabc1.setA("Changed A");
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// AJAX vs URL 访问 不刷新</span>
+<span class="token comment" spellcheck="true">// Request：Header,JSON -> Class(Pabc1)</span>
+<span class="token comment" spellcheck="true">// Response： Class -> JSON</span>
+<span class="token comment" spellcheck="true">// /param/test9</span>
+<span class="token comment" spellcheck="true">// POST Body : 用于接收JSON</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test7"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@ResponseBody</span> Pabc1 <span class="token function">test7</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> Pabc1 pabc1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test7()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"pabc= "</span> <span class="token operator">+</span> pabc1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pabc1<span class="token punctuation">.</span><span class="token function">setA</span><span class="token punctuation">(</span><span class="token string">"Changed A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return pabc1; // Class -> JSON
-}
+    <span class="token keyword">return</span> pabc1<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Class -> JSON</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<pre class=" language-lang-javascript"><code class="language-lang-javascript"><script type="text/javascript">
-    $(document).ready(function () {
-        // 为#btn绑定事件函数
-        $('#btn').on('click',function () {
-            var p = { };
-            p.a = 'aaaa';
-            p.b = '555';
-            p.c = '777';
-            p.pd = {};
-            var pd = p.pd;
-            pd.d1 = '111';
-            pd.d2 = '222';
-            p.listPd = [];
-            var listPd = p.listPd;
-            listPd[0] = {};
-            listPd[0].d1 = '111';
-            listPd[0].d2 = '222';
+<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script type<span class="token operator">=</span><span class="token string">"text/javascript"</span><span class="token operator">></span>
+    <span class="token function">$</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ready</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 为#btn绑定事件函数</span>
+        <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#btn'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> p <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            p<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token string">'aaaa'</span><span class="token punctuation">;</span>
+            p<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token string">'555'</span><span class="token punctuation">;</span>
+            p<span class="token punctuation">.</span>c <span class="token operator">=</span> <span class="token string">'777'</span><span class="token punctuation">;</span>
+            p<span class="token punctuation">.</span>pd <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> pd <span class="token operator">=</span> p<span class="token punctuation">.</span>pd<span class="token punctuation">;</span>
+            pd<span class="token punctuation">.</span>d1 <span class="token operator">=</span> <span class="token string">'111'</span><span class="token punctuation">;</span>
+            pd<span class="token punctuation">.</span>d2 <span class="token operator">=</span> <span class="token string">'222'</span><span class="token punctuation">;</span>
+            p<span class="token punctuation">.</span>listPd <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> listPd <span class="token operator">=</span> p<span class="token punctuation">.</span>listPd<span class="token punctuation">;</span>
+            listPd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+            listPd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>d1 <span class="token operator">=</span> <span class="token string">'111'</span><span class="token punctuation">;</span>
+            listPd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>d2 <span class="token operator">=</span> <span class="token string">'222'</span><span class="token punctuation">;</span>
 
-            p.mapPd = {};
-            var mapPd = p.mapPd;
-            mapPd.a = {};
-            mapPd.a.d1 = '111';
-            mapPd.a.d2 = '222';
+            p<span class="token punctuation">.</span>mapPd <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> mapPd <span class="token operator">=</span> p<span class="token punctuation">.</span>mapPd<span class="token punctuation">;</span>
+            mapPd<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+            mapPd<span class="token punctuation">.</span>a<span class="token punctuation">.</span>d1 <span class="token operator">=</span> <span class="token string">'111'</span><span class="token punctuation">;</span>
+            mapPd<span class="token punctuation">.</span>a<span class="token punctuation">.</span>d2 <span class="token operator">=</span> <span class="token string">'222'</span><span class="token punctuation">;</span>
 
-            // console.log(JSON.stringify(p));
-            $.ajax({
-                type: 'POST',
-                url: '/SpringMVCDemo01_war_exploded/resp/test7',
-                contentType: 'application/json;charset=UTF-8',
-                dataType: 'json',
-                data: JSON.stringify(p),
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function () {
-                    console.log('error');
-                }
-            })
-        });
-    });
-</script>
+            <span class="token comment" spellcheck="true">// console.log(JSON.stringify(p));</span>
+            $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                type<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+                url<span class="token punctuation">:</span> <span class="token string">'/SpringMVCDemo01_war_exploded/resp/test7'</span><span class="token punctuation">,</span>
+                contentType<span class="token punctuation">:</span> <span class="token string">'application/json;charset=UTF-8'</span><span class="token punctuation">,</span>
+                dataType<span class="token punctuation">:</span> <span class="token string">'json'</span><span class="token punctuation">,</span>
+                data<span class="token punctuation">:</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                success<span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                error<span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
 </code></pre>
-<h2 id="文件上传（单个文件）"><a href="#文件上传（单个文件）" class="headerlink" title="文件上传（单个文件）"></a>文件上传（单个文件）</h2><h3 id="Servlet原生的方法"><a href="#Servlet原生的方法" class="headerlink" title="Servlet原生的方法"></a><strong>Servlet原生的方法</strong></h3><p>​    需要的jar包：commons-FileUpload、commons-io</p>
+<h2 id="文件上传（单个文件）"><a href="#文件上传（单个文件）" class="headerlink" title="文件上传（单个文件）"></a>文件上传（单个文件）</h2><h3 id="Servlet原生的方法"><a href="#Servlet原生的方法" class="headerlink" title="Servlet原生的方法"></a><strong>Servlet原生的方法</strong></h3><p>​	需要的jar包：commons-FileUpload、commons-io</p>
 <p>下面是示例：</p>
 <p>在index.jsp新建一个form表单来进行提交文件：</p>
-<pre class=" language-lang-html"><code class="language-lang-html"><form action="/SpringMVCDemo01_war_exploded/uploader/test1" method="post" enctype="multipart/form-data">
-    Select file:<input type="file"  name="upfile"/>
-    <input type="submit" value="upload"/>
-</form>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/SpringMVCDemo01_war_exploded/uploader/test1<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipart/form-data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    Select file:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upfile<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upload<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>创建对应的Controller类用于处理接收的数据</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@Controller
-@RequestMapping("/uploader")
-public class Uploader {
-    @RequestMapping("/test1")
-    public String test1(HttpServletRequest request) throws Exception {
-        System.out.println("test1()");
-        // 用于保存文件的文件夹
-        String path = request.getSession().getServletContext().getRealPath("/upload/");
-        File dir = new File(path);
-        if (!dir.exists()){ // 如果文件夹不存在，创建
-            dir.mkdir();
-        }
-        // 从request中分离出file，挨个保存
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        List<FileItem> files = upload.parseRequest(request);
-        for (FileItem file : files)
-        {
-            if (!file.isFormField()){//如果不是表单元素(Form Field)，说明是上传的文件
-                String fileName = file.getName();
-                file.write(new File(path,fileName)); // 将接收到的文件写入path目录下
-                file.delete();
-            }
-        }
-        return "jsp1";
-    }
-}
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/uploader"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Uploader</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">test1</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test1()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 用于保存文件的文件夹</span>
+        String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"/upload/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        File dir <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dir<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 如果文件夹不存在，创建</span>
+            dir<span class="token punctuation">.</span><span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// 从request中分离出file，挨个保存</span>
+        DiskFileItemFactory factory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DiskFileItemFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ServletFileUpload upload <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServletFileUpload</span><span class="token punctuation">(</span>factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>FileItem<span class="token operator">></span> files <span class="token operator">=</span> upload<span class="token punctuation">.</span><span class="token function">parseRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>FileItem file <span class="token operator">:</span> files<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file<span class="token punctuation">.</span><span class="token function">isFormField</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//如果不是表单元素(Form Field)，说明是上传的文件</span>
+                String fileName <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                file<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>fileName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 将接收到的文件写入path目录下</span>
+                file<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token string">"jsp1"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>运行结果：</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713162556331.png" alt="运行结果"></p>
 <p><img src="/2022/07/12/springmvc04/image-20220713162611197.png" alt="运行结果"></p>
 <p>或者用Postman上传一个文件夹</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713163119647.png" alt="用Postman上传一个文件夹"></p>
-<h3 id="使用UUID来产生不会重名的文件"><a href="#使用UUID来产生不会重名的文件" class="headerlink" title="使用UUID来产生不会重名的文件"></a>使用UUID来产生不会重名的文件</h3><pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping("/test1")
-public String test1(HttpServletRequest request) throws Exception {
-    System.out.println("test1()");
-    // 用于保存文件的文件夹
-    String path = request.getSession().getServletContext().getRealPath("/upload/");
-    File dir = new File(path);
-    if (!dir.exists()){ // 如果文件夹不存在，创建
-        dir.mkdir();
+<h3 id="使用UUID来产生不会重名的文件"><a href="#使用UUID来产生不会重名的文件" class="headerlink" title="使用UUID来产生不会重名的文件"></a>使用UUID来产生不会重名的文件</h3><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test1"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">test1</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test1()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 用于保存文件的文件夹</span>
+    String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"/upload/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    File dir <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dir<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 如果文件夹不存在，创建</span>
+        dir<span class="token punctuation">.</span><span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    }
-    // 从request中分离出file，挨个保存
-    DiskFileItemFactory factory = new DiskFileItemFactory();
-    ServletFileUpload upload = new ServletFileUpload(factory);
-    List<FileItem> files = upload.parseRequest(request);
-    for (FileItem file : files)
-    {
-        if (!file.isFormField()){//如果不是表单元素(Form Field)，说明是上传的文件
-            String fileName = file.getName();
-            // 使用UUID
-            String uuid = UUID.randomUUID().toString().replace("-","");
-            fileName = uuid + "_" + fileName;
-            file.write(new File(path,fileName)); // 将接收到的文件写入path目录下
-            file.delete();
-        }
-    }
-    return "jsp1";
-}
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 从request中分离出file，挨个保存</span>
+    DiskFileItemFactory factory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DiskFileItemFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ServletFileUpload upload <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServletFileUpload</span><span class="token punctuation">(</span>factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    List<span class="token operator">&lt;</span>FileItem<span class="token operator">></span> files <span class="token operator">=</span> upload<span class="token punctuation">.</span><span class="token function">parseRequest</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>FileItem file <span class="token operator">:</span> files<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file<span class="token punctuation">.</span><span class="token function">isFormField</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//如果不是表单元素(Form Field)，说明是上传的文件</span>
+            String fileName <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 使用UUID</span>
+            String uuid <span class="token operator">=</span> UUID<span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fileName <span class="token operator">=</span> uuid <span class="token operator">+</span> <span class="token string">"_"</span> <span class="token operator">+</span> fileName<span class="token punctuation">;</span>
+            file<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>fileName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 将接收到的文件写入path目录下</span>
+            file<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token string">"jsp1"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><img src="/2022/07/12/springmvc04/image-20220713180248991.png" alt="结果"></p>
 <p>在上面原生的JAVAWEB上传文件中，具体流程：</p>
@@ -723,110 +722,110 @@ public String test1(HttpServletRequest request) throws Exception {
 <p><img src="/2022/07/12/springmvc04/image-20220713180957856.png" alt="流程2"></p>
 <p>具体代码如下：</p>
 <p>SpringMVC.xml</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipartResolver<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.web.multipart.commons.CommonsMultipartResolver<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>创建对应的Controller类用于处理接收的数据</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping("/test2")
-public String test2(HttpServletRequest request, MultipartFile upload) throws Exception {
-    System.out.println("test2()");
-    // 用于保存文件的文件夹
-    String path = request.getSession().getServletContext().getRealPath("/upload/");
-    File dir = new File(path);
-    if (!dir.exists()){ // 如果文件夹不存在，创建
-        dir.mkdir();
-    }
-    // 说明不是Form Field , 说明是上传的文件
-    // 使用UUID
-    String filename = upload.getOriginalFilename();
-    String uuid = UUID.randomUUID().toString().replace("-", "");
-    filename = uuid + "_" + filename;
-    // 将接收到的文件写入path目录下
-    upload.transferTo(new File(path,filename));
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test2"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">test2</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> MultipartFile upload<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 用于保存文件的文件夹</span>
+    String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"/upload/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    File dir <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dir<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 如果文件夹不存在，创建</span>
+        dir<span class="token punctuation">.</span><span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 说明不是Form Field , 说明是上传的文件</span>
+    <span class="token comment" spellcheck="true">// 使用UUID</span>
+    String filename <span class="token operator">=</span> upload<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    String uuid <span class="token operator">=</span> UUID<span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    filename <span class="token operator">=</span> uuid <span class="token operator">+</span> <span class="token string">"_"</span> <span class="token operator">+</span> filename<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 将接收到的文件写入path目录下</span>
+    upload<span class="token punctuation">.</span><span class="token function">transferTo</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>filename<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 
-    return "jsp1";
-}
+    <span class="token keyword">return</span> <span class="token string">"jsp1"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p><img src="/2022/07/12/springmvc04/image-20220713183715610.png" alt="结果"></p>
 <p>同理，以上操作用Postman也是可以完成的</p>
 <h2 id="文件上传（多个文件）"><a href="#文件上传（多个文件）" class="headerlink" title="文件上传（多个文件）"></a>文件上传（多个文件）</h2><h3 id="Servlet原生的方法-1"><a href="#Servlet原生的方法-1" class="headerlink" title="Servlet原生的方法"></a>Servlet原生的方法</h3><p>取消SpringMVC.xml的multipartResolver绑定</p>
 <p>在form表单的属性上添加multiple属性</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"> <form action="/SpringMVCDemo01_war_exploded/uploader/test1" method="post" enctype="multipart/form-data">
-        Select file:<input type="file" multiple="multiple"  name="upfile"/>
-        <input type="submit" value="upload"/>
-    </form>
+<pre class=" language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/SpringMVCDemo01_war_exploded/uploader/test1<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipart/form-data<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        Select file:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">multiple</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multiple<span class="token punctuation">"</span></span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upfile<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upload<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>上传文件：</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713191212424.png" alt="上传文件"></p>
 <p>上传成功：</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713191348997.png" alt="上传到服务器了"></p>
 <h4 id="SpringMVC的方法"><a href="#SpringMVC的方法" class="headerlink" title="SpringMVC的方法"></a>SpringMVC的方法</h4><p>SpringMVC就不需要这么麻烦了，只需要在原来test2方法的基础上，将MultipartFile改为MultipartFile[]数组进行读取文件就可以了</p>
-<pre class=" language-lang-java"><code class="language-lang-java">@RequestMapping("/test3")
-public String test3(HttpServletRequest request,@RequestParam("upfile") MultipartFile[] files) throws Exception {
-    System.out.println("test3()");
-    // 用于保存文件的文件夹
-    String path = request.getSession().getServletContext().getRealPath("/upload/");
-    File dir = new File(path);
-    if (!dir.exists()){ // 如果文件夹不存在，创建
-        dir.mkdir();
-    }
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test3"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">test3</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span><span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"upfile"</span><span class="token punctuation">)</span> MultipartFile<span class="token punctuation">[</span><span class="token punctuation">]</span> files<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test3()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 用于保存文件的文件夹</span>
+    String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"/upload/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    File dir <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dir<span class="token punctuation">.</span><span class="token function">exists</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 如果文件夹不存在，创建</span>
+        dir<span class="token punctuation">.</span><span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    // 说明不是Form Field , 说明是上传的文件
-    // 使用UUID
-    for (MultipartFile file : files) {
-        String filename = file.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        filename = uuid + "_" + filename;
-        // 将接收到的文件写入path目录下
-        file.transferTo(new File(path,filename));
+    <span class="token comment" spellcheck="true">// 说明不是Form Field , 说明是上传的文件</span>
+    <span class="token comment" spellcheck="true">// 使用UUID</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>MultipartFile file <span class="token operator">:</span> files<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        String filename <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String uuid <span class="token operator">=</span> UUID<span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        filename <span class="token operator">=</span> uuid <span class="token operator">+</span> <span class="token string">"_"</span> <span class="token operator">+</span> filename<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 将接收到的文件写入path目录下</span>
+        file<span class="token punctuation">.</span><span class="token function">transferTo</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>filename<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    }
-    return "jsp1";
-}
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token string">"jsp1"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <h2 id="SpringMVC跨服务器上传文件"><a href="#SpringMVC跨服务器上传文件" class="headerlink" title="SpringMVC跨服务器上传文件"></a>SpringMVC跨服务器上传文件</h2><p>通过一个tomcat服务器（Demo01）将文件写到另一个tomcat文件服务器(FileServer)上</p>
 <p>使用调用Jersey客户端API来实现这种RestFul风格的Web服务</p>
 <p>pom.xml导入jar包</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><dependency>
-    <groupId>com.sun.jersey</groupId>
-    <artifactId>jersey-core</artifactId>
-    <version>1.19.4</version>
-</dependency>
-<dependency>
-    <groupId>com.sun.jersey</groupId>
-    <artifactId>jersey-client</artifactId>
-    <version>1.19.4</version>
-</dependency>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.sun.jersey<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jersey-core<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.19.4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.sun.jersey<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jersey-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.19.4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 </code></pre>
 <h3 id="利用Jersey客户端的RESTful-Java客户端"><a href="#利用Jersey客户端的RESTful-Java客户端" class="headerlink" title="利用Jersey客户端的RESTful Java客户端"></a>利用Jersey客户端的RESTful Java客户端</h3><p>创建一个客户类</p>
-<pre class=" language-lang-java"><code class="language-lang-java">Client client = Client.create(); // 配置客户端
+<pre class=" language-java"><code class="language-java">Client client <span class="token operator">=</span> Client<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 配置客户端</span>
 </code></pre>
 <p>说明：Client 类是创建一个 RESTful Web Service 客户端的主要配置点。你可以使用它来配置<strong>不同的客户端属性和功能</strong>，并且指出使用哪个资源提供者。创建一个 Client 类的实例是一个比较昂贵的操作，所以尽量避免创建一些不需要的客户端实例。<br>比较好的方式是尽可能地复用已经存在的实例。</p>
 <p>2.当创建完 Client 类实例后，则可使用它。无论如何，在发出请求前，你需创建一个 Web Resource 对象来封装客户端所需要的 Web 资源。Web 资源创建了一个 WebResponse 对象：</p>
-<pre class=" language-lang-java"><code class="language-lang-java">import com.sun.jersey .api.client.WebResource;
-Web Resource webResource = c.resource("http://example.com/base");
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> com<span class="token punctuation">.</span>sun<span class="token punctuation">.</span>jersey <span class="token punctuation">.</span>api<span class="token punctuation">.</span>client<span class="token punctuation">.</span>WebResource<span class="token punctuation">;</span>
+Web Resource webResource <span class="token operator">=</span> c<span class="token punctuation">.</span><span class="token function">resource</span><span class="token punctuation">(</span><span class="token string">"http://example.com/base"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>说明：通过使用 WebResource 对象来创建要发送到 Web 资源的请求，以及处理从 Web 资源返回的响应。<br>例如，你可以使用 WebResource 对象来发送 <strong>HTTP GET、<font color="red">PUT</font>、POST 以及 DELETE</strong> 请求。</p>
 <p>一个tomcat接收文件并把该文件发送到另一个tomcat服务器的具体实例：</p>
-<pre class=" language-lang-java"><code class="language-lang-java">    @RequestMapping("/test4")
-    public String test4(HttpServletRequest request, MultipartFile upfile) throws Exception {
-        System.out.println("test4()");
-        // 用于保存文件的文件夹
-        String path = "http://localhost:8081/fileServer_war/uploads";
-        // 说明不是Form Field , 说明是上传的文件
-        // 使用UUID
-        String filename = upfile.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        filename = uuid + "_" + filename;
-        // 将接收到的文件写入FileServer 这个客户端
-        Client client = Client.create(); // 配置客户端
-        WebResource webResource = client.resource(path + filename); //找到另一台服务器的path下的文件目录，并放入资源
-        webResource.put(upfile.getBytes());//put请求
-        return "jsp1";
-    }
+<pre class=" language-java"><code class="language-java">    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test4"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">test4</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> MultipartFile upfile<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test4()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 用于保存文件的文件夹</span>
+        String path <span class="token operator">=</span> <span class="token string">"http://localhost:8081/fileServer_war/uploads"</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 说明不是Form Field , 说明是上传的文件</span>
+        <span class="token comment" spellcheck="true">// 使用UUID</span>
+        String filename <span class="token operator">=</span> upfile<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String uuid <span class="token operator">=</span> UUID<span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        filename <span class="token operator">=</span> uuid <span class="token operator">+</span> <span class="token string">"_"</span> <span class="token operator">+</span> filename<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 将接收到的文件写入FileServer 这个客户端</span>
+        Client client <span class="token operator">=</span> Client<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 配置客户端</span>
+        WebResource webResource <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">resource</span><span class="token punctuation">(</span>path <span class="token operator">+</span> filename<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//找到另一台服务器的path下的文件目录，并放入资源</span>
+        webResource<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>upfile<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//put请求</span>
+        <span class="token keyword">return</span> <span class="token string">"jsp1"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 </code></pre>
 <p>index.jsp</p>
-<pre class=" language-lang-jsp"><code class="language-lang-jsp"><form action="/SpringMVCDemo01_war_exploded/uploader/test4" method="post" enctype="multipart/form-data">
+<pre class=" language-jsp"><code class="language-jsp"><form action="/SpringMVCDemo01_war_exploded/uploader/test4" method="post" enctype="multipart/form-data">
         Select file:<input type="file" multiple="multiple"  name="upfile"/>
         <input type="submit" value="upload"/>
 </form>
@@ -834,30 +833,30 @@ Web Resource webResource = c.resource("http://example.com/base");
 <p>但是到这里服务器报了一个405错误，表明fileServer不支持这个PUT请求。</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713213013911.png" alt="error405"></p>
 <p>原因：我们一般的网页是只读的，如果要配成可写的状态，需要在web.xml配置</p>
-<pre class=" language-lang-xml"><code class="language-lang-xml"><!DOCTYPE web-app PUBLIC
+<pre class=" language-xml"><code class="language-xml"><span class="token doctype">&lt;!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+ "http://java.sun.com/dtd/web-app_2_3.dtd" ></span>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-    <servlet-name>default</servlet-name>
-    <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
-    <init-param>
-      <param-name>debug</param-name>
-      <param-value>0</param-value>
-    </init-param>
-    <init-param>
-      <param-name>readonly</param-name>
-      <param-value>false</param-value><!--把网页的默认只读改为false-->
-    </init-param>
-    <init-param>
-      <param-name>listings</param-name>
-      <param-value>false</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-</web-app>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>display-name</span><span class="token punctuation">></span></span>Archetype Created Web Application<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>display-name</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>default<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>org.apache.catalina.servlets.DefaultServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>init-param</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-name</span><span class="token punctuation">></span></span>debug<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-name</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-value</span><span class="token punctuation">></span></span>0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-value</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>init-param</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>init-param</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-name</span><span class="token punctuation">></span></span>readonly<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-name</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-value</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-value</span><span class="token punctuation">></span></span><span class="token comment" spellcheck="true">&lt;!--把网页的默认只读改为false--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>init-param</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>init-param</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-name</span><span class="token punctuation">></span></span>listings<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-name</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-value</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-value</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>init-param</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>load-on-startup</span><span class="token punctuation">></span></span>1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>load-on-startup</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>web-app</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>此时又会出现409错误。。。</p>
 <p><img src="/2022/07/12/springmvc04/image-20220713222253525.png" alt="错误409"></p>
