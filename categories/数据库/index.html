@@ -605,21 +605,19 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/02/redis01-rdb/">
+                    <a href="/2022/09/02/redis02-rep/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Redis的持久化">
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis 主从复制">
                             
-                            <span class="card-title">Redis的持久化</span>
+                            <span class="card-title">Redis 主从复制</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Redis的持久化众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。
-
-为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从内存
+                                Redis 主从复制Redis高可用的方案包括持久化、主从复制（及读写分离）、哨兵和集群。其中持久化侧重解决的是Redis数据的单机备份问题（从内存到硬盘的备份）；而主从复制则侧重解决数据的多机热备。此外，主从复制还可以实现负载均衡和故障恢
                             
                         </div>
                         <div class="publish-info">
@@ -653,19 +651,21 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/02/redis02-rep/">
+                    <a href="/2022/09/02/redis01-rdb/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis 主从复制">
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Redis的持久化">
                             
-                            <span class="card-title">Redis 主从复制</span>
+                            <span class="card-title">Redis的持久化</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Redis 主从复制Redis高可用的方案包括持久化、主从复制（及读写分离）、哨兵和集群。其中持久化侧重解决的是Redis数据的单机备份问题（从内存到硬盘的备份）；而主从复制则侧重解决数据的多机热备。此外，主从复制还可以实现负载均衡和故障恢
+                                Redis的持久化众所周知，Redis作为一个键值对内存数据库(NoSQL)，数据都存储在内存当中，在处理客户端请求时，所有操作都在内存当中进行。
+
+为了避免内存中数据丢失，Redis提供了对持久化的支持，我们可以选择不同的方式将数据从内存
                             
                         </div>
                         <div class="publish-info">
