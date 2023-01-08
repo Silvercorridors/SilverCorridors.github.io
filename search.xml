@@ -4,11 +4,61 @@
   
     
     <entry>
+      <title>微服务拆分方法论</title>
+      <link href="/2023/01/08/ms-01/"/>
+      <url>/2023/01/08/ms-01/</url>
+      
+        <content type="html"><![CDATA[<h1 id="微服务拆分"><a href="#微服务拆分" class="headerlink" title="微服务拆分"></a>微服务拆分</h1><h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="领域驱动设计-Domain-driven-design"><a href="#领域驱动设计-Domain-driven-design" class="headerlink" title="领域驱动设计 (Domain-driven design)"></a>领域驱动设计 (Domain-driven design)</h3><h4 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h4><p>将所有业务逻辑内聚到业务领域（domain）层，将设计和开发的关注点聚焦到业务领域。</p><h4 id="分层架构"><a href="#分层架构" class="headerlink" title="分层架构"></a>分层架构</h4><p><img src="/794f64b902214ba1b58d567f56ea9590tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.png" alt="img"></p><p>大的层次上分为四层</p><p>api：用户界面层(或表示层)，向外提供服务，负责向用户显示信息和解释用户指令。</p><p>app：应用层，包含应用服务，负责用例流程调度，事务控制。不包含业务规则或者知识，而只为下一层中的领域对象协调 任务，分配工作。</p><p>domain：领域层，包含领域对象和领域服务，专注核心业务，负责表达业务概念，业务状态信息以及业务规则。</p><p>infra：基础设施层，提供数据持久化、防腐层实现、第三方库、消息等。为上面各层提供通用的技术能力:为应用层传递消息，为领域层提供持久化机制， 为用户界面层绘制屏幕组件，等等。</p><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h4><p>强调“重视设计、建模”，学习曲线高，概念较多（例如问题空间、限界上下文、聚合根实体、VO、Service、工厂）。目前在国内不是主流，不过变得越来越流行。</p><h4 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a><strong>推荐书籍</strong></h4><ul><li>​    DDD开山鼻祖——《领域驱动设计》 （主要是理论，实现比较少）</li><li>​    《实现领域驱动设计》（大量代码演示）</li></ul><h4 id="数据驱动和领域驱动对比"><a href="#数据驱动和领域驱动对比" class="headerlink" title="数据驱动和领域驱动对比"></a>数据驱动和领域驱动对比</h4><p><img src="/2023/01/08/ms-01/fefd7260f2f84ff1afd512ad6cd89179tplv-k3u1fbpfcp-zoom-in-crop-mark4536000.webp" alt="1"></p><p>领域驱动设计与之前的系统设计开发过程有很大的不同：</p><ol><li>就在于系统的参与角色，产品、开发、测试等，需要形成一套通用语言； </li><li>在于方案设计不再把db设计放在一个核心问题去解决，更加专注于业务模型本身，进行领域、业务聚合的设计，领域层的聚合及实体才是整个系统的核心内容；</li><li>真正的面向对象编程，由过程式的事务脚本方式，转变为真正的面向对象。</li></ol><h2 id="微服务拆分-合理的粒度"><a href="#微服务拆分-合理的粒度" class="headerlink" title="微服务拆分-合理的粒度"></a>微服务拆分-合理的粒度</h2><ul><li>良好的满足业务</li><li>幸福感</li><li><p>增量迭代</p></li><li><p><strong>持续进化</strong></p></li></ul><h2 id="个人心得"><a href="#个人心得" class="headerlink" title="个人心得"></a>个人心得</h2><p>在我看来，微服务拆分分为两个维度：</p><p><strong>职责划分：</strong>例如订单服务应该只关注订单相关的业务，其他的业务不应该放到这里。</p><p><strong>通用性划分：</strong>把一些通用功能做成微服务，例如：用户中心、消息中心等等</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html">领域驱动设计在互联网业务开发中的实践</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 架构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微服务 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Redis cluster02：深入集群</title>
+      <link href="/2022/11/01/redis05-cluster02/"/>
+      <url>/2022/11/01/redis05-cluster02/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Redis-cluster02：深入集群"><a href="#Redis-cluster02：深入集群" class="headerlink" title="Redis cluster02：深入集群"></a>Redis cluster02：深入集群</h1><h2 id="集群通信"><a href="#集群通信" class="headerlink" title="集群通信"></a>集群通信</h2><ul><li>在分布式存储中需要<strong>提供维护节点元数据信息的机制，所谓元数据是指：节点负责哪些数据，是否出现故障等状态信息</strong></li><li>Redis集群采用P2P的 Gossip（流言）协议， Gossip协议工作原理就是节点彼此不断通信交换信息，一段时间后所有的节 点都会知道集群完整的信息，这种方式类似流言传播，如下图所示：</li></ul><p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png" alt=""></p><h2 id="集群伸缩"><a href="#集群伸缩" class="headerlink" title="集群伸缩"></a>集群伸缩</h2><h3 id="伸缩原理"><a href="#伸缩原理" class="headerlink" title="伸缩原理"></a>伸缩原理</h3><p>​       Redis集群提供了灵活的节点扩容和收缩方案。 在不影响集群对外服务的情况下， 可以为集群添加节点进行扩容也可以下线部分节点进行缩容， 如下图所示：</p><p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184.webp" alt=""></p><p>​      从上图看出， Redis集群可以实现对节点的灵活上下线控制。 其中原理可抽象为<strong>槽和对应数据在不同节点之间灵活移动</strong>。 首先来看我们之前搭建的集群槽和数据与节点的对应关系， 如下图所示：</p><p><img src="/2022/11/01/redis05-cluster02/resize,m_fixed,w_1184-16673182238317.webp" alt=""></p><p>​       三个主节点分别维护自己负责的槽和对应的数据， 如果希望加入1个节点实现<strong>集群扩容</strong>时， 需要通过相关命令把一部分槽和数据迁移给新节点， 如下图所示：<img src="/resize,m_fixed,w_1184-166731824884610.webp" alt="Redis集群--Cluster--集群伸缩--过程/原理_redis_03"></p><p> 图中每个节点把一部分槽和数据迁移到新的节点6385， 每个节点负责的槽和数据相比之前变少了从而达到了集群扩容的目的。 这里我们故意忽略了槽和数据在节点之间迁移的细节， 目的是想让读者重点关注在上层槽和节点分配上来， 理解集群的水平伸缩的上层原理： 集群伸缩=槽和数据在节点之间的移动， 下面将介绍集群扩容和收缩的细节。</p><h3 id="扩容集群"><a href="#扩容集群" class="headerlink" title="扩容集群"></a>扩容集群</h3><p>扩容是分布式存储最常见的需求，Redis集群扩容操作可分为如下步骤：</p><ol><li>准备节点</li><li>加入集群</li><li>迁移槽和数据</li></ol><p>以下来具体演示：</p><h4 id="准备新节点"><a href="#准备新节点" class="headerlink" title="准备新节点"></a>准备新节点</h4><pre class=" language-lang-markdown"><code class="language-lang-markdown">新节点要求：    集群模式    配置和其他节点统一    启动后是孤儿节点</code></pre><p>具体命令：</p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-server conf/redis-6385.confredis-server conf/redis-6386.conf</code></pre><p>此时集群状态</p><p><img src="/2022/11/01/redis05-cluster02/image-20221102000435398.png" alt=""></p><h4 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h4><p>新节点依然采用cluster meet命令加入到现有集群中。在集群内任意节点执行cluster meet命令让6385和6386节点加入进来</p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -p 6379 cluster meet 127.0.0.1 6385redis-cli -p 6379 cluster meet 127.0.0.1 6386</code></pre><p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731919573013.png" alt=""></p><ul><li>集群内新旧节点<strong>经过一段时间的ping/pong消息通信之后</strong>，所有节点会发现新节点并将它们的状态保存到本地</li></ul><h4 id="迁移槽和数据"><a href="#迁移槽和数据" class="headerlink" title="迁移槽和数据"></a>迁移槽和数据</h4><p><strong>槽是Redis集群管理数据的基本单位，首先需要为新节点制定槽的迁移计划，确定原有节点的哪些槽需要迁移到新节点。迁移计划需要确保每个节点负责相似数量的槽，从而保证各节点的数据均匀</strong>。计划图如下：</p><p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731928527316.png" alt=""></p><p>数据迁移过程是逐个槽进行的</p><p><img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166731933198419.png" alt=""></p><p>具体流程图：</p><p><img src="/2022/11/01/redis05-cluster02/image-20221102003015624.png" alt=""></p><p>伪代码（通过pipeline来传递数据）：</p><p><img src="/2022/11/01/redis05-cluster02/image-20221102003138822.png" alt="image-20221102003138822"></p><p>或者使用 redis-trib.rb 中的reshard完成槽的分配</p><h3 id="缩容集群"><a href="#缩容集群" class="headerlink" title="缩容集群"></a>缩容集群</h3><p>流程说明：<br>1）首先需要确定下线节点是否有负责的槽，如果是，需要把槽迁移到其他节点，保证节点下线后整个集群槽节点映射的完整性<br>2）当下线节点不再负责槽或者本身是从节点时，就可以通知集群内其他节点忘记下线节点，<strong>当所有的节点忘记该节点后可以正常关闭</strong></p><p>流程图如下：<img src="/2022/11/01/redis05-cluster02/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166732190877522.png" alt=""></p><h4 id="下线槽"><a href="#下线槽" class="headerlink" title="下线槽"></a><strong>下线槽</strong></h4><p>迁移命令同样可以使用redis-trib的reshard命令</p><p><img src="/2022/11/01/redis05-cluster02/image-20221102010017215.png" alt=""></p><h4 id="忘记槽"><a href="#忘记槽" class="headerlink" title="忘记槽"></a>忘记槽</h4><p>命令：</p><pre class=" language-lang-bash"><code class="language-lang-bash">cluster forget {downNodeId}</code></pre><p><img src="/2022/11/01/redis05-cluster02/image-20221102010038849.png" alt=""></p><p>注意：对于主从节点，要先下线从节点再下线主节点</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/Shangxingya/article/details/111575571">Redis~集群(分布理论、一致性哈希分区、虚拟槽分区、节点握手、集群通信、集群伸缩、请求路由、故障转移、集群维护)</a></p><p><a href="https://blog.51cto.com/knifeedge/5135892"><strong>Redis集群—Cluster—集群伸缩—过程/原理</strong></a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis cluster01：初识</title>
       <link href="/2022/10/11/redis04-cluster/"/>
       <url>/2022/10/11/redis04-cluster/</url>
       
-        <content type="html"><![CDATA[<h1 id="Redis-集群-cluster"><a href="#Redis-集群-cluster" class="headerlink" title="Redis 集群(cluster)"></a>Redis 集群(cluster)</h1><p>Redis 集群是一个提供在<strong>多个Redis间节点间共享数据</strong>的程序集。</p><p>Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.</p><p>Redis 集群通过分区来提供<strong>一定程度的可用性</strong>,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:</p><ul><li>自动分割数据到不同的节点上。</li><li>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</li></ul><h2 id="数据分布概论"><a href="#数据分布概论" class="headerlink" title="数据分布概论"></a>数据分布概论</h2><p>先上一个图直观理解一下数据分区</p><p><img src="/2022/10/11/redis04-cluster/image-20221018174517497.png" alt=""></p><p>分区规则包括：<strong>顺序分布</strong>和<strong>哈希分布</strong></p><p><img src="/2022/10/11/redis04-cluster/image-20221018175200340.png" alt=""></p><p>两种分布方式：</p><div class="table-container"><table><thead><tr><th style="text-align:center">分布方式</th><th style="text-align:center">特点</th><th style="text-align:center">典型产品</th></tr></thead><tbody><tr><td style="text-align:center">哈希分布</td><td style="text-align:center">数据分散度高<br>键值分布业务无关<br>无法顺序访问<br>支持批量操作</td><td style="text-align:center">一致性哈希Memcache<br>redis Cluster<br>其他缓存产品</td></tr><tr><td style="text-align:center">顺序分布</td><td style="text-align:center">数据分散度易倾斜<br>键值业务相关<br>可顺序访问<br>支持批量操作</td><td style="text-align:center">BigTable<br>HBase</td></tr></tbody></table></div><p>下面主要介绍一些<strong>hash分区</strong>的具体规则:</p><h3 id="Hash分区"><a href="#Hash分区" class="headerlink" title="Hash分区"></a>Hash分区</h3><h4 id="节点取余分区"><a href="#节点取余分区" class="headerlink" title="节点取余分区"></a>节点取余分区</h4><p>按照 <strong>数据节点数mod分区数</strong> 进行分区操作：</p><p><img src="/2022/10/11/redis04-cluster/image-20221018180848477.png" alt=""></p><p>缺点：数据迁移时不容易操作，迁移量比较大，可通过多倍扩容降低迁移量。</p><h4 id="一致性分布哈希算法"><a href="#一致性分布哈希算法" class="headerlink" title="一致性分布哈希算法"></a>一致性分布哈希算法</h4><p>具体设计：</p><p><strong>1.环形hash空间</strong></p><p>按照常用的<strong>hash算法</strong>来将<strong>对应的key</strong>哈希到一个具有<script type="math/tex">2^{32}</script>次方个节点的空间中，即<script type="math/tex">0 \sim  (2^{32})-1</script>的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。(节点的个数可以自定义，整个hash环我们可以用TreeMap来实现，因为treeMap是排序的，我们刚好可以利用上)</p><p><img src="/v2-0a21bff27b5f037748292aa338965d65_720w.jpeg" alt="img"></p><p><strong>2.映射服务器节点</strong></p><p>将各个服务器使用Hash进行一个哈希，具体可以选择服务器的ip或唯一主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置。假设我们将四台服务器使用ip地址哈希后在环空间的位置如下：</p><p><img src="/2022/10/11/redis04-cluster/v2-252cc4ed5bbb07e5e1e3b27c5eda0d23_720w.jpeg" alt=""></p><p><strong>3.映射数据</strong></p><p>现在我们将<code>objectA、objectB、objectC、objectD</code>四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上,然后从数据所在位置<strong>沿环顺时针</strong>“行走”，第一台遇到的服务器就是其应该定位到的服务器。</p><p><img src="/2022/10/11/redis04-cluster/v2-0fb33fe30c7a05eee2abe3784a42f98a_720w-16660901196037.webp" alt="img"></p><p><strong>4.扩容服务器的删除与添加</strong></p><p><strong>删除：</strong>如果此时NodeC宕机了，此时Object A、B、D不会受到影响，只有Object C会重新分配到Node D上面去，而其他数据对象不会发生变化</p><p><strong>添加：</strong>如果在环境中新增一台服务器Node X，通过hash算法将Node X映射到环中，通过按顺时针迁移的规则，那么Object C被迁移到了Node X中，其它对象还保持这原有的存储位置。通过对节点的添加和删除的分析，一致性哈希算法在保持了单调性的同时，还是数据的迁移达到了最小，这样的算法对分布式集群来说是非常合适的，避免了大量数据迁移，减小了服务器的的压力。</p><p><img src="/2022/10/11/redis04-cluster/v2-bf7daae4aa145478dd55fc339ee57ec7_720w.webp" alt="img"></p><p><strong>这种方式相比节点取余最大的好处在于加入和删除节点只影响哈希环中相邻的节点，对其他节点无影响</strong>。</p><p><strong>但一致性哈希分区存在问题：</strong></p><p>1.当服务器节点比较少的时候，会出现一个问题，就是此时必然造成大量数据集中到一个节点上面，极少数数据集中到另外的节点上面。</p><p><img src="/2022/10/11/redis04-cluster/v2-0ce62cf40bcc5f980cafe285dafe0633_720w.jpeg" alt=""></p><p>为了解决这种数据倾斜问题，一致性哈希算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以<strong>先确定每个物理节点关联的虚拟节点数量，然后在ip或者主机名后面增加编号。例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点：</strong></p><p><img src="/2022/10/11/redis04-cluster/v2-5d9cdea01cb4b44162aa41980345e8ac_720w.jpeg" alt="img"></p><p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。每个物理节点关联的虚拟节点数量就根据具体的生产环境情况在确定。</p><p>2.因为redis是一个高速的存储服务器 , 即使使用一致性hash在扩容的时候还是会导致一个节点的部分时间不可用</p><p>所以采用虚拟节点要增加或者减少服务器的时候就可以可以将原来的虚拟节点变成一个真的节点, 将原来由这个虚拟节点映射过来的数据直接复制到新节点上, 就省去了rehash的操作</p><h4 id="虚拟槽分区（redis-cluster使用）"><a href="#虚拟槽分区（redis-cluster使用）" class="headerlink" title="虚拟槽分区（redis cluster使用）"></a>虚拟槽分区（redis cluster使用）</h4><ul><li>正因为一致性哈希分区的这些缺点，一些分布式系统（redis cluster）采用虚拟槽对一致性哈希进行改造</li><li><strong>其实本质上虚拟槽中的槽就是大量的虚拟节点的抽象化, 将原来的虚拟节点变成一个槽, redis内置是有16383个槽也就是有16383个虚拟节点</strong></li><li>虚拟槽分区巧妙地使用了哈希空间，<strong>使用分散度良好的哈希函数把所有数据映射到一个固定范围的整数集合中，整数定义为槽（slot）</strong>。这个范围 一般远远大于节点数，比如Redis Cluster槽范围是0~16383</li><li><strong>如下图所示</strong>：当前集群有5个节点，每个节点平均大约负责3276个槽</li></ul><p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p><ul><li>由于<strong>采用高质量的哈希算法，每个槽所映射的数据通常比较均匀，将数据平均划分到5个节点进行数据分区, 所以redis使用的就是虚拟槽分区</strong></li><li>采用虚拟槽分区，所有的键根据哈希函数映射到0~16383整数槽内，计算公式：<strong>slot=CRC16（key）&amp;16383</strong>。每一个节点负责维护一部分槽以及槽所映射的键值数据，如下图所示</li></ul><p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166610698378618.png" alt=""></p><p><strong>Redis虚拟槽分区的特点：</strong></p><p>​    1.<strong>解耦数据和节点之间直接关系</strong>, 一致性hash计算方式是<strong>key &amp; 节点个数</strong>, 映射的结果和节点个数有关系, 但是使用hash槽计算方式是 <strong>CRC16(key) % 槽的个数</strong>, 所以就解耦了数据和节点的关系。</p><p>​    2.使用哈希槽的好处就在于可以<strong>方便的添加或移除节点</strong>。</p><ul><li><strong>当需要增加节点时，只需要把其他节点的某些哈希槽挪到新节点就可以了</strong>；</li><li><strong>当需要移除节点时，只需要把移除节点上的哈希槽挪到其他节点就行了</strong>；</li><li><strong>在这一点上，我们以后新增或移除节点的时候不用先停掉所有的 redis 服务甚至不用停到任何一个节点的服务。对应槽的采用直接复制数据过去显然比rehash快很多。</strong></li></ul><p>​    3.节点自身维护槽的映射关系, 不需要客户端和代理服务器进行维护处理</p><h2 id="Redis-集群模式"><a href="#Redis-集群模式" class="headerlink" title="Redis 集群模式"></a>Redis 集群模式</h2><p>1.主从模式，单台服务器即可，无高可用，为1主2从方式</p><p>主节点可读写，从节点只读，数据会从主节点同步至从节点</p><p>2.cluster模式 3.0以上版本支持</p><h2 id="分布式特性"><a href="#分布式特性" class="headerlink" title="分布式特性"></a>分布式特性</h2><p>分布式特性：服务端每个节点<strong>相互通信</strong>，且每个节点<strong>负责读写</strong>。</p><p><img src="/2022/10/11/redis04-cluster/image-20221019004022484.png" alt=""></p><h2 id="redis-cluster架构"><a href="#redis-cluster架构" class="headerlink" title="redis cluster架构"></a>redis cluster架构</h2><p>Redis Cluster 基本架构：Redis Cluster 中有多个主节点，每个主节点都负责进行数据读写操作，并且每个节点之间会进行通信。</p><p>redis cluster是一个去中心化的集群，每个节点都会跟其他节点保持连接，每个节点之间会互相通信。以下是一些基本概念。</p><ul><li>节点：基本节点，完成读写数据</li><li>meet：完成每个节点相互通信的操作</li><li>指派槽：给启动的节点指派槽。当节点收到访问请求时，会根据key来判断要访问的数据是否在槽内。</li><li>复制：每个主节点都有一个从节点。节点之间相互交互。</li></ul><p>要保证高可用，每个主节点都至少有一个从节点，当主节点故障，Cluster 会按照规则实现主备的高可用性，对于节点来说，有一个配置项：cluster-enabled，即是否以集群模式启动。</p><h2 id="Redis-Cluster-部署"><a href="#Redis-Cluster-部署" class="headerlink" title="Redis Cluster 部署"></a>Redis Cluster 部署</h2><h3 id="方式一：原生命令"><a href="#方式一：原生命令" class="headerlink" title="方式一：原生命令"></a>方式一：原生命令</h3><p>1.配置开启节点</p><p>2.meet</p><p>3.指派槽</p><p>4.主从</p><p><strong>Redis cluster 节点主要配置</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">cluster-enabled yes # 表示当前节点为cluster节点cluster-node-timeout 15000 # 故障转移时间，节点超时时间，主观下线时间cluster-config-file "nodes-${port}.conf" # 集群配置文件(节点配置)cluster-require-full-coverage yes # 是否需要集群内所有节点都可以提供服务</code></pre><p><strong>开启节点</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-server redis-7000.conf # 开启端口7000的节点redis-server redis-7001.conf # 开启端口7001的节点redis-server redis-7002.conf # 开启端口7002的节点redis-server redis-7003.conf # 开启端口7003的节点redis-server redis-7004.conf # 开启端口7004的节点redis-server redis-7005.conf # 开启端口7005的节点</code></pre><p><strong>meet实现节点之间的相互通信</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7002redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7003redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005</code></pre><p>此时，所有节点彼此之间都可以相互感知</p><p><strong>分配槽</strong>（0~16383）</p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster addslots [0...5461] # 这里最好用shell实现redis-cli -h 127.0.0.1 -p 7001 cluster addslots [5462...10922]redis-cli -h 127.0.0.1 -p 7002 cluster addslots [10923...16383]</code></pre><p><strong>设置主从</strong>（一主一从）</p><pre class=" language-lang-bash"><code class="language-lang-bash"># 主 7000 从 7003redis-cli -h 127.0.0.1 -p 7003 cluster replicate ${node-id-7000}# 主 7001 从 7004redis-cli -h 127.0.0.1 -p 7004 cluster replicate ${node-id-7001}# 主 7002 从 7005redis-cli -h 127.0.0.1 -p 7005 cluster replicate ${node-id-7002}</code></pre><h3 id="方式二：Ruby环境"><a href="#方式二：Ruby环境" class="headerlink" title="方式二：Ruby环境"></a>方式二：Ruby环境</h3><p>下载ruby环境，参考网上教程</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/98030096">一致性Hash算法详解</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="Redis-集群-cluster"><a href="#Redis-集群-cluster" class="headerlink" title="Redis 集群(cluster)"></a>Redis 集群(cluster)</h1><p>Redis 集群是一个提供在<strong>多个Redis间节点间共享数据</strong>的程序集。</p><p>Redis集群并不支持处理多个keys的命令,因为这需要在不同的节点间移动数据,从而达不到像Redis那样的性能,在高负载的情况下可能会导致不可预料的错误.</p><p>Redis 集群通过分区来提供<strong>一定程度的可用性</strong>,在实际环境中当某个节点宕机或者不可达的情况下继续处理命令. Redis 集群的优势:</p><ul><li>自动分割数据到不同的节点上。</li><li>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</li></ul><h2 id="数据分布概论"><a href="#数据分布概论" class="headerlink" title="数据分布概论"></a>数据分布概论</h2><p>先上一个图直观理解一下数据分区</p><p><img src="/2022/10/11/redis04-cluster/image-20221018174517497.png" alt=""></p><p>分区规则包括：<strong>顺序分布</strong>和<strong>哈希分布</strong></p><p><img src="/2022/10/11/redis04-cluster/image-20221018175200340.png" alt=""></p><p>两种分布方式：</p><div class="table-container"><table><thead><tr><th style="text-align:center">分布方式</th><th style="text-align:center">特点</th><th style="text-align:center">典型产品</th></tr></thead><tbody><tr><td style="text-align:center">哈希分布</td><td style="text-align:center">数据分散度高<br>键值分布业务无关<br>无法顺序访问<br>支持批量操作</td><td style="text-align:center">一致性哈希Memcache<br>redis Cluster<br>其他缓存产品</td></tr><tr><td style="text-align:center">顺序分布</td><td style="text-align:center">数据分散度易倾斜<br>键值业务相关<br>可顺序访问<br>支持批量操作</td><td style="text-align:center">BigTable<br>HBase</td></tr></tbody></table></div><p>下面主要介绍一些<strong>hash分区</strong>的具体规则:</p><h3 id="Hash分区"><a href="#Hash分区" class="headerlink" title="Hash分区"></a>Hash分区</h3><h4 id="节点取余分区"><a href="#节点取余分区" class="headerlink" title="节点取余分区"></a>节点取余分区</h4><p>按照 <strong>数据节点数mod分区数</strong> 进行分区操作：</p><p><img src="/2022/10/11/redis04-cluster/image-20221018180848477.png" alt=""></p><p>缺点：数据迁移时不容易操作，迁移量比较大，可通过多倍扩容降低迁移量。</p><h4 id="一致性分布哈希算法"><a href="#一致性分布哈希算法" class="headerlink" title="一致性分布哈希算法"></a>一致性分布哈希算法</h4><p>具体设计：</p><p><strong>1.环形hash空间</strong></p><p>按照常用的<strong>hash算法</strong>来将<strong>对应的key</strong>哈希到一个具有<script type="math/tex">2^{32}</script>次方个节点的空间中，即<script type="math/tex">0 \sim  (2^{32})-1</script>的数字空间中。现在我们可以将这些数字头尾相连，想象成一个闭合的环形。(节点的个数可以自定义，整个hash环我们可以用TreeMap来实现，因为treeMap是排序的，我们刚好可以利用上)</p><p><img src="/v2-0a21bff27b5f037748292aa338965d65_720w.jpeg" alt="img"></p><p><strong>2.映射服务器节点</strong></p><p>将各个服务器使用Hash进行一个哈希，具体可以选择服务器的ip或唯一主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置。假设我们将四台服务器使用ip地址哈希后在环空间的位置如下：</p><p><img src="/2022/10/11/redis04-cluster/v2-252cc4ed5bbb07e5e1e3b27c5eda0d23_720w.jpeg" alt=""></p><p><strong>3.映射数据</strong></p><p>现在我们将<code>objectA、objectB、objectC、objectD</code>四个对象通过特定的Hash函数计算出对应的key值，然后散列到Hash环上,然后从数据所在位置<strong>沿环顺时针</strong>“行走”，第一台遇到的服务器就是其应该定位到的服务器。</p><p><img src="/2022/10/11/redis04-cluster/v2-0fb33fe30c7a05eee2abe3784a42f98a_720w-16660901196037.webp" alt="img"></p><p><strong>4.扩容服务器的删除与添加</strong></p><p><strong>删除：</strong>如果此时NodeC宕机了，此时Object A、B、D不会受到影响，只有Object C会重新分配到Node D上面去，而其他数据对象不会发生变化</p><p><strong>添加：</strong>如果在环境中新增一台服务器Node X，通过hash算法将Node X映射到环中，通过按顺时针迁移的规则，那么Object C被迁移到了Node X中，其它对象还保持这原有的存储位置。通过对节点的添加和删除的分析，一致性哈希算法在保持了单调性的同时，还是数据的迁移达到了最小，这样的算法对分布式集群来说是非常合适的，避免了大量数据迁移，减小了服务器的的压力。</p><p><img src="/2022/10/11/redis04-cluster/v2-bf7daae4aa145478dd55fc339ee57ec7_720w.webp" alt="img"></p><p><strong>这种方式相比节点取余最大的好处在于加入和删除节点只影响哈希环中相邻的节点，对其他节点无影响</strong>。</p><p><strong>但一致性哈希分区存在问题：</strong></p><p>1.当服务器节点比较少的时候，会出现一个问题，就是此时必然造成大量数据集中到一个节点上面，极少数数据集中到另外的节点上面。</p><p><img src="/2022/10/11/redis04-cluster/v2-0ce62cf40bcc5f980cafe285dafe0633_720w.jpeg" alt=""></p><p>为了解决这种数据倾斜问题，一致性哈希算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以<strong>先确定每个物理节点关联的虚拟节点数量，然后在ip或者主机名后面增加编号。例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点：</strong></p><p><img src="/2022/10/11/redis04-cluster/v2-5d9cdea01cb4b44162aa41980345e8ac_720w.jpeg" alt="img"></p><p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。每个物理节点关联的虚拟节点数量就根据具体的生产环境情况在确定。</p><p>2.因为redis是一个高速的存储服务器 , 即使使用一致性hash在扩容的时候还是会导致一个节点的部分时间不可用</p><p>所以采用虚拟节点要增加或者减少服务器的时候就可以可以将原来的虚拟节点变成一个真的节点, 将原来由这个虚拟节点映射过来的数据直接复制到新节点上, 就省去了rehash的操作</p><h4 id="虚拟槽分区（redis-cluster使用）"><a href="#虚拟槽分区（redis-cluster使用）" class="headerlink" title="虚拟槽分区（redis cluster使用）"></a>虚拟槽分区（redis cluster使用）</h4><ul><li>正因为一致性哈希分区的这些缺点，一些分布式系统（redis cluster）采用虚拟槽对一致性哈希进行改造</li><li><strong>其实本质上虚拟槽中的槽就是大量的虚拟节点的抽象化, 将原来的虚拟节点变成一个槽, redis内置是有16383个槽也就是有16383个虚拟节点</strong></li><li>虚拟槽分区巧妙地使用了哈希空间，<strong>使用分散度良好的哈希函数把所有数据映射到一个固定范围的整数集合中，整数定义为槽（slot）</strong>。这个范围 一般远远大于节点数，比如Redis Cluster槽范围是0~16383</li><li><strong>如下图所示</strong>：当前集群有5个节点，每个节点平均大约负责3276个槽</li></ul><p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p><ul><li>由于<strong>采用高质量的哈希算法，每个槽所映射的数据通常比较均匀，将数据平均划分到5个节点进行数据分区, 所以redis使用的就是虚拟槽分区</strong></li><li>采用虚拟槽分区，所有的键根据哈希函数映射到0~16383整数槽内，计算公式：<strong>slot=CRC16（key）&amp;16383</strong>。每一个节点负责维护一部分槽以及槽所映射的键值数据，如下图所示</li></ul><p><img src="/2022/10/11/redis04-cluster/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1NoYW5neGluZ3lh,size_16,color_FFFFFF,t_70-166610698378618.png" alt=""></p><p><strong>Redis虚拟槽分区的特点：</strong></p><p>​    1.<strong>解耦数据和节点之间直接关系</strong>, 一致性hash计算方式是<strong>key &amp; 节点个数</strong>, 映射的结果和节点个数有关系, 但是使用hash槽计算方式是 <strong>CRC16(key) % 槽的个数</strong>, 所以就解耦了数据和节点的关系。</p><p>​    2.使用哈希槽的好处就在于可以<strong>方便的添加或移除节点</strong>。</p><ul><li><strong>当需要增加节点时，只需要把其他节点的某些哈希槽挪到新节点就可以了</strong>；</li><li><strong>当需要移除节点时，只需要把移除节点上的哈希槽挪到其他节点就行了</strong>；</li><li><strong>在这一点上，我们以后新增或移除节点的时候不用先停掉所有的 redis 服务甚至不用停到任何一个节点的服务。对应槽的采用直接复制数据过去显然比rehash快很多。</strong></li></ul><p>​    3.节点自身维护槽的映射关系, 不需要客户端和代理服务器进行维护处理</p><h2 id="Redis-集群模式"><a href="#Redis-集群模式" class="headerlink" title="Redis 集群模式"></a>Redis 集群模式</h2><p>1.主从模式，单台服务器即可，无高可用，为1主2从方式</p><p>主节点可读写，从节点只读，数据会从主节点同步至从节点</p><p>2.cluster模式 3.0以上版本支持</p><h2 id="分布式特性"><a href="#分布式特性" class="headerlink" title="分布式特性"></a>分布式特性</h2><p>分布式特性：服务端每个节点<strong>相互通信</strong>，且每个节点<strong>负责读写</strong>。</p><p><img src="/2022/10/11/redis04-cluster/image-20221019004022484.png" alt=""></p><h2 id="redis-cluster架构"><a href="#redis-cluster架构" class="headerlink" title="redis cluster架构"></a>redis cluster架构</h2><p>Redis Cluster 基本架构：Redis Cluster 中有多个主节点，每个主节点都负责进行数据读写操作，并且每个节点之间会进行通信。</p><p>redis cluster是一个去中心化的集群，每个节点都会跟其他节点保持连接，每个节点之间会互相通信。以下是一些基本概念。</p><ul><li>节点：基本节点，完成读写数据</li><li>meet：完成每个节点相互通信的操作</li><li>指派槽：给启动的节点指派槽。当节点收到访问请求时，会根据key来判断要访问的数据是否在槽内。</li><li>复制：每个主节点都有一个从节点。节点之间相互交互。</li></ul><p>要保证高可用，每个主节点都至少有一个从节点，当主节点故障，Cluster 会按照规则实现主备的高可用性，对于节点来说，有一个配置项：cluster-enabled，即是否以集群模式启动。</p><h2 id="Redis-Cluster-部署"><a href="#Redis-Cluster-部署" class="headerlink" title="Redis Cluster 部署"></a>Redis Cluster 部署</h2><h3 id="方式一：原生命令"><a href="#方式一：原生命令" class="headerlink" title="方式一：原生命令"></a>方式一：原生命令</h3><p>1.配置开启节点</p><p>2.meet</p><p>3.指派槽</p><p>4.主从</p><p><strong>Redis cluster 节点主要配置</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">cluster-enabled yes # 表示当前节点为cluster节点cluster-node-timeout 15000 # 故障转移时间，节点超时时间，主观下线时间cluster-config-file "nodes-${port}.conf" # 集群配置文件(节点配置)cluster-require-full-coverage yes # 是否需要集群内所有节点都可以提供服务</code></pre><p><strong>开启节点</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-server redis-7000.conf # 开启端口7000的节点redis-server redis-7001.conf # 开启端口7001的节点redis-server redis-7002.conf # 开启端口7002的节点redis-server redis-7003.conf # 开启端口7003的节点redis-server redis-7004.conf # 开启端口7004的节点redis-server redis-7005.conf # 开启端口7005的节点</code></pre><p><strong>meet实现节点之间的相互通信</strong></p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7002redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7003redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005</code></pre><p>此时，所有节点彼此之间都可以相互感知</p><p><strong>分配槽</strong>（0~16383）</p><pre class=" language-lang-bash"><code class="language-lang-bash">redis-cli -h 127.0.0.1 -p 7000 cluster addslots [0...5461] # 这里最好用shell实现redis-cli -h 127.0.0.1 -p 7001 cluster addslots [5462...10922]redis-cli -h 127.0.0.1 -p 7002 cluster addslots [10923...16383]</code></pre><p><strong>设置主从</strong>（一主一从）</p><pre class=" language-lang-bash"><code class="language-lang-bash"># 主 7000 从 7003redis-cli -h 127.0.0.1 -p 7003 cluster replicate ${node-id-7000}# 主 7001 从 7004redis-cli -h 127.0.0.1 -p 7004 cluster replicate ${node-id-7001}# 主 7002 从 7005redis-cli -h 127.0.0.1 -p 7005 cluster replicate ${node-id-7002}</code></pre><h3 id="方式二：Ruby环境"><a href="#方式二：Ruby环境" class="headerlink" title="方式二：Ruby环境"></a><del>方式二：Ruby环境</del></h3><p><del>下载ruby环境，参考网上教程</del></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/98030096">一致性Hash算法详解</a></p>]]></content>
       
       
       <categories>
@@ -305,7 +355,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -357,7 +407,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -382,7 +432,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -434,7 +484,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -459,7 +509,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -484,7 +534,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -509,7 +559,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -534,7 +584,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -559,7 +609,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -584,7 +634,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -609,7 +659,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -634,7 +684,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -765,7 +815,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -790,7 +840,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -815,7 +865,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -840,7 +890,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> Spring </category>
           
       </categories>
       
@@ -892,7 +942,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 计算机基础 </category>
           
       </categories>
       
@@ -973,7 +1023,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 计算机基础 </category>
           
       </categories>
       
@@ -1052,7 +1102,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1079,16 +1129,16 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 数据库 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> Java </tag>
+            
+            <tag> MySQL </tag>
             
         </tags>
       

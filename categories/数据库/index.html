@@ -379,19 +379,10 @@
                 </a>
                 
                 
-                <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端: 20">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">后端
-                        <span class="tag-length">20</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/categories/%E7%AE%97%E6%B3%95/" title="算法: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">算法
+                            style="background-color: #F5EEF8;">算法
                         <span class="tag-length">3</span>
                     </span>
                 </a>
@@ -400,7 +391,7 @@
                 <a href="/categories/%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="阅读笔记: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #E8F8F5;">阅读笔记
+                            style="background-color: #D5F5E3;">阅读笔记
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -409,7 +400,7 @@
                 <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/" title="面试题库: 8">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #FEF9E7;">面试题库
+                            style="background-color: #E8F8F5;">面试题库
                         <span class="tag-length">8</span>
                     </span>
                 </a>
@@ -418,17 +409,44 @@
                 <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="杂七杂八: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F8F9F9;">杂七杂八
+                            style="background-color: #FEF9E7;">杂七杂八
                         <span class="tag-length">3</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 4">
+                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" title="计算机基础: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8F9F9;">计算机基础
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/Spring/" title="Spring: 16">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #82E0AA;">Spring
+                        <span class="tag-length">16</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库: 7">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
-                            style="background-color: #82E0AA;">数据库
-                        <span class="tag-length">4</span>
+                            style="background-color: #D7BDE2;">数据库
+                        <span class="tag-length">7</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/%E6%9E%B6%E6%9E%84/" title="架构: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #A3E4D7;">架构
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -443,6 +461,54 @@
 
     <article id="articles" class="container articles">
         <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/11/01/redis05-cluster02/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Redis cluster02：深入集群">
+                            
+                            <span class="card-title">Redis cluster02：深入集群</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Redis cluster02：深入集群集群通信
+在分布式存储中需要提供维护节点元数据信息的机制，所谓元数据是指：节点负责哪些数据，是否出现故障等状态信息
+Redis集群采用P2P的 Gossip（流言）协议， Gossip协议工作原理就是
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-01
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
@@ -631,9 +697,83 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
                 </div>
             </div>
             
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/06/19/database01/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="数据库学习：触发器">
+                            
+                            <span class="card-title">数据库学习：触发器</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                触发器（Trigger）触发器 (Trigger) 是一个存储过程（stored Procedure），在适当条件下被调用的过程，有点类似于回调函数与生命周期函数(在某个时刻会自动执行的函数)。触发器是mysql5新增的功能，通常在进行增删
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                            <span class="chip bg-color">数据库</span>
+                        </a>
+                        
+                        <a href="/tags/MySQL/">
+                            <span class="chip bg-color">MySQL</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
         </div>
     </article>
 </main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a class="left btn-floating btn-large disabled">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">1 / 2</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/page/2/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
 
 
 
@@ -691,7 +831,7 @@ Redis集群并不支持处理多个keys的命令,因为这需要在不同的节�
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2022</span>
+                <span id="year">2022-2023</span>
             
             <a href="/about" target="_blank">银色回廊</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
